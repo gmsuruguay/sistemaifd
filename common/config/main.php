@@ -53,9 +53,7 @@ return [
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
-            'site/*', //Permisos permitidos solo de manera temporal por que no existen usuarios
-            'admin/*',            
-            'user/*',
+            'site/*', //Permisos permitidos solo de manera temporal por que no existen usuarios           
             'site/logout',
             'admin/user/request-password-reset',
             'admin/user/signup',

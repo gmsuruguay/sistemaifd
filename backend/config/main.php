@@ -9,7 +9,7 @@ $params = array_merge(
 return [
     'language' => 'es',
     'id' => 'app-backend',
-    'name'=>'Medicina Nuclear Jujuy S.R.L.',
+    'name'=>'Sistema',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],

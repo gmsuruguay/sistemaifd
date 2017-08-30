@@ -195,6 +195,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasOne(Perfil::className(), ['user_id' => 'id']);
     }
 
+    public function getTipoUsuario()
+    {
+    return $this->hasOne(TipoUsuario::className(), ['id' => 'tipo_usuario_id']);
+    }
+
     public function getPerfilApellido()
     {
         return $this->perfil ? $this->perfil->apellido : 'ninguno';

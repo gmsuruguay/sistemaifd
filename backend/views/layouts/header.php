@@ -22,7 +22,7 @@ use yii\bootstrap\Alert;
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="img/user.jpg" class="user-image" alt="User Image"/>
-                        <span class="hidden-xs"><?=  Yii::$app->user->identity->username  ?></span>
+                        <span class="hidden-xs"><?= Yii::$app->user->identity->username  ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->

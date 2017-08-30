@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\MaskedInput;
 use kartik\form\ActiveForm;
-
+use backend\models\TipoUsuario;
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \mdm\admin\models\form\Signup */

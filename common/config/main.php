@@ -54,21 +54,13 @@ return [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
             'site/*', //Permisos permitidos solo de manera temporal por que no existen usuarios
-            //'admin/*',
-            'turno/*',
-            'autoupdate/*',// Utilizado para test del autoupdater (temporal).
+            'admin/*',            
             'user/*',
             'site/logout',
             'admin/user/request-password-reset',
             'admin/user/signup',
             'gii/*',
-            'admin/user/reset-password',
-            'perfil/*',
-            'tratamiento/*',
-            'horario-atencion/*',
-            'paciente/*',
-            'localidad/*',
-            'cobertura-social/*',
+            'admin/user/reset-password',          
 
         ]
     ]

@@ -18,13 +18,8 @@ use yii\helpers\ArrayHelper;
  * @property string $piso
  * @property string $dpto
  * @property string $telefono
- * @property string $celular
- * @property string $tipo_usuario
- *
- * @property HistoriaClinica[] $historiaClinicas
- * @property HorarioAtencion[] $horarioAtencions
- * @property User $user
- * @property Turno[] $turnos
+ * @property string $celular  
+ * @property User $user 
  */
 class Perfil extends \yii\db\ActiveRecord
 {
@@ -44,13 +39,13 @@ class Perfil extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'apellido', 'tipo_usuario'], 'required'],
+            [['nombre', 'apellido'], 'required'],
             ['estado','default', 'value' =>self::STATUS_ACTIVE],
             [['user_id','numero_doc','estado'], 'integer'],
             [['numero_doc'],'unique'],
             [['nombre', 'apellido', 'domicilio'], 'string', 'max' => 450],
             [['numero'], 'string', 'max' => 15],
-            [['piso', 'dpto', 'telefono', 'celular', 'tipo_usuario'], 'string', 'max' => 45],
+            [['piso', 'dpto', 'telefono', 'celular'], 'string', 'max' => 45],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -71,28 +66,11 @@ class Perfil extends \yii\db\ActiveRecord
             'piso' => 'Piso',
             'dpto' => 'Dpto',
             'telefono' => 'Telefono Fijo',
-            'celular' => 'Celular',
-            'tipo_usuario' => 'Tipo Usuario',
+            'celular' => 'Celular',           
             'estado'=>'Estado'
         ];
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getHistoriaClinicas()
-    {
-        return $this->hasMany(HistoriaClinica::className(), ['perfil_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getHorarioAtencions()
-    {
-        return $this->hasMany(HorarioAtencion::className(), ['perfil_id' => 'id']);
-    }
-
+    
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -104,10 +82,7 @@ class Perfil extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTurnos()
-    {
-        return $this->hasMany(Turno::className(), ['medico_id' => 'id']);
-    }
+   
 
     public function getNombreApellido()
     {
@@ -123,23 +98,7 @@ class Perfil extends \yii\db\ActiveRecord
         return $this->getNombreApellido();
     }
 
-    public static function getListaMedicos()
-    {        
-        $medicos = self::find()->where(['estado' => 1,'tipo_usuario'=>'medico'])->orderBy('apellido')->all();
-        return ArrayHelper::map($medicos, 'id', 'nombreApellido');
-    }
     
-//    public function getTratamientos() {
-//        return $this->hasMany(Tratamiento::className(), ['id' => 'tratamiento_id'])
-//                ->viaTable('horario_atencion', ['perfil_id' => 'id']);
-//    }
     
-    public static function getMedicoHabilitado($medico_id){
-        return self::find()->where("
-                tipo_usuario = 'medico' 
-                and estado = 1 
-                and id = $medico_id
-                ")->one();
-    }
 
 }

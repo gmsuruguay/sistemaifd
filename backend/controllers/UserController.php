@@ -119,7 +119,9 @@ class UserController extends Controller
 
         if ($model->load(Yii::$app->getRequest()->post()) && $perfil->load(Yii::$app->getRequest()->post()) ) {
             $model->setPassword($model->password);
-            $model->generateAuthKey();    
+            $model->generateAuthKey();
+            //echo $model->tipo_usuario_id;            
+            //die;
             if ($model->save()) {
                 $perfil->user_id = $model->id;
                 $perfil->save();

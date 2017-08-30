@@ -7,8 +7,9 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use backend\models\Perfil;
+use backend\models\TipoUsuario;
 use common\models\User;
-
+use yii\helpers\ArrayHelper;
 /**
  * User model
  *
@@ -66,16 +67,19 @@ class User extends ActiveRecord implements IdentityInterface
             ['email', 'email'],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este Email ya existe.'],
 
-            [['username','email','password'], 'required', 'on'=>'create'],
+            [['username','email','password','tipo_usuario_id'], 'required', 'on'=>'create'],
             [['email'], 'required', 'on'=>'update'],
             ['password', 'match', 'pattern' => "/^.{8,16}$/", 'message' => 'Mínimo 6 y máximo 16 caracteres'], 
+            //[['tipo_usuario_id'], 'required'],
+            [['tipo_usuario_id'], 'integer'],
+            [['tipo_usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => TipoUsuario::className(), 'targetAttribute' => ['tipo_usuario_id' => 'id']],
         ];
     }
 
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios['create'] = ['username','email','password']; 
+        $scenarios['create'] = ['username','email','password','tipo_usuario_id']; 
         $scenarios['update'] = ['email'];       
         return $scenarios;
     }
@@ -85,7 +89,8 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             'username'=>"Username",
             'password'=>"Password",
-            'email'=> "Email"
+            'email'=> "Email",
+            'tipo_usuario_id' => 'Tipo Usuario',
         ];
     }
 
@@ -223,6 +228,17 @@ class User extends ActiveRecord implements IdentityInterface
     public function getPerfil()
     {
         return $this->hasOne(Perfil::className(), ['user_id' => 'id']);
+    }
+
+    public function getTipoUsuario() 
+    { 
+        return $this->hasOne(TipoUsuario::className(), ['id' => 'tipo_usuario_id']);
+    } 
+
+    public static function getListaTipo()
+    {        
+        $tipo_usuarios = TipoUsuario::find()->all();
+        return ArrayHelper::map($tipo_usuarios, 'id', 'descripcion');
     }
 
     public function getPerfilApellido()

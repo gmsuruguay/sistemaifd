@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\MaskedInput;
 use kartik\form\ActiveForm;
+use backend\models\TipoUsuario;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
@@ -40,11 +41,11 @@ use kartik\form\ActiveForm;
                             <h4>Datos de Perfil</h4> 
 
                             <?php
-                            $listData=['admin'=>'Personal Administrativo','medico'=>'Profesional Medico'];
-                            echo $form->field($perfil, 'tipo_usuario',[
+                            $listData=TipoUsuario::getListaTipo();
+                            echo $form->field($model, 'tipo_usuario_id',[
                                         'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-user"></i>']]
                                     ])->dropDownList($listData, 
-						        ['prompt'=>'Seleccione tipo']);
+						        ['prompt'=>'Seleccione tipo'])->label('* Tipo usuario');
                             ?>
 
                             <div class="row">

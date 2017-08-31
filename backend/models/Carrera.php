@@ -1,0 +1,87 @@
+<?php
+
+namespace backend\models;
+
+use Yii;
+
+/**
+ * This is the model class for table "carrera".
+ *
+ * @property integer $id
+ * @property string $descripcion
+ * @property integer $duracion
+ * @property string $anio_inicio
+ *
+ * @property Inscripcion[] $inscripcions
+ * @property InscripcionMateria[] $inscripcionMaterias
+ * @property Materia[] $materias
+ * @property Reinscripcion[] $reinscripcions
+ */
+class Carrera extends \yii\db\ActiveRecord
+{
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'carrera';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['descripcion', 'duracion'], 'required'],
+            [['duracion'], 'integer'],
+            [['descripcion'], 'string', 'max' => 450],
+            [['anio_inicio'], 'string', 'max' => 45],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'descripcion' => 'Descripcion',
+            'duracion' => 'Duracion',
+            'anio_inicio' => 'Anio Inicio',
+        ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInscripcions()
+    {
+        return $this->hasMany(Inscripcion::className(), ['carrera_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInscripcionMaterias()
+    {
+        return $this->hasMany(InscripcionMateria::className(), ['carrera_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMaterias()
+    {
+        return $this->hasMany(Materia::className(), ['carrera_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReinscripcions()
+    {
+        return $this->hasMany(Reinscripcion::className(), ['carrera_id' => 'id']);
+    }
+}

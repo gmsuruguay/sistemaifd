@@ -5,12 +5,12 @@ namespace backend\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Localidad;
+use backend\models\Titulo;
 
 /**
- * LocalidadSearch represents the model behind the search form about `backend\models\Localidad`.
+ * TituloSearch represents the model behind the search form about `backend\models\Titulo`.
  */
-class LocalidadSearch extends Localidad
+class TituloSearch extends Titulo
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class LocalidadSearch extends Localidad
      */
     public function search($params)
     {
-        $query = Localidad::find();
+        $query = Titulo::find();
 
         // add conditions that should always apply here
 

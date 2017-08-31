@@ -44,7 +44,7 @@ class Docente extends \yii\db\ActiveRecord
     {
         return [
             [['apellido', 'nombre', 'tipo_doc', 'numero', 'fecha_nacimiento'], 'required'],
-            [['fecha_nacimiento'], 'safe'],
+            [['fecha_nacimiento','fecha_baja'], 'safe'],
             [['user_id'], 'integer'],
             [['nro_legajo', 'tipo_doc', 'numero', 'num', 'piso', 'dpto', 'telefono', 'celular'], 'string', 'max' => 45],
             [['apellido', 'nombre', 'lugar_nacimiento', 'domicilio', 'email'], 'string', 'max' => 450],
@@ -58,15 +58,15 @@ class Docente extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nro_legajo' => 'Nro Legajo',
+            'nro_legajo' => 'Nro legajo',
             'apellido' => 'Apellido',
             'nombre' => 'Nombre',
-            'tipo_doc' => 'Tipo Doc',
-            'numero' => 'Numero',
-            'fecha_nacimiento' => 'Fecha Nacimiento',
-            'lugar_nacimiento' => 'Lugar Nacimiento',
+            'tipo_doc' => 'Tipo doc.',
+            'numero' => 'Nro doc',
+            'fecha_nacimiento' => 'Fecha nacimiento',
+            'lugar_nacimiento' => 'Lugar nacimiento',
             'domicilio' => 'Domicilio',
-            'num' => 'Num',
+            'num' => 'Nro',
             'piso' => 'Piso',
             'dpto' => 'Dpto',
             'telefono' => 'Telefono',

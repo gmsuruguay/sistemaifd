@@ -11,37 +11,34 @@ $this->title = 'Docentes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="docente-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+    
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Docente', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+    
+    <div class="box">
 
-            'id',
-            'nro_legajo',
-            'apellido',
-            'nombre',
-            'tipo_doc',
-            // 'numero',
-            // 'fecha_nacimiento',
-            // 'lugar_nacimiento',
-            // 'domicilio',
-            // 'num',
-            // 'piso',
-            // 'dpto',
-            // 'telefono',
-            // 'celular',
-            // 'email:email',
-            // 'user_id',
+        <div class="box-header with-border">            
+            <h3 class="box-title">Lista de Docentes</h3>
+            <div class="pull-right">
+            <?= Html::a('<i class="fa  fa-plus"></i> Nuevo', ['create'], ['class' => 'btn btn-success']) ?>
+            </div>            
+        </div>
+        <div class="box-body">
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                   
+                    'nro_legajo',
+                    'apellido',
+                    'nombre',                       
+                    'numero',
+                    
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]); ?>
+        </div>
+    </div>
 </div>

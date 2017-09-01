@@ -22,7 +22,16 @@
                     ['label' => 'Menu', 'options' => ['class' => 'header']],
                     //['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii']],
                     ['label' => 'Inicio', 'icon' => 'fa fa-home', 'url' => ['/site']],                   
-                    ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],                   
+                    ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest], 
+                    [
+                        'label' => 'Docentes',
+                        'icon' => 'fa fa-user',
+                        'url' => '#',
+                        'items' => [                            
+                            ['label' => 'Listar', 'icon' => 'fa fa-list', 'url' => ['/docente'],],
+                            ['label' => 'Agregar', 'icon' => 'fa fa-plus', 'url' => ['/docente/create'],],                            
+                        ],
+                    ],                  
                     [
                         'label' => 'Usuarios',
                         'icon' => 'fa fa-users',

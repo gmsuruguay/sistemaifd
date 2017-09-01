@@ -16,11 +16,12 @@ use Yii;
  * @property string $nombre
  * @property string $sexo
  * @property string $estado_civil
+ * @property string $nacionalidad
  * @property string $fecha_nacimiento
  * @property integer $lugar_nacimiento_id
  * @property string $domicilio
- * @property integer $localidad_id
  * @property string $nro
+ * @property integer $localidad_id
  * @property string $telefono
  * @property string $celular
  * @property string $email
@@ -52,7 +53,7 @@ class Alumno extends \yii\db\ActiveRecord
             [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento'], 'required'],
             [['fecha_nacimiento', 'fecha_baja'], 'safe'],
             [['lugar_nacimiento_id', 'localidad_id', 'user_id'], 'integer'],
-            [['nro_legajo', 'tipo_doc', 'numero', 'cuil', 'sexo', 'estado_civil', 'nro', 'telefono', 'celular'], 'string', 'max' => 45],
+            [['nro_legajo', 'tipo_doc', 'numero', 'cuil', 'sexo', 'estado_civil', 'nacionalidad', 'nro', 'telefono', 'celular'], 'string', 'max' => 45],
             [['apellido', 'nombre', 'domicilio', 'email'], 'string', 'max' => 450],
             [['localidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['localidad_id' => 'id']],
             [['lugar_nacimiento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['lugar_nacimiento_id' => 'id']],
@@ -74,11 +75,12 @@ class Alumno extends \yii\db\ActiveRecord
             'nombre' => 'Nombre',
             'sexo' => 'Sexo',
             'estado_civil' => 'Estado Civil',
+            'nacionalidad' => 'Nacionalidad',
             'fecha_nacimiento' => 'Fecha Nacimiento',
             'lugar_nacimiento_id' => 'Lugar Nacimiento ID',
             'domicilio' => 'Domicilio',
-            'localidad_id' => 'Localidad ID',
             'nro' => 'Nro',
+            'localidad_id' => 'Localidad ID',
             'telefono' => 'Telefono',
             'celular' => 'Celular',
             'email' => 'Email',

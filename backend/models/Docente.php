@@ -76,15 +76,15 @@ class Docente extends \yii\db\ActiveRecord
             'estado_civil' => 'Estado Civil',
             'nacionalidad' => 'Nacionalidad',
             'fecha_nacimiento' => 'Fecha Nacimiento',
-            'lugar_nacimiento_id' => 'Lugar Nacimiento ID',
+            'lugar_nacimiento_id' => 'Lugar Nacimiento',
             'domicilio' => 'Domicilio',
             'nro' => 'Nro',
-            'localidad_id' => 'Localidad ID',
+            'localidad_id' => 'Localidad',
             'telefono' => 'Telefono',
             'celular' => 'Celular',
             'email' => 'Email',
             'fecha_baja' => 'Fecha Baja',
-            'user_id' => 'User ID',
+            'user_id' => 'User',
         ];
     }
 

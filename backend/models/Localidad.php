@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "localidad".
  *
@@ -50,5 +50,11 @@ class Localidad extends \yii\db\ActiveRecord
     public function getPacientes()
     {
         return $this->hasMany(Paciente::className(), ['localidad_id' => 'id']);
+    }
+
+    public static function getListaLocalidades()
+    {        
+        $sql = self::find()->orderBy('descripcion')->all();
+        return ArrayHelper::map($sql, 'id', 'descripcion');
     }
 }

@@ -5,7 +5,7 @@ namespace backend\models;
 use Yii;
 
 /**
- * This is the model class for table "docente".
+ * This is the model class for table "alumno".
  *
  * @property integer $id
  * @property string $nro_legajo
@@ -16,12 +16,11 @@ use Yii;
  * @property string $nombre
  * @property string $sexo
  * @property string $estado_civil
- * @property string $nacionalidad
  * @property string $fecha_nacimiento
  * @property integer $lugar_nacimiento_id
  * @property string $domicilio
- * @property string $nro
  * @property integer $localidad_id
+ * @property string $nro
  * @property string $telefono
  * @property string $celular
  * @property string $email
@@ -30,17 +29,18 @@ use Yii;
  *
  * @property Localidad $localidad
  * @property Localidad $lugarNacimiento
- * @property MateriaAsignada[] $materiaAsignadas
- * @property TituloDocente[] $tituloDocentes
+ * @property Inscripcion[] $inscripcions
+ * @property InscripcionMateria[] $inscripcionMaterias
+ * @property Reinscripcion[] $reinscripcions
  */
-class Docente extends \yii\db\ActiveRecord
+class Alumno extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'docente';
+        return 'alumno';
     }
 
     /**
@@ -52,7 +52,7 @@ class Docente extends \yii\db\ActiveRecord
             [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento'], 'required'],
             [['fecha_nacimiento', 'fecha_baja'], 'safe'],
             [['lugar_nacimiento_id', 'localidad_id', 'user_id'], 'integer'],
-            [['nro_legajo', 'tipo_doc', 'numero', 'cuil', 'sexo', 'estado_civil', 'nacionalidad', 'nro', 'telefono', 'celular'], 'string', 'max' => 45],
+            [['nro_legajo', 'tipo_doc', 'numero', 'cuil', 'sexo', 'estado_civil', 'nro', 'telefono', 'celular'], 'string', 'max' => 45],
             [['apellido', 'nombre', 'domicilio', 'email'], 'string', 'max' => 450],
             [['localidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['localidad_id' => 'id']],
             [['lugar_nacimiento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['lugar_nacimiento_id' => 'id']],
@@ -74,12 +74,11 @@ class Docente extends \yii\db\ActiveRecord
             'nombre' => 'Nombre',
             'sexo' => 'Sexo',
             'estado_civil' => 'Estado Civil',
-            'nacionalidad' => 'Nacionalidad',
             'fecha_nacimiento' => 'Fecha Nacimiento',
             'lugar_nacimiento_id' => 'Lugar Nacimiento ID',
             'domicilio' => 'Domicilio',
-            'nro' => 'Nro',
             'localidad_id' => 'Localidad ID',
+            'nro' => 'Nro',
             'telefono' => 'Telefono',
             'celular' => 'Celular',
             'email' => 'Email',
@@ -107,16 +106,24 @@ class Docente extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMateriaAsignadas()
+    public function getInscripcions()
     {
-        return $this->hasMany(MateriaAsignada::className(), ['docente_id' => 'id']);
+        return $this->hasMany(Inscripcion::className(), ['alumno_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTituloDocentes()
+    public function getInscripcionMaterias()
     {
-        return $this->hasMany(TituloDocente::className(), ['docente_id' => 'id']);
+        return $this->hasMany(InscripcionMateria::className(), ['alumno_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReinscripcions()
+    {
+        return $this->hasMany(Reinscripcion::className(), ['alumno_id' => 'id']);
     }
 }

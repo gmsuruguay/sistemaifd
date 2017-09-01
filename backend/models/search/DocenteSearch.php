@@ -18,8 +18,8 @@ class DocenteSearch extends Docente
     public function rules()
     {
         return [
-            [['id', 'user_id'], 'integer'],
-            [['nro_legajo', 'apellido', 'nombre', 'tipo_doc', 'numero', 'fecha_nacimiento', 'lugar_nacimiento', 'domicilio', 'num', 'piso', 'dpto', 'telefono', 'celular', 'email'], 'safe'],
+            [['id', 'lugar_nacimiento_id', 'localidad_id', 'user_id'], 'integer'],
+            [['nro_legajo', 'tipo_doc', 'numero', 'cuil', 'apellido', 'nombre', 'sexo', 'estado_civil', 'nacionalidad', 'fecha_nacimiento', 'domicilio', 'nro', 'telefono', 'celular', 'email', 'fecha_baja'], 'safe'],
         ];
     }
 
@@ -61,19 +61,23 @@ class DocenteSearch extends Docente
         $query->andFilterWhere([
             'id' => $this->id,
             'fecha_nacimiento' => $this->fecha_nacimiento,
+            'lugar_nacimiento_id' => $this->lugar_nacimiento_id,
+            'localidad_id' => $this->localidad_id,
+            'fecha_baja' => $this->fecha_baja,
             'user_id' => $this->user_id,
         ]);
 
         $query->andFilterWhere(['like', 'nro_legajo', $this->nro_legajo])
-            ->andFilterWhere(['like', 'apellido', $this->apellido])
-            ->andFilterWhere(['like', 'nombre', $this->nombre])
             ->andFilterWhere(['like', 'tipo_doc', $this->tipo_doc])
             ->andFilterWhere(['like', 'numero', $this->numero])
-            ->andFilterWhere(['like', 'lugar_nacimiento', $this->lugar_nacimiento])
+            ->andFilterWhere(['like', 'cuil', $this->cuil])
+            ->andFilterWhere(['like', 'apellido', $this->apellido])
+            ->andFilterWhere(['like', 'nombre', $this->nombre])
+            ->andFilterWhere(['like', 'sexo', $this->sexo])
+            ->andFilterWhere(['like', 'estado_civil', $this->estado_civil])
+            ->andFilterWhere(['like', 'nacionalidad', $this->nacionalidad])
             ->andFilterWhere(['like', 'domicilio', $this->domicilio])
-            ->andFilterWhere(['like', 'num', $this->num])
-            ->andFilterWhere(['like', 'piso', $this->piso])
-            ->andFilterWhere(['like', 'dpto', $this->dpto])
+            ->andFilterWhere(['like', 'nro', $this->nro])
             ->andFilterWhere(['like', 'telefono', $this->telefono])
             ->andFilterWhere(['like', 'celular', $this->celular])
             ->andFilterWhere(['like', 'email', $this->email]);

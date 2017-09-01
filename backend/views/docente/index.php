@@ -33,8 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'nro_legajo',
                     'apellido',
                     'nombre',                       
-                    'numero',
-                    
+                    'numero',                    
 
                     ['class' => 'yii\grid\ActionColumn'],
                 ],

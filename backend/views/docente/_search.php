@@ -19,31 +19,39 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nro_legajo') ?>
 
-    <?= $form->field($model, 'apellido') ?>
-
-    <?= $form->field($model, 'nombre') ?>
-
     <?= $form->field($model, 'tipo_doc') ?>
 
-    <?php // echo $form->field($model, 'numero') ?>
+    <?= $form->field($model, 'numero') ?>
+
+    <?= $form->field($model, 'cuil') ?>
+
+    <?php // echo $form->field($model, 'apellido') ?>
+
+    <?php // echo $form->field($model, 'nombre') ?>
+
+    <?php // echo $form->field($model, 'sexo') ?>
+
+    <?php // echo $form->field($model, 'estado_civil') ?>
+
+    <?php // echo $form->field($model, 'nacionalidad') ?>
 
     <?php // echo $form->field($model, 'fecha_nacimiento') ?>
 
-    <?php // echo $form->field($model, 'lugar_nacimiento') ?>
+    <?php // echo $form->field($model, 'lugar_nacimiento_id') ?>
 
     <?php // echo $form->field($model, 'domicilio') ?>
 
-    <?php // echo $form->field($model, 'num') ?>
+    <?php // echo $form->field($model, 'nro') ?>
 
-    <?php // echo $form->field($model, 'piso') ?>
-
-    <?php // echo $form->field($model, 'dpto') ?>
+    <?php // echo $form->field($model, 'localidad_id') ?>
 
     <?php // echo $form->field($model, 'telefono') ?>
 
     <?php // echo $form->field($model, 'celular') ?>
 
     <?php // echo $form->field($model, 'email') ?>
+
+    <?php // echo $form->field($model, 'fecha_baja') ?>
 
     <?php // echo $form->field($model, 'user_id') ?>
 

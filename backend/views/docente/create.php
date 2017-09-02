@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Docentes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="docente-create">   
-
+<?php $model->fecha_nacimiento = $model->fecha_nacimiento? date('d/m/Y', strtotime($model->fecha_nacimiento)) : null; ?>
     <?= $this->render('_form', [
         'model' => $model,
         'model_titulo' =>$model_titulo

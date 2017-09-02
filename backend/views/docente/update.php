@@ -12,10 +12,10 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="docente-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+<?php $model->fecha_nacimiento = $model->fecha_nacimiento? date('d/m/Y', strtotime($model->fecha_nacimiento)) : null; ?>
     <?= $this->render('_form', [
         'model' => $model,
+        'model_titulo' =>$model_titulo
     ]) ?>
 
 </div>

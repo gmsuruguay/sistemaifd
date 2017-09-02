@@ -8,6 +8,7 @@ use backend\models\search\DocenteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\models\TituloDocente;
 
 /**
  * DocenteController implements the CRUD actions for Docente model.
@@ -61,7 +62,7 @@ class DocenteController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    /*public function actionCreate()
     {
         $model = new Docente();
 
@@ -72,6 +73,29 @@ class DocenteController extends Controller
                 'model' => $model,
             ]);
         }
+    }*/
+
+    public function actionCreate()
+    {
+        $model = new Docente();
+        $model_titulo = new TituloDocente();
+
+        if ($model->load(Yii::$app->request->post()) && $model_titulo->load(Yii::$app->request->post()) ) {
+            if($model->save()){               
+                
+                foreach ($model_titulo->titulo_id as $value) {
+                    $datos= new TituloDocente();                
+                    $datos->docente_id= $model->id;
+                    $datos->titulo_id= $value;
+                    $datos->save();
+                }
+                return $this->redirect(['index']);
+            }            
+        } 
+        return $this->render('create', [
+            'model' => $model,
+            'model_titulo' =>$model_titulo
+        ]);
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "titulo".
  *
@@ -50,5 +50,11 @@ class Titulo extends \yii\db\ActiveRecord
     public function getTituloDocentes()
     {
         return $this->hasMany(TituloDocente::className(), ['titulo_id' => 'id']);
+    }
+
+    public static function getListaTitulos()
+    {        
+        $sql = self::find()->orderBy('descripcion')->all();
+        return ArrayHelper::map($sql, 'id', 'descripcion');
     }
 }

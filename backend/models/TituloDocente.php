@@ -45,7 +45,7 @@ class TituloDocente extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'docente_id' => 'Docente ID',
-            'titulo_id' => 'Titulo ID',
+            'titulo_id' => 'Titulos',
         ];
     }
 

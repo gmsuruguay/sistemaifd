@@ -5,7 +5,7 @@ use kartik\form\ActiveForm;
 use kartik\select2\Select2;
 use yii\widgets\MaskedInput;
 use backend\models\Localidad;
-
+use backend\models\Titulo;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Docente */
 /* @var $form yii\widgets\ActiveForm */
@@ -140,7 +140,20 @@ use backend\models\Localidad;
                                                 'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-envelope"></i>']]
                                             ])->textInput(['placeholder'=>"Correo electrónico"])?>
             </div>
-         </div>  
+         </div>
+
+         <?= $form->field($model_titulo, 'titulo_id')->widget(Select2::classname(), [
+        
+                                        'data' => Titulo::getlistaTitulos(),
+                                        'language' => 'es',
+                                        'options' => ['placeholder' => 'Seleccione los titulos obtenidos'],
+                                        'pluginOptions' => [
+                                            'allowClear' => true,
+                                            'multiple' => true,
+                                        ],
+                                        ])->label('* Titulos')
+
+                    ?>  
 
         </div>                              
         <div class="box-footer">

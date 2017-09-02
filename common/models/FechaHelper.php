@@ -49,7 +49,7 @@ class FechaHelper {
      * @return string La fecha en formato YMD, o la fecha original si la conversión no puede realizarse.
      */
     public static function fechaYMD($fecha) {
-        return self::convertirFecha($fecha, '/', '-', 'Y-m-d');
+        return self::convertirFecha($fecha, '/', '-', 'Y/m/d');
     }
 
     /**

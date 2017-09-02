@@ -80,7 +80,7 @@ use backend\models\Localidad;
             <?= $form->field($model, 'fecha_nacimiento',[
                                 'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-calendar"></i>']]
                             ])->widget( MaskedInput::className(), [    
-                                            'clientOptions' => ['alias' =>  'dd-mm-yyyy']
+                                            'clientOptions' => ['alias' =>  'date']
                 ])->label('* Fecha Nacimiento') ?>
             </div>
             <div class="col-md-4">

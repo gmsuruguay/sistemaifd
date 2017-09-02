@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-
+use common\models\FechaHelper;
 /**
  * This is the model class for table "docente".
  *
@@ -51,7 +51,9 @@ class Docente extends \yii\db\ActiveRecord
         return [
             [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento'], 'required'],
             [['fecha_nacimiento', 'fecha_baja'], 'safe'],
+            [['fecha_nacimiento','fecha_baja'], 'date', 'format'=>'php:Y-m-d'],
             [['lugar_nacimiento_id', 'localidad_id', 'user_id'], 'integer'],
+            [['numero'],'unique'],
             [['nro_legajo', 'tipo_doc', 'numero', 'cuil', 'sexo', 'estado_civil', 'nacionalidad', 'nro', 'telefono', 'celular'], 'string', 'max' => 45],
             [['apellido', 'nombre', 'domicilio', 'email'], 'string', 'max' => 450],
             [['localidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['localidad_id' => 'id']],
@@ -119,4 +121,18 @@ class Docente extends \yii\db\ActiveRecord
     {
         return $this->hasMany(TituloDocente::className(), ['docente_id' => 'id']);
     }
+
+    /**
+    * Formatear fechas antes de insertar en base de datos
+    *
+    */
+    public function beforeValidate()
+    {
+        if ($this->fecha_nacimiento != null) {           
+            $this->fecha_nacimiento = FechaHelper::fechaYMD($this->fecha_nacimiento);
+        }        
+        
+        return parent::beforeValidate();
+    }
+
 }

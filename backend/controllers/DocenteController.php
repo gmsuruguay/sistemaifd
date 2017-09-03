@@ -119,7 +119,7 @@ class DocenteController extends Controller
         
         if ($model->load(Yii::$app->request->post()) && $model_titulo->load(Yii::$app->request->post()) ) {
             if($model->save()){               
-                
+                TituloDocente::deleteAll(['docente_id' => $model->id]);
                 foreach ($model_titulo->titulo_id as $value) {
                     $datos= new TituloDocente();                
                     $datos->docente_id= $model->id;

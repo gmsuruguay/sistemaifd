@@ -31,7 +31,7 @@ class TituloDocente extends \yii\db\ActiveRecord
     {
         return [
             [['docente_id', 'titulo_id'], 'required'],
-            [['docente_id', 'titulo_id'], 'integer'],
+            [['docente_id'], 'integer'],
             [['docente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Docente::className(), 'targetAttribute' => ['docente_id' => 'id']],
             [['titulo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Titulo::className(), 'targetAttribute' => ['titulo_id' => 'id']],
         ];

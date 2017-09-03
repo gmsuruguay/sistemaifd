@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\TituloDocente;
-
+use yii\helpers\ArrayHelper;
 /**
  * DocenteController implements the CRUD actions for Docente model.
  */
@@ -106,15 +106,34 @@ class DocenteController extends Controller
      */
     public function actionUpdate($id)
     {
+        $model_titulo = new TituloDocente();
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $sql = TituloDocente::find()->where('docente_id = :id', [':id' => $model->id])->all();
+        $titulos = array();
+        $i=0;
+        foreach ($sql as $modelo) {
+            $titulos[$i]= $modelo->titulo_id;
+            ++$i;
         }
+        //print_r($titulos) ;die;
+        
+        if ($model->load(Yii::$app->request->post()) && $model_titulo->load(Yii::$app->request->post()) ) {
+            if($model->save()){               
+                
+                foreach ($model_titulo->titulo_id as $value) {
+                    $datos= new TituloDocente();                
+                    $datos->docente_id= $model->id;
+                    $datos->titulo_id= $value;
+                    $datos->save();
+                }
+                return $this->redirect(['index']);
+            }            
+        } 
+        return $this->render('update', [
+            'model' => $model,
+            'model_titulo' =>$model_titulo,
+            'titulos'=>$titulos,
+        ]);
     }
 
     /**
@@ -145,4 +164,5 @@ class DocenteController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
 }

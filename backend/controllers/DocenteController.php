@@ -74,6 +74,7 @@ class DocenteController extends Controller
         $model = new Docente();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('info', "Por favor continúe agregando los datos académicos del docente");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [

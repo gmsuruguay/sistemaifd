@@ -138,4 +138,9 @@ class Docente extends \yii\db\ActiveRecord
         return parent::beforeValidate();
     }
 
+    public function getApellidoNombre()
+    {
+        return $this->apellido.' '.$this->nombre;
+    }
+
 }

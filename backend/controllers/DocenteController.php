@@ -62,7 +62,7 @@ class DocenteController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    /*public function actionCreate()
+    public function actionCreate()
     {
         $model = new Docente();
 
@@ -73,9 +73,9 @@ class DocenteController extends Controller
                 'model' => $model,
             ]);
         }
-    }*/
+    }
 
-    public function actionCreate()
+    /*public function actionCreate()
     {
         $model = new Docente();
         $model_titulo = new TituloDocente();
@@ -96,7 +96,7 @@ class DocenteController extends Controller
             'model' => $model,
             'model_titulo' =>$model_titulo
         ]);
-    }
+    }*/
 
     /**
      * Updates an existing Docente model.
@@ -104,7 +104,19 @@ class DocenteController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+     public function actionUpdate($id)
+     {
+         $model = $this->findModel($id);
+ 
+         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+             return $this->redirect(['view', 'id' => $model->id]);
+         } else {
+             return $this->render('update', [
+                 'model' => $model,
+             ]);
+         }
+     } 
+    /*public function actionUpdate($id)
     {
         $model_titulo = new TituloDocente();
         $model = $this->findModel($id);
@@ -134,7 +146,7 @@ class DocenteController extends Controller
             'model_titulo' =>$model_titulo,
             'titulos'=>$titulos,
         ]);
-    }
+    }*/
 
     /**
      * Deletes an existing Docente model.

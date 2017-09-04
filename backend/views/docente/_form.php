@@ -140,20 +140,7 @@ use backend\models\Titulo;
                                                 'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-envelope"></i>']]
                                             ])->textInput(['placeholder'=>"Correo electrónico"])?>
             </div>
-         </div>
-
-         <?= $form->field($model_titulo, 'titulo_id')->widget(Select2::classname(), [
-        
-                                        'data' => Titulo::getlistaTitulos(),
-                                        'language' => 'es',
-                                        'options' => ['placeholder' => 'Seleccione los titulos obtenidos'],
-                                        'pluginOptions' => [
-                                            'allowClear' => true,
-                                            'multiple' => true,
-                                        ],
-                                        ])->label('* Titulos')
-
-                    ?>  
+         </div>       
 
         </div>                              
         <div class="box-footer">

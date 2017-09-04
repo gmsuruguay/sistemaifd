@@ -12,40 +12,29 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="alumno-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<div class="box">
 
-    <p>
-        <?= Html::a('Create Alumno', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+        <div class="box-header with-border">            
+            <h3 class="box-title">Lista de Alumnos</h3>
+            <div class="pull-right">
+            <?= Html::a('<i class="fa  fa-plus"></i> Nuevo', ['create'], ['class' => 'btn btn-success']) ?>
+            </div>            
+        </div>
+        <div class="box-body">
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                   
+                    'nro_legajo',
+                    'apellido',
+                    'nombre',                       
+                    'numero',                    
 
-            'id',
-            'nro_legajo',
-            'tipo_doc',
-            'numero',
-            'cuil',
-            // 'apellido',
-            // 'nombre',
-            // 'sexo',
-            // 'estado_civil',
-            // 'nacionalidad',
-            // 'fecha_nacimiento',
-            // 'lugar_nacimiento_id',
-            // 'domicilio',
-            // 'nro',
-            // 'localidad_id',
-            // 'telefono',
-            // 'celular',
-            // 'email:email',
-            // 'fecha_baja',
-            // 'user_id',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]); ?>
+        </div>
+    </div>
 </div>

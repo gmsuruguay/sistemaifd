@@ -140,7 +140,7 @@ class Docente extends \yii\db\ActiveRecord
 
     public function getApellidoNombre()
     {
-        return $this->apellido.' '.$this->nombre;
+        return $this->numero.' '.$this->apellido.' '.$this->nombre;
     }
 
 }

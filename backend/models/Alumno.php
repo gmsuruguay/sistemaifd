@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "alumno".
  *
@@ -127,5 +127,11 @@ class Alumno extends Docente
     public function getReinscripcions()
     {
         return $this->hasMany(Reinscripcion::className(), ['alumno_id' => 'id']);
+    }
+
+    public static function getListaAlumnos()
+    {        
+        $alumnos = self::find()->where(['fecha_baja' => null])->orderBy('apellido')->all();
+        return ArrayHelper::map($alumnos, 'id', 'apellidoNombre');
     }
 }

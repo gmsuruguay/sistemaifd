@@ -24,6 +24,24 @@
                     ['label' => 'Inicio', 'icon' => 'fa fa-home', 'url' => ['/site']],                   
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest], 
                     [
+                        'label' => 'Inscripciones',
+                        'icon' => 'fa fa-pencil-square-o',
+                        'url' => '#',
+                        'items' => [                            
+                            ['label' => 'Listar', 'icon' => 'fa fa-list', 'url' => ['/inscripcion'],],
+                            ['label' => 'Agregar', 'icon' => 'fa fa-plus', 'url' => ['/inscripcion/create'],],                            
+                        ],
+                    ],
+                    [
+                        'label' => 'Alumnos',
+                        'icon' => 'fa fa-graduation-cap',
+                        'url' => '#',
+                        'items' => [                            
+                            ['label' => 'Listar', 'icon' => 'fa fa-list', 'url' => ['/alumno'],],
+                            ['label' => 'Agregar', 'icon' => 'fa fa-plus', 'url' => ['/alumno/create'],],                            
+                        ],
+                    ], 
+                    [
                         'label' => 'Docentes',
                         'icon' => 'fa fa-user',
                         'url' => '#',

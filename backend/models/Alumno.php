@@ -34,7 +34,7 @@ use Yii;
  * @property InscripcionMateria[] $inscripcionMaterias
  * @property Reinscripcion[] $reinscripcions
  */
-class Alumno extends \yii\db\ActiveRecord
+class Alumno extends Docente
 {
     /**
      * @inheritdoc
@@ -47,7 +47,7 @@ class Alumno extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function rules()
+    /*public function rules()
     {
         return [
             [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento'], 'required'],
@@ -58,12 +58,12 @@ class Alumno extends \yii\db\ActiveRecord
             [['localidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['localidad_id' => 'id']],
             [['lugar_nacimiento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['lugar_nacimiento_id' => 'id']],
         ];
-    }
+    }*/
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    /*public function attributeLabels()
     {
         return [
             'id' => 'ID',
@@ -87,23 +87,23 @@ class Alumno extends \yii\db\ActiveRecord
             'fecha_baja' => 'Fecha Baja',
             'user_id' => 'User ID',
         ];
-    }
+    }*/
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getLocalidad()
+    /*public function getLocalidad()
     {
         return $this->hasOne(Localidad::className(), ['id' => 'localidad_id']);
-    }
+    }*/
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getLugarNacimiento()
+    /*public function getLugarNacimiento()
     {
         return $this->hasOne(Localidad::className(), ['id' => 'lugar_nacimiento_id']);
-    }
+    }*/
 
     /**
      * @return \yii\db\ActiveQuery

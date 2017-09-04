@@ -3,10 +3,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use mdm\admin\components\Helper;
 use common\models\FechaHelper;
-use yii\grid\GridView;
-use yii\widgets\Pjax;
-use yii\bootstrap\Modal;
-use yii\helpers\Url;
+
 ?>
 <?= DetailView::widget([
         'model' => $model,
@@ -52,3 +49,7 @@ use yii\helpers\Url;
          
         ?>
 </div>
+
+
+
+    

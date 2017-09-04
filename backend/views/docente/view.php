@@ -2,6 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Docente */
@@ -30,6 +34,55 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <!-- /.tab-content -->
     </div> 
-    
+
+    <div class="box">
+        <div class="box-header with-border">            
+            <h3 class="box-title">Lista de titulos</h3>
+            <div class="pull-right">
+            <?= Html::a('<i class="fa  fa-plus"></i> Agregar titulo', ['titulo-docente/create','id' => $model->id],['class' => 'btn btn-success modalButton']) ?>
+            </div>            
+        </div>
+        <div class="box-body">
+        <?php Pjax::begin(['id'=>'grid-titulo']); ?>    <?= GridView::widget([
+                'dataProvider' => $dataProvider,                
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],                   
+                    
+                    'titulo_id',
+
+                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]); ?>
+        <?php Pjax::end(); ?></div>
+        </div>
+    </div>   
 
 </div>
+
+<?php 
+      Modal::begin([
+        'header' => '<h3 class="text-center modal-title"><i class="fa fa-bolt"></i> Titulos</h3>',
+        'id'=>'ModalId',
+        'class'=>'modal',
+        'size'=>'modal-lg', 
+        'clientOptions' => ['backdrop' => 'static'],  
+         ]);
+
+        echo "<div class='modalContent'></div>";
+        
+      Modal::end();
+
+      
+
+      $script = <<< JS
+    
+    $('body').on('beforeSubmit','form#titulo-docente' , function(e){        
+        ajax($(this),refrescarGridTitulo);
+        return false;
+    });    
+   
+    
+JS;
+$this->registerJs($script);
+
+?>

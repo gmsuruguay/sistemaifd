@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\TituloDocente;
+use backend\models\search\TituloDocenteSearch;
 use yii\helpers\ArrayHelper;
 /**
  * DocenteController implements the CRUD actions for Docente model.
@@ -52,8 +53,14 @@ class DocenteController extends Controller
      */
     public function actionView($id)
     {
+        $docente= $this->findModel($id);
+        $searchModel = new TituloDocenteSearch();
+        $searchModel->docente_id= $docente->id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $docente,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

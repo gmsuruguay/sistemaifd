@@ -6,13 +6,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Inscripcion */
 
-$this->title = 'Create Inscripcion';
-$this->params['breadcrumbs'][] = ['label' => 'Inscripcions', 'url' => ['index']];
+$this->title = 'Nueva Inscripción';
+$this->params['breadcrumbs'][] = ['label' => 'Inscripciones', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="inscripcion-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="inscripcion-create">   
 
     <?= $this->render('_form', [
         'model' => $model,

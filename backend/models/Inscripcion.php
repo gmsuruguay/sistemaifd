@@ -49,8 +49,8 @@ class Inscripcion extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'alumno_id' => 'Alumno ID',
-            'carrera_id' => 'Carrera ID',
+            'alumno_id' => 'Alumno',
+            'carrera_id' => 'Carrera',
             'nro_libreta' => 'Nro Libreta',
             'fecha' => 'Fecha',
             'observacion' => 'Observacion',

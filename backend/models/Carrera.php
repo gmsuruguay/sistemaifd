@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "carrera".
  *
@@ -74,5 +74,11 @@ class Carrera extends \yii\db\ActiveRecord
     public function getReinscripcions()
     {
         return $this->hasMany(Reinscripcion::className(), ['carrera_id' => 'id']);
+    }
+
+    public static function getListaCarreras()
+    {        
+        $sql = self::find()->orderBy('descripcion')->all();
+        return ArrayHelper::map($sql, 'id', 'descripcion');
     }
 }

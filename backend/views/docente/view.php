@@ -6,7 +6,7 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
-
+use mdm\admin\components\Helper;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Docente */
 
@@ -50,7 +50,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     
                     'titulo.descripcion',
 
-                    ['class' => 'yii\grid\ActionColumn'],
+                    ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{update}'), 
+                    'buttons' => [
+                        'update' => function ($url, $model) {
+                                                    
+                            return Html::a('<i class="fa  fa-pencil"></i>',['titulo-docente/update','id' => $model->id],['class' => 'btn btn-link modalButton']);
+                            
+                        }                         
+                    ]],
                 ],
             ]); ?>
         <?php Pjax::end(); ?></div>

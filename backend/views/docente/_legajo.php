@@ -1,9 +1,8 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use mdm\admin\components\Helper;
 use common\models\FechaHelper;
-
+use mdm\admin\components\Helper;
 ?>
 <?= DetailView::widget([
         'model' => $model,

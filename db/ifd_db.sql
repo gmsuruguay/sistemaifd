@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-08-2017 a las 01:11:38
+-- Tiempo de generación: 04-09-2017 a las 12:59:09
 -- Versión del servidor: 5.7.14
 -- Versión de PHP: 5.6.25
 
@@ -28,21 +28,25 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `alumno` (
   `id` int(11) NOT NULL,
-  `apellido` varchar(450) COLLATE utf8_spanish_ci NOT NULL,
-  `nombre` varchar(450) COLLATE utf8_spanish_ci NOT NULL,
+  `nro_legajo` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   `tipo_doc` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
   `numero` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `cuil` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `apellido` varchar(450) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre` varchar(450) COLLATE utf8_spanish_ci NOT NULL,
+  `sexo` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `estado_civil` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `nacionalidad` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   `fecha_nacimiento` date NOT NULL,
-  `lugar_nacimiento` varchar(450) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `lugar_nacimiento_id` int(11) DEFAULT NULL,
   `domicilio` varchar(450) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `num` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `piso` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `dpto` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `nro` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `localidad_id` int(11) DEFAULT NULL,
   `telefono` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   `celular` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   `email` varchar(450) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `nacionalidad_id` int(11) NOT NULL
+  `fecha_baja` date DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -86,8 +90,10 @@ CREATE TABLE `auth_item` (
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 ('/admin/*', 2, NULL, NULL, NULL, 1504053920, 1504053920),
+('/docente/*', 2, NULL, NULL, NULL, 1504529767, 1504529767),
 ('/localidad/*', 2, NULL, NULL, NULL, 1504053912, 1504053912),
 ('/site/*', 2, NULL, NULL, NULL, 1504053903, 1504053903),
+('/titulo-docente/*', 2, NULL, NULL, NULL, 1504535064, 1504535064),
 ('/user/*', 2, NULL, NULL, NULL, 1504053887, 1504053887),
 ('Administrador', 1, NULL, NULL, NULL, 1504053832, 1504053832),
 ('Super Admin', 1, NULL, NULL, NULL, 1504053820, 1504053820);
@@ -109,8 +115,10 @@ CREATE TABLE `auth_item_child` (
 
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('Administrador', '/admin/*'),
+('Administrador', '/docente/*'),
 ('Administrador', '/localidad/*'),
 ('Administrador', '/site/*'),
+('Administrador', '/titulo-docente/*'),
 ('Administrador', '/user/*');
 
 -- --------------------------------------------------------
@@ -129,14 +137,105 @@ CREATE TABLE `auth_rule` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `carrera`
+--
+
+CREATE TABLE `carrera` (
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(450) COLLATE utf8_spanish_ci NOT NULL,
+  `duracion` tinyint(1) NOT NULL,
+  `anio_inicio` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `condicion`
+--
+
+CREATE TABLE `condicion` (
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(450) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `correlatividad`
+--
+
+CREATE TABLE `correlatividad` (
+  `materia_id` int(11) NOT NULL,
+  `materia_id_correlativa` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `docente`
 --
 
 CREATE TABLE `docente` (
   `id` int(11) NOT NULL,
+  `nro_legajo` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `tipo_doc` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `numero` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `cuil` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   `apellido` varchar(450) COLLATE utf8_spanish_ci NOT NULL,
   `nombre` varchar(450) COLLATE utf8_spanish_ci NOT NULL,
+  `sexo` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `estado_civil` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `nacionalidad` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `fecha_nacimiento` date NOT NULL,
+  `lugar_nacimiento_id` int(11) DEFAULT NULL,
+  `domicilio` varchar(450) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `nro` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `localidad_id` int(11) DEFAULT NULL,
+  `telefono` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `celular` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `email` varchar(450) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `fecha_baja` date DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `docente`
+--
+
+INSERT INTO `docente` (`id`, `nro_legajo`, `tipo_doc`, `numero`, `cuil`, `apellido`, `nombre`, `sexo`, `estado_civil`, `nacionalidad`, `fecha_nacimiento`, `lugar_nacimiento_id`, `domicilio`, `nro`, `localidad_id`, `telefono`, `celular`, `email`, `fecha_baja`, `user_id`) VALUES
+(1, '33041', 'dni', '32452851', '20-3', 'SURUGUAY', 'MARTIN GERARDO', 'M', 'CASADO', 'ARGENTINA', '1985-11-14', NULL, 'EXODO', '988', NULL, '', '', '', NULL, NULL),
+(2, '', 'dni', '32458210', '20-7', 'SOSA', 'DAVID', '', '', 'ARGENTINA', '1962-12-21', NULL, '', '', NULL, '', '', '', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `inscripcion`
+--
+
+CREATE TABLE `inscripcion` (
+  `id` int(11) NOT NULL,
+  `alumno_id` int(11) NOT NULL,
+  `carrera_id` int(11) NOT NULL,
+  `nro_libreta` int(11) DEFAULT NULL,
+  `fecha` date NOT NULL,
+  `observacion` longtext COLLATE utf8_spanish_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `inscripcion_materia`
+--
+
+CREATE TABLE `inscripcion_materia` (
+  `id` int(11) NOT NULL,
+  `fecha_inscripcion` date NOT NULL,
+  `alumno_id` int(11) NOT NULL,
+  `nota` decimal(6,2) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `nro_acta` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `condicion_id` int(11) NOT NULL,
+  `carrera_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -147,15 +246,35 @@ CREATE TABLE `docente` (
 
 CREATE TABLE `localidad` (
   `id` int(11) NOT NULL,
-  `descripcion` varchar(350) COLLATE utf8_spanish_ci NOT NULL
+  `descripcion` varchar(450) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `localidad`
+-- Estructura de tabla para la tabla `materia`
 --
 
-INSERT INTO `localidad` (`id`, `descripcion`) VALUES
-(1, 'Perico');
+CREATE TABLE `materia` (
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(450) COLLATE utf8_spanish_ci NOT NULL,
+  `carrera_id` int(11) NOT NULL,
+  `estado` bit(1) DEFAULT NULL COMMENT 'Cuando el valor es 1 esta ocupado'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `materia_asignada`
+--
+
+CREATE TABLE `materia_asignada` (
+  `id` int(11) NOT NULL,
+  `fecha_alta` date NOT NULL,
+  `docente_id` int(11) NOT NULL,
+  `materia_id` int(11) NOT NULL,
+  `fecha_baja` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -196,17 +315,6 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `nacionalidad`
---
-
-CREATE TABLE `nacionalidad` (
-  `id` int(11) NOT NULL,
-  `descripcion` varchar(450) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `perfil`
 --
 
@@ -236,6 +344,19 @@ INSERT INTO `perfil` (`id`, `numero_doc`, `nombre`, `apellido`, `user_id`, `domi
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `reinscripcion`
+--
+
+CREATE TABLE `reinscripcion` (
+  `id` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `carrera_id` int(11) NOT NULL,
+  `alumno_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tipo_usuario`
 --
 
@@ -253,6 +374,47 @@ INSERT INTO `tipo_usuario` (`id`, `descripcion`) VALUES
 (2, 'Docente\r\n'),
 (3, 'Preceptor'),
 (4, 'Secretario');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `titulo`
+--
+
+CREATE TABLE `titulo` (
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(450) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `titulo`
+--
+
+INSERT INTO `titulo` (`id`, `descripcion`) VALUES
+(1, 'DOCENTE DE NIVEL PRIMARIO'),
+(2, 'PROFESOR DE LENGUAS'),
+(3, 'LICENCIADO EN EDUCACION'),
+(4, 'PROGRAMADOR');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `titulo_docente`
+--
+
+CREATE TABLE `titulo_docente` (
+  `id` int(11) NOT NULL,
+  `docente_id` int(11) NOT NULL,
+  `titulo_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `titulo_docente`
+--
+
+INSERT INTO `titulo_docente` (`id`, `docente_id`, `titulo_id`) VALUES
+(1, 1, 1),
+(10, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -289,7 +451,8 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_res
 --
 ALTER TABLE `alumno`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_alumno_nacionalidad1_idx` (`nacionalidad_id`);
+  ADD KEY `fk_localidad_id` (`localidad_id`),
+  ADD KEY `fk_lugar_nacimiento_id` (`lugar_nacimiento_id`);
 
 --
 -- Indices de la tabla `auth_assignment`
@@ -319,16 +482,69 @@ ALTER TABLE `auth_rule`
   ADD PRIMARY KEY (`name`);
 
 --
+-- Indices de la tabla `carrera`
+--
+ALTER TABLE `carrera`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `condicion`
+--
+ALTER TABLE `condicion`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `correlatividad`
+--
+ALTER TABLE `correlatividad`
+  ADD KEY `fk_correlatividad_materia1_idx` (`materia_id`),
+  ADD KEY `fk_correlatividad_materia2_idx` (`materia_id_correlativa`);
+
+--
 -- Indices de la tabla `docente`
 --
 ALTER TABLE `docente`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_docente_localidad_id` (`localidad_id`),
+  ADD KEY `fk_docente_lugar_nacimiento_id` (`lugar_nacimiento_id`);
+
+--
+-- Indices de la tabla `inscripcion`
+--
+ALTER TABLE `inscripcion`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_inscripcion_alumno1_idx` (`alumno_id`),
+  ADD KEY `fk_inscripcion_carrera1_idx` (`carrera_id`);
+
+--
+-- Indices de la tabla `inscripcion_materia`
+--
+ALTER TABLE `inscripcion_materia`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_inscripcion_materia_alumno1_idx` (`alumno_id`),
+  ADD KEY `fk_inscripcion_materia_condicion1_idx` (`condicion_id`),
+  ADD KEY `fk_inscripcion_materia_carrera1_idx` (`carrera_id`);
 
 --
 -- Indices de la tabla `localidad`
 --
 ALTER TABLE `localidad`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `materia`
+--
+ALTER TABLE `materia`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_materia_carrera1_idx` (`carrera_id`);
+
+--
+-- Indices de la tabla `materia_asignada`
+--
+ALTER TABLE `materia_asignada`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_materia_asignada_docente1_idx` (`docente_id`),
+  ADD KEY `fk_materia_asignada_materia1_idx` (`materia_id`);
 
 --
 -- Indices de la tabla `menu`
@@ -344,12 +560,6 @@ ALTER TABLE `migration`
   ADD PRIMARY KEY (`version`);
 
 --
--- Indices de la tabla `nacionalidad`
---
-ALTER TABLE `nacionalidad`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `perfil`
 --
 ALTER TABLE `perfil`
@@ -358,10 +568,32 @@ ALTER TABLE `perfil`
   ADD KEY `fk_perfil_especialidad1_idx` (`especialidad_id`);
 
 --
+-- Indices de la tabla `reinscripcion`
+--
+ALTER TABLE `reinscripcion`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_reinscripcion_carrera1_idx` (`carrera_id`),
+  ADD KEY `fk_reinscripcion_alumno1_idx` (`alumno_id`);
+
+--
 -- Indices de la tabla `tipo_usuario`
 --
 ALTER TABLE `tipo_usuario`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `titulo`
+--
+ALTER TABLE `titulo`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `titulo_docente`
+--
+ALTER TABLE `titulo_docente`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_titulo_docente_docente1_idx` (`docente_id`),
+  ADD KEY `fk_titulo_docente_titulo1_idx` (`titulo_id`);
 
 --
 -- Indices de la tabla `user`
@@ -380,24 +612,49 @@ ALTER TABLE `user`
 ALTER TABLE `alumno`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `carrera`
+--
+ALTER TABLE `carrera`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `condicion`
+--
+ALTER TABLE `condicion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `docente`
 --
 ALTER TABLE `docente`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `inscripcion`
+--
+ALTER TABLE `inscripcion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `inscripcion_materia`
+--
+ALTER TABLE `inscripcion_materia`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `localidad`
 --
 ALTER TABLE `localidad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `materia`
+--
+ALTER TABLE `materia`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `materia_asignada`
+--
+ALTER TABLE `materia_asignada`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `nacionalidad`
---
-ALTER TABLE `nacionalidad`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `perfil`
@@ -405,10 +662,25 @@ ALTER TABLE `nacionalidad`
 ALTER TABLE `perfil`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
+-- AUTO_INCREMENT de la tabla `reinscripcion`
+--
+ALTER TABLE `reinscripcion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `tipo_usuario`
 --
 ALTER TABLE `tipo_usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT de la tabla `titulo`
+--
+ALTER TABLE `titulo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT de la tabla `titulo_docente`
+--
+ALTER TABLE `titulo_docente`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
@@ -422,7 +694,8 @@ ALTER TABLE `user`
 -- Filtros para la tabla `alumno`
 --
 ALTER TABLE `alumno`
-  ADD CONSTRAINT `fk_alumno_nacionalidad1` FOREIGN KEY (`nacionalidad_id`) REFERENCES `nacionalidad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_alumno_localidad1` FOREIGN KEY (`localidad_id`) REFERENCES `localidad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_alumno_localidad2` FOREIGN KEY (`lugar_nacimiento_id`) REFERENCES `localidad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `auth_assignment`
@@ -444,10 +717,66 @@ ALTER TABLE `auth_item_child`
   ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `correlatividad`
+--
+ALTER TABLE `correlatividad`
+  ADD CONSTRAINT `fk_correlatividad_materia1` FOREIGN KEY (`materia_id`) REFERENCES `materia` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_correlatividad_materia2` FOREIGN KEY (`materia_id_correlativa`) REFERENCES `materia` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `docente`
+--
+ALTER TABLE `docente`
+  ADD CONSTRAINT `fk_docente_localidad1` FOREIGN KEY (`localidad_id`) REFERENCES `localidad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_docente_localidad2` FOREIGN KEY (`lugar_nacimiento_id`) REFERENCES `localidad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `inscripcion`
+--
+ALTER TABLE `inscripcion`
+  ADD CONSTRAINT `fk_inscripcion_alumno1` FOREIGN KEY (`alumno_id`) REFERENCES `alumno` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_inscripcion_carrera1` FOREIGN KEY (`carrera_id`) REFERENCES `carrera` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `inscripcion_materia`
+--
+ALTER TABLE `inscripcion_materia`
+  ADD CONSTRAINT `fk_inscripcion_materia_alumno1` FOREIGN KEY (`alumno_id`) REFERENCES `alumno` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_inscripcion_materia_carrera1` FOREIGN KEY (`carrera_id`) REFERENCES `carrera` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_inscripcion_materia_condicion1` FOREIGN KEY (`condicion_id`) REFERENCES `condicion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `materia`
+--
+ALTER TABLE `materia`
+  ADD CONSTRAINT `fk_materia_carrera1` FOREIGN KEY (`carrera_id`) REFERENCES `carrera` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `materia_asignada`
+--
+ALTER TABLE `materia_asignada`
+  ADD CONSTRAINT `fk_materia_asignada_docente1` FOREIGN KEY (`docente_id`) REFERENCES `docente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_materia_asignada_materia1` FOREIGN KEY (`materia_id`) REFERENCES `materia` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Filtros para la tabla `menu`
 --
 ALTER TABLE `menu`
   ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `menu` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `reinscripcion`
+--
+ALTER TABLE `reinscripcion`
+  ADD CONSTRAINT `fk_reinscripcion_alumno1` FOREIGN KEY (`alumno_id`) REFERENCES `alumno` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_reinscripcion_carrera1` FOREIGN KEY (`carrera_id`) REFERENCES `carrera` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `titulo_docente`
+--
+ALTER TABLE `titulo_docente`
+  ADD CONSTRAINT `fk_titulo_docente_docente1` FOREIGN KEY (`docente_id`) REFERENCES `docente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_titulo_docente_titulo1` FOREIGN KEY (`titulo_id`) REFERENCES `titulo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `user`

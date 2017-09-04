@@ -10,10 +10,12 @@ use Yii;
  * @property integer $id
  * @property string $descripcion
  * @property integer $carrera_id
+ * @property string $anio
  * @property boolean $estado
  *
  * @property Correlatividad[] $correlatividads
  * @property Correlatividad[] $correlatividads0
+ * @property InscripcionMateria[] $inscripcionMaterias
  * @property Carrera $carrera
  * @property MateriaAsignada[] $materiaAsignadas
  */
@@ -33,10 +35,11 @@ class Materia extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['descripcion', 'carrera_id'], 'required'],
+            [['descripcion', 'carrera_id', 'anio'], 'required'],
             [['carrera_id'], 'integer'],
             [['estado'], 'boolean'],
             [['descripcion'], 'string', 'max' => 450],
+            [['anio'], 'string', 'max' => 45],
             [['carrera_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carrera::className(), 'targetAttribute' => ['carrera_id' => 'id']],
         ];
     }
@@ -50,6 +53,7 @@ class Materia extends \yii\db\ActiveRecord
             'id' => 'ID',
             'descripcion' => 'Descripcion',
             'carrera_id' => 'Carrera ID',
+            'anio' => 'Anio',
             'estado' => 'Estado',
         ];
     }
@@ -68,6 +72,14 @@ class Materia extends \yii\db\ActiveRecord
     public function getCorrelatividads0()
     {
         return $this->hasMany(Correlatividad::className(), ['materia_id_correlativa' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInscripcionMaterias()
+    {
+        return $this->hasMany(InscripcionMateria::className(), ['materia_id' => 'id']);
     }
 
     /**

@@ -13,7 +13,6 @@ use Yii;
  * @property string $anio_inicio
  *
  * @property Inscripcion[] $inscripcions
- * @property InscripcionMateria[] $inscripcionMaterias
  * @property Materia[] $materias
  * @property Reinscripcion[] $reinscripcions
  */
@@ -59,14 +58,6 @@ class Carrera extends \yii\db\ActiveRecord
     public function getInscripcions()
     {
         return $this->hasMany(Inscripcion::className(), ['carrera_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getInscripcionMaterias()
-    {
-        return $this->hasMany(InscripcionMateria::className(), ['carrera_id' => 'id']);
     }
 
     /**

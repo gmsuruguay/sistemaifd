@@ -121,9 +121,13 @@ class TituloDocenteController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model= $this->findModel($id);
+        $docente_id = $model->docente_id;
+        $model->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/docente/view',
+            'id' => $docente_id
+        ]);
     }
 
     /**

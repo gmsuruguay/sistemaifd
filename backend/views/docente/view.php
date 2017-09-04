@@ -50,13 +50,26 @@ $this->params['breadcrumbs'][] = $this->title;
                     
                     'titulo.descripcion',
 
-                    ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{update}'), 
+                    ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{update}{delete}'), 
                     'buttons' => [
                         'update' => function ($url, $model) {
                                                     
-                            return Html::a('<i class="fa  fa-pencil"></i>',['titulo-docente/update','id' => $model->id],['class' => 'btn btn-link modalButton']);
+                            return Html::a('<i class="fa  fa-pencil"></i>',['titulo-docente/update','id' => $model->id],['class' => 'btn btn-link modalButton','title'=>'Actualizar',]);
                             
-                        }                         
+                        } ,
+                        'delete' => function ($url, $model, $key) {
+                            
+                            return Html::a('', ['titulo-docente/delete', 'id'=>$model->id], [
+                                'class' => 'btn btn-link fa fa-trash', 
+                                'title'=>'Eliminar',
+                                'data' => [
+                                                'confirm' => 'Está seguro de eliminar este elemento?',
+                                                'method' => 'post',
+                                            ],
+                            ]);
+                            
+                        },
+
                     ]],
                 ],
             ]); ?>

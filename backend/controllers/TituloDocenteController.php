@@ -123,11 +123,12 @@ class TituloDocenteController extends Controller
     {
         $model= $this->findModel($id);
         $docente_id = $model->docente_id;
-        $model->delete();
-
-        return $this->redirect(['/docente/view',
-            'id' => $docente_id
-        ]);
+        if($model->delete()){
+            Yii::$app->session->setFlash('success', "Elemento eliminado correctamente");
+            return $this->redirect(['/docente/view',
+                'id' => $docente_id
+            ]);
+        }
     }
 
     /**

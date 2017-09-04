@@ -13,7 +13,9 @@ use mdm\admin\components\Helper;
 $this->title = 'Legajo del Docente';
 $this->params['breadcrumbs'][] = ['label' => 'Docentes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-?>
+?>  
+
+
 <div class="docente-view">   
     <div class="nav-tabs-custom">
         <ul class="app-icono nav nav-tabs pull-right">          
@@ -24,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="tab-content">              
           <!-- /.tab-pane -->
           <div class="tab-pane" id="historia_academica">
-           <?php//  echo $this->render('_historia_clinica', ['model'=>$model,'searchModel' => $searchModel,'dataProvider' => $dataProvider,]); ?>
+           
           </div>
           <!-- /.tab-pane -->
           <div class="tab-pane active" id="legajo">

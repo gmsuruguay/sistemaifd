@@ -48,6 +48,8 @@ return [
         'identityClass' => 'mdm\admin\models\User',
         'loginUrl' => ['admin/user/login'],
         ],
+
+        
     ],
 
     'as access' => [

@@ -8,6 +8,7 @@ use backend\models\search\InscripcionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\FechaHelper;
 
 /**
  * InscripcionController implements the CRUD actions for Inscripcion model.
@@ -123,12 +124,15 @@ class InscripcionController extends Controller
     }
 
     public function actionImprimir($id){
+        
+        $mes=FechaHelper::obtenerMes(date('Y-m-d'));
         $pdf = Yii::$app->pdf;
         $inscripcion = $this->findModel($id);
         $pdf->cssFile = 'css/reporte.css';
         $pdf->options = ['title' => 'Certificado de Alumno Regular'];
         $pdf->content = $this->renderPartial('certificado_alumno_regular', [
-            'inscripcion' =>$inscripcion            
+            'inscripcion' =>$inscripcion,
+            'mes'=>$mes            
         ]);
         
         

@@ -86,6 +86,18 @@ class FechaHelper {
        
     } 
 
+    public static function obtenerMes($fecha){
+        
+        if(empty($fecha)){
+           return null; 
+        }
+        setlocale(LC_ALL,"es_ES","esp");        
+        $mes = strftime("%B", strtotime($fecha));
+        return utf8_encode($mes);
+        
+       
+    } 
+
     /**
     * Formatear fecha a dd-mm-aaaa
     */

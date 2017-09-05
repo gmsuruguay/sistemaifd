@@ -20,7 +20,7 @@ $this->title = 'Certificado de Alumno Regular';
     <p align="justify">
     A solicitud del interesado y al solo efecto de ser presentada ante las autoridades que lo requieran,
      se expide la presente constancia que sella y firma en Ciudad Perico a los 
-     <?=date('t')?> Días  del   mes <?=date('F')?> del año  <?=date('Y')?>
+     <?=date('j')?> Días  del   mes <?= ucfirst($mes)?> del año  <?=date('Y')?>
 
     </p>
    

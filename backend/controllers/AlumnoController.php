@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
+use backend\models\search\InscripcionSearch;
 /**
  * AlumnoController implements the CRUD actions for Alumno model.
  */
@@ -62,8 +63,14 @@ class AlumnoController extends Controller
      */
     public function actionView($id)
     {
+        $alumno= $this->findModel($id);
+        $searchModel = new InscripcionSearch();
+        $searchModel->alumno_id = $alumno->id; 
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $alumno,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

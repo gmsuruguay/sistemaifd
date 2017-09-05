@@ -16,12 +16,18 @@ use yii\grid\GridView;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',            
-            'carrera_id',
+            'id',
+            [
+				'attribute'=>'carrera_id',
+				'label'=>'Carrera',
+				'format'=>'text',//raw, html
+				'content'=>function($data){
+					return $data->descripcionCarrera;
+					}
+			],           
+            
             'nro_libreta',
-            'fecha',           
-
-            ['class' => 'yii\grid\ActionColumn'],
+            'fecha',               
         ],
     ]); ?>
 </div>

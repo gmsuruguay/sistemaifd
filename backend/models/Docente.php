@@ -143,4 +143,9 @@ class Docente extends \yii\db\ActiveRecord
         return $this->numero.' '.$this->apellido.' '.$this->nombre;
     }
 
+    public function getNombreCompleto()
+    {
+        return $this->apellido.' '.$this->nombre;
+    }
+
 }

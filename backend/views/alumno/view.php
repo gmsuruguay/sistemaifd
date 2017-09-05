@@ -6,49 +6,30 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Alumno */
 
-$this->title = $model->id;
+$this->title = 'Legajo del Alumno';
 $this->params['breadcrumbs'][] = ['label' => 'Alumnos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="alumno-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'nro_legajo',
-            'tipo_doc',
-            'numero',
-            'cuil',
-            'apellido',
-            'nombre',
-            'sexo',
-            'estado_civil',
-            'nacionalidad',
-            'fecha_nacimiento',
-            'lugar_nacimiento_id',
-            'domicilio',
-            'nro',
-            'localidad_id',
-            'telefono',
-            'celular',
-            'email:email',
-            'fecha_baja',
-            'user_id',
-        ],
-    ]) ?>
+    <div class="nav-tabs-custom">
+        <ul class="app-icono nav nav-tabs pull-right">          
+          <li class=""><a href="#datos_academicos" data-toggle="tab" aria-expanded="false"><i class="fa  fa-briefcase"></i> Datos Academicos</a></li>
+          <li class="active"><a href="#legajo" data-toggle="tab" aria-expanded="true"><i class="fa fa-file-text"></i> Datos Personales</a></li>          
+          <li class="pull-left header "><i class="fa fa-user"></i> <?=$model->nombreCompleto?></li>
+        </ul>
+        <div class="tab-content">              
+          <!-- /.tab-pane -->
+          <div class="tab-pane" id="datos_academicos">
+            <?php  echo $this->render('_academico', ['model'=>$model,'searchModel' => $searchModel,'dataProvider' => $dataProvider]); ?>
+          </div>
+          <!-- /.tab-pane -->
+          <div class="tab-pane active" id="legajo">
+            <?php  echo $this->render('_legajo', ['model' => $model]); ?>
+          </div>
+          <!-- /.tab-pane -->
+        </div>
+        <!-- /.tab-content -->
+    </div> 
 
 </div>

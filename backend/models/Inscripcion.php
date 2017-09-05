@@ -48,7 +48,7 @@ class Inscripcion extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id' => 'Nro Inscripción',
             'alumno_id' => 'Alumno',
             'carrera_id' => 'Carrera',
             'nro_libreta' => 'Nro Libreta',
@@ -80,5 +80,10 @@ class Inscripcion extends \yii\db\ActiveRecord
         }        
         
         return parent::beforeValidate();
+    }
+
+    public function getDescripcionCarrera()
+    {
+        return $this->carrera ? $this->carrera->descripcion : ' - ';
     }
 }

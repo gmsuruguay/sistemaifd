@@ -5,7 +5,7 @@ use kartik\form\ActiveForm;
 use kartik\select2\Select2;
 use yii\widgets\MaskedInput;
 use backend\models\Localidad;
-
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Alumno */
 /* @var $form yii\widgets\ActiveForm */
@@ -17,7 +17,12 @@ use backend\models\Localidad;
         <div class="box-header with-border">            
             <h3 class="box-title">Datos Alumno</h3>
         </div>
-        <?php $form = ActiveForm::begin(['id'=>'alumno']); ?>
+        <?php $form = ActiveForm::begin([
+            'id'=>'alumno',
+            'enableAjaxValidation' => true,
+            'validationUrl' => Url::toRoute('alumno/validation'), 
+            ]); 
+        ?>
         <div class="box-body">
          <div class="row">
             <div class="col-md-3">  

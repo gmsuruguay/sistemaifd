@@ -8,7 +8,7 @@ use backend\models\search\AlumnoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\widgets\ActiveForm;
 /**
  * AlumnoController implements the CRUD actions for Alumno model.
  */
@@ -27,6 +27,17 @@ class AlumnoController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actionValidation()
+    {
+      $model = new Alumno();
+
+      if ( Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+            Yii::$app->response->format = 'json';
+            return ActiveForm::validate($model);
+        }  
+
     }
 
     /**

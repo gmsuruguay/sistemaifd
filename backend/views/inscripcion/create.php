@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Inscripciones', 'url' => ['index']
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="inscripcion-create">   
-
+<?php $model->fecha = $model->fecha ? date('d/m/Y', strtotime($model->fecha)) : null; ?>
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

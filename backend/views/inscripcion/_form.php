@@ -6,6 +6,7 @@ use yii\bootstrap\Modal;
 use kartik\widgets\ActiveForm;
 use backend\models\Alumno;
 use backend\models\Carrera;
+use yii\widgets\MaskedInput;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Inscripcion */
 /* @var $form yii\widgets\ActiveForm */
@@ -19,7 +20,11 @@ use backend\models\Carrera;
         </div>
         <?php $form = ActiveForm::begin(); ?>
         <div class="box-body">
-            <?= $form->field($model, 'fecha')->textInput() ?>
+            <?= $form->field($model, 'fecha',[
+                                'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-calendar"></i>']]
+                            ])->widget( MaskedInput::className(), [    
+                                            'clientOptions' => ['alias' =>  'date']
+                ])->textInput(['value'=>date('d/m/Y')]) ?>
             <?= $form->field($model, 'alumno_id')->widget(Select2::classname(), [                                            
                                                     'data' => Alumno::getListaAlumnos(),
                                                     'language' => 'es',

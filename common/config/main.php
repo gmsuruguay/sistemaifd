@@ -1,4 +1,6 @@
 <?php
+use kartik\mpdf\Pdf;
+
 return [    
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',    
     'timeZone' => 'America/Argentina/Jujuy',
@@ -47,6 +49,23 @@ return [
         
         'identityClass' => 'mdm\admin\models\User',
         'loginUrl' => ['admin/user/login'],
+        ],
+
+        'pdf' => [
+            'class' => Pdf::classname(),
+            // set to use core fonts only
+            'mode' => Pdf::MODE_BLANK, 
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4, 
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT,         
+    
+            // stream to browser inline
+            'destination' => Pdf::DEST_BROWSER,       
+            // format content from your own css file if needed or use the
+            // enhanced bootstrap css built by Krajee for mPDF formatting 
+            'cssInline' => '.kv-heading-1{font-size:18px} ',        
+           
         ],
 
         

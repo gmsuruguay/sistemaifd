@@ -121,4 +121,11 @@ class InscripcionController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionImprimir($id){
+        $pdf = Yii::$app->pdf;
+        $htmlContent= '<h1>Hola</h1>';
+        $pdf->content = $htmlContent;
+        return $pdf->render();
+    }
 }

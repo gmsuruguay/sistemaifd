@@ -27,7 +27,17 @@ use yii\grid\GridView;
 			],           
             
             'nro_libreta',
-            'fecha',               
+            'fecha',  
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{imprimir}', 
+            'buttons' => [
+                'imprimir' => function ($url, $model, $key) {
+                    return Html::a('<span class="glyphicon glyphicon-print" aria-hidden="true"></span> cert. regular', ['/inscripcion/imprimir', 'id' => $key], [
+                        'class' => 'btn btn-success',
+                        'target'=>'_blank'
+                        
+                    ]);
+                },
+            ]],             
         ],
     ]); ?>
 </div>

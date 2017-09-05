@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-
+use common\models\FechaHelper;
 /**
  * This is the model class for table "inscripcion".
  *
@@ -71,5 +71,14 @@ class Inscripcion extends \yii\db\ActiveRecord
     public function getCarrera()
     {
         return $this->hasOne(Carrera::className(), ['id' => 'carrera_id']);
+    }
+
+    public function beforeValidate()
+    {
+        if ($this->fecha != null) {           
+            $this->fecha = FechaHelper::fechaYMD($this->fecha);
+        }        
+        
+        return parent::beforeValidate();
     }
 }

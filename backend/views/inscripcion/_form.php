@@ -7,6 +7,8 @@ use kartik\widgets\ActiveForm;
 use backend\models\Alumno;
 use backend\models\Carrera;
 use yii\widgets\MaskedInput;
+use yii\widgets\Pjax;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Inscripcion */
 /* @var $form yii\widgets\ActiveForm */
@@ -25,6 +27,8 @@ use yii\widgets\MaskedInput;
                             ])->widget( MaskedInput::className(), [    
                                             'clientOptions' => ['alias' =>  'date']
                 ])->textInput(['value'=>date('d/m/Y')]) ?>
+            <label class="control-label" for"inscripcion-alumno_id"><?=Html::button('Alumno', ['value'=>Url::to(['alumno/nuevo']),'class' => 'btn-link btnmodal'])?></label>
+            <?php Pjax::begin(['id'=>'select-alumno']); ?>
             <?= $form->field($model, 'alumno_id')->widget(Select2::classname(), [                                            
                                                     'data' => Alumno::getListaAlumnos(),
                                                     'language' => 'es',
@@ -32,8 +36,8 @@ use yii\widgets\MaskedInput;
                                                     'pluginOptions' => [
                                                         'allowClear' => true
                                                     ],
-                                                    ]) ?>
-
+                                                    ])->label(false) ?>
+            <?php Pjax::end(); ?>
             <?= $form->field($model, 'carrera_id')->widget(Select2::classname(), [                                            
                                                     'data' => Carrera::getListaCarreras(),
                                                     'language' => 'es',
@@ -56,3 +60,35 @@ use yii\widgets\MaskedInput;
     </div>     
 
 </div>
+
+<?php 
+      Modal::begin([
+        'header' => '<h3 class="text-center modal-title"><i class="fa fa-user"></i> Nuevo Alumno</h3>',
+        'class'=>'modal',
+        'size'=>'modal-lg', 
+        'clientOptions' => ['backdrop' => 'static'],  
+         ]);
+
+        echo "<div class='modalContent'></div>";
+        
+      Modal::end();
+
+?>
+
+<?php
+ $script = <<< JS
+ $('.btnmodal').click(function(){
+	$('.modal').modal('show')
+	.find('.modalContent')
+	.load($(this).attr('value'));
+});
+
+ $('body').on('beforeSubmit','form#alumno' , function(e){             
+        ajax($(this),refrescarSelect);
+        return false;
+    });         
+   
+    
+JS;
+$this->registerJs($script);
+?>

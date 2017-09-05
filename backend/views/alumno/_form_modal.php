@@ -10,14 +10,14 @@ use backend\models\Localidad;
 /* @var $model backend\models\Alumno */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<?php $model->fecha_nacimiento = $model->fecha_nacimiento? date('d/m/Y', strtotime($model->fecha_nacimiento)) : null; ?>
 <div class="alumno-form">
 
     <div class="box ">
         <div class="box-header with-border">            
             <h3 class="box-title">Datos Alumno</h3>
         </div>
-        <?php $form = ActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin(['id'=>'alumno']); ?>
         <div class="box-body">
          <div class="row">
             <div class="col-md-3">  
@@ -59,10 +59,10 @@ use backend\models\Localidad;
             
          </div>
          <div class="row">
-         <div class="col-md-2">
+         <div class="col-md-3">
          <?= $form->field($model, 'sexo')->dropDownList(['F'=>'FEMENINO','M'=>'MASCULINO'],['prompt'=>'Sexo']); ?>
          </div>
-         <div class="col-md-2">
+         <div class="col-md-3">
          <?php
          $lista=[
             'SOLTERO'=>'SOLTERO',
@@ -72,38 +72,41 @@ use backend\models\Localidad;
         ]; ?>
          <?= $form->field($model, 'estado_civil')->dropDownList($lista,['prompt'=>'estado civil']); ?>
          </div>
-         <div class="col-md-2">
+         <div class="col-md-6">
             <?= $form->field($model, 'nacionalidad')->textInput(['maxlength' => true, 'value'=>'ARGENTINA']) ?>
             </div> 
          
-         <div class="col-md-2">
-            <?= $form->field($model, 'fecha_nacimiento',[
-                                'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-calendar"></i>']]
-                            ])->widget( MaskedInput::className(), [    
-                                            'clientOptions' => ['alias' =>  'date']
-                ])->label('* Fecha Nacimiento') ?>
-            </div>
-            <div class="col-md-4">
-            <?= $form->field($model, 'lugar_nacimiento_id')->widget(Select2::classname(), [
-                            
-                                                            'data' => Localidad::getlistaLocalidades(),
-                                                            'language' => 'es',
-                                                            'options' => ['placeholder' => 'Seleccione lugar de nacimiento'],
-                                                            'pluginOptions' => [
-                                                                'allowClear' => true
-                                                            ],
-                                                            ])
-
-                                        ?>
-            </div>            
+             
          </div>
          <div class="row">
-            <div class="col-md-5">
+           <div class="col-md-6">
+                <?= $form->field($model, 'fecha_nacimiento',[
+                                    'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-calendar"></i>']]
+                                ])->widget( MaskedInput::className(), [    
+                                                'clientOptions' => ['alias' =>  'date']
+                    ])->label('* Fecha Nacimiento') ?>
+           </div>
+           <div class="col-md-6">
+                <?= $form->field($model, 'lugar_nacimiento_id')->widget(Select2::classname(), [
+                                
+                                                                'data' => Localidad::getlistaLocalidades(),
+                                                                'language' => 'es',
+                                                                'options' => ['placeholder' => 'Seleccione lugar de nacimiento'],
+                                                                'pluginOptions' => [
+                                                                    'allowClear' => true
+                                                                ],
+                                                                ])
+
+                                            ?>
+            </div>        
+         </div>
+         <div class="row">
+            <div class="col-md-4">
              <?= $form->field($model, 'domicilio')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
             <?= $form->field($model, 'nro')->textInput(['maxlength' => true]) ?>
-            </div>
+         </div>
             <div class="col-md-6">
             <?= $form->field($model, 'localidad_id')->widget(Select2::classname(), [
                             

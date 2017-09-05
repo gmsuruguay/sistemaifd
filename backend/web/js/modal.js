@@ -64,7 +64,7 @@ function refrescarGridTitulo() {
 }
 
 function refrescarSelect(data) {
-    $.pjax.reload({ container: '#select-md' });
+    $.pjax.reload({ container: '#select-alumno' });
     /*var data = $.parseJSON(data);
     var id= data.id;*/
 }

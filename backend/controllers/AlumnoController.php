@@ -74,6 +74,24 @@ class AlumnoController extends Controller
         }
     }
 
+    public function actionNuevo()
+    {
+        $model = new Alumno();
+
+        if ($model->load(Yii::$app->request->post())) {
+            
+            if($model->save()){            
+                 echo 1;
+             }else{
+                 echo 0;
+             }
+         } else {
+             return $this->renderAjax('_form_modal', [
+                 'model' => $model,
+             ]);
+         }
+    }
+
     /**
      * Updates an existing Alumno model.
      * If update is successful, the browser will be redirected to the 'view' page.

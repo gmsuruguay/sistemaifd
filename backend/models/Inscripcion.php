@@ -86,4 +86,8 @@ class Inscripcion extends \yii\db\ActiveRecord
     {
         return $this->carrera ? $this->carrera->descripcion : ' - ';
     }
+
+    public function getNombreAlumno(){
+        return $this->alumno ? $this->alumno->nombreCompleto : ' - ';
+    }
 }

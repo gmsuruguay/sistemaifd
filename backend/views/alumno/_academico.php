@@ -31,10 +31,10 @@ use yii\grid\GridView;
             ['class' => 'yii\grid\ActionColumn', 'template' => '{imprimir}', 
             'buttons' => [
                 'imprimir' => function ($url, $model, $key) {
-                    return Html::a('<span class="glyphicon glyphicon-print" aria-hidden="true"></span> cert. regular', ['/inscripcion/imprimir', 'id' => $key], [
+                    return Html::a('<span class="glyphicon glyphicon-print" aria-hidden="true"></span> certificado', ['/inscripcion/imprimir', 'id' => $key], [
                         'class' => 'btn btn-success',
-                        'target'=>'_blank'
-                        
+                        'target'=>'_blank',
+                        'title'=>'imprimir certificado de alumno regular'
                     ]);
                 },
             ]],             

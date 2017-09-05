@@ -124,8 +124,14 @@ class InscripcionController extends Controller
 
     public function actionImprimir($id){
         $pdf = Yii::$app->pdf;
-        $htmlContent= '<h1>Hola</h1>';
-        $pdf->content = $htmlContent;
+        $inscripcion = $this->findModel($id);
+        $pdf->cssFile = 'css/reporte.css';
+        $pdf->options = ['title' => 'Certificado de Alumno Regular'];
+        $pdf->content = $this->renderPartial('certificado_alumno_regular', [
+            'inscripcion' =>$inscripcion            
+        ]);
+        
+        
         return $pdf->render();
     }
 }

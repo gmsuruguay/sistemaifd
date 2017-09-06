@@ -56,23 +56,20 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="box-body">
         <?php Pjax::begin(['id'=>'grid-materia']); ?>    <?= GridView::widget([
-                'dataProvider' => $dataProvider,                
+                'dataProvider' => $dataProvider,  
+                'filterModel' => $searchModel,              
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],           
                                        
-                    [
-                    'attribute'=>'carrera_id',
-                    'label'=>'Carrera',
-                    'value'=>function($data){
-                        return $data->descripcion;
-                    }    
-                    ],
+                    'descripcion',
                     [
                     'attribute'=>'anio',
                     'label'=>'Año',
+                    'filter'=>array("1"=>"1° AÑO","2"=>"2° AÑO","3"=>"3° AÑO","4"=>"4° AÑO","5"=>"5° AÑO"),
                     'value'=>function($data){
                         return $data->anioMateria;
-                    }    
+                    }
+
                     ],
 
                     ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{update}{delete}'), 

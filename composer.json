@@ -23,7 +23,8 @@
         "dmstr/yii2-adminlte-asset": "2.*",
         "kartik-v/yii2-popover-x": "*",
         "mpdf/mpdf": "^6.1",
-        "vova07/yii2-imperavi-widget": "~1.2"       
+        "vova07/yii2-imperavi-widget": "~1.2",
+        "kartik-v/yii2-grid": "@dev"       
         
     },
     "require-dev": {

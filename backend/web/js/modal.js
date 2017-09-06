@@ -63,6 +63,10 @@ function refrescarGridTitulo() {
     $.pjax.reload({ container: '#grid-titulo' });
 }
 
+function refrescarGridMateria() {
+    $.pjax.reload({ container: '#grid-materia' });
+}
+
 function refrescarSelect(data) {
     $.pjax.reload({ container: '#select-alumno' });
     /*var data = $.parseJSON(data);

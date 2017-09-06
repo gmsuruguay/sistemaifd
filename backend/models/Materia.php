@@ -97,4 +97,32 @@ class Materia extends \yii\db\ActiveRecord
     {
         return $this->hasMany(MateriaAsignada::className(), ['materia_id' => 'id']);
     }
+
+    public function getAnioMateria()
+    {      
+        $anio="";
+        switch ($this->anio) {
+            case '1':
+                $anio="PRIMER AÑO";
+                break;
+            case '2':
+                $anio="SEGUNDO AÑO";
+                break;
+            case '3':
+                $anio="TERCER AÑO";
+                break;
+            case '4':
+                $anio="CUARON AÑO";
+                break;
+            case '5':
+            $anio="QUINTO AÑO";
+            break;
+            
+            default:
+                $anio="SIN ESPECIFICAR";
+                break;
+        } 
+        return $anio;
+    }
+    
 }

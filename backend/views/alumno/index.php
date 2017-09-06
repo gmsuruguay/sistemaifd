@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use mdm\admin\components\Helper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\AlumnoSearch */
@@ -12,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="alumno-index">
 
-<div class="box">
+    <div class="box">
 
         <div class="box-header with-border">            
             <h3 class="box-title">Lista de Alumnos</h3>
@@ -31,8 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     'apellido',
                     'nombre',                       
                     'numero',                    
-
-                    ['class' => 'yii\grid\ActionColumn'],
+                    ['class' => 'yii\grid\ActionColumn',
+                    'template' => Helper::filterActionColumn('{view} {update}'),
+                    ],
                 ],
             ]); ?>
         </div>

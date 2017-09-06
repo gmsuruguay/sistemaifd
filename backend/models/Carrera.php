@@ -46,9 +46,9 @@ class Carrera extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'descripcion' => 'Descripcion',
-            'duracion' => 'Duracion',
-            'anio_inicio' => 'Anio Inicio',
+            'descripcion' => 'Descripción',
+            'duracion' => 'Duración',
+            'anio_inicio' => 'Año Inicio',
         ];
     }
 

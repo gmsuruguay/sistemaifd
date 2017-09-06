@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use mdm\admin\components\Helper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\CarreraSearch */
@@ -12,24 +13,31 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="carrera-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="box">
 
-    <p>
-        <?= Html::a('Create Carrera', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+        <div class="box-header with-border">            
+            <h3 class="box-title">Lista de Carreras</h3>
+            <div class="pull-right">
+            <?= Html::a('<i class="fa  fa-plus"></i> Nuevo', ['create'], ['class' => 'btn btn-success']) ?>
+            </div>            
+        </div>
+        <div class="box-body">
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                
+                'descripcion',
+                'duracion',
+                'anio_inicio',
 
-            'id',
-            'descripcion',
-            'duracion',
-            'anio_inicio',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                ['class' => 'yii\grid\ActionColumn',
+                'template' => Helper::filterActionColumn('{view} {update}'),
+                ],
+            ],
+        ]); ?>
+        </div>
+    </div>   
+    
 </div>

@@ -6,34 +6,37 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Materia */
 
-$this->title = $model->id;
+$this->title = 'Detalle de Materias Correlativas';
 $this->params['breadcrumbs'][] = ['label' => 'Materias', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="materia-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="box">
+        <div class="box-header with-border">
+            <i class="fa fa-file"></i>
+            <h3 class="box-title"><?=$model->descripcion?></h3>              
+        </div>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+        <div class="box-body">  
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [                  
+                    
+                    [
+                    'label'=>'Carrera',
+                    'value'=>$model->descripcionCarrera,
+                    ],                    
+                    [
+                    'label'=>'Año',
+                    'value'=>$model->anioMateria,
+                    ],                   
+                ],
+            ]) ?>                                                              
+        </div>
+        
+    </div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'descripcion',
-            'carrera_id',
-            'anio',
-            'estado:boolean',
-        ],
-    ]) ?>
+    
 
 </div>

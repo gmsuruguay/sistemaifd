@@ -124,5 +124,10 @@ class Materia extends \yii\db\ActiveRecord
         } 
         return $anio;
     }
+    public function getDescripcionCarrera()
+    {
+        return $this->carrera ? $this->carrera->descripcion : '-Ninguno-';
+    }
+
     
 }

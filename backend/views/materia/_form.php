@@ -15,13 +15,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>    
 
     <?php
-     $listData= [
-        '1'=>'Primer año',
-        '2'=>'Segundo año',
-        '3'=>'Tercer año',
-        '4'=>'Cuarto año',
-        '5'=>'Quinto año',
-     ];
+     $listData= array("1"=>"1° AÑO","2"=>"2° AÑO","3"=>"3° AÑO","4"=>"4° AÑO","5"=>"5° AÑO");
      echo $form->field($model, 'anio')->dropDownList($listData,['prompt'=>'Seleccione a que año pertenece la materia'])
      
     ?>    

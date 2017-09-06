@@ -103,19 +103,19 @@ class Materia extends \yii\db\ActiveRecord
         $anio="";
         switch ($this->anio) {
             case '1':
-                $anio="PRIMER AÑO";
+                $anio="1° AÑO";
                 break;
             case '2':
-                $anio="SEGUNDO AÑO";
+                $anio="2° AÑO";
                 break;
             case '3':
-                $anio="TERCER AÑO";
+                $anio="3° AÑO";
                 break;
             case '4':
-                $anio="CUARON AÑO";
+                $anio="4° AÑO";
                 break;
             case '5':
-            $anio="QUINTO AÑO";
+            $anio="5° AÑO";
             break;
             
             default:

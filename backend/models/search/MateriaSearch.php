@@ -48,6 +48,7 @@ class MateriaSearch extends Materia
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['anio' => SORT_ASC]],
         ]);
 
         $this->load($params);

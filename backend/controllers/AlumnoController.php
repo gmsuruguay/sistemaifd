@@ -10,6 +10,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
 use backend\models\search\InscripcionSearch;
+use backend\models\search\InscripcionMateriaSearch;
+use backend\models\search\MateriaSearch;
+use backend\models\Inscripcion;
 /**
  * AlumnoController implements the CRUD actions for Alumno model.
  */
@@ -64,11 +67,35 @@ class AlumnoController extends Controller
     public function actionView($id)
     {
         $alumno= $this->findModel($id);
+        //Busqueda de Inscripcion del alumno
         $searchModel = new InscripcionSearch();
         $searchModel->alumno_id = $alumno->id; 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        //Busqueda de Inscripcion en materia del alumno
+        $searchModel_cursada = new InscripcionMateriaSearch();
+        $searchModel_cursada->alumno_id= $alumno->id;
+        $dataProvider_cursada = $searchModel_cursada->search(Yii::$app->request->queryParams);
+
+        //Busqueda de Materias segun la carrera del alumno
+
         return $this->render('view', [
             'model' => $alumno,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'searchModel_cursada' => $searchModel_cursada,
+            'dataProvider_cursada' => $dataProvider_cursada,
+        ]);
+    }
+
+    public function actionListarMateria($id)
+    {
+        $model=$this->findModelInscripcion($id);
+        $searchModel = new MateriaSearch();
+        $searchModel->carrera_id = $model->id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('_inscripcion_materia', [
+            'model' => $model, 
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -152,6 +179,15 @@ class AlumnoController extends Controller
     protected function findModel($id)
     {
         if (($model = Alumno::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findModelInscripcion($id)
+    {
+        if (($model = Inscripcion::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

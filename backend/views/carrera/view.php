@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 use mdm\admin\components\Helper;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\bootstrap\Modal;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Carrera */
@@ -48,8 +48,8 @@ $this->params['breadcrumbs'][] = $this->title;
     !--> 
 
     <div class="box">
-        <div class="box-header with-border">            
-            <h3 class="box-title">Lista de materias</h3>
+        <div class="box-header with-border">           
+            
             <div class="pull-right">
             <?= Html::a('<i class="fa  fa-plus"></i> Agregar materia', ['materia/create','id' => $model->id],['class' => 'btn btn-success modalButton']) ?>
             </div>            
@@ -57,9 +57,16 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-body">
         <?php Pjax::begin(['id'=>'grid-materia']); ?>    <?= GridView::widget([
                 'dataProvider' => $dataProvider,  
-                'filterModel' => $searchModel,              
+                'filterModel' => $searchModel,     
+                'hover'=>true,
+                'panel' => [
+                'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon glyphicon-file"></i>Lista de Materias</h3>',
+                'type'=>'primary',
+                'footer'=>false
+                ],   
+                'export'=>false,      
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],           
+                    ['class' => 'kartik\grid\SerialColumn'],           
                                        
                     'descripcion',
                     [

@@ -121,9 +121,14 @@ class MateriaController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $model= $this->findModel($id);
+        $carrera_id = $model->carrera_id;
+        if($model->delete()){
+            Yii::$app->session->setFlash('danger', "Elemento eliminado correctamente");
+            return $this->redirect(['/carrera/view',
+                'id' => $carrera_id
+            ]);
+        }
     }
 
     /**

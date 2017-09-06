@@ -21,7 +21,7 @@ $this->title = 'Inicio - Sistema';
               <p>Alumnos</p>
             </div>
             <div class="icon">
-            <?= Html::img('@web/img/icono_alumno.svg', ['width' => '80px','height'=>'80px','alt' => 'alumno']) ?>
+            <i class="fa fa-graduation-cap"></i>
             </div>
             <a href="<?= Url::toRoute('alumno/') ?>" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -35,7 +35,7 @@ $this->title = 'Inicio - Sistema';
               <p>Docentes</p>
             </div>
             <div class="icon">
-            <?= Html::img('@web/img/icono_docente.svg', ['width' => '80px','height'=>'80px','alt' => 'docente']) ?>
+            <i class="fa fa-user"></i>
             </div>
             <a href="<?= Url::toRoute('docente/') ?>" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -49,7 +49,7 @@ $this->title = 'Inicio - Sistema';
               <p>Carreras</p>
             </div>
             <div class="icon">
-            <?= Html::img('@web/img/icono_carrera.svg', ['width' => '80px','height'=>'80px','alt' => 'carrera']) ?>
+             <i class="fa fa-certificate"></i>
             </div>
             <a href="<?= Url::toRoute('carrera/') ?>" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -63,7 +63,7 @@ $this->title = 'Inicio - Sistema';
               <p>Usuarios</p>
             </div>
             <div class="icon">
-            <?= Html::img('@web/img/icono_usuario.svg', ['width' => '80px','height'=>'80px','alt' => 'usuarios']) ?>
+            <i class="fa fa-users"></i>
             </div>
             <a href="<?= Url::toRoute('user/') ?>" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
           </div>

@@ -40,7 +40,8 @@
                         ],
                     ],  
                     ['label' => 'Titulos', 'icon' => 'fa fa-vcard-o', 'url' => ['/titulo']],  
-                    ['label' => 'Localidades', 'icon' => 'fa fa-map-marker', 'url' => ['/localidad']],                  
+                    ['label' => 'Localidades', 'icon' => 'fa fa-map-marker', 'url' => ['/localidad']], 
+                    ['label' => 'Condición Cursada', 'icon' => 'fa fa-question-circle', 'url' => ['/condicion']],                  
                     [
                         'label' => 'Usuarios',
                         'icon' => 'fa fa-users',

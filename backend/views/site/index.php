@@ -1,11 +1,10 @@
 <?php
 use yii\helpers\Url;
 use common\models\ValorHelper;
-use backend\models\Perfil;
-use backend\models\Paciente;
-use backend\models\CoberturaSocial;
-use backend\models\Tratamiento;
-use backend\models\Turno;
+use backend\models\Alumno;
+use backend\models\Docente;
+use backend\models\Carrera;
+use yii\helpers\Html;
 /* @var $this yii\web\View */
 
 $this->title = 'Inicio - Sistema';
@@ -18,13 +17,13 @@ $this->title = 'Inicio - Sistema';
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">              
-              <h3> <i class="fa fa-medkit"></i></h3>
-              <p>Insumos médicos</p>
+              <h3><?= Alumno::Cantidad() ?></h3>
+              <p>Alumnos</p>
             </div>
             <div class="icon">
-              <i class="fa fa-cubes"></i>
+            <?= Html::img('@web/img/icono_alumno.svg', ['width' => '80px','height'=>'80px','alt' => 'alumno']) ?>
             </div>
-            <a href="#" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?= Url::toRoute('alumno/') ?>" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -32,14 +31,13 @@ $this->title = 'Inicio - Sistema';
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>$</h3>
-
-              <p>Cuenta a cobrar</p>
+            <h3><?= Docente::Cantidad() ?></h3>
+              <p>Docentes</p>
             </div>
             <div class="icon">
-              <i class="fa fa-money"></i>
+            <?= Html::img('@web/img/icono_docente.svg', ['width' => '80px','height'=>'80px','alt' => 'docente']) ?>
             </div>
-            <a href="#" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?= Url::toRoute('docente/') ?>" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -47,14 +45,13 @@ $this->title = 'Inicio - Sistema';
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3><i class="fa fa-pie-chart"></i></h3>
-
-              <p>Analisis Estadisticos</p>
+            <h3><?= Carrera::Cantidad() ?></h3>
+              <p>Carreras</p>
             </div>
             <div class="icon">
-              <i class="fa fa-bar-chart"></i>
+            <?= Html::img('@web/img/icono_carrera.svg', ['width' => '80px','height'=>'80px','alt' => 'carrera']) ?>
             </div>
-            <a href="#" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?= Url::toRoute('carrera/') ?>" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -66,7 +63,7 @@ $this->title = 'Inicio - Sistema';
               <p>Usuarios</p>
             </div>
             <div class="icon">
-              <i class="fa fa-users"></i>
+            <?= Html::img('@web/img/icono_usuario.svg', ['width' => '80px','height'=>'80px','alt' => 'usuarios']) ?>
             </div>
             <a href="<?= Url::toRoute('user/') ?>" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
           </div>

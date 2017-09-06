@@ -148,4 +148,10 @@ class Docente extends \yii\db\ActiveRecord
         return $this->apellido.' '.$this->nombre;
     }
 
+    public static function cantidad(){        	
+        $cantidad = self::find()->where(['fecha_baja' => null])->count();
+        return $cantidad;        
+
+    }
+
 }

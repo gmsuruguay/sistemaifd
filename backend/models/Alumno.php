@@ -134,4 +134,6 @@ class Alumno extends Docente
         $alumnos = self::find()->where(['fecha_baja' => null])->orderBy('apellido')->all();
         return ArrayHelper::map($alumnos, 'id', 'apellidoNombre');
     }
+
+    
 }

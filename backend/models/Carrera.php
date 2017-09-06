@@ -81,4 +81,10 @@ class Carrera extends \yii\db\ActiveRecord
         $sql = self::find()->orderBy('descripcion')->all();
         return ArrayHelper::map($sql, 'id', 'descripcion');
     }
+
+    public static function cantidad(){        	
+        $cantidad = self::find()->count();
+        return $cantidad;        
+
+    }
 }

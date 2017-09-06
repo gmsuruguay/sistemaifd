@@ -105,12 +105,12 @@ class MateriaController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+            echo 1;
+         } else {
+             return $this->renderAjax('update', [
+                 'model' => $model,
+             ]);
+         }
     }
 
     /**

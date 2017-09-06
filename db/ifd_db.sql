@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-09-2017 a las 12:59:09
+-- Tiempo de generación: 06-09-2017 a las 00:39:37
 -- Versión del servidor: 5.7.14
 -- Versión de PHP: 5.6.25
 
@@ -49,6 +49,14 @@ CREATE TABLE `alumno` (
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `alumno`
+--
+
+INSERT INTO `alumno` (`id`, `nro_legajo`, `tipo_doc`, `numero`, `cuil`, `apellido`, `nombre`, `sexo`, `estado_civil`, `nacionalidad`, `fecha_nacimiento`, `lugar_nacimiento_id`, `domicilio`, `nro`, `localidad_id`, `telefono`, `celular`, `email`, `fecha_baja`, `user_id`) VALUES
+(1, '', 'dni', '52452863', '20-4', 'RODRIGUEZ', 'CONI', '', '', 'ARGENTINA', '1985-11-14', 2, '', '', 1, '', '', '', NULL, NULL),
+(2, '', 'dni', '32452851', '20-3', 'SURUGUAY', 'LEILA', '', '', 'ARGENTINA', '2017-08-03', 1, '', '', NULL, '', '', '', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -90,10 +98,13 @@ CREATE TABLE `auth_item` (
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 ('/admin/*', 2, NULL, NULL, NULL, 1504053920, 1504053920),
-('/docente/*', 2, NULL, NULL, NULL, 1504529767, 1504529767),
-('/localidad/*', 2, NULL, NULL, NULL, 1504053912, 1504053912),
+('/alumno/*', 2, NULL, NULL, NULL, 1504553174, 1504553174),
+('/carrera/*', 2, NULL, NULL, NULL, 1504655216, 1504655216),
+('/docente/*', 2, NULL, NULL, NULL, 1504213029, 1504213029),
+('/inscripcion/*', 2, NULL, NULL, NULL, 1504564372, 1504564372),
 ('/site/*', 2, NULL, NULL, NULL, 1504053903, 1504053903),
-('/titulo-docente/*', 2, NULL, NULL, NULL, 1504535064, 1504535064),
+('/titulo-docente/*', 2, NULL, NULL, NULL, 1504213044, 1504213044),
+('/titulo/*', 2, NULL, NULL, NULL, 1504213034, 1504213034),
 ('/user/*', 2, NULL, NULL, NULL, 1504053887, 1504053887),
 ('Administrador', 1, NULL, NULL, NULL, 1504053832, 1504053832),
 ('Super Admin', 1, NULL, NULL, NULL, 1504053820, 1504053820);
@@ -115,10 +126,12 @@ CREATE TABLE `auth_item_child` (
 
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('Administrador', '/admin/*'),
+('Administrador', '/alumno/*'),
 ('Administrador', '/docente/*'),
-('Administrador', '/localidad/*'),
+('Administrador', '/inscripcion/*'),
 ('Administrador', '/site/*'),
 ('Administrador', '/titulo-docente/*'),
+('Administrador', '/titulo/*'),
 ('Administrador', '/user/*');
 
 -- --------------------------------------------------------
@@ -146,6 +159,14 @@ CREATE TABLE `carrera` (
   `duracion` tinyint(1) NOT NULL,
   `anio_inicio` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `carrera`
+--
+
+INSERT INTO `carrera` (`id`, `descripcion`, `duracion`, `anio_inicio`) VALUES
+(1, 'Profesorado de Ingles', 5, '2010'),
+(2, 'Tecnico en Comercio', 3, '2009');
 
 -- --------------------------------------------------------
 
@@ -203,8 +224,12 @@ CREATE TABLE `docente` (
 --
 
 INSERT INTO `docente` (`id`, `nro_legajo`, `tipo_doc`, `numero`, `cuil`, `apellido`, `nombre`, `sexo`, `estado_civil`, `nacionalidad`, `fecha_nacimiento`, `lugar_nacimiento_id`, `domicilio`, `nro`, `localidad_id`, `telefono`, `celular`, `email`, `fecha_baja`, `user_id`) VALUES
-(1, '33041', 'dni', '32452851', '20-3', 'SURUGUAY', 'MARTIN GERARDO', 'M', 'CASADO', 'ARGENTINA', '1985-11-14', NULL, 'EXODO', '988', NULL, '', '', '', NULL, NULL),
-(2, '', 'dni', '32458210', '20-7', 'SOSA', 'DAVID', '', '', 'ARGENTINA', '1962-12-21', NULL, '', '', NULL, '', '', '', NULL, NULL);
+(1, '', 'dni', '32452851', '', 'Suruguay', 'Martin', '', '', 'ARGENTINA', '1985-11-14', NULL, '', '', NULL, '', '', 'tinchohlj@gmail.com', NULL, NULL),
+(2, '', 'dni', '32452820', '20-3', 'Castillo', 'Azucena', 'F', 'DIVORCIADO', 'ARGENTINA', '1961-12-21', 1, '23 de Agosto', '527', 1, '', '155136584', 'azuhlj@gmail.com', NULL, NULL),
+(3, '', 'dni', '3245285', '', 'Castillo', 'Marcelo', '', '', 'ARGENTINA', '1985-11-14', NULL, '', '', NULL, '', '', '', NULL, NULL),
+(4, '', 'dni', '45826258', '20-4', 'Sosa', 'David Angie', '', '', 'ARGENTINA', '1985-12-14', NULL, '', '', NULL, '', '', '', NULL, NULL),
+(5, '', 'dni', '32108792', '27-8', 'Cruz', 'Natalia L', '', '', 'ARGENTINA', '1986-09-04', NULL, '', '', NULL, '', '', '', NULL, NULL),
+(6, '', 'dni', '32452858', '', 'Castillo', 'Luis', '', '', 'ARGENTINA', '1952-08-23', NULL, '', '', NULL, '', '', '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -221,6 +246,15 @@ CREATE TABLE `inscripcion` (
   `observacion` longtext COLLATE utf8_spanish_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `inscripcion`
+--
+
+INSERT INTO `inscripcion` (`id`, `alumno_id`, `carrera_id`, `nro_libreta`, `fecha`, `observacion`) VALUES
+(1, 2, 1, 1234, '2017-09-05', ''),
+(2, 2, 2, 4567, '2017-09-05', ''),
+(3, 1, 1, 5289, '2017-09-05', '');
+
 -- --------------------------------------------------------
 
 --
@@ -231,11 +265,11 @@ CREATE TABLE `inscripcion_materia` (
   `id` int(11) NOT NULL,
   `fecha_inscripcion` date NOT NULL,
   `alumno_id` int(11) NOT NULL,
+  `materia_id` int(11) NOT NULL,
   `nota` decimal(6,2) DEFAULT NULL,
   `fecha` date DEFAULT NULL,
   `nro_acta` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `condicion_id` int(11) NOT NULL,
-  `carrera_id` int(11) NOT NULL
+  `condicion_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -249,6 +283,14 @@ CREATE TABLE `localidad` (
   `descripcion` varchar(450) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `localidad`
+--
+
+INSERT INTO `localidad` (`id`, `descripcion`) VALUES
+(1, 'PERICO'),
+(2, 'EL CARMEN');
+
 -- --------------------------------------------------------
 
 --
@@ -259,6 +301,7 @@ CREATE TABLE `materia` (
   `id` int(11) NOT NULL,
   `descripcion` varchar(450) COLLATE utf8_spanish_ci NOT NULL,
   `carrera_id` int(11) NOT NULL,
+  `anio` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
   `estado` bit(1) DEFAULT NULL COMMENT 'Cuando el valor es 1 esta ocupado'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -391,10 +434,8 @@ CREATE TABLE `titulo` (
 --
 
 INSERT INTO `titulo` (`id`, `descripcion`) VALUES
-(1, 'DOCENTE DE NIVEL PRIMARIO'),
-(2, 'PROFESOR DE LENGUAS'),
-(3, 'LICENCIADO EN EDUCACION'),
-(4, 'PROGRAMADOR');
+(1, 'Profesor de Matematicas'),
+(2, 'Tecnico en Informatica');
 
 -- --------------------------------------------------------
 
@@ -413,8 +454,13 @@ CREATE TABLE `titulo_docente` (
 --
 
 INSERT INTO `titulo_docente` (`id`, `docente_id`, `titulo_id`) VALUES
-(1, 1, 1),
-(10, 2, 3);
+(3, 5, 2),
+(4, 6, 1),
+(5, 6, 2),
+(6, 5, 2),
+(7, 5, 2),
+(9, 4, 1),
+(10, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -523,7 +569,7 @@ ALTER TABLE `inscripcion_materia`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_inscripcion_materia_alumno1_idx` (`alumno_id`),
   ADD KEY `fk_inscripcion_materia_condicion1_idx` (`condicion_id`),
-  ADD KEY `fk_inscripcion_materia_carrera1_idx` (`carrera_id`);
+  ADD KEY `fk_inscripcion_materia_materia1_idx` (`materia_id`);
 
 --
 -- Indices de la tabla `localidad`
@@ -610,12 +656,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `alumno`
 --
 ALTER TABLE `alumno`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `carrera`
 --
 ALTER TABLE `carrera`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `condicion`
 --
@@ -625,12 +671,12 @@ ALTER TABLE `condicion`
 -- AUTO_INCREMENT de la tabla `docente`
 --
 ALTER TABLE `docente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `inscripcion_materia`
 --
@@ -640,7 +686,7 @@ ALTER TABLE `inscripcion_materia`
 -- AUTO_INCREMENT de la tabla `localidad`
 --
 ALTER TABLE `localidad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `materia`
 --
@@ -675,7 +721,7 @@ ALTER TABLE `tipo_usuario`
 -- AUTO_INCREMENT de la tabla `titulo`
 --
 ALTER TABLE `titulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `titulo_docente`
 --
@@ -742,8 +788,8 @@ ALTER TABLE `inscripcion`
 --
 ALTER TABLE `inscripcion_materia`
   ADD CONSTRAINT `fk_inscripcion_materia_alumno1` FOREIGN KEY (`alumno_id`) REFERENCES `alumno` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_inscripcion_materia_carrera1` FOREIGN KEY (`carrera_id`) REFERENCES `carrera` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_inscripcion_materia_condicion1` FOREIGN KEY (`condicion_id`) REFERENCES `condicion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_inscripcion_materia_condicion1` FOREIGN KEY (`condicion_id`) REFERENCES `condicion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_inscripcion_materia_materia1` FOREIGN KEY (`materia_id`) REFERENCES `materia` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `materia`

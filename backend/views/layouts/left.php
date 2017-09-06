@@ -38,7 +38,8 @@
                             ['label' => 'Listar', 'icon' => 'fa fa-list', 'url' => ['/docente'],],
                             ['label' => 'Agregar', 'icon' => 'fa fa-plus', 'url' => ['/docente/create'],],                            
                         ],
-                    ],                  
+                    ],  
+                    ['label' => 'Localidades', 'icon' => 'fa fa-map-marker', 'url' => ['/localidad']],                  
                     [
                         'label' => 'Usuarios',
                         'icon' => 'fa fa-users',

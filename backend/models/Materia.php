@@ -53,7 +53,7 @@ class Materia extends \yii\db\ActiveRecord
             'id' => 'ID',
             'descripcion' => 'Descripcion',
             'carrera_id' => 'Carrera ID',
-            'anio' => 'Anio',
+            'anio' => 'Año',
             'estado' => 'Estado',
         ];
     }

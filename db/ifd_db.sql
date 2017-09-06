@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-09-2017 a las 00:39:37
+-- Tiempo de generación: 06-09-2017 a las 19:20:11
 -- Versión del servidor: 5.7.14
 -- Versión de PHP: 5.6.25
 
@@ -102,6 +102,8 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/carrera/*', 2, NULL, NULL, NULL, 1504655216, 1504655216),
 ('/docente/*', 2, NULL, NULL, NULL, 1504213029, 1504213029),
 ('/inscripcion/*', 2, NULL, NULL, NULL, 1504564372, 1504564372),
+('/localidad/*', 2, NULL, NULL, NULL, 1504724176, 1504724176),
+('/materia/*', 2, NULL, NULL, NULL, 1504704371, 1504704371),
 ('/site/*', 2, NULL, NULL, NULL, 1504053903, 1504053903),
 ('/titulo-docente/*', 2, NULL, NULL, NULL, 1504213044, 1504213044),
 ('/titulo/*', 2, NULL, NULL, NULL, 1504213034, 1504213034),
@@ -127,8 +129,11 @@ CREATE TABLE `auth_item_child` (
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('Administrador', '/admin/*'),
 ('Administrador', '/alumno/*'),
+('Administrador', '/carrera/*'),
 ('Administrador', '/docente/*'),
 ('Administrador', '/inscripcion/*'),
+('Administrador', '/localidad/*'),
+('Administrador', '/materia/*'),
 ('Administrador', '/site/*'),
 ('Administrador', '/titulo-docente/*'),
 ('Administrador', '/titulo/*'),
@@ -166,7 +171,8 @@ CREATE TABLE `carrera` (
 
 INSERT INTO `carrera` (`id`, `descripcion`, `duracion`, `anio_inicio`) VALUES
 (1, 'Profesorado de Ingles', 5, '2010'),
-(2, 'Tecnico en Comercio', 3, '2009');
+(2, 'Tecnico en Comercio', 3, '2009'),
+(3, 'PROFESOR DE MATEMATICAS', 5, '1980');
 
 -- --------------------------------------------------------
 
@@ -289,7 +295,9 @@ CREATE TABLE `localidad` (
 
 INSERT INTO `localidad` (`id`, `descripcion`) VALUES
 (1, 'PERICO'),
-(2, 'EL CARMEN');
+(2, 'EL CARMEN'),
+(3, 'SAN PEDRO'),
+(4, 'PALPALA');
 
 -- --------------------------------------------------------
 
@@ -304,6 +312,19 @@ CREATE TABLE `materia` (
   `anio` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
   `estado` bit(1) DEFAULT NULL COMMENT 'Cuando el valor es 1 esta ocupado'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `materia`
+--
+
+INSERT INTO `materia` (`id`, `descripcion`, `carrera_id`, `anio`, `estado`) VALUES
+(1, 'GRAMATICA INICIAL  I', 1, '1', b'0'),
+(2, 'LINGUISTICA', 1, '1', b'0'),
+(3, 'LENGUA INGLESA', 1, '1', b'0'),
+(4, 'MATEMATICA', 1, '1', b'0'),
+(5, 'GRAMATICA LINGUISTICA II', 1, '2', b'0'),
+(6, 'SONIDO', 1, '2', b'0'),
+(8, 'FONETICA', 1, '2', b'0');
 
 -- --------------------------------------------------------
 
@@ -435,7 +456,8 @@ CREATE TABLE `titulo` (
 
 INSERT INTO `titulo` (`id`, `descripcion`) VALUES
 (1, 'Profesor de Matematicas'),
-(2, 'Tecnico en Informatica');
+(2, 'Tecnico en Informatica 2'),
+(3, 'TECNICO EN REDES');
 
 -- --------------------------------------------------------
 
@@ -456,11 +478,11 @@ CREATE TABLE `titulo_docente` (
 INSERT INTO `titulo_docente` (`id`, `docente_id`, `titulo_id`) VALUES
 (3, 5, 2),
 (4, 6, 1),
-(5, 6, 2),
 (6, 5, 2),
 (7, 5, 2),
 (9, 4, 1),
-(10, 1, 1);
+(10, 1, 1),
+(12, 6, 2);
 
 -- --------------------------------------------------------
 
@@ -661,7 +683,7 @@ ALTER TABLE `alumno`
 -- AUTO_INCREMENT de la tabla `carrera`
 --
 ALTER TABLE `carrera`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `condicion`
 --
@@ -686,12 +708,12 @@ ALTER TABLE `inscripcion_materia`
 -- AUTO_INCREMENT de la tabla `localidad`
 --
 ALTER TABLE `localidad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `materia_asignada`
 --
@@ -721,12 +743,12 @@ ALTER TABLE `tipo_usuario`
 -- AUTO_INCREMENT de la tabla `titulo`
 --
 ALTER TABLE `titulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `titulo_docente`
 --
 ALTER TABLE `titulo_docente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `user`
 --

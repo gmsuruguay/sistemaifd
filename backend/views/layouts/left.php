@@ -39,6 +39,7 @@
                             ['label' => 'Agregar', 'icon' => 'fa fa-plus', 'url' => ['/docente/create'],],                            
                         ],
                     ],  
+                    ['label' => 'Titulos', 'icon' => 'fa fa-vcard-o', 'url' => ['/titulo']],  
                     ['label' => 'Localidades', 'icon' => 'fa fa-map-marker', 'url' => ['/localidad']],                  
                     [
                         'label' => 'Usuarios',

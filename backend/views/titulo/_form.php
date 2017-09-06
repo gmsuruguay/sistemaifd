@@ -10,14 +10,21 @@ use yii\widgets\ActiveForm;
 
 <div class="titulo-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <div class="box">
+        <div class="box-header with-border">            
+            <h3 class="box-title">Datos titulo</h3>
+        </div>
+        <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
+        <div class="box-body">
 
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>           
+            
+        </div>  
+        <div class="box-footer">
+                <?= Html::submitButton( '<i class="fa fa-save"> </i> Guardar', ['class' => 'btn btn-success', 'name' => 'signup-button']) ?>
+        </div>   
+        <?php ActiveForm::end(); ?>
     </div>
-
-    <?php ActiveForm::end(); ?>
 
 </div>

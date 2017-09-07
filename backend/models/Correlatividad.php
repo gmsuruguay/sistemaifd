@@ -45,7 +45,7 @@ class Correlatividad extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'materia_id' => 'Materia ID',
-            'materia_id_correlativa' => 'Materia Id Correlativa',
+            'materia_id_correlativa' => 'Correlativas',
         ];
     }
 

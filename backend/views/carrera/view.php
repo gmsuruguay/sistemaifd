@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 use kartik\grid\GridView;
 use yii\bootstrap\Modal;
+use backend\models\search\CorrelatividadSearch;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Carrera */
 
@@ -72,7 +73,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         return GridView::ROW_COLLAPSED;
                     },
                     'detail'=> function ($model, $key, $index, $column) {                        
-                        
+                        $searchModel = new CorrelatividadSearch();
+                        $searchModel->materia_id= $model->id;
+                        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+                        return Yii::$app->controller->renderPartial('_correlativas', [
+                            'searchModel' => $searchModel,
+                            'dataProvider' => $dataProvider,
+                        ]);
                     },
                     ],           
                                        

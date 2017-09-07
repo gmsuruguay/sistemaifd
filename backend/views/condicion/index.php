@@ -7,7 +7,7 @@ use mdm\admin\components\Helper;
 /* @var $searchModel backend\models\search\CondicionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Condicions';
+$this->title = 'Condiciones';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="condicion-index">

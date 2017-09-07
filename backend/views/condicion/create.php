@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model backend\models\Condicion */
 
 $this->title = 'Nueva Condición';
-$this->params['breadcrumbs'][] = ['label' => 'Condicions', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Condiciones', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="condicion-create">

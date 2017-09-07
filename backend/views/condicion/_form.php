@@ -11,8 +11,7 @@ use yii\widgets\ActiveForm;
 <div class="condicion-form">
 
     <div class="box">
-        <div class="box-header with-border">
-            <i class="fa fa-map-marker"></i>
+        <div class="box-header with-border">            
             <h3 class="box-title">Datos condición</h3>
         </div>
         <?php $form = ActiveForm::begin(); ?>

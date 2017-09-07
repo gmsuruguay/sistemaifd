@@ -7,6 +7,7 @@ use Yii;
 /**
  * This is the model class for table "correlatividad".
  *
+ * @property integer $id
  * @property integer $materia_id
  * @property integer $materia_id_correlativa
  *
@@ -42,6 +43,7 @@ class Correlatividad extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'id' => 'ID',
             'materia_id' => 'Materia ID',
             'materia_id_correlativa' => 'Materia Id Correlativa',
         ];

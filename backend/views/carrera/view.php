@@ -66,7 +66,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],   
                 'export'=>false,      
                 'columns' => [
-                    ['class' => 'kartik\grid\SerialColumn'],           
+                    [
+                    'class' => 'kartik\grid\ExpandRowColumn',
+                    'value' => function ($model, $key, $index, $column) {                        
+                        return GridView::ROW_COLLAPSED;
+                    },
+                    'detail'=> function ($model, $key, $index, $column) {                        
+                        
+                    },
+                    ],           
                                        
                     'descripcion',
                     [
@@ -75,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'filter'=>array("1"=>"1° AÑO","2"=>"2° AÑO","3"=>"3° AÑO","4"=>"4° AÑO","5"=>"5° AÑO"),
                     'value'=>function($data){
                         return $data->anioMateria;
-                    }
+                    },
 
                     ],
 

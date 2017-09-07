@@ -94,6 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
 
                     ],
+                    'periodo',
 
                     ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{update} {view} {delete}'), 
                     'buttons' => [

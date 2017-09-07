@@ -39,7 +39,7 @@ class Materia extends \yii\db\ActiveRecord
             [['carrera_id'], 'integer'],
             [['estado'], 'boolean'],
             [['descripcion'], 'string', 'max' => 450],
-            [['anio'], 'string', 'max' => 45],
+            [['anio','periodo'], 'string', 'max' => 45],
             [['carrera_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carrera::className(), 'targetAttribute' => ['carrera_id' => 'id']],
         ];
     }
@@ -54,6 +54,7 @@ class Materia extends \yii\db\ActiveRecord
             'descripcion' => 'Descripcion',
             'carrera_id' => 'Carrera ID',
             'anio' => 'Año',
+            'periodo' => 'Periodo',
             'estado' => 'Estado',
         ];
     }

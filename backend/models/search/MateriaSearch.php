@@ -19,7 +19,7 @@ class MateriaSearch extends Materia
     {
         return [
             [['id', 'carrera_id'], 'integer'],
-            [['descripcion', 'anio'], 'safe'],
+            [['descripcion', 'anio','periodo'], 'safe'],
             [['estado'], 'boolean'],
         ];
     }
@@ -67,6 +67,7 @@ class MateriaSearch extends Materia
         ]);
 
         $query->andFilterWhere(['like', 'descripcion', $this->descripcion])
+            ->andFilterWhere(['like', 'periodo', $this->periodo])
             ->andFilterWhere(['like', 'anio', $this->anio]);
 
         return $dataProvider;

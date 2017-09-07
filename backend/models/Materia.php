@@ -35,7 +35,7 @@ class Materia extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['descripcion', 'carrera_id', 'anio'], 'required'],
+            [['descripcion', 'carrera_id', 'anio','periodo'], 'required'],
             [['carrera_id'], 'integer'],
             [['estado'], 'boolean'],
             [['descripcion'], 'string', 'max' => 450],

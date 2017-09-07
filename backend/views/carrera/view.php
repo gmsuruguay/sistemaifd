@@ -105,8 +105,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'view' => function ($url, $model, $key) {
                             
                             return Html::a('', ['materia/view', 'id'=>$key], [
-                                'class' => 'fa fa-external-link', 
-                                'title'=>'Ver correlativas',                                
+                                'class' => 'fa fa-random', 
+                                'title'=>'Cargar materias correlativas',                                
                             ]);
                             
                         },

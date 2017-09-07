@@ -64,4 +64,9 @@ class Correlatividad extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Materia::className(), ['id' => 'materia_id_correlativa']);
     }
+
+    public function getDescripcionMateria()
+    {
+        return $this->materiaIdCorrelativa ? $this->materiaIdCorrelativa->descripcion : 'Ninguno';
+    }
 }

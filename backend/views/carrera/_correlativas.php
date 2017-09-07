@@ -15,7 +15,12 @@ use yii\grid\GridView;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
-            'materia_id_correlativa',
+            [
+            'label'=> 'Correlativas',
+            'value'=> function ($data){
+                return $data->descripcionMateria;
+            }
+            ]
            
         ],
     ]); ?>

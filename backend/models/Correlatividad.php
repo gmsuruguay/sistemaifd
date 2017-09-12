@@ -27,7 +27,7 @@ class Correlatividad extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function rules()
+   /* public function rules()
     {
         return [
             [['materia_id', 'materia_id_correlativa'], 'required'],
@@ -35,7 +35,7 @@ class Correlatividad extends \yii\db\ActiveRecord
             [['materia_id'], 'exist', 'skipOnError' => true, 'targetClass' => Materia::className(), 'targetAttribute' => ['materia_id' => 'id']],
             [['materia_id_correlativa'], 'exist', 'skipOnError' => true, 'targetClass' => Materia::className(), 'targetAttribute' => ['materia_id_correlativa' => 'id']],
         ];
-    }
+    }*/
 
     /**
      * @inheritdoc

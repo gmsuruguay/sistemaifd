@@ -4,10 +4,12 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Materia;
+use backend\models\Correlatividad;
 use backend\models\search\MateriaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * MateriaController implements the CRUD actions for Materia model.
@@ -50,10 +52,38 @@ class MateriaController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {
+    { 
+        $model= $this->findModel($id);
+        $materias = Materia::find()
+                    ->where(['carrera_id' => $model->carrera_id])
+                    ->andWhere('id<>'.$id)
+                    ->all();
+        $correlativas = Correlatividad::find()->where(['materia_id' => $id])->all();
+        $indices = $this->indexCorrelativas($materias, $correlativas);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'materias'=> $materias,
+            'indices'=> $indices,
         ]);
+    }
+
+    private function indexCorrelativas($arrayMaterias, $arrayCorrelativas)
+    {
+        $length = count($arrayCorrelativas);
+        $lengthTwo =count($arrayMaterias);
+        if($length==0)
+        {
+            return null;
+        }
+        $array = [];
+        for($i=0; $i<$length;$i++){
+            for($j=0; $j<$lengthTwo;$j++){
+                if($arrayCorrelativas[$i]->materia_id_correlativa == $arrayMaterias[$j]->id){
+                    array_push($array, $arrayCorrelativas[$i]->materia_id_correlativa);
+                }
+            }
+        }
+        return $array;
     }
 
     /**

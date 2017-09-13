@@ -2,23 +2,23 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\search\InscripcionMateriaSearch */
+/* @var $searchModel backend\models\search\HistoriaAcademicaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Inscripcion Materias';
+$this->title = 'Historia Academicas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="inscripcion-materia-index">
+<div class="historia-academica-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Inscripcion Materia', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Historia Academica', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -28,12 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'fecha_inscripcion',
             'alumno_id',
             'materia_id',
-            'nota',
+            'condicion_id',
+            // 'libro',
+            // 'folio',
             // 'fecha',
-            // 'nro_acta',
-            // 'condicion_id',
+            // 'nota',
+            // 'asistencia',
+            // 'tipo_inscripcion',
+            // 'fecha_vencimiento',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-<?php Pjax::end(); ?></div>
+</div>

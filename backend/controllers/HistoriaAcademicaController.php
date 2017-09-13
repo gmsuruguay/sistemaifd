@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\InscripcionMateria;
-use backend\models\search\InscripcionMateriaSearch;
+use backend\models\HistoriaAcademica;
+use backend\models\search\HistoriaAcademicaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * InscripcionMateriaController implements the CRUD actions for InscripcionMateria model.
+ * HistoriaAcademicaController implements the CRUD actions for HistoriaAcademica model.
  */
-class InscripcionMateriaController extends Controller
+class HistoriaAcademicaController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class InscripcionMateriaController extends Controller
     }
 
     /**
-     * Lists all InscripcionMateria models.
+     * Lists all HistoriaAcademica models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new InscripcionMateriaSearch();
+        $searchModel = new HistoriaAcademicaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class InscripcionMateriaController extends Controller
     }
 
     /**
-     * Displays a single InscripcionMateria model.
+     * Displays a single HistoriaAcademica model.
      * @param integer $id
      * @return mixed
      */
@@ -57,13 +57,13 @@ class InscripcionMateriaController extends Controller
     }
 
     /**
-     * Creates a new InscripcionMateria model.
+     * Creates a new HistoriaAcademica model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new InscripcionMateria();
+        $model = new HistoriaAcademica();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -75,7 +75,7 @@ class InscripcionMateriaController extends Controller
     }
 
     /**
-     * Updates an existing InscripcionMateria model.
+     * Updates an existing HistoriaAcademica model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -94,7 +94,7 @@ class InscripcionMateriaController extends Controller
     }
 
     /**
-     * Deletes an existing InscripcionMateria model.
+     * Deletes an existing HistoriaAcademica model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -107,15 +107,15 @@ class InscripcionMateriaController extends Controller
     }
 
     /**
-     * Finds the InscripcionMateria model based on its primary key value.
+     * Finds the HistoriaAcademica model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return InscripcionMateria the loaded model
+     * @return HistoriaAcademica the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = InscripcionMateria::findOne($id)) !== null) {
+        if (($model = HistoriaAcademica::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

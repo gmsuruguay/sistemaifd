@@ -10,7 +10,6 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
 use backend\models\search\InscripcionSearch;
-use backend\models\search\InscripcionMateriaSearch;
 use backend\models\search\MateriaSearch;
 use backend\models\Inscripcion;
 /**
@@ -73,9 +72,9 @@ class AlumnoController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         //Busqueda de Inscripcion en materia del alumno
-        $searchModel_cursada = new InscripcionMateriaSearch();
+        /*$searchModel_cursada = new InscripcionMateriaSearch();
         $searchModel_cursada->alumno_id= $alumno->id;
-        $dataProvider_cursada = $searchModel_cursada->search(Yii::$app->request->queryParams);
+        $dataProvider_cursada = $searchModel_cursada->search(Yii::$app->request->queryParams);*/
 
         //Busqueda de Materias segun la carrera del alumno
 
@@ -83,8 +82,8 @@ class AlumnoController extends Controller
             'model' => $alumno,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'searchModel_cursada' => $searchModel_cursada,
-            'dataProvider_cursada' => $dataProvider_cursada,
+            //'searchModel_cursada' => $searchModel_cursada,
+            //'dataProvider_cursada' => $dataProvider_cursada,
         ]);
     }
 

@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\InscripcionMateria */
+/* @var $model backend\models\HistoriaAcademica */
 
-$this->title = 'Create Inscripcion Materia';
-$this->params['breadcrumbs'][] = ['label' => 'Inscripcion Materias', 'url' => ['index']];
+$this->title = 'Create Historia Academica';
+$this->params['breadcrumbs'][] = ['label' => 'Historia Academicas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="inscripcion-materia-create">
+<div class="historia-academica-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

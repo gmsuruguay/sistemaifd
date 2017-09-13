@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\InscripcionMateria */
+/* @var $model backend\models\HistoriaAcademica */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Inscripcion Materias', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Historia Academicas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="inscripcion-materia-view">
+<div class="historia-academica-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -32,10 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'fecha_inscripcion',
             'alumno_id',
             'materia_id',
-            'nota',
-            'fecha',
-            'nro_acta',
             'condicion_id',
+            'libro',
+            'folio',
+            'fecha',
+            'nota',
+            'asistencia',
+            'tipo_inscripcion',
+            'fecha_vencimiento',
         ],
     ]) ?>
 

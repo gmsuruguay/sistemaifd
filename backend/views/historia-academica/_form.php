@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\InscripcionMateria */
+/* @var $model backend\models\HistoriaAcademica */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="inscripcion-materia-form">
+<div class="historia-academica-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -18,13 +18,21 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'materia_id')->textInput() ?>
 
-    <?= $form->field($model, 'nota')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'condicion_id')->textInput() ?>
+
+    <?= $form->field($model, 'libro')->textInput() ?>
+
+    <?= $form->field($model, 'folio')->textInput() ?>
 
     <?= $form->field($model, 'fecha')->textInput() ?>
 
-    <?= $form->field($model, 'nro_acta')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'nota')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'condicion_id')->textInput() ?>
+    <?= $form->field($model, 'asistencia')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'tipo_inscripcion')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'fecha_vencimiento')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -47,8 +47,8 @@ class Condicion extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getInscripcionMaterias()
-    {
-        return $this->hasMany(InscripcionMateria::className(), ['condicion_id' => 'id']);
-    }
+     public function getHistoriaAcademicas() 
+     { 
+         return $this->hasMany(HistoriaAcademica::className(), ['condicion_id' => 'id']);
+     } 
 }

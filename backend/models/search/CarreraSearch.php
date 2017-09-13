@@ -19,7 +19,7 @@ class CarreraSearch extends Carrera
     {
         return [
             [['id', 'duracion'], 'integer'],
-            [['descripcion', 'anio_inicio'], 'safe'],
+            [['descripcion', 'cohorte'], 'safe'],
         ];
     }
 
@@ -64,7 +64,7 @@ class CarreraSearch extends Carrera
         ]);
 
         $query->andFilterWhere(['like', 'descripcion', $this->descripcion])
-            ->andFilterWhere(['like', 'anio_inicio', $this->anio_inicio]);
+            ->andFilterWhere(['like', 'cohorte', $this->cohorte]);
 
         return $dataProvider;
     }

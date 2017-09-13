@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 
                 'descripcion',
                 'duracion',
-                'anio_inicio',
+                'cohorte',
 
                 ['class' => 'yii\grid\ActionColumn',
                 'template' => Helper::filterActionColumn('{view} {update}'),

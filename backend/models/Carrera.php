@@ -35,7 +35,7 @@ class Carrera extends \yii\db\ActiveRecord
             [['descripcion', 'duracion'], 'required'],
             [['duracion'], 'integer'],
             [['descripcion'], 'string', 'max' => 450],
-            [['anio_inicio'], 'string', 'max' => 45],
+            [['cohorte','validez_nacional','cantidad_materias','cantidad_horas','nro_resolucion'], 'string', 'max' => 45],
         ];
     }
 
@@ -48,7 +48,11 @@ class Carrera extends \yii\db\ActiveRecord
             'id' => 'ID',
             'descripcion' => 'Descripción',
             'duracion' => 'Duración',
-            'anio_inicio' => 'Año Inicio',
+            'cohorte' => 'Cohorte',
+            'validez_nacional',
+            'cantidad_materias',
+            'cantidad_horas',
+            'nro_resolucion'
         ];
     }
 

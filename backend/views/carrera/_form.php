@@ -22,7 +22,15 @@ use yii\widgets\ActiveForm;
 
                 <?= $form->field($model, 'duracion')->textInput() ?>
 
-                <?= $form->field($model, 'anio_inicio')->textInput(['maxlength' => true]) ?>                       
+                <?= $form->field($model, 'cohorte')->textInput(['maxlength' => true]) ?>  
+
+                <?= $form->field($model, 'validez_nacional')->textInput(['maxlength' => true]) ?>  
+
+                <?= $form->field($model, 'cantidad_materias')->textInput(['maxlength' => true]) ?>  
+
+                <?= $form->field($model, 'cantidad_horas')->textInput(['maxlength' => true]) ?>   
+
+                <?= $form->field($model, 'nro_resolucion')->textInput(['maxlength' => true]) ?>                     
                 
             </div>  
             <div class="box-footer">

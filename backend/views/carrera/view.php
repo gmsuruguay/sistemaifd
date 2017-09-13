@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'attributes' => [               
                
                 'duracion',
-                'anio_inicio',
+                'cohorte',
             ],
             ]) ?>     
         </div>

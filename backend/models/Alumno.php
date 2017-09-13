@@ -116,10 +116,10 @@ class Alumno extends Docente
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getInscripcionMaterias()
-    {
-        return $this->hasMany(InscripcionMateria::className(), ['alumno_id' => 'id']);
-    }
+     public function getHistoriaAcademicas() 
+     { 
+         return $this->hasMany(HistoriaAcademica::className(), ['alumno_id' => 'id']);
+     } 
 
     /**
      * @return \yii\db\ActiveQuery

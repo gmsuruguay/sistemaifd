@@ -63,7 +63,7 @@ class CarreraSearch extends Carrera
             'duracion' => $this->duracion,
         ]);
 
-        $query->andFilterWhere(['like', 'descripcion', $this->descripcion])
+        $query->andFilterWhere(['like', 'descripcion', $this->descripcion]);
             ->andFilterWhere(['like', 'cohorte', $this->cohorte]);
 
         return $dataProvider;

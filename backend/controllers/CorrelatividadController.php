@@ -60,14 +60,25 @@ class CorrelatividadController extends Controller
                 'model' => $model,
             ]);
         }*/
-         $array = $request->post('materia_id_correlativa');
-            $length= count($array);
-            for ($i=0;$i<$length; $i++) {
-                 $model = new Correlatividad();
-                 $model->materia_id_correlativa = $array[$i];
-                 $model->materia_id = $materia_id;
-                 $model->save();
-            }
+        $array = $request->post('materia_id_correlativa_a');
+        $length= count($array);
+        for ($i=0;$i<$length; $i++) {
+            $model = new Correlatividad();
+            $model->materia_id_correlativa = $array[$i];
+            $model->materia_id = $materia_id;
+            $model->tipo = 'a';
+            $model->save();
+        }
+
+        $array = $request->post('materia_id_correlativa_r');
+        $length= count($array);
+        for ($i=0;$i<$length; $i++) {
+            $model = new Correlatividad();
+            $model->materia_id_correlativa = $array[$i];
+            $model->materia_id = $materia_id;
+            $model->tipo = 'r';
+            $model->save();
+        }
 
         $materia = Materia::findOne($materia_id);
         return $this->redirect(['carrera/view', 'id' => $materia->carrera_id]);

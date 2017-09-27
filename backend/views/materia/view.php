@@ -42,8 +42,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'action' => ['correlatividad/add'],
                 ]); ?>
 
-                 <div class="form-inline">
-                    <?= Html::checkboxList('materia_id_correlativa', $indices, ArrayHelper::map($materias, 'id', 'descripcion'),['separator'=> '<br>']) ?>
+                 <div class="form-inlie">
+                    <p>Aprobadas</p>
+                    <?= Html::checkboxList('materia_id_correlativa_a', $indicesA, ArrayHelper::map($materias, 'id', 'descripcion'),['separator'=> '<br>']) ?>
+                     <p>Regulares</p>
+                    <?= Html::checkboxList('materia_id_correlativa_r', $indicesR, ArrayHelper::map($materias, 'id', 'descripcion'),['separator'=> '<br>']) ?>
                     <?=Html::hiddenInput('materia_id', $model->id)?>
                     <?= Html::submitButton('Actualizar', ['class' => 'btn btn-primary']) ?>
                 </div>

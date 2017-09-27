@@ -1,7 +1,9 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+//use yii\grid\GridView;
+use kartik\grid\GridView;
+use mdm\admin\components\Helper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\DocenteSearch */
@@ -35,8 +37,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     'nombre',                       
                     'numero',                    
 
-                    ['class' => 'yii\grid\ActionColumn'],
-                ],
+                    ['class' => 'yii\grid\ActionColumn','template' => '{view}{update}{delete} {carrera}', 
+                     'buttons' => [
+                        'carrera'=>function ($url, $model, $key) {
+                                            
+                            return Html::a('', ['/docente/asignar-materia', 'id'=>$model->id], ['class' => 'fa fa-random', 'title'=>'Cargar cursos a cargo']);
+                            
+                        },
+                    ]
+                ],]
             ]); ?>
         </div>
     </div>

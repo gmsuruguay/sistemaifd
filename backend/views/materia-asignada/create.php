@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Correlatividad */
+/* @var $model backend\models\MateriaAsignada */
 
-$this->title = 'Create Correlatividad';
-$this->params['breadcrumbs'][] = ['label' => 'Correlatividades', 'url' => ['index']];
+$this->title = 'Create Materia Asignada';
+$this->params['breadcrumbs'][] = ['label' => 'Materia Asignadas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="correlatividad-create">
+<div class="materia-asignada-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

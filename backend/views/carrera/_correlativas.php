@@ -20,6 +20,16 @@ use yii\grid\GridView;
             'value'=> function ($data){
                 return $data->descripcionMateria;
             }
+            ],
+            [
+            'label'=> 'Condición',
+            'value'=> function ($data){
+                if($data->tipo=='a')
+                {
+                    return 'APROBADO';
+                }
+                return 'REGULAR';
+            }
             ]
            
         ],

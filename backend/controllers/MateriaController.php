@@ -57,13 +57,24 @@ class MateriaController extends Controller
         $materias = Materia::find()
                     ->where(['carrera_id' => $model->carrera_id])
                     ->andWhere('id<>'.$id)
+                    ->andWhere('anio<='.$model->anio)
                     ->all();
-        $correlativas = Correlatividad::find()->where(['materia_id' => $id])->all();
-        $indices = $this->indexCorrelativas($materias, $correlativas);
+        $correlativasAprobadas = Correlatividad::find()
+                        ->where(['materia_id' => $id])
+                        ->andWhere(['tipo' => 'a'])
+                        ->all();
+        $correlativasRegulares = Correlatividad::find()
+                        ->where(['materia_id' => $id])
+                        ->andWhere(['tipo' => 'r'])
+                        ->all();
+                        
+        $indicesAprobadas = $this->indexCorrelativas($materias, $correlativasAprobadas);
+        $indicesRegulares = $this->indexCorrelativas($materias, $correlativasRegulares);
         return $this->render('view', [
             'model' => $model,
             'materias'=> $materias,
-            'indices'=> $indices,
+            'indicesA'=> $indicesAprobadas,
+            'indicesR'=> $indicesRegulares,
         ]);
     }
 

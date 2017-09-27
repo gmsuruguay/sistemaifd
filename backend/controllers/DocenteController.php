@@ -4,6 +4,8 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Docente;
+use backend\models\Carrera;
+use backend\models\Materia;
 use backend\models\search\DocenteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -167,6 +169,34 @@ class DocenteController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the Docente model based on its primary key value.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionAsignarMateria($id)
+    {
+        $model = $this->findModel($id);
+        $carreras = Carrera::find()->all();
+
+         return $this->render('asignar_materia', [
+            'model' => $model,
+            'carreras'=> $carreras,
+        ]);
+    }
+
+    public function actionChangeCarrera($carreraId)
+    {
+        $materias= Materia::find()
+                            ->where(['carrera_id'=> $carreraId])
+                            ->all();
+        echo "<option>--------------</option>" ; 
+        foreach ($materias as $m)
+        {
+            echo '<option value="'.$m->id.'">'.$m->descripcion.'</option>';
+        }
     }
 
     /**

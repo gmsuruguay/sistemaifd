@@ -46,6 +46,7 @@ class Correlatividad extends \yii\db\ActiveRecord
             'id' => 'ID',
             'materia_id' => 'Materia ID',
             'materia_id_correlativa' => 'Correlativas',
+            'tipo'=>'Condicion',
         ];
     }
 

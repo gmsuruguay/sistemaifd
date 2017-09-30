@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use common\models\FechaHelper;
 
 /**
  * This is the model class for table "materia_asignada".
@@ -69,4 +70,22 @@ class MateriaAsignada extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Materia::className(), ['id' => 'materia_id']);
     }
+
+    public function getDescripcionMateria()
+    {
+        return $this->materia->descripcion;
+    }
+
+     public function beforeValidate()
+    {
+        if ($this->fecha_alta != null) {           
+            $this->fecha_alta = FechaHelper::fechaYMD($this->fecha_alta);
+        }
+        if ($this->fecha_baja != null) {           
+            $this->fecha_baja = FechaHelper::fechaYMD($this->fecha_baja);
+        }         
+        
+        return parent::beforeValidate();
+    }
+
 }

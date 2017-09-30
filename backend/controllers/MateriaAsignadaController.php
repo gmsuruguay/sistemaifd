@@ -4,6 +4,8 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\MateriaAsignada;
+use backend\models\Materia;
+use backend\models\Docente;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -33,16 +35,20 @@ class MateriaAsignadaController extends Controller
      * Lists all MateriaAsignada models.
      * @return mixed
      */
-    public function actionIndex()
+    /*public function actionIndex($docente_id)
     {
+        $model = new MateriaAsignada();
+        $docente = Docente::findOne($docente_id);
         $dataProvider = new ActiveDataProvider([
             'query' => MateriaAsignada::find(),
         ]);
-
+        
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'docente' => $docente,
+            'model' => $model,
         ]);
-    }
+    }*/
 
     /**
      * Displays a single MateriaAsignada model.
@@ -61,15 +67,21 @@ class MateriaAsignadaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($docente_id = 0)
     {
         $model = new MateriaAsignada();
-
+        $docente = Docente::findOne($docente_id);
+        $dataProvider = new ActiveDataProvider([
+            'query' => MateriaAsignada::find()->where(['docente_id' => $docente_id]),
+        ]);
+       
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['create', 'docente_id' => $model->docente_id]);
         } else {
             return $this->render('create', [
+                'dataProvider' => $dataProvider,
                 'model' => $model,
+                'docente'=> $docente,
             ]);
         }
     }
@@ -83,12 +95,14 @@ class MateriaAsignadaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $materias = Materia::find()->where(['carrera_id'=> $model->materia->carrera->id])->all();
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['create', 'docente_id' => $model->docente_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'materias' => $materias,
             ]);
         }
     }
@@ -101,9 +115,11 @@ class MateriaAsignadaController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $docente_id = $model->docente_id;
+        $model->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['create', 'docente_id'=> $docente_id]);
     }
 
     /**

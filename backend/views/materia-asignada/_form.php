@@ -10,16 +10,20 @@ use yii\helpers\Url;
 /* @var $model backend\models\MateriaAsignada */
 /* @var $form yii\widgets\ActiveForm */
 $carreras = Carrera::find()->all();
-
+//$idCarrera= $model->materia->carrera->id;
 ?>
 
 <div class="materia-asignada-form">
 
-    <?php $form = ActiveForm::begin(); ?>
-
-	<?= Html::label('Carreras') ?>
+    <?php $form = ActiveForm::begin(/*[
+                'method' => 'post',
+                'action' => ['materia-asignada/create'],
+                ]*/); ?>
+    <div class="row">
+        <div class="col-md-6">  
+            <?= Html::label('Carreras') ?>
                     <?= Html::dropDownList('carrera', 
-                                            'carreraId', 
+                                            $model->isNewRecord ? '': $model->materia->carrera->id, 
                                             ArrayHelper::map($carreras, 'id', 'descripcion'),
                                             [
                                                 'prompt'=>'-------------',
@@ -31,20 +35,30 @@ $carreras = Carrera::find()->all();
                                                                 });'
                                             ]) 
                                             ?> 
+        </div>
+        <div class="col-md-6"> 
+            <?= Html::label('Materias') ?>
+          <!--  <select id="materiaasignada-materia_id" class="form-control" name="MateriaAsignada[materia_id]" aria-required="true"></select>-->
+             <?= $model->isNewRecord ?$form->field($model, 'materia_id')->label(false)->dropDownList([]) : 
+                    $form->field($model, 'materia_id')->label(false)->dropDownList(ArrayHelper::map($materias, 'id', 'descripcion'))?>
+        </div>
+        <div class="col-md-6"> 
+             <?= $form->field($model, 'fecha_alta')->textInput() ?>
+        </div>
+        <div class="col-md-6"> 
+            <?= $form->field($model, 'fecha_baja')->textInput() ?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'docente_id')->textInput() ?>
+	
+
+    <?= $form->field($model, 'docente_id')->label(false)->hiddenInput(['value' => $model->isNewRecord ? $docente->id: $model->docente_id]); ?>
+
 
     
 
-    <select id="materiaasignada-materia_id" class="form-control" name="MateriaAsignada[materia_id]" aria-required="true"></select>
-
-
-    <?= $form->field($model, 'fecha_alta')->textInput() ?>
-
-    <?= $form->field($model, 'fecha_baja')->textInput() ?>
-
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

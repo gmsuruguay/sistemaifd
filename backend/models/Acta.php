@@ -61,4 +61,48 @@ class Acta extends \yii\db\ActiveRecord
             'resolucion' => 'Resolucion',
         ];
     }
+
+    /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+     public function getAlumno() 
+     { 
+         return $this->hasOne(Alumno::className(), ['id' => 'alumno_id']);
+     } 
+ 
+     /** 
+      * @return \yii\db\ActiveQuery 
+      */ 
+     public function getCondicion() 
+     { 
+         return $this->hasOne(Condicion::className(), ['id' => 'condicion_id']);
+     } 
+ 
+     /** 
+      * @return \yii\db\ActiveQuery 
+      */ 
+     public function getMateria() 
+     { 
+         return $this->hasOne(Materia::className(), ['id' => 'materia_id']);
+     } 
+
+    public function getAnioMateria()
+    {
+        return $this->materia ? $this->materia->anio : null;
+    }
+
+    public function getPeriodoMateria()
+    {
+        return $this->materia ? $this->materia->periodo : null;
+    }
+
+    public function getDescripcionMateria()
+    {
+        return $this->materia ? $this->materia->descripcion : 'Ninguno';
+    }
+
+    public function getDescripcionCondicion()
+    {
+        return $this->condicion ? $this->condicion->descripcion : 'Ninguno';
+    }
 }

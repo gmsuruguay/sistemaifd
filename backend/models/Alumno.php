@@ -135,5 +135,17 @@ class Alumno extends Docente
         return ArrayHelper::map($alumnos, 'id', 'apellidoNombre');
     }
 
+    public static function getPromedio($query)
+    {      
+        $suma_nota=0;
+        $cant=0;  
+        foreach ($query as  $value) {
+            $suma_nota += $value->nota;
+            ++$cant;
+        }
+        $promedio = $suma_nota/$cant;
+        return number_format($promedio,2);
+    }
+
     
 }

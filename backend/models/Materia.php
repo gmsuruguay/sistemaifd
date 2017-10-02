@@ -78,9 +78,9 @@ class Materia extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-     public function getHistoriaAcademicas() 
+     public function getActa() 
      { 
-         return $this->hasMany(HistoriaAcademica::className(), ['materia_id' => 'id']);
+         return $this->hasMany(Acta::className(), ['materia_id' => 'id']);
      } 
 
     /**

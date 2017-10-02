@@ -33,12 +33,14 @@ class Inscripcion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['alumno_id', 'carrera_id', 'fecha'], 'required'],
-            [['alumno_id', 'carrera_id', 'nro_libreta'], 'integer'],
+            [['alumno_id', 'carrera_id', 'fecha', 'titulo_secundario_id'], 'required'],
+            [['alumno_id', 'carrera_id', 'nro_libreta', 'titulo_secundario_id'], 'integer'],
+            [['fotocopia_dni', 'certificado_nacimiento', 'titulo_secundario', 'certificado_visual', 'certificado_auditivo', 'certificado_foniatrico', 'foto', 'constancia_cuil', 'planilla_prontuarial'], 'boolean'],
             [['fecha'], 'safe'],
             [['observacion'], 'string'],
             [['alumno_id'], 'exist', 'skipOnError' => true, 'targetClass' => Alumno::className(), 'targetAttribute' => ['alumno_id' => 'id']],
             [['carrera_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carrera::className(), 'targetAttribute' => ['carrera_id' => 'id']],
+            [['titulo_secundario_id'], 'exist', 'skipOnError' => true, 'targetClass' => TituloSecundario::className(), 'targetAttribute' => ['titulo_secundario_id' => 'id']],
         ];
     }
 
@@ -54,6 +56,16 @@ class Inscripcion extends \yii\db\ActiveRecord
             'nro_libreta' => 'Nro Libreta',
             'fecha' => 'Fecha',
             'observacion' => 'Observacion',
+            'titulo_secundario_id' => 'Titulo Secundario ID',
+            'fotocopia_dni' => 'Fotocopia Dni',
+            'certificado_nacimiento' => 'Certificado Nacimiento',
+            'titulo_secundario' => 'Titulo Secundario',
+            'certificado_visual' => 'Certificado Visual',
+            'certificado_auditivo' => 'Certificado Auditivo',
+            'certificado_foniatrico' => 'Certificado Foniatrico',
+            'foto' => 'Foto',
+            'constancia_cuil' => 'Constancia Cuil',
+            'planilla_prontuarial' => 'Planilla Prontuarial',
         ];
     }
 
@@ -72,6 +84,14 @@ class Inscripcion extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Carrera::className(), ['id' => 'carrera_id']);
     }
+
+    /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+     public function getTituloSecundario() 
+     { 
+         return $this->hasOne(TituloSecundario::className(), ['id' => 'titulo_secundario_id']);
+     } 
 
     public function beforeValidate()
     {

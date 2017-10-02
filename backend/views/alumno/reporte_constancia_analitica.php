@@ -31,7 +31,8 @@ use backend\models\Autoridades;
         <th>Calificación</th>               
         <th>Fecha</th>    
         <th>Libro Folio</th>   
-        <th>Condición</th>          
+        <th>Condición</th>   
+        <th>Observaciones</th>         
       </tr>
     </thead> 
     <tbody>
@@ -42,7 +43,8 @@ use backend\models\Autoridades;
             <td><?=$dato->nota ?></td>  
             <td><?=FechaHelper::fechaDMY($dato->fecha_examen) ?></td>  
             <td><?=$dato->libro .'/'. $dato->folio ?></td>  
-            <td><?=$dato->descripcionCondicion ?></td>          
+            <td><?=$dato->descripcionCondicion ?></td>  
+            <td><?=$dato->resolucion ?></td>         
         </tr>
         <?php endforeach; ?>
     </tbody>                
@@ -54,7 +56,7 @@ use backend\models\Autoridades;
     <p align="justify">
     A solicitud del interesado/a y al solo efecto de ser presentada ante las autoridades que lo requieran,
      se expide la presente Constancia Analitica que sella y firma en Ciudad Perico a los 
-     <?=date('j')?> Días  del   mes <?= ucfirst($mes)?> del año  <?=date('Y')?>
+     <?=date('j')?> días  del   mes <?= ucfirst($mes)?> del año  <?=date('Y')?>
     </p>
 </section>
 

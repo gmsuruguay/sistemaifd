@@ -40,7 +40,7 @@ use backend\models\Autoridades;
             <td><?=$dato->descripcionMateria ?></td>  
             <td><?=$dato->anioMateria .'/'.$dato->periodoMateria ?></td>  
             <td><?=$dato->nota ?></td>  
-            <td><?=FechaHelper::fechaDMY($dato->fecha) ?></td>  
+            <td><?=FechaHelper::fechaDMY($dato->fecha_examen) ?></td>  
             <td><?=$dato->libro .'/'. $dato->folio ?></td>  
             <td><?=$dato->descripcionCondicion ?></td>          
         </tr>

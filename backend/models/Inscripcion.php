@@ -90,4 +90,8 @@ class Inscripcion extends \yii\db\ActiveRecord
     public function getNombreAlumno(){
         return $this->alumno ? $this->alumno->nombreCompleto : ' - ';
     }
+
+    public function getResolucionCarrera(){
+        return $this->carrera ? $this->carrera->nro_resolucion : ' - ';
+    }
 }

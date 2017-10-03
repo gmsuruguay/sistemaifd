@@ -6,6 +6,7 @@ use yii\bootstrap\Modal;
 use kartik\widgets\ActiveForm;
 use backend\models\Alumno;
 use backend\models\Carrera;
+use backend\models\TituloSecundario;
 use yii\widgets\MaskedInput;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
@@ -47,7 +48,37 @@ use yii\helpers\Url;
                                                     ],
                                                     ]) ?>
 
-            <?= $form->field($model, 'nro_libreta')->textInput() ?>           
+           
+            <?= $form->field($model, 'nro_libreta')->textInput() ?>      
+
+            <?= $form->field($model, 'titulo_secundario_id')->widget(Select2::classname(), [                                            
+                                                    'data' => TituloSecundario::getListaTitulos(),
+                                                    'language' => 'es',
+                                                    'options' => ['placeholder' => 'Seleccione titulo secundario'],
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true
+                                                    ],
+                                                    ]) ?>
+
+            <label for="">Documentación Presentada</label>
+
+            <?= $form->field($model, 'fotocopia_dni')->checkbox() ?>
+
+            <?= $form->field($model, 'certificado_nacimiento')->checkbox() ?>
+
+            <?= $form->field($model, 'titulo_secundario')->checkbox() ?>
+
+            <?= $form->field($model, 'certificado_visual')->checkbox() ?>
+
+            <?= $form->field($model, 'certificado_auditivo')->checkbox() ?>
+
+            <?= $form->field($model, 'certificado_foniatrico')->checkbox() ?>
+
+            <?= $form->field($model, 'foto')->checkbox() ?>
+
+            <?= $form->field($model, 'constancia_cuil')->checkbox() ?>
+
+            <?= $form->field($model, 'planilla_prontuarial')->checkbox() ?>       
 
             <?= $form->field($model, 'observacion')->textarea(['rows' => 6]) ?>
 

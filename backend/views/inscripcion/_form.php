@@ -7,6 +7,7 @@ use kartik\widgets\ActiveForm;
 use backend\models\Alumno;
 use backend\models\Carrera;
 use backend\models\TituloSecundario;
+use backend\models\ColegioSecundario;
 use yii\widgets\MaskedInput;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
@@ -59,6 +60,15 @@ use yii\helpers\Url;
                                                         'allowClear' => true
                                                     ],
                                                     ]) ?>
+
+            <?= $form->field($model, 'colegio_secundario_id')->widget(Select2::classname(), [                                            
+                                                                'data' => ColegioSecundario::getListaColegios(),
+                                                                'language' => 'es',
+                                                                'options' => ['placeholder' => 'Seleccione colegio secundario'],
+                                                                'pluginOptions' => [
+                                                                    'allowClear' => true
+                                                                ],
+                                                                ]) ?>
 
             <label for="">Documentación Presentada</label>
 

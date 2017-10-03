@@ -143,8 +143,12 @@ class Alumno extends Docente
             $suma_nota += $value->nota;
             ++$cant;
         }
-        $promedio = $suma_nota/$cant;
-        return number_format($promedio,2);
+        if($cant!=0){
+            $promedio = $suma_nota/$cant;
+            return number_format($promedio,2);
+        }
+        return $cant;
+        
     }
 
     

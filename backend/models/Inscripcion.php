@@ -113,4 +113,9 @@ class Inscripcion extends \yii\db\ActiveRecord
     public function getResolucionCarrera(){
         return $this->carrera ? $this->carrera->nro_resolucion : ' - ';
     }
+
+    public function getDescripcionTitulo()
+    {
+        return $this->tituloSecundario ? $this->tituloSecundario->descripcion : ' - ';
+    }
 }

@@ -29,6 +29,7 @@ use yii\helpers\Url;
                             ])->widget( MaskedInput::className(), [    
                                             'clientOptions' => ['alias' =>  'date']
                 ])->textInput(['value'=>date('d/m/Y')]) ?>
+            <?= $form->field($model, 'nro_legajo')->textInput(['maxlength' => true]) ?>
             <label class="control-label" for"inscripcion-alumno_id"><?=Html::button('Alumno', ['value'=>Url::to(['alumno/nuevo']),'class' => 'btn-link btnmodal'])?></label>
             <?php Pjax::begin(['id'=>'select-alumno']); ?>
             <?= $form->field($model, 'alumno_id')->widget(Select2::classname(), [                                            

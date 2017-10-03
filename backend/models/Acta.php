@@ -39,7 +39,7 @@ class Acta extends \yii\db\ActiveRecord
             [['asistencia'], 'boolean'],
             [['condicion_id', 'alumno_id', 'materia_id'], 'required'],
             [['fecha_examen'], 'safe'],
-            [['resolucion'], 'string', 'max' => 45],
+            [['resolucion','nro_permiso'], 'string', 'max' => 45],
         ];
     }
 
@@ -50,13 +50,14 @@ class Acta extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'nro_permiso' => 'Nro Permiso',
             'libro' => 'Libro',
             'folio' => 'Folio',
             'nota' => 'Nota',
             'asistencia' => 'Asistencia',
-            'condicion_id' => 'Condicion ID',
-            'alumno_id' => 'Alumno ID',
-            'materia_id' => 'Materia ID',
+            'condicion_id' => 'Condicion',
+            'alumno_id' => 'Alumno',
+            'materia_id' => 'Materia',
             'fecha_examen' => 'Fecha Examen',
             'resolucion' => 'Resolucion',
         ];

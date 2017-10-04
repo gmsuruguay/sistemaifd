@@ -47,7 +47,7 @@ class Alumno extends Docente
     /**
      * @inheritdoc
      */
-    /*public function rules()
+    public function rules()
     {
         return [
             [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento'], 'required'],
@@ -58,7 +58,7 @@ class Alumno extends Docente
             [['localidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['localidad_id' => 'id']],
             [['lugar_nacimiento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['lugar_nacimiento_id' => 'id']],
         ];
-    }*/
+    }
 
     /**
      * @inheritdoc
@@ -135,5 +135,14 @@ class Alumno extends Docente
         return ArrayHelper::map($alumnos, 'id', 'apellidoNombre');
     }
 
+    public function getActas()
+    {
+        return $this->hasMany(Acta::className(), ['alumno_id' => 'id']);
+    }
+
+     public function getNombreCompleto()
+    {
+        return $this->apellido.' '.$this->nombre;
+    }
     
 }

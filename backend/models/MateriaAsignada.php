@@ -76,7 +76,7 @@ class MateriaAsignada extends \yii\db\ActiveRecord
         return $this->materia->descripcion;
     }
 
-     public function beforeValidate()
+    public function beforeValidate()
     {
         if ($this->fecha_alta != null) {           
             $this->fecha_alta = FechaHelper::fechaYMD($this->fecha_alta);

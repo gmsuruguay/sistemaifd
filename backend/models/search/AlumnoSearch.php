@@ -19,7 +19,7 @@ class AlumnoSearch extends Alumno
     {
         return [
             [['id', 'lugar_nacimiento_id', 'localidad_id', 'user_id'], 'integer'],
-            [['nro_legajo', 'tipo_doc', 'numero', 'cuil', 'apellido', 'nombre', 'sexo', 'estado_civil', 'nacionalidad', 'fecha_nacimiento', 'domicilio', 'nro', 'telefono', 'celular', 'email', 'fecha_baja'], 'safe'],
+            [['tipo_doc', 'numero', 'cuil', 'apellido', 'nombre', 'sexo', 'estado_civil', 'nacionalidad', 'fecha_nacimiento', 'domicilio', 'nro', 'telefono', 'celular', 'email', 'fecha_baja'], 'safe'],
         ];
     }
 
@@ -67,8 +67,7 @@ class AlumnoSearch extends Alumno
             'user_id' => $this->user_id,
         ]);
 
-        $query->andFilterWhere(['like', 'nro_legajo', $this->nro_legajo])
-            ->andFilterWhere(['like', 'tipo_doc', $this->tipo_doc])
+        $query->andFilterWhere(['like', 'tipo_doc', $this->tipo_doc])
             ->andFilterWhere(['like', 'numero', $this->numero])
             ->andFilterWhere(['like', 'cuil', $this->cuil])
             ->andFilterWhere(['like', 'apellido', $this->apellido])

@@ -3,7 +3,9 @@
 namespace backend\models;
 
 use Yii;
+
 use common\models\FechaHelper;
+
 
 /**
  * This is the model class for table "acta".
@@ -45,6 +47,7 @@ class Acta extends \yii\db\ActiveRecord
             [['alumno_id'], 'exist', 'skipOnError' => true, 'targetClass' => Alumno::className(), 'targetAttribute' => ['alumno_id' => 'id']],
             [['condicion_id'], 'exist', 'skipOnError' => true, 'targetClass' => Condicion::className(), 'targetAttribute' => ['condicion_id' => 'id']],
             [['materia_id'], 'exist', 'skipOnError' => true, 'targetClass' => Materia::className(), 'targetAttribute' => ['materia_id' => 'id']],
+
         ];
     }
 
@@ -55,17 +58,19 @@ class Acta extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'nro_permiso' => 'Nro Permiso',
             'libro' => 'Libro',
             'folio' => 'Folio',
             'nota' => 'Nota',
             'asistencia' => 'Asistencia',
-            'condicion_id' => 'Condicion ID',
-            'alumno_id' => 'Alumno ID',
-            'materia_id' => 'Materia ID',
+            'condicion_id' => 'Condicion',
+            'alumno_id' => 'Alumno',
+            'materia_id' => 'Materia',
             'fecha_examen' => 'Fecha Examen',
             'resolucion' => 'Resolucion',
         ];
     }
+
 
     /**
      * @return \yii\db\ActiveQuery
@@ -75,13 +80,7 @@ class Acta extends \yii\db\ActiveRecord
         return $this->hasOne(Alumno::className(), ['id' => 'alumno_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMateria()
-    {
-        return $this->hasOne(Materia::className(), ['id' => 'materia_id']);
-    }
+    
 
      public function getCondicion()
     {
@@ -95,6 +94,31 @@ class Acta extends \yii\db\ActiveRecord
         }  
         
         return parent::beforeValidate();
+    }
+
+
+ 
+     /** 
+      * @return \yii\db\ActiveQuery 
+      */ 
+     public function getMateria() 
+     { 
+         return $this->hasOne(Materia::className(), ['id' => 'materia_id']);
+     } 
+
+    public function getAnioMateria()
+    {
+        return $this->materia ? $this->materia->anio : null;
+    }
+
+    public function getPeriodoMateria()
+    {
+        return $this->materia ? $this->materia->periodo : null;
+    }
+
+    public function getDescripcionMateria()
+    {
+        return $this->materia ? $this->materia->descripcion : 'Ninguno';
     }
 
 }

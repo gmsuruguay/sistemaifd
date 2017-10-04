@@ -20,10 +20,8 @@ use backend\models\Localidad;
         <?php $form = ActiveForm::begin(); ?>
         <div class="box-body">
          <div class="row">
-            <div class="col-md-3">  
-            <?= $form->field($model, 'nro_legajo')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col-md-3">
+           
+            <div class="col-md-4">
             <?php
                         $listData=['dni'=>'DNI',
                                     'du'=>'DU',
@@ -35,13 +33,13 @@ use backend\models\Localidad;
                             echo $form->field($model, 'tipo_doc')->dropDownList($listData, ['options'=>['dni'=>['Selected'=>true]]]);
                 ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
             <?= $form->field($model, 'numero')->widget( MaskedInput::className(), [                           
                         'mask' => '9',
                         'clientOptions' => ['repeat' => 8, 'greedy' => false]
                 ])->label('* Numero') ?>
             </div>
-            <div class="col-md-3">  
+            <div class="col-md-4">  
             <?= $form->field($model, 'cuil')->widget( MaskedInput::className(), [                      
                         
                         'clientOptions' => ['alias' =>  '99-9']

@@ -53,7 +53,7 @@ class Alumno extends Docente
             [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento'], 'required'],
             [['fecha_nacimiento', 'fecha_baja'], 'safe'],
             [['lugar_nacimiento_id', 'localidad_id', 'user_id'], 'integer'],
-            [['nro_legajo', 'tipo_doc', 'numero', 'cuil', 'sexo', 'estado_civil', 'nacionalidad', 'nro', 'telefono', 'celular'], 'string', 'max' => 45],
+            [['tipo_doc', 'numero', 'cuil', 'sexo', 'estado_civil', 'nacionalidad', 'nro', 'telefono', 'celular'], 'string', 'max' => 45],
             [['apellido', 'nombre', 'domicilio', 'email'], 'string', 'max' => 450],
             [['localidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['localidad_id' => 'id']],
             [['lugar_nacimiento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['lugar_nacimiento_id' => 'id']],
@@ -135,6 +135,7 @@ class Alumno extends Docente
         return ArrayHelper::map($alumnos, 'id', 'apellidoNombre');
     }
 
+
     public function getActas()
     {
         return $this->hasMany(Acta::className(), ['alumno_id' => 'id']);
@@ -144,5 +145,22 @@ class Alumno extends Docente
     {
         return $this->apellido.' '.$this->nombre;
     }
+
+    public static function getPromedio($query)
+    {      
+        $suma_nota=0;
+        $cant=0;  
+        foreach ($query as  $value) {
+            $suma_nota += $value->nota;
+            ++$cant;
+        }
+        if($cant!=0){
+            $promedio = $suma_nota/$cant;
+            return number_format($promedio,2);
+        }
+        return $cant;
+        
+    }
+
     
 }

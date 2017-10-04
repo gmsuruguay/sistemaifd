@@ -7,8 +7,7 @@ use mdm\admin\components\Helper;
 <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'nro_legajo',
+            'id',           
             'tipo_doc',
             'numero',
             'cuil',

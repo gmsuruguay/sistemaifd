@@ -12,6 +12,8 @@ use yii\widgets\ActiveForm;
 use backend\models\search\InscripcionSearch;
 use backend\models\search\MateriaSearch;
 use backend\models\Inscripcion;
+use backend\models\Acta;
+use common\models\FechaHelper;
 /**
  * AlumnoController implements the CRUD actions for Alumno model.
  */
@@ -167,6 +169,37 @@ class AlumnoController extends Controller
 
         return $this->redirect(['index']);
     }
+
+    public function actionImprimirAnalitico($id){
+        
+                $model=$this->findModelInscripcion($id);              
+                $alumno = $model->alumno_id;
+                $carrera = $model->carrera_id;        
+                $query = Acta::find()
+                         ->joinWith(['materia'])
+                         ->where(['alumno_id' => $alumno])                
+                         ->andWhere(['asistencia'=>1])                            
+                         ->andWhere(['materia.carrera_id' => $carrera])
+                         ->orderBy('materia.anio')
+                         ->all();
+                
+                $promedio=Alumno::getPromedio($query);
+        
+                
+                $mes=FechaHelper::obtenerMes(date('Y-m-d'));
+                $pdf = Yii::$app->pdf;        
+                $pdf->cssFile = 'css/reporte.css';
+                $pdf->options = ['title' => 'Constancia Analitica'];
+                $pdf->content = $this->renderPartial('reporte_constancia_analitica', [
+                    'model' => $model,
+                    'analitico' => $query,
+                    'promedio'=>$promedio,
+                    'mes'=>$mes            
+                ]);
+                
+                
+                return $pdf->render();
+            }
 
     /**
      * Finds the Alumno model based on its primary key value.

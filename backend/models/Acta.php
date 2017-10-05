@@ -121,4 +121,14 @@ class Acta extends \yii\db\ActiveRecord
         return $this->materia ? $this->materia->descripcion : 'Ninguno';
     }
 
+    public function getDatoCompletoAlumno()
+    {
+        return $this->alumno ? $this->alumno->datoAlumno : '-Ninguno-';
+    }
+
+    public function getAlumnoId()
+    {
+        return $this->alumno ? $this->alumno->id : '-Ninguno-';
+    }
+
 }

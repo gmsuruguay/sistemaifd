@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use mdm\admin\components\Helper;
-
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\ActaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -29,12 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'folio',
                     'nro_permiso',
                     [
-                        'attribute'=> 'alumno_id',
-                        'label'=> 'Apellido y Nombre',
-                        'value'=> function ($data){
-                                    return $data->alumno->nombreCompleto;
-                            }
-                    ],
+                    'attribute'=>'alumno',
+                    'label'=>'Alumno',
+                    'format'=>'text',//raw, html
+                    'content'=>function ($data){      
+                        $url = Url::to(['alumno/view', 'id'=>$data->alumnoId]);
+                        $opciones = [];
+                        return Html::a($data->datoCompletoAlumno, $url, $opciones);             
+                        
+                    }
+                    ], 
                     'nota',
                     'asistencia:boolean',
                     // 'condicion_id',

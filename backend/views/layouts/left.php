@@ -30,6 +30,7 @@
                             ['label' => 'Agregar', 'icon' => 'fa fa-plus', 'url' => ['/alumno/create'],],                            
                         ],
                     ], 
+                    ['label' => 'Actas', 'icon' => 'fa fa-book', 'url' => ['/acta']],  
                     [
                         'label' => 'Docentes',
                         'icon' => 'fa fa-user',

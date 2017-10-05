@@ -99,6 +99,20 @@ $this->title = 'Inicio - Sistema';
             </div>
           </div>
           <!-- ./col -->
+          <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+              <div class="inner">
+                <h3><i class="fa fa-plus"></i></h3>
+                <p>Cursadas</p>
+              </div>
+              <div class="icon">
+               <i class="fa fa-rocket"></i>
+              </div>
+              <a href="<?= Url::toRoute('cursada/') ?>" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
         </div>
 
     </div>

@@ -30,6 +30,15 @@
                             ['label' => 'Agregar', 'icon' => 'fa fa-plus', 'url' => ['/alumno/create'],],                            
                         ],
                     ], 
+                    [
+                        'label' => 'Cursadas',
+                        'icon' => 'fa fa-rocket',
+                        'url' => '#',
+                        'items' => [                            
+                            ['label' => 'Listar', 'icon' => 'fa fa-list', 'url' => ['/cursada'],],
+                            ['label' => 'Agregar', 'icon' => 'fa fa-plus', 'url' => ['/cursada/create'],],                            
+                        ],
+                    ], 
                     ['label' => 'Actas', 'icon' => 'fa fa-book', 'url' => ['/acta']],  
                     [
                         'label' => 'Docentes',

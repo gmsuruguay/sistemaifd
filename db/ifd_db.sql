@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-10-2017 a las 03:13:45
+-- Tiempo de generación: 05-10-2017 a las 03:10:14
 -- Versión del servidor: 5.7.14
 -- Versión de PHP: 5.6.25
 
@@ -46,7 +46,16 @@ CREATE TABLE `acta` (
 
 INSERT INTO `acta` (`id`, `nro_permiso`, `libro`, `folio`, `nota`, `asistencia`, `condicion_id`, `alumno_id`, `materia_id`, `fecha_examen`, `resolucion`) VALUES
 (1, NULL, 1, 2, '5.00', b'1', 3, 1, 1, '2017-09-02', NULL),
-(2, NULL, 5, 2, '6.00', b'1', 4, 1, 2, '2016-12-18', NULL);
+(2, NULL, 5, 2, '6.00', b'1', 4, 1, 2, '2016-12-18', NULL),
+(3, '851', 10, 1, '8.00', NULL, 2, 2, 1, '2017-04-10', NULL),
+(4, '659', 10, 1, '8.00', NULL, 2, 3, 1, '2017-04-10', NULL),
+(5, '4005', 8, 22, '9.00', NULL, 2, 4, 10, '2017-12-23', NULL),
+(8, '54', 8, 22, '10.00', NULL, 2, 2, 10, '2017-12-23', NULL),
+(9, '4527', 8, 22, '5.00', NULL, 2, 3, 10, '2017-12-23', NULL),
+(10, '863', 8, 22, '6.00', NULL, 2, 1, 10, '2017-12-23', NULL),
+(11, '5', 8, 22, '9.00', NULL, 2, 2, 10, '2017-12-23', NULL),
+(12, '85', 50, 1, '0.00', b'0', 1, 2, 17, '2012-10-29', NULL),
+(13, '45', 50, 1, '6.00', b'1', 1, 3, 17, '2012-10-29', NULL);
 
 -- --------------------------------------------------------
 
@@ -126,13 +135,20 @@ CREATE TABLE `auth_item` (
 --
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+('/acta/*', 2, NULL, NULL, NULL, 1507163378, 1507163378),
 ('/admin/*', 2, NULL, NULL, NULL, 1504053920, 1504053920),
 ('/alumno/*', 2, NULL, NULL, NULL, 1504553174, 1504553174),
 ('/alumno/listar-materia', 2, NULL, NULL, NULL, 1504735722, 1504735722),
 ('/autoridades/*', 2, NULL, NULL, NULL, 1506372081, 1506372081),
 ('/carrera/*', 2, NULL, NULL, NULL, 1504655216, 1504655216),
 ('/condicion/*', 2, NULL, NULL, NULL, 1504738816, 1504738816),
+('/correlatividad/*', 2, NULL, NULL, NULL, 1507076807, 1507076807),
 ('/correlatividad/add', 2, NULL, NULL, NULL, 1505262091, 1505262091),
+('/correlatividad/create', 2, NULL, NULL, NULL, 1507163409, 1507163409),
+('/correlatividad/delete', 2, NULL, NULL, NULL, 1507163409, 1507163409),
+('/correlatividad/index', 2, NULL, NULL, NULL, 1507163409, 1507163409),
+('/correlatividad/update', 2, NULL, NULL, NULL, 1507163409, 1507163409),
+('/correlatividad/view', 2, NULL, NULL, NULL, 1507163409, 1507163409),
 ('/docente/*', 2, NULL, NULL, NULL, 1504213029, 1504213029),
 ('/historia-academica/*', 2, NULL, NULL, NULL, 1505265060, 1505265060),
 ('/inscripcion/*', 2, NULL, NULL, NULL, 1504564372, 1504564372),
@@ -161,13 +177,20 @@ CREATE TABLE `auth_item_child` (
 --
 
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+('Administrador', '/acta/*'),
 ('Administrador', '/admin/*'),
 ('Administrador', '/alumno/*'),
 ('Administrador', '/alumno/listar-materia'),
 ('Administrador', '/autoridades/*'),
 ('Administrador', '/carrera/*'),
 ('Administrador', '/condicion/*'),
+('Administrador', '/correlatividad/*'),
 ('Administrador', '/correlatividad/add'),
+('Administrador', '/correlatividad/create'),
+('Administrador', '/correlatividad/delete'),
+('Administrador', '/correlatividad/index'),
+('Administrador', '/correlatividad/update'),
+('Administrador', '/correlatividad/view'),
 ('Administrador', '/docente/*'),
 ('Administrador', '/historia-academica/*'),
 ('Administrador', '/inscripcion/*'),
@@ -296,12 +319,16 @@ CREATE TABLE `correlatividad` (
 --
 
 INSERT INTO `correlatividad` (`id`, `materia_id`, `materia_id_correlativa`, `tipo`) VALUES
-(1, 2, 1, NULL),
-(2, 3, 2, NULL),
-(4, 5, 1, NULL),
-(5, 5, 2, NULL),
-(7, 12, 8, NULL),
-(11, 8, 2, NULL);
+(1, 5, 1, 'a'),
+(5, 2, 3, NULL),
+(6, 2, 1, NULL),
+(11, 8, 1, 'a'),
+(12, 1, 3, 'a'),
+(13, 1, 4, 'a'),
+(14, 16, 10, 'a'),
+(15, 16, 13, 'r'),
+(16, 22, 19, 'a'),
+(17, 12, 1, 'a');
 
 -- --------------------------------------------------------
 
@@ -315,7 +342,8 @@ CREATE TABLE `cursada` (
   `condicion_id` int(11) NOT NULL,
   `alumno_id` int(11) NOT NULL,
   `materia_id` int(11) NOT NULL,
-  `nota` decimal(6,2) DEFAULT NULL
+  `nota` decimal(6,2) DEFAULT NULL,
+  `fecha_vencimiento` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -391,9 +419,8 @@ CREATE TABLE `inscripcion` (
 --
 
 INSERT INTO `inscripcion` (`id`, `nro_legajo`, `alumno_id`, `carrera_id`, `nro_libreta`, `fecha`, `observacion`, `titulo_secundario_id`, `colegio_secundario_id`, `fotocopia_dni`, `certificado_nacimiento`, `titulo_secundario`, `certificado_visual`, `certificado_auditivo`, `certificado_foniatrico`, `foto`, `constancia_cuil`, `planilla_prontuarial`) VALUES
-(1, NULL, 2, 1, 1234, '2017-10-02', '', 1, 1, b'1', b'1', b'1', b'0', b'0', b'0', b'1', b'1', b'0'),
-(2, NULL, 2, 2, 4567, '2017-09-05', '', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, NULL, 1, 1, 5289, '2017-09-05', '', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(4, '1234', 2, 3, 1234, '2017-10-04', '', 1, 1, b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0'),
+(5, '5824', 3, 1, 854, '2017-10-04', '', 2, 2, b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0');
 
 -- --------------------------------------------------------
 
@@ -461,7 +488,18 @@ INSERT INTO `materia` (`id`, `descripcion`, `carrera_id`, `anio`, `periodo`, `es
 (9, 'HISTORIA', 1, '1', '', b'0'),
 (10, 'MARKETING I', 2, '1', '', b'0'),
 (11, 'ALGEBRA I', 4, '1', '', b'0'),
-(12, 'Fonologia III', 1, '3', 'ANUAL', b'0');
+(12, 'Fonologia III', 1, '3', 'ANUAL', b'0'),
+(13, 'SEO', 2, '1', '1° C', b'0'),
+(14, 'MARKET PLACE', 2, '2', 'ANUAL', b'0'),
+(15, 'MERCADO LIBRE', 2, '2', 'ANUAL', b'0'),
+(16, 'CLIENTE', 2, '3', '2° C', b'0'),
+(17, 'PEDAGOGIA', 3, '1', '1° C', b'0'),
+(18, 'FINANZAS', 3, '2', '1° C', b'0'),
+(19, 'ALGEBRA I', 3, '1', 'ANUAL', b'0'),
+(20, 'LOGICA', 3, '3', 'ANUAL', b'0'),
+(21, 'CALCULO NUMERICO', 3, '3', '1° C', b'0'),
+(22, 'ALGEBRA II', 3, '3', '2° C', b'0'),
+(23, 'AUDICION', 1, '1', '1° C', b'0');
 
 -- --------------------------------------------------------
 
@@ -873,7 +911,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `acta`
 --
 ALTER TABLE `acta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `alumno`
 --
@@ -903,7 +941,7 @@ ALTER TABLE `condicion`
 -- AUTO_INCREMENT de la tabla `correlatividad`
 --
 ALTER TABLE `correlatividad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT de la tabla `cursada`
 --
@@ -918,7 +956,7 @@ ALTER TABLE `docente`
 -- AUTO_INCREMENT de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `inscripcion_examen`
 --
@@ -933,7 +971,7 @@ ALTER TABLE `localidad`
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT de la tabla `materia_asignada`
 --

@@ -137,5 +137,24 @@ class Inscripcion extends \yii\db\ActiveRecord
         return $this->colegioSecundario ? $this->colegioSecundario->descripcion : ' - ';
     }
 
+    public function getDatoCompletoAlumno()
+    {
+        return $this->alumno ? $this->alumno->datoAlumno : '-Ninguno-';
+    }
+
+    public function getAlumnoId()
+    {
+        return $this->alumno ? $this->alumno->id : '-Ninguno-';
+    }
+
+    public function getDocumentacion($valor)
+    {
+        if($valor==1){
+            return "PRESENTADO";
+        }
+        return "FALTANTE";
+    }
+
+
 
 }

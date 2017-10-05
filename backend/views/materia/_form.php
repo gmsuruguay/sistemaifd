@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
      
     ?>    
 
-    <div class="form-group">
+    <div class="form-group" id="submit-control">
         <?= Html::submitButton( '<i class="fa fa-save"> </i> Guardar', ['class' => 'btn btn-success', 'name' => 'signup-button']) ?>
     </div>
 

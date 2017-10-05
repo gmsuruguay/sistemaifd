@@ -9,7 +9,7 @@ $params = array_merge(
 return [
     'language' => 'es',
     'id' => 'app-backend',
-    'name'=>'Sistema',
+    'name'=>'SURI - SISTEMA UNICO DE REGISTRO INTITUCIONAL',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],

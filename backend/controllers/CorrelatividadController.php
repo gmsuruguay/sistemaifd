@@ -116,16 +116,22 @@ class CorrelatividadController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id,$carrera_id,$anio)
     {
         $model = new Correlatividad();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            
-            return $this->redirect(['view', 'id' => $model->id]);
+        $listado_materias = $model->getListaMaterias($id,$carrera_id,$anio);
+        if ($model->load(Yii::$app->request->post()) ) {
+            $model->materia_id= $id;           
+            if($model->save()){
+                echo 1;
+            }
+            else{
+                echo 0;
+            }                           
         } else {
-            return $this->render('create', [
+            return $this->renderAjax('create', [
                 'model' => $model,
+                'listado_materias'=> $listado_materias,
             ]);
         }
     }
@@ -157,9 +163,14 @@ class CorrelatividadController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $model= $this->findModel($id);
+        $carrera_id = $model->idCarrera;
+        if($model->delete()){
+            Yii::$app->session->setFlash('danger', "Elemento eliminado correctamente");
+            return $this->redirect(['/carrera/view',
+                'id' => $carrera_id
+            ]);
+        }
     }
 
     /**

@@ -162,5 +162,10 @@ class Alumno extends Docente
         
     }
 
+    public function getDatoAlumno()
+    {
+       return $this->numero.' '.$this->apellido.' '.$this->nombre;
+    }
+
     
 }

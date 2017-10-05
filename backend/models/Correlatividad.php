@@ -3,6 +3,8 @@
 namespace backend\models;
 
 use Yii;
+use backend\models\Materia;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "correlatividad".
@@ -27,15 +29,16 @@ class Correlatividad extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-   /* public function rules()
+    public function rules()
     {
         return [
-            [['materia_id', 'materia_id_correlativa'], 'required'],
+            [['materia_id', 'materia_id_correlativa','tipo'], 'required'],
+            [['tipo'],'string','max' => 45],
             [['materia_id', 'materia_id_correlativa'], 'integer'],
             [['materia_id'], 'exist', 'skipOnError' => true, 'targetClass' => Materia::className(), 'targetAttribute' => ['materia_id' => 'id']],
             [['materia_id_correlativa'], 'exist', 'skipOnError' => true, 'targetClass' => Materia::className(), 'targetAttribute' => ['materia_id_correlativa' => 'id']],
         ];
-    }*/
+    }
 
     /**
      * @inheritdoc
@@ -68,6 +71,23 @@ class Correlatividad extends \yii\db\ActiveRecord
 
     public function getDescripcionMateria()
     {
-        return $this->materiaIdCorrelativa ? $this->materiaIdCorrelativa->descripcion : 'Ninguno';
+        return $this->materiaIdCorrelativa ? $this->materiaIdCorrelativa->descripcionAnioMateria : 'Ninguno';
+    }
+
+    public static function getListaMaterias($id,$carrera_id,$anio)
+    {        
+        $materias_registradas= self::find()->select('materia_id_correlativa')->where(['materia_id' => $id]);
+        $query = Materia::find()->where(['NOT IN', 'id', $materias_registradas ])->andWhere(['carrera_id' => $carrera_id]); 
+        $lista = $query                 
+                ->andWhere(['<=','anio',$anio]) 
+                ->andWhere(['<>','id',$id])                               
+                ->orderBy('anio')
+                ->all();
+        return ArrayHelper::map($lista, 'id', 'descripcionAnioMateria');
+    }
+
+    public function getIdCarrera()
+    {
+        return $this->materia ? $this->materia->carrera_id : 'Ninguno';
     }
 }

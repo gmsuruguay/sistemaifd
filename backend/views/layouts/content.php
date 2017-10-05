@@ -35,10 +35,7 @@ use dmstr\widgets\Alert;
     </section>
 </div>
 
-<footer class="main-footer">
-    <div class="pull-right hidden-xs">
-        <b>Desarrollado por <a href="#">Innovatic</a> </b>
-    </div>
+<footer class="main-footer">    
     <strong>Copyright &copy; <?=date('Y')?> <a href="#"><?= Yii::$app->name ?> </a>.</strong> All rights
     reserved.
 </footer>

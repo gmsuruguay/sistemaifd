@@ -12,7 +12,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="site-login">    
             <div class="login-box">
         <div class="login-logo">
-            <p><b>Sistema</b></p>
+            <p><b>SURI </b></p>
+            
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">

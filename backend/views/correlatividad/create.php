@@ -11,11 +11,10 @@ $this->params['breadcrumbs'][] = ['label' => 'Correlatividades', 'url' => ['inde
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="correlatividad-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
+    
     <?= $this->render('_form', [
         'model' => $model,
+        'listado_materias'=> $listado_materias,
     ]) ?>
 
 </div>

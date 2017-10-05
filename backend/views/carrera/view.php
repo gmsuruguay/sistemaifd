@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use mdm\admin\components\Helper;
 use yii\helpers\Url;
-use yii\widgets\Pjax;
+//use yii\widgets\Pjax;
 use kartik\grid\GridView;
 use yii\bootstrap\Modal;
 use backend\models\search\CorrelatividadSearch;
@@ -56,9 +56,11 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>            
         </div>
         <div class="box-body">
-        <?php Pjax::begin(['id'=>'grid-materia']); ?>    <?= GridView::widget([
+          <?= GridView::widget([
                 'dataProvider' => $dataProvider,  
-                'filterModel' => $searchModel,     
+                'filterModel' => $searchModel, 
+                'id'=>'grid-materia',  
+                'pjax'=>true,  
                 'hover'=>true,
                 'panel' => [
                 'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon glyphicon-file"></i>Lista de Materias</h3>',
@@ -78,6 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
                         return Yii::$app->controller->renderPartial('_correlativas', [
+                            'model'=>$model,
                             'searchModel' => $searchModel,
                             'dataProvider' => $dataProvider,
                         ]);
@@ -96,21 +99,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'periodo',
 
-                    ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{update} {view} {delete}'), 
+                    ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{update} {delete}'), 
                     'buttons' => [
                         'update' => function ($url, $model, $key) {
                                                     
                             return Html::a('',['materia/update','id' => $key],['class' => 'modalButton fa fa-pencil','title'=>'Actualizar',]);
                             
                         } ,
-                        'view' => function ($url, $model, $key) {
-                            
-                            return Html::a('', ['materia/view', 'id'=>$key], [
-                                'class' => 'fa fa-random', 
-                                'title'=>'Cargar materias correlativas',                                
-                            ]);
-                            
-                        },
+                        
                         'delete' => function ($url, $model, $key) {
                             
                             return Html::a('', ['materia/delete', 'id'=>$key], [
@@ -127,7 +123,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]],
                 ],
             ]); ?>
-        <?php Pjax::end(); ?></div>
+       
         </div>
     </div> 
 
@@ -154,6 +150,11 @@ $this->params['breadcrumbs'][] = $this->title;
         ajax($(this),refrescarGridMateria);
         return false;
     });    
+
+    $('body').on('beforeSubmit','form#materia-correlativa' , function(e){        
+        ajax($(this),refrescarGridMateria);
+        return false;
+    });
    
     
 JS;

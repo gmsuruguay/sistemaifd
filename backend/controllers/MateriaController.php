@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
+use backend\models\search\CorrelatividadSearch;
 
 /**
  * MateriaController implements the CRUD actions for Materia model.
@@ -51,7 +52,7 @@ class MateriaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    /*public function actionView($id)
     { 
         $model= $this->findModel($id);
         $materias = Materia::find()
@@ -95,7 +96,23 @@ class MateriaController extends Controller
             }
         }
         return $array;
+    }*/
+
+    public function actionView($id)
+    { 
+        $model= $this->findModel($id);
+        $searchModel = new CorrelatividadSearch();
+        $searchModel->materia_id= $model->id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        return $this->render('view', [
+            'model' => $model, 
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+       
     }
+
 
     /**
      * Creates a new Materia model.

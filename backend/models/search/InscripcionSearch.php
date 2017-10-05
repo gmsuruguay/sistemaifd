@@ -12,6 +12,7 @@ use backend\models\Inscripcion;
  */
 class InscripcionSearch extends Inscripcion
 {
+    public $alumno;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class InscripcionSearch extends Inscripcion
     {
         return [
             [['id', 'alumno_id', 'carrera_id', 'nro_libreta'], 'integer'],
-            [['fecha', 'observacion'], 'safe'],
+            [['fecha', 'observacion','alumno','nro_legajo'], 'safe'],
         ];
     }
 
@@ -41,13 +42,20 @@ class InscripcionSearch extends Inscripcion
      */
     public function search($params)
     {
-        $query = Inscripcion::find();
+        $query = Inscripcion::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
-
+        $query->joinWith(['alumno']);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['alumno'] = [
+            // The tables are the ones our relation are configured to
+            // in my case they are prefixed with "tbl_"
+            'asc' => ['alumno.apellido' => SORT_ASC],
+            'desc'=> ['alumno.apellido' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -60,13 +68,15 @@ class InscripcionSearch extends Inscripcion
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'nro_legajo' => $this->nro_legajo,
             'alumno_id' => $this->alumno_id,
             'carrera_id' => $this->carrera_id,
             'nro_libreta' => $this->nro_libreta,
             'fecha' => $this->fecha,
         ]);
 
-        $query->andFilterWhere(['like', 'observacion', $this->observacion]);
+        $query->orFilterWhere(['like', 'alumno.numero', $this->alumno])
+              ->orFilterWhere(['like', "concat_ws(' ',alumno.apellido,alumno.nombre)", $this->alumno]);
 
         return $dataProvider;
     }

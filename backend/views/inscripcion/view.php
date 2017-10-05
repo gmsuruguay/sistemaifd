@@ -6,35 +6,79 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Inscripcion */
 
-$this->title = $model->id;
+$this->title = 'Inscripción';
 $this->params['breadcrumbs'][] = ['label' => 'Inscripcions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="inscripcion-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="box">
+        <div class="box-header with-border">
+            <i class="fa fa-file"></i>
+            <h3 class="box-title">Datos de Inscripción</h3>              
+        </div>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
+        <div class="box-body">  
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'nro_legajo',
+                [
+                'label'=>'Alumno',
+                'value'=>$model->datoCompletoAlumno,
+                ],
+                [
+                'label'=>'Carrera',
+                'value'=>$model->descripcionCarrera,
+                ],
+                'nro_libreta',
+                'fecha',
+                'observacion:ntext',
+                [
+                'label'=>'Titulo',
+                'value'=>$model->descripcionTitulo,
+                ],
+                [
+                'label'=>'Colegio',
+                'value'=>$model->descripcionColegio,
+                ],
+                [
+                'label'=>'Fotocopia DNI',
+                'value'=>$model->getDocumentacion($model->fotocopia_dni),
+                ],
+                [
+                'label'=>'Certificado Nacimiento',
+                'value'=>$model->getDocumentacion($model->certificado_nacimiento),
+                ],
+                [
+                'label'=>'Certificado Visual',
+                'value'=>$model->getDocumentacion($model->certificado_visual),
+                ],
+                [
+                'label'=>'Certificado Auditivo',
+                'value'=>$model->getDocumentacion($model->certificado_auditivo),
+                ],
+                [
+                'label'=>'Certificado Foniatrico',
+                'value'=>$model->getDocumentacion($model->certificado_foniatrico),
+                ],
+                [
+                'label'=>'Foto',
+                'value'=>$model->getDocumentacion($model->foto),
+                ],
+                [
+                'label'=>'Constancia de CUIL',
+                'value'=>$model->getDocumentacion($model->constancia_cuil),
+                ],
+                [
+                'label'=>'Planilla Prontuarial',
+                'value'=>$model->getDocumentacion($model->planilla_prontuarial),
+                ]
             ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'alumno_id',
-            'carrera_id',
-            'nro_libreta',
-            'fecha',
-            'observacion:ntext',
-        ],
-    ]) ?>
+        ]) ?>  
+                                                            
+        </div>    
+    </div> 
+    
 
 </div>

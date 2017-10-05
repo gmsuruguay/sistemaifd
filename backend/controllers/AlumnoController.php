@@ -66,11 +66,11 @@ class AlumnoController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {
-        $alumno= $this->findModel($id);
+    {        
+        $model= $this->findModel($id);
         //Busqueda de Inscripcion del alumno
         $searchModel = new InscripcionSearch();
-        $searchModel->alumno_id = $alumno->id; 
+        $searchModel->alumno_id = $id; 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         //Busqueda de Inscripcion en materia del alumno
@@ -81,7 +81,7 @@ class AlumnoController extends Controller
         //Busqueda de Materias segun la carrera del alumno
 
         return $this->render('view', [
-            'model' => $alumno,
+            'model' => $model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             //'searchModel_cursada' => $searchModel_cursada,

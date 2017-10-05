@@ -9,37 +9,37 @@ $(document).on('ready pjax:success', function() {
 
 // Mandar por ajax el formulario y refrescar el grid view o select.
 function ajax(form, callback) {
-
-    $.ajax({
-            url: form.attr("action"),
-            type: "post",
-            data: form.serialize(),
-            beforeSend: function() {
-                $('.preload').css('display', 'inline');
-            }
-        })
-        .done(function(response) {
-            if (response == 1) {
-                //$form.trigger('reset');
-                $(document).find('.modal').modal('hide');
-                callback(); //for pjax update            
-
-            } else {
-                $('#message').html(response);
-            }
-        })
-        .fail(function() {
-            console.log('server error');
-        })
-        .always(function() {
-            setTimeout(function() {
-                $('.preload').hide();
-            }, 2000);
-
-        });
-
-    return false;
-
+    
+        $.ajax({
+                url: form.attr("action"),
+                type: "post",
+                data: form.serialize(),
+                beforeSend: function() {                
+                    $('#submit-control').html("<i class='fa fa-spinner fa-pulse fa-2x'></i> Procesando ...");
+                }
+            })
+            .done(function(response) {
+                if (response == 1) {
+                    //$form.trigger('reset');
+                    $(document).find('.modal').modal('hide');
+                    callback(); //for pjax update            
+    
+                } else {
+                    $('#message').html(response);
+                }
+            })
+            .fail(function() {
+                console.log('server error');
+            })
+            .always(function() {
+                setTimeout(function() {
+                    $('#submit-control').hide();
+                }, 3000);
+    
+            });
+    
+        return false;
+    
 }
 
 function select(form, callback) {
@@ -66,6 +66,7 @@ function refrescarGridTitulo() {
 function refrescarGridMateria() {
     $.pjax.reload({ container: '#grid-materia' });
 }
+
 
 function refrescarSelect(data) {
     $.pjax.reload({ container: '#select-alumno' });

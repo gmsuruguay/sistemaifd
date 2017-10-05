@@ -6,6 +6,9 @@ use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use mdm\admin\components\Helper;
+use yii\helpers\Url;
+use yii\widgets\Pjax;
+use yii\bootstrap\Modal;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Materia */
 
@@ -35,26 +38,96 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value'=>$model->anioMateria,
                     ],                   
                 ],
-            ]) ?> 
-            <?php $form = ActiveForm::begin([
-                'method' => 'post',
-                'class'  => 'form-horizontal',
-                'action' => ['correlatividad/add'],
-                ]); ?>
-
-                 <div class="form-inlie">
-                    <p>Aprobadas</p>
-                    <?= Html::checkboxList('materia_id_correlativa_a', $indicesA, ArrayHelper::map($materias, 'id', 'descripcion'),['separator'=> '<br>']) ?>
-                     <p>Regulares</p>
-                    <?= Html::checkboxList('materia_id_correlativa_r', $indicesR, ArrayHelper::map($materias, 'id', 'descripcion'),['separator'=> '<br>']) ?>
-                    <?=Html::hiddenInput('materia_id', $model->id)?>
-                    <?= Html::submitButton('Actualizar', ['class' => 'btn btn-primary']) ?>
-                </div>
-            <?php $form = ActiveForm::end(); ?> 
+            ]) ?>            
                                                             
         </div>    
-    </div>
-    
+    </div>    
 </div>
 
+<div class="correlatividad-index">
+    <div class="box">
+            <div class="box-header with-border">           
+                <h3 class="box-title">Correlatividades</h3>
+                <div class="pull-right">
+                <?= Html::a('<i class="fa  fa-plus"></i> Agregar materia', ['correlatividad/create','id' => $model->id,'carrera_id'=>$model->carrera_id,'anio'=>$model->anio],['class' => 'btn btn-success modalButton']) ?>
+                </div>            
+            </div>
+            <div class="box-body">   
+                <?php Pjax::begin(['id'=>'grid-correlativas']); ?>
+                    <?= GridView::widget([
+                        'dataProvider' => $dataProvider,        
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+                            
+                            [
+                            'label'=> 'Correlativas',
+                            'value'=> function ($data){
+                                return $data->descripcionMateria;
+                            }
+                            ],
+                            [
+                            'label'=> 'Condición',
+                            'value'=> function ($data){
+                                if($data->tipo=='a')
+                                {
+                                    return 'APROBADO';
+                                }
+                                return 'REGULAR';
+                            }
+                            ],
+
+                            ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{delete}'), 
+                            'buttons' => [                             
+                                 
+                                'delete' => function ($url, $model, $key) {
+                                    
+                                    return Html::a('', ['correlatividad/delete', 'id'=>$key], [
+                                        'class' => 'fa fa-trash', 
+                                        'title'=>'Eliminar',
+                                        'data' => [
+                                                        'confirm' => 'Está seguro de eliminar este elemento?',
+                                                        'method' => 'post',
+                                                    ],
+                                    ]);
+                                    
+                                },
+        
+                            ]],
+                        
+                        
+                        ],
+                    ]); ?>
+                <?php Pjax::end(); ?>
+            </div>
+    </div>
+
 </div>
+
+
+<?php 
+      Modal::begin([
+        'header' => '<h3 class="text-center modal-title"><i class="fa fa-file"></i> Materia</h3>',
+        'id'=>'ModalId',
+        'class'=>'modal',
+        'size'=>'modal-lg', 
+        'clientOptions' => ['backdrop' => 'static'],  
+         ]);
+
+        echo "<div class='modalContent'></div>";
+        
+      Modal::end();
+
+      
+
+      $script = <<< JS
+    
+    $('body').on('beforeSubmit','form#materia-correlativa' , function(e){        
+        ajax($(this),refrescarGridCorrelatividad);
+        return false;
+    });    
+   
+    
+JS;
+$this->registerJs($script);
+
+?>

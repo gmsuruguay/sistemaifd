@@ -105,6 +105,14 @@ class Alumno extends Docente
         return $this->hasOne(Localidad::className(), ['id' => 'lugar_nacimiento_id']);
     }*/
 
+    /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+     public function getCursadas() 
+     { 
+         return $this->hasMany(Cursada::className(), ['alumno_id' => 'id']);
+     } 
+
     /**
      * @return \yii\db\ActiveQuery
      */

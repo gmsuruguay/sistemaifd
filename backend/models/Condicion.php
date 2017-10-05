@@ -44,6 +44,14 @@ class Condicion extends \yii\db\ActiveRecord
         ];
     }
 
+    /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+     public function getCursadas() 
+     { 
+         return $this->hasMany(Cursada::className(), ['condicion_id' => 'id']);
+     } 
+
     /**
      * @return \yii\db\ActiveQuery
      */

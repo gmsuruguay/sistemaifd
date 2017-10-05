@@ -217,7 +217,14 @@ class ActaController extends Controller
     {
         $model = new Acta();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->nota > 0){
+                $model->asistencia=1;
+            }else{
+                $model->asistencia=0;
+            }
+
+            $model->save();
             $notas = new ActiveDataProvider([
                 'query' => Acta::find()->where(['libro' => $model->libro, 'folio'=> $model->folio]),
             ]);

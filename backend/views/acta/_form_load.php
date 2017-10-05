@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
 use yii\grid\GridView;
+use common\models\FechaHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ActaExamen */
@@ -23,7 +24,7 @@ use yii\grid\GridView;
 
         <?= $form->field($model, 'folio')->label(false)->hiddenInput() ?>
 
-        <?= $form->field($model, 'fecha_examen')->label(false)->hiddenInput(['value'=> date('d/m/Y',strtotime($model->fecha_examen))]) ?>
+        <?= $form->field($model, 'fecha_examen')->label(false)->hiddenInput(['value'=> FechaHelper::fechaDMY($model->fecha_examen)]) ?>
 
         <?= $form->field($model, 'condicion_id')->label(false)->hiddenInput()?>
 
@@ -46,7 +47,7 @@ use yii\grid\GridView;
                 <?= $form->field($model, 'nro_permiso')->label(false)->textInput(['placeholder'=>'Nro. de permiso']) ?>
             </div>
             <div class="col-md-3">
-                <?= $form->field($model, 'nota')->label(false)->textInput(['placeholder'=>'Nota', 'required'=> 'required']) ?>
+                <?= $form->field($model, 'nota')->label(false)->textInput(['placeholder'=>'Nota']) ?>
             </div>
             
         </div>
@@ -105,7 +106,8 @@ function cargarNota(response)
     $('#txt-dni').val(null);
     $('#acta-nro_permiso').val(null);
     $('#acta-nota').val(null);
-    $('#acta-alumno_id').val(null);
+    //$('#acta-alumno_id').val(null);
+    $('#lb-nombre').html('');
 
 }
 

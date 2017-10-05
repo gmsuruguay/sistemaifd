@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use common\models\FechaHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\ActaExamen */
 
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'label'=> 'Fecha de Examen',
                         'value'=> function ($data){
-                                return date('d/m/Y', strtotime($data->fecha_examen));
+                                return FechaHelper::fechaDMY($data->fecha_examen);
                             }
                     ],
                     [

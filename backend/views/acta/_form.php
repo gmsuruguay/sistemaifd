@@ -1,13 +1,14 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 use backend\models\Carrera;
 use backend\models\Condicion;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 use yii\grid\GridView;
+use kartik\form\ActiveForm;
+use yii\widgets\MaskedInput;
 
 
 /* @var $this yii\web\View */
@@ -56,7 +57,11 @@ $condicion = Condicion::find()->all();
             <?= $form->field($model, 'folio')->textInput() ?>
         </div>
         <div class="col-sm-4 col-md-4">
-            <?= $model->isNewRecord ?$form->field($model, 'fecha_examen')->textInput(): $form->field($model, 'fecha_examen')->textInput(['value'=> date('d/m/Y',strtotime($model->fecha_examen))])?>
+            <?= $model->isNewRecord ? $form->field($model, 'fecha_examen',[
+                                'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-calendar"></i>']]
+                            ])->widget( MaskedInput::className(), [    
+                                            'clientOptions' => ['alias' =>  'date']
+                ]): $form->field($model, 'fecha_examen')->textInput(['value'=> date('d/m/Y',strtotime($model->fecha_examen))])?>
         </div>
     </div>
     <div class="row">

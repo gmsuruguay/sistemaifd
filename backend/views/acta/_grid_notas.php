@@ -16,17 +16,12 @@ use yii\grid\GridView;
                     ['class' => 'yii\grid\SerialColumn'],
                     'nro_permiso',
                     [
-                    'label'=> 'Apellido y Nombre',
+                    'attribute'=>'alumno_id',
+                    'label'=> 'Alumno',
                     'value'=> function ($data){
-                            return $data->alumno->nombreCompleto;
+                            return $data->alumno->datoAlumno;
                         }
-                    ],
-                    [
-                    'label'=> 'Dni',
-                    'value'=> function ($data){
-                            return $data->alumno->numero;
-                        }
-                    ],
+                    ],                  
                     
                     'nota',
 

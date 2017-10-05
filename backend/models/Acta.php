@@ -40,7 +40,7 @@ class Acta extends \yii\db\ActiveRecord
             [['libro', 'folio', 'condicion_id', 'alumno_id', 'materia_id'], 'integer'],
             [['nota'], 'number'],
             [['asistencia'], 'boolean'],
-            [['condicion_id', 'alumno_id', 'materia_id'], 'required'],
+            [['condicion_id', 'alumno_id', 'materia_id','nota'], 'required'],
             [['fecha_examen'], 'safe'],
             [['resolucion'], 'string', 'max' => 45],
             [['nro_permiso'], 'string', 'max' => 11],

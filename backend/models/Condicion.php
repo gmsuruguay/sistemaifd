@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "condicion".
  *
@@ -51,4 +51,10 @@ class Condicion extends \yii\db\ActiveRecord
      { 
          return $this->hasMany(HistoriaAcademica::className(), ['condicion_id' => 'id']);
      } 
+
+     public static function getListaCondicion()
+     {        
+         $sql = self::find()->orderBy('descripcion')->all();
+         return ArrayHelper::map($sql, 'id', 'descripcion');
+     }
 }

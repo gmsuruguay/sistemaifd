@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "materia".
  *
@@ -133,6 +133,12 @@ class Materia extends \yii\db\ActiveRecord
     public function getDescripcionAnioMateria()
     {
         return $this->descripcion.' - '.$this->anioMateria.' - '.$this->periodo;
+    }
+
+    public static function getListaMaterias()
+    {        
+        $sql = self::find()->orderBy('descripcion')->all();
+        return ArrayHelper::map($sql, 'id', 'descripcion');
     }
 
     

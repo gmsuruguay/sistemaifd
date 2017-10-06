@@ -14,8 +14,7 @@ use yii\widgets\ActiveForm;
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
-
-    <?= $form->field($model, 'id') ?>
+   
 
     <?= $form->field($model, 'fecha_inscripcion') ?>
 
@@ -25,9 +24,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'materia_id') ?>
 
-    <?php // echo $form->field($model, 'nota') ?>
+    <?php echo $form->field($model, 'nota') ?>
 
-    <?php // echo $form->field($model, 'fecha_vencimiento') ?>
+    <?php echo $form->field($model, 'fecha_vencimiento') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

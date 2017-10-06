@@ -12,7 +12,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cursada-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<?php $model->fecha_inscripcion = $model->fecha_inscripcion? date('d/m/Y', strtotime($model->fecha_inscripcion)) : null; ?>
+<?php $model->fecha_vencimiento = $model->fecha_vencimiento? date('d/m/Y', strtotime($model->fecha_vencimiento)) : null; ?>
+
 
     <?= $this->render('_form', [
         'model' => $model,

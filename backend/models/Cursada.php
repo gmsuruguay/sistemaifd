@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-
+use common\models\FechaHelper;
 /**
  * This is the model class for table "cursada".
  *
@@ -53,9 +53,9 @@ class Cursada extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'fecha_inscripcion' => 'Fecha Inscripcion',
-            'condicion_id' => 'Condicion ID',
-            'alumno_id' => 'Alumno ID',
-            'materia_id' => 'Materia ID',
+            'condicion_id' => 'Condicion',
+            'alumno_id' => 'Alumno',
+            'materia_id' => 'Materia',
             'nota' => 'Nota',
             'fecha_vencimiento' => 'Fecha Vencimiento',
         ];
@@ -83,5 +83,33 @@ class Cursada extends \yii\db\ActiveRecord
     public function getMateria()
     {
         return $this->hasOne(Materia::className(), ['id' => 'materia_id']);
+    }
+
+    public function beforeValidate()
+    {
+        if ($this->fecha_inscripcion != null) {           
+            $this->fecha_inscripcion = FechaHelper::fechaYMD($this->fecha_inscripcion);
+        }  
+
+        if ($this->fecha_vencimiento != null) {           
+            $this->fecha_vencimiento = FechaHelper::fechaYMD($this->fecha_vencimiento);
+        }  
+        
+        return parent::beforeValidate();
+    }
+
+    public function getDatoCompletoAlumno()
+    {
+        return $this->alumno ? $this->alumno->datoAlumno : '-Ninguno-';
+    }
+
+    public function getAlumnoId()
+    {
+        return $this->alumno ? $this->alumno->id : '-Ninguno-';
+    }
+
+    public function getDescripcionMateria()
+    {
+        return $this->materia ? $this->materia->descripcion : 'Ninguno';
     }
 }

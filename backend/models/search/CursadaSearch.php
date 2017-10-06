@@ -12,6 +12,7 @@ use backend\models\Cursada;
  */
 class CursadaSearch extends Cursada
 {
+    public $alumno;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class CursadaSearch extends Cursada
     {
         return [
             [['id', 'condicion_id', 'alumno_id', 'materia_id'], 'integer'],
-            [['fecha_inscripcion', 'fecha_vencimiento'], 'safe'],
+            [['fecha_inscripcion', 'fecha_vencimiento','alumno'], 'safe'],
             [['nota'], 'number'],
         ];
     }
@@ -45,10 +46,20 @@ class CursadaSearch extends Cursada
         $query = Cursada::find();
 
         // add conditions that should always apply here
+        $query->joinWith(['alumno']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['id' => SORT_DESC]],
         ]);
+
+        
+        $dataProvider->sort->attributes['alumno'] = [
+            // The tables are the ones our relation are configured to
+            // in my case they are prefixed with "tbl_"
+            'asc' => ['alumno.apellido' => SORT_ASC],
+            'desc'=> ['alumno.apellido' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -68,6 +79,9 @@ class CursadaSearch extends Cursada
             'nota' => $this->nota,
             'fecha_vencimiento' => $this->fecha_vencimiento,
         ]);
+
+        $query->orFilterWhere(['like', 'alumno.numero', $this->alumno])
+              ->orFilterWhere(['like', "concat_ws(' ',alumno.apellido,alumno.nombre)", $this->alumno]);
 
         return $dataProvider;
     }

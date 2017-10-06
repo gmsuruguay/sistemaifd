@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\models\Cursada;
 use yii\helpers\Url;
+use common\models\FechaHelper;
+use mdm\admin\components\Helper;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\CursadaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -12,23 +14,27 @@ $this->title = 'Cursadas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cursada-index">
+    <?=$this->render('_search', ['model' => $searchModel])?>
     <div class="box">
         <div class="box-header with-border">            
             <h3 class="box-title">Listado de actas</h3>  
             <div class="pull-right">
-            <?= Html::a('<i class="fa  fa-plus"></i> Acta', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('<i class="fa  fa-plus"></i> Nuevo', ['create'], ['class' => 'btn btn-success']) ?>
             </div>           
         </div>
         <div class="box-body">
             <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
+                'dataProvider' => $dataProvider,               
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-
-                    
-                    'fecha_inscripcion',
-                    'condicion_id',
+                    ['class' => 'yii\grid\SerialColumn'],                    
+                    [
+                    'attribute'=>'fecha_inscripcion',
+                    'label'=>'Fecha Inscripción',
+                    'format'=>'text',//raw, html
+                    'content'=>function ($data){
+                        return FechaHelper::fechaDMY($data->fecha_inscripcion);
+                    }
+                    ],                 
                     [
                     'attribute'=>'alumno',
                     'label'=>'Alumno',
@@ -48,10 +54,33 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $data->descripcionMateria;
                     }
                     ], 
-                    'nota',
-                    // 'fecha_vencimiento',
+                    [
+                    'attribute'=>'condicion_id',
+                    'label'=>'Condición',
+                    'format'=>'text',//raw, html
+                    'content'=>function ($data){
+                        return $data->descripcionCondicion;
+                    }
+                    ], 
+                    [
+                    'attribute'=>'fecha',
+                    'label'=>'Fecha',
+                    'format'=>'text',//raw, html
+                    'content'=>function ($data){
+                        return FechaHelper::fechaDMY($data->fecha);
+                    }
+                    ], 
+                    'nota',                   
+                    [
+                    'attribute'=>'fecha_vencimiento',
+                    'label'=>'Fecha Vencimiento',
+                    'format'=>'text',//raw, html
+                    'content'=>function ($data){
+                        return FechaHelper::fechaDMY($data->fecha_vencimiento);
+                    }
+                    ], 
 
-                    ['class' => 'yii\grid\ActionColumn'],
+                    ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{update} {delete}')],
                 ],
             ]); ?>
         </div>

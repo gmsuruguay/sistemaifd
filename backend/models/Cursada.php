@@ -4,6 +4,8 @@ namespace backend\models;
 
 use Yii;
 use common\models\FechaHelper;
+use yii\helpers\ArrayHelper;
+use backend\models\Condicion;
 /**
  * This is the model class for table "cursada".
  *
@@ -35,8 +37,8 @@ class Cursada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fecha_inscripcion', 'fecha_vencimiento'], 'safe'],
-            [['condicion_id', 'alumno_id', 'materia_id'], 'required'],
+            [['fecha_inscripcion', 'fecha_vencimiento','fecha'], 'safe'],
+            [['alumno_id', 'materia_id'], 'required'],
             [['condicion_id', 'alumno_id', 'materia_id'], 'integer'],
             [['nota'], 'number'],
             [['alumno_id'], 'exist', 'skipOnError' => true, 'targetClass' => Alumno::className(), 'targetAttribute' => ['alumno_id' => 'id']],
@@ -58,6 +60,7 @@ class Cursada extends \yii\db\ActiveRecord
             'materia_id' => 'Materia',
             'nota' => 'Nota',
             'fecha_vencimiento' => 'Fecha Vencimiento',
+            'fecha'=>'Fecha'
         ];
     }
 
@@ -94,6 +97,10 @@ class Cursada extends \yii\db\ActiveRecord
         if ($this->fecha_vencimiento != null) {           
             $this->fecha_vencimiento = FechaHelper::fechaYMD($this->fecha_vencimiento);
         }  
+
+        if ($this->fecha != null) {           
+            $this->fecha = FechaHelper::fechaYMD($this->fecha);
+        }  
         
         return parent::beforeValidate();
     }
@@ -111,5 +118,16 @@ class Cursada extends \yii\db\ActiveRecord
     public function getDescripcionMateria()
     {
         return $this->materia ? $this->materia->descripcion : 'Ninguno';
+    }
+
+    public function getDescripcionCondicion()
+    {
+        return $this->condicion ? $this->condicion->descripcion : 'Ninguno';
+    }   
+
+    public function getListaCondicion()
+    {        
+        $sql = Condicion::find()->where(['id'=>[1,2,3]])->orderBy('descripcion')->all();
+        return ArrayHelper::map($sql, 'id', 'descripcion');
     }
 }

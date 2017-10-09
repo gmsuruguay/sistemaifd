@@ -31,6 +31,7 @@ use mdm\admin\components\Helper;
             'celular',
             'email:email',
             'fecha_baja',
+            'ubicacion_legajo',
             //'user_id',
         ],
     ]) ?>

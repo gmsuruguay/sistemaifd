@@ -148,7 +148,13 @@ use yii\helpers\Url;
                                             ])->textInput(['placeholder'=>"Correo electrónico"])?>
             </div>
          </div>       
-
+         <?php
+         $lista=[
+            'EL CARMEN'=>'EL CARMEN',
+            'MONTERRICO'=>'MONTERRICO',
+            'PERICO'=>'PERICO',                       
+        ]; ?>
+         <?= $form->field($model, 'ubicacion_legajo')->dropDownList($lista,['prompt'=>'Seleccione el lugar de residencia del legajo']); ?>
         </div>                              
         <div class="box-footer">
                 <?= Html::submitButton( '<i class="fa fa-save"> </i> Guardar', ['class' => 'btn btn-success', 'name' => 'signup-button']) ?>

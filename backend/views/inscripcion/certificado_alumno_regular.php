@@ -13,7 +13,7 @@ $this->title = 'Certificado de Alumno Regular';
 <section class="contenedor margen-superior">
     <p align="justify">
     Por la presente se hace constar que: <b><?= $inscripcion->nombreAlumno ?></b>  con    
-    D.N.I. <b><?=$inscripcion->alumno->numero?></b> es Alumno/a de ...... la Carrera
+    D.N.I. <b><?=$inscripcion->alumno->numero?></b> es Alumno/a de la Carrera
     <b><?= $inscripcion->descripcionCarrera ?></b> en este establecimiento.    
     </p>
 

@@ -6,6 +6,9 @@ use kartik\select2\Select2;
 use yii\widgets\MaskedInput;
 use backend\models\Localidad;
 use backend\models\Titulo;
+use yii\widgets\Pjax;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Docente */
 /* @var $form yii\widgets\ActiveForm */
@@ -84,6 +87,8 @@ use backend\models\Titulo;
                 ])->label('* Fecha Nacimiento') ?>
             </div>
             <div class="col-md-4">
+            <label class="control-label"><?=Html::button('Lugar Nacimiento', ['value'=>Url::to(['localidad/nuevo']),'class' => 'btn-link btnmodal','id'=>'btnLugar'])?></label>
+            <?php Pjax::begin(['id'=>'select-lugar']); ?>  
             <?= $form->field($model, 'lugar_nacimiento_id')->widget(Select2::classname(), [
                             
                                                             'data' => Localidad::getlistaLocalidades(),
@@ -92,9 +97,9 @@ use backend\models\Titulo;
                                                             'pluginOptions' => [
                                                                 'allowClear' => true
                                                             ],
-                                                            ])
+                                                            ])->label(false);
 
-                                        ?>
+                                        ?> <?php Pjax::end(); ?>
             </div>            
          </div>
          <div class="row">
@@ -105,6 +110,8 @@ use backend\models\Titulo;
             <?= $form->field($model, 'nro')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-6">
+            <label class="control-label"><?=Html::button('Localidad', ['value'=>Url::to(['localidad/nuevo']),'class' => 'btn-link btnmodal' ,'id'=>'btnLocalidad'])?></label>
+            <?php Pjax::begin(['id'=>'select-localidad']); ?> 
             <?= $form->field($model, 'localidad_id')->widget(Select2::classname(), [
                             
                                                             'data' => Localidad::getlistaLocalidades(),
@@ -113,9 +120,9 @@ use backend\models\Titulo;
                                                             'pluginOptions' => [
                                                                 'allowClear' => true
                                                             ],
-                                                            ])
+                                                            ])->label(false)
 
-                                        ?>
+                                        ?> <?php Pjax::end(); ?>
             </div>
          </div>   
          <div class="row">
@@ -151,3 +158,46 @@ use backend\models\Titulo;
     </div>       
 
 </div>
+
+
+<?php 
+      Modal::begin([
+        'header' => '<h3 class="text-center modal-title">Localidad</h3>',
+        'class'=>'modal',
+        'size'=>'modal-md', 
+        'clientOptions' => ['backdrop' => 'static'],  
+         ]);
+
+        echo "<div class='modalContent'></div>";
+        
+      Modal::end();
+
+?>
+<?php
+ $script = <<< JS
+ var  id;
+
+ $('.btnmodal').click(function(){
+    if($(this).attr('id') == 'btnLugar'){
+        id='lugar';
+    }else{
+        id='localidad';
+    }
+	$('.modal').modal('show')
+	.find('.modalContent')
+	.load($(this).attr('value'));
+});
+
+ $('body').on('beforeSubmit','form#localidad' , function(e){    
+        if(id=='lugar'){
+            select($(this),refrescarSelectLugar);
+        } else{
+            select($(this),refrescarSelectLocalidad);
+        }            
+        return false;
+    });         
+   
+    
+JS;
+$this->registerJs($script);
+?>

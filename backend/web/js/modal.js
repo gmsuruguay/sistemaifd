@@ -9,37 +9,37 @@ $(document).on('ready pjax:success', function() {
 
 // Mandar por ajax el formulario y refrescar el grid view o select.
 function ajax(form, callback) {
-    
-        $.ajax({
-                url: form.attr("action"),
-                type: "post",
-                data: form.serialize(),
-                beforeSend: function() {                
-                    $('#submit-control').html("<i class='fa fa-spinner fa-pulse fa-2x'></i> Procesando ...");
-                }
-            })
-            .done(function(response) {
-                if (response == 1) {
-                    //$form.trigger('reset');
-                    $(document).find('.modal').modal('hide');
-                    callback(); //for pjax update            
-    
-                } else {
-                    $('#message').html(response);
-                }
-            })
-            .fail(function() {
-                console.log('server error');
-            })
-            .always(function() {
-                setTimeout(function() {
-                    $('#submit-control').hide();
-                }, 3000);
-    
-            });
-    
-        return false;
-    
+
+    $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: form.serialize(),
+            beforeSend: function() {
+                $('#submit-control').html("<i class='fa fa-spinner fa-pulse fa-2x'></i> Procesando ...");
+            }
+        })
+        .done(function(response) {
+            if (response == 1) {
+                //$form.trigger('reset');
+                $(document).find('.modal').modal('hide');
+                callback(); //for pjax update            
+
+            } else {
+                $('#message').html(response);
+            }
+        })
+        .fail(function() {
+            console.log('server error');
+        })
+        .always(function() {
+            setTimeout(function() {
+                $('#submit-control').hide();
+            }, 3000);
+
+        });
+
+    return false;
+
 }
 
 function select(form, callback) {
@@ -72,4 +72,14 @@ function refrescarSelect(data) {
     $.pjax.reload({ container: '#select-alumno' });
     /*var data = $.parseJSON(data);
     var id= data.id;*/
+}
+
+function refrescarSelectLugar() {
+    $.pjax.reload({ container: '#select-lugar', async: false });
+    $.pjax.reload({ container: '#select-localidad', async: false });
+
+}
+
+function refrescarSelectLocalidad() {
+    $.pjax.reload({ container: '#select-localidad' });
 }

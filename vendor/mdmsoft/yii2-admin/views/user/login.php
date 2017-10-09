@@ -12,8 +12,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="site-login">    
             <div class="login-box">
         <div class="login-logo">
-            <p><b>SURI </b></p>    
-            <h3>SISTEMA ÚNICO DE REGISTRO INSTITUCIONAL</h3>       
+        <img src="img/logo_ifd_header.png" class="img-responsive center-block"  alt="Logo"/>
+            <!--<p><b>SURI </b></p>    
+            <h3>SISTEMA ÚNICO DE REGISTRO INSTITUCIONAL</h3>  -->     
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">

@@ -36,6 +36,3 @@ phpunit.phar
 
 # vagrant runtime
 /.vagrant
-
-#Archivo htaccess
-.htaccess

@@ -113,12 +113,13 @@ use yii\helpers\Url;
 
         echo "<div class='modalContent'></div>";
         
-      Modal::end();
+      Modal::end();      
 
 ?>
 
 <?php
  $script = <<< JS
+ 
  $('.btnmodal').click(function(){
 	$('.modal').modal('show')
 	.find('.modalContent')

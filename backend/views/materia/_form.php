@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
 /* @var $this yii\web\View */
 /* @var $model backend\models\Materia */
 /* @var $form yii\widgets\ActiveForm */
@@ -25,6 +24,14 @@ use yii\widgets\ActiveForm;
      echo $form->field($model, 'periodo')->dropDownList($listData,['prompt'=>'Seleccione periodo de duración'])
      
     ?>    
+
+    <?= $form->field($model, 'condicion_id')->dropDownList($model->listaCondicion,['prompt'=>'Seleccione condición']) ?>
+    
+    <?php
+     $listData= array("1"=>"LIBRE","2"=>"LIBRE CON INSCRIPCION A CURSADA");
+     echo $form->field($model, 'condicion_examen_libre')->dropDownList($listData,['prompt'=>'Seleccione condición para rendir exámen libre'])
+     
+    ?>  
 
     <div class="form-group" id="submit-control">
         <?= Html::submitButton( '<i class="fa fa-save"> </i> Guardar', ['class' => 'btn btn-success', 'name' => 'signup-button']) ?>

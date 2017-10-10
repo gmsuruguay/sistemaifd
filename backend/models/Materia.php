@@ -4,6 +4,7 @@ namespace backend\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use backend\models\Condicion;
 /**
  * This is the model class for table "materia".
  *
@@ -35,12 +36,13 @@ class Materia extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['descripcion', 'carrera_id', 'anio','periodo'], 'required'],
+            [['descripcion', 'carrera_id', 'anio','periodo','condicion_id'], 'required'],
             [['carrera_id'], 'integer'],
             [['estado'], 'boolean'],
             [['descripcion'], 'string', 'max' => 450],
-            [['anio','periodo'], 'string', 'max' => 45],
+            [['anio','periodo','condicion_examen_libre'], 'string', 'max' => 45],
             [['carrera_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carrera::className(), 'targetAttribute' => ['carrera_id' => 'id']],
+            [['condicion_id'], 'exist', 'skipOnError' => true, 'targetClass' => Condicion::className(), 'targetAttribute' => ['condicion_id' => 'id']],
         ];
     }
 
@@ -56,8 +58,18 @@ class Materia extends \yii\db\ActiveRecord
             'anio' => 'Año',
             'periodo' => 'Periodo',
             'estado' => 'Estado',
+            'condicion_id' => 'Condicion',
+            'condicion_examen_libre' => 'Condicion Examen Libre',
         ];
     }
+
+    /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+     public function getCondicion() 
+     { 
+         return $this->hasOne(Condicion::className(), ['id' => 'condicion_id']);
+     } 
 
      /** 
      * @return \yii\db\ActiveQuery 
@@ -149,5 +161,25 @@ class Materia extends \yii\db\ActiveRecord
         return ArrayHelper::map($sql, 'id', 'descripcion');
     }
 
+    public function getListaCondicion()
+    {        
+        $sql = Condicion::find()->where(['id'=>[2,3]])->orderBy('descripcion')->all();
+        return ArrayHelper::map($sql, 'id', 'descripcion');
+    }
+
+    public function getCondicionExamen()
+    {
+        if($this->condicion_examen_libre == 1){ // si el valor es igual a 1 significa que puede rendir libre esta materia
+            return 'LIBRE';
+        }elseif($this->condicion_examen_libre == 2){ //para rendir al menos debe haberse inscripto a cursar la materia.
+            return 'LIBRE CON INSCRIPCION A CURSADA';
+        }
+        return "No asignado";
+    }
+
+    public function getDescripcionCondicion()
+    {
+        return $this->condicion ? $this->condicion->descripcion : 'Ninguno';
+    }   
     
 }

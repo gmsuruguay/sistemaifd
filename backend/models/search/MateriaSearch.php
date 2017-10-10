@@ -19,7 +19,7 @@ class MateriaSearch extends Materia
     {
         return [
             [['id', 'carrera_id'], 'integer'],
-            [['descripcion', 'anio','periodo'], 'safe'],
+            [['descripcion', 'anio'], 'safe'],
             [['estado'], 'boolean'],
         ];
     }

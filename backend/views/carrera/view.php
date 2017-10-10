@@ -102,6 +102,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     ],
                     'periodo',
+                    [
+                    'attribute'=>'condicion_id',
+                    'label'=>'Condicion',
+                    'value'=>function($data){
+                        return $data->descripcionCondicion;
+                    },
+                    ],
+                    [
+                    'attribute'=>'condicion_examen_libre',
+                    'label'=>'Condicion Examen Libre',
+                    'value'=>function($data){
+                        return $data->condicionExamen;
+                    },
+                    ],                    
 
                     ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{update} {delete}'), 
                     'buttons' => [

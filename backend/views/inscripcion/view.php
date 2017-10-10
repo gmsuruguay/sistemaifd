@@ -33,15 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'nro_libreta',
                 'fecha',
-                'observacion:ntext',
-                [
-                'label'=>'Titulo',
-                'value'=>$model->descripcionTitulo,
-                ],
-                [
-                'label'=>'Colegio',
-                'value'=>$model->descripcionColegio,
-                ],
+                'observacion:ntext',                
                 [
                 'label'=>'Fotocopia DNI',
                 'value'=>$model->getDocumentacion($model->fotocopia_dni),

@@ -8,6 +8,8 @@ use backend\models\Localidad;
 use yii\widgets\Pjax;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use backend\models\TituloSecundario;
+use backend\models\ColegioSecundario;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Alumno */
@@ -145,7 +147,29 @@ use yii\helpers\Url;
                                                 'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-envelope"></i>']]
                                             ])->textInput(['placeholder'=>"Correo electrónico"])?>
             </div>
-         </div>       
+         </div> 
+         <div class="row">
+            <div class="col-md-6">
+            <?= $form->field($model, 'titulo_secundario_id')->widget(Select2::classname(), [                                            
+                                                    'data' => TituloSecundario::getListaTitulos(),
+                                                    'language' => 'es',
+                                                    'options' => ['placeholder' => 'Seleccione titulo secundario'],
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true
+                                                    ],
+                                                    ]) ?>
+            </div>  
+            <div class="col-md-6">
+            <?= $form->field($model, 'colegio_secundario_id')->widget(Select2::classname(), [                                            
+                                                                'data' => ColegioSecundario::getListaColegios(),
+                                                                'language' => 'es',
+                                                                'options' => ['placeholder' => 'Seleccione colegio secundario'],
+                                                                'pluginOptions' => [
+                                                                    'allowClear' => true
+                                                                ],
+                                                                ]) ?>
+            </div>
+         </div>      
 
         </div>                              
         <div class="box-footer">

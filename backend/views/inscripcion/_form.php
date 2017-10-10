@@ -51,25 +51,7 @@ use yii\helpers\Url;
                                                     ]) ?>
 
            
-            <?= $form->field($model, 'nro_libreta')->textInput() ?>      
-
-            <?= $form->field($model, 'titulo_secundario_id')->widget(Select2::classname(), [                                            
-                                                    'data' => TituloSecundario::getListaTitulos(),
-                                                    'language' => 'es',
-                                                    'options' => ['placeholder' => 'Seleccione titulo secundario'],
-                                                    'pluginOptions' => [
-                                                        'allowClear' => true
-                                                    ],
-                                                    ]) ?>
-
-            <?= $form->field($model, 'colegio_secundario_id')->widget(Select2::classname(), [                                            
-                                                                'data' => ColegioSecundario::getListaColegios(),
-                                                                'language' => 'es',
-                                                                'options' => ['placeholder' => 'Seleccione colegio secundario'],
-                                                                'pluginOptions' => [
-                                                                    'allowClear' => true
-                                                                ],
-                                                                ]) ?>
+            <?= $form->field($model, 'nro_libreta')->textInput() ?>            
 
             <label for="">Documentación Presentada</label>
 

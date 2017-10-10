@@ -29,6 +29,14 @@ use mdm\admin\components\Helper;
             'telefono',
             'celular',
             'email:email',
+            [
+            'label'=>'Titulo',
+            'value'=>$model->descripcionTitulo,
+            ],
+            [
+            'label'=>'Colegio',
+            'value'=>$model->descripcionColegio,
+            ],
             'fecha_baja',
             //'user_id',
         ],

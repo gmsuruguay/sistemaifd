@@ -41,8 +41,7 @@ class Inscripcion extends \yii\db\ActiveRecord
             [['observacion'], 'string'],
             [['alumno_id'], 'exist', 'skipOnError' => true, 'targetClass' => Alumno::className(), 'targetAttribute' => ['alumno_id' => 'id']],
             [['carrera_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carrera::className(), 'targetAttribute' => ['carrera_id' => 'id']],
-            [['colegio_secundario_id'], 'exist', 'skipOnError' => true, 'targetClass' => ColegioSecundario::className(), 'targetAttribute' => ['colegio_secundario_id' => 'id']],
-            [['titulo_secundario_id'], 'exist', 'skipOnError' => true, 'targetClass' => TituloSecundario::className(), 'targetAttribute' => ['titulo_secundario_id' => 'id']],
+           
         ];
     }
 
@@ -58,9 +57,7 @@ class Inscripcion extends \yii\db\ActiveRecord
             'carrera_id' => 'Carrera',
             'nro_libreta' => 'Nro Libreta',
             'fecha' => 'Fecha',
-            'observacion' => 'Observacion',
-            'titulo_secundario_id' => 'Titulo Secundario',
-            'colegio_secundario_id' => 'Colegio Secundario',
+            'observacion' => 'Observacion',            
             'fotocopia_dni' => 'Fotocopia Dni',
             'certificado_nacimiento' => 'Certificado Nacimiento',            
             'certificado_visual' => 'Certificado Visual',
@@ -87,23 +84,7 @@ class Inscripcion extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Carrera::className(), ['id' => 'carrera_id']);
     }
-
-    /** 
-     * @return \yii\db\ActiveQuery 
-     */ 
-     public function getTituloSecundario() 
-     { 
-         return $this->hasOne(TituloSecundario::className(), ['id' => 'titulo_secundario_id']);
-     } 
-
-     /** 
-     * @return \yii\db\ActiveQuery 
-     */ 
-    public function getColegioSecundario() 
-    { 
-        return $this->hasOne(ColegioSecundario::className(), ['id' => 'colegio_secundario_id']);
-    } 
-
+   
 
     public function beforeValidate()
     {
@@ -126,16 +107,7 @@ class Inscripcion extends \yii\db\ActiveRecord
     public function getResolucionCarrera(){
         return $this->carrera ? $this->carrera->nro_resolucion : ' - ';
     }
-
-    public function getDescripcionTitulo()
-    {
-        return $this->tituloSecundario ? $this->tituloSecundario->descripcion : ' - ';
-    }
-
-    public function getDescripcionColegio()
-    {
-        return $this->colegioSecundario ? $this->colegioSecundario->descripcion : ' - ';
-    }
+    
 
     public function getDatoCompletoAlumno()
     {

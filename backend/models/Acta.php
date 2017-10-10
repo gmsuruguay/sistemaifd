@@ -131,4 +131,9 @@ class Acta extends \yii\db\ActiveRecord
         return $this->alumno ? $this->alumno->id : '-Ninguno-';
     }
 
+    public function getDescripcionCondicion()
+    {
+        return $this->condicion ? $this->condicion->descripcion : 'Ninguno';
+    }
+
 }

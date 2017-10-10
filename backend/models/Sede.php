@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "sede".
  *
@@ -74,5 +74,16 @@ class Sede extends \yii\db\ActiveRecord
     public function getDocentes()
     {
         return $this->hasMany(Docente::className(), ['sede_id' => 'id']);
+    }
+
+    public function getDescripcionSede()
+    {
+        return $this->descripcion.'-'.$this->localidad;
+    }
+
+    public static function getListaSedes()
+    {        
+        $sql = self::find()->orderBy('descripcion')->all();
+        return ArrayHelper::map($sql, 'id', 'descripcionSede');
     }
 }

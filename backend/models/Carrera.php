@@ -36,6 +36,7 @@ class Carrera extends \yii\db\ActiveRecord
             [['duracion'], 'integer'],
             [['descripcion'], 'string', 'max' => 450],
             [['cohorte','validez_nacional','cantidad_materias','cantidad_horas','nro_resolucion'], 'string', 'max' => 45],
+            [['sede_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sede::className(), 'targetAttribute' => ['sede_id' => 'id']],
         ];
     }
 
@@ -47,14 +48,23 @@ class Carrera extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'descripcion' => 'Descripción',
-            'duracion' => 'Duración',
+            'duracion' => 'Duración en años',
             'cohorte' => 'Cohorte',
             'validez_nacional',
             'cantidad_materias',
             'cantidad_horas',
-            'nro_resolucion'
+            'nro_resolucion',
+            'sede_id' => 'Sede',
         ];
     }
+
+    /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+     public function getSede() 
+     { 
+         return $this->hasOne(Sede::className(), ['id' => 'sede_id']);
+     } 
 
     /**
      * @return \yii\db\ActiveQuery
@@ -90,5 +100,10 @@ class Carrera extends \yii\db\ActiveRecord
         $cantidad = self::find()->count();
         return $cantidad;        
 
+    }
+
+    public function getDescripcionSede()
+    {
+        return $this->sede ? $this->sede->descripcionSede : ' - ';
     }
 }

@@ -39,6 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
                
                 'duracion',
                 'cohorte',
+                [
+                'label'=>'Sede',
+                'value'=>$model->descripcionSede,
+                ],
             ],
             ]) ?>     
         </div>

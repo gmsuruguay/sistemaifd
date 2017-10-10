@@ -18,7 +18,7 @@ use backend\models\Autoridades;
     <p align="justify">
     El que suscribe, <?=Autoridades::getDatoRector()?>, Rector a cargo del I.E.S. N ° 6 de Ciudad Perico, HACE CONSTAR QUE:
     <b><?=$model->nombreAlumno?></b> con  D.N.I. <b><?=$model->alumno->numero?></b> quien ingresara con el Titulo de: 
-    <b><?=$model->descripcionTitulo?> </b>, otorgado por <b><?=$model->DescripcionColegio?> </b>
+    <b><?=$model->alumno->descripcionTitulo?> </b>, otorgado por <b><?=$model->alumno->DescripcionColegio?> </b>
     , ha cursado y aprobado los Espacios Curriculares que se detallan y que corresponden a la Estructura Curricular de la Carrera
     <b><?= $model->descripcionCarrera ?></b> <?= $model->resolucionCarrera ?>.    
     </p>   

@@ -12,6 +12,7 @@ use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use backend\models\search\CorrelatividadSearch;
 use yii\widgets\ActiveForm;
+use backend\models\Carrera;
 /**
  * MateriaController implements the CRUD actions for Materia model.
  */
@@ -130,18 +131,34 @@ class MateriaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    /*public function actionCreate()
+    public function actionNuevo($id)
     {
         $model = new Materia();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $carrera= Carrera::nombreCarrera($id);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->carrera_id= $id;
+            $model->estado = 0;
+            if($model->save()){
+                Yii::$app->session->setFlash('success', "Se agrego la materia correctamente");
+                return $this->redirect(['/carrera/view',
+                    'id' => $id,
+                ]);
+            }else {
+                return $this->render('_formulario', [
+                    'model' => $model,
+                    'carrera'=> $carrera,
+                    'id'=>$id
+                ]);
+            }
+            
         } else {
-            return $this->render('create', [
+            return $this->render('_formulario', [
                 'model' => $model,
+                'carrera'=> $carrera,
+                'id'=>$id
             ]);
         }
-    }*/
+    }
 
     public function actionCreate($id)
     {

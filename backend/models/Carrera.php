@@ -106,4 +106,12 @@ class Carrera extends \yii\db\ActiveRecord
     {
         return $this->sede ? $this->sede->descripcionSede : ' - ';
     }
+
+    public static function  nombreCarrera($id)
+    {        
+        $model = self::find()->where(['id'=>$id])->one();
+        if($model){
+           return  $model->descripcion;
+        }
+    }
 }

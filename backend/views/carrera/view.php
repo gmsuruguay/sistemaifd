@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-header with-border">           
             
             <div class="pull-right">
-            <?= Html::a('<i class="fa  fa-plus"></i> Agregar materia', ['materia/create','id' => $model->id],['class' => 'btn btn-success modalButton']) ?>
+            <?= Html::a('<i class="fa  fa-plus"></i> Agregar materia', ['materia/nuevo','id' => $model->id],['class' => 'btn btn-success']) ?>
             </div>            
         </div>
         <div class="box-body">

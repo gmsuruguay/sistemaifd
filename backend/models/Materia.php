@@ -37,10 +37,9 @@ class Materia extends \yii\db\ActiveRecord
     {
         return [
             [['descripcion', 'carrera_id', 'anio','periodo','condicion_id'], 'required'],
-            [['carrera_id'], 'integer'],
-            [['estado'], 'boolean'], 
+            [['carrera_id'], 'integer'],            
             //[['descripcion'], 'validateDescripcion'],  
-            //[['descripcion','carrera_id'],'unique','targetAttribute' => ['descripcion', 'carrera_id']],                      
+            [['descripcion','carrera_id'],'unique','targetAttribute' => ['descripcion','carrera_id'],'message' => 'Este nombre de Materia ya existe para la Carrera actual.'],                      
             [['descripcion'], 'string', 'max' => 450],
             [['anio','periodo','condicion_examen_libre'], 'string', 'max' => 45],
             [['carrera_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carrera::className(), 'targetAttribute' => ['carrera_id' => 'id']],

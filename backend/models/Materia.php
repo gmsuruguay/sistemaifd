@@ -38,7 +38,7 @@ class Materia extends \yii\db\ActiveRecord
         return [
             [['descripcion', 'carrera_id', 'anio','periodo','condicion_id'], 'required'],
             [['carrera_id'], 'integer'],
-            [['estado'], 'boolean'],
+            [['estado'], 'boolean'],            
             [['descripcion'], 'string', 'max' => 450],
             [['anio','periodo','condicion_examen_libre'], 'string', 'max' => 45],
             [['carrera_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carrera::className(), 'targetAttribute' => ['carrera_id' => 'id']],
@@ -172,7 +172,9 @@ class Materia extends \yii\db\ActiveRecord
         if($this->condicion_examen_libre == 1){ // si el valor es igual a 1 significa que puede rendir libre esta materia
             return 'LIBRE';
         }elseif($this->condicion_examen_libre == 2){ //para rendir al menos debe haberse inscripto a cursar la materia.
-            return 'LIBRE CON INSCRIPCION A CURSADA';
+            return 'LIBRE CON OPCION';
+        }elseif($this->condicion_examen_libre == 3){
+            return 'NO SE PUEDE RENDIR LIBRE';
         }
         return "No asignado";
     }

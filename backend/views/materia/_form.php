@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'condicion_id')->dropDownList($model->listaCondicion,['prompt'=>'Seleccione condición']) ?>
     
     <?php
-     $listData= array("1"=>"LIBRE","2"=>"LIBRE CON INSCRIPCION A CURSADA");
+     $listData= array("1"=>"LIBRE","2"=>"LIBRE CON OPCION","3"=>"NO SE PUEDE RENDIR LIBRE");
      echo $form->field($model, 'condicion_examen_libre')->dropDownList($listData,['prompt'=>'Seleccione condición para rendir exámen libre'])
      
     ?>  

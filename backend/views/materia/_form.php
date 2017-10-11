@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Materia */
 /* @var $form yii\widgets\ActiveForm */
@@ -9,7 +10,7 @@ use yii\widgets\ActiveForm;
 
 <div class="materia-form">
 
-    <?php $form = ActiveForm::begin(['options' => ['id'=>'materia-carrera','data-pjax' => true ]]); ?>
+    <?php $form = ActiveForm::begin(['id'=>'materia-carrera','enableAjaxValidation' => true,'validationUrl' => Url::toRoute('materia/validation')]); ?>
 
     <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>    
 

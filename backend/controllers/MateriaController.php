@@ -11,7 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use backend\models\search\CorrelatividadSearch;
-
+use yii\widgets\ActiveForm;
 /**
  * MateriaController implements the CRUD actions for Materia model.
  */
@@ -30,6 +30,17 @@ class MateriaController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actionValidation()
+    {
+      $model = new Materia();
+
+      if ( Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+            Yii::$app->response->format = 'json';
+            return ActiveForm::validate($model);
+        }  
+
     }
 
     /**

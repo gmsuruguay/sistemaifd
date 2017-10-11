@@ -39,7 +39,8 @@ class Materia extends \yii\db\ActiveRecord
             [['descripcion', 'carrera_id', 'anio','periodo','condicion_id'], 'required'],
             [['carrera_id'], 'integer'],
             [['estado'], 'boolean'], 
-            [['descripcion'], 'unique'],           
+            //[['descripcion'], 'validateDescripcion'],  
+            //[['descripcion','carrera_id'],'unique','targetAttribute' => ['descripcion', 'carrera_id']],                      
             [['descripcion'], 'string', 'max' => 450],
             [['anio','periodo','condicion_examen_libre'], 'string', 'max' => 45],
             [['carrera_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carrera::className(), 'targetAttribute' => ['carrera_id' => 'id']],
@@ -164,7 +165,7 @@ class Materia extends \yii\db\ActiveRecord
 
     public function getListaCondicion()
     {        
-        $sql = Condicion::find()->where(['id'=>[2,3]])->orderBy('descripcion')->all();
+        $sql = Condicion::find()->where(['id'=>[2,3,5]])->orderBy('descripcion')->all();
         return ArrayHelper::map($sql, 'id', 'descripcion');
     }
 
@@ -184,5 +185,14 @@ class Materia extends \yii\db\ActiveRecord
     {
         return $this->condicion ? $this->condicion->descripcion : 'Ninguno';
     }   
+
+    public function validateDescripcion()
+    {
+        $materia= self::find()->where(['descripcion'=>$this->descripcion, 'carrera_id'=>$this->carrera_id])->exists();
+        
+        if($materia){
+            $this->addError('descripcion', 'Ya existe una materia con el mismo nombre para esta Carrera');
+        }
+    }
     
 }

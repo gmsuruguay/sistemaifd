@@ -173,7 +173,7 @@ class Materia extends \yii\db\ActiveRecord
         if($this->condicion_examen_libre == 1){ // si el valor es igual a 1 significa que puede rendir libre esta materia
             return 'LIBRE';
         }elseif($this->condicion_examen_libre == 2){ //para rendir al menos debe haberse inscripto a cursar la materia.
-            return 'LIBRE CON OPCION';
+            return 'LIBRE POR OPCION';
         }elseif($this->condicion_examen_libre == 3){
             return 'NO SE PUEDE RENDIR LIBRE';
         }

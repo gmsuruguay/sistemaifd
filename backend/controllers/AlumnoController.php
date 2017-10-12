@@ -96,6 +96,7 @@ class AlumnoController extends Controller
         $model=$this->findModelInscripcion($id);
         $searchModel = new CursadaSearch();
         $searchModel->alumno_id = $model->alumno_id;
+        $searchModel->carrera = $model->carrera_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('_inscripcion_materia', [
             'model' => $model, 

@@ -50,7 +50,7 @@ class Alumno extends Docente
     public function rules()
     {
         return [
-            [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento'], 'required'],
+            [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento','colegio_secundario_id','titulo_secundario_id'], 'required'],
             [['fecha_nacimiento', 'fecha_baja'], 'safe'],
             [['lugar_nacimiento_id', 'localidad_id', 'user_id'], 'integer'],
             [['tipo_doc', 'numero', 'cuil', 'sexo', 'estado_civil', 'nacionalidad', 'nro', 'telefono', 'celular'], 'string', 'max' => 45],            

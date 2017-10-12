@@ -7,7 +7,7 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 use kartik\grid\GridView;
 use yii\bootstrap\Modal;
-
+use common\models\FechaHelper;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Inscripcion */
 
@@ -62,8 +62,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     ['class' => 'kartik\grid\SerialColumn'], 
                     
-                    'fecha_inscripcion',                                       
-                    'materia_id',        
+                    [
+                    'attribute'=>'fecha_inscripcion',
+                    'label'=>'Fecha Inscripción',
+                    'format'=>'text',//raw, html
+                    'content'=>function ($data){
+                        return FechaHelper::fechaDMY($data->fecha_inscripcion);
+                    }
+                    ],                                       
+                    [
+                    'attribute'=>'materia_id',
+                    'label'=>'Materia',
+                    'format'=>'text',//raw, html
+                    'content'=>function ($data){
+                        return $data->descripcionMateria;
+                    }
+                    ],    
  
                 ],
             ]); ?>

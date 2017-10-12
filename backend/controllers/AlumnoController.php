@@ -14,6 +14,8 @@ use backend\models\search\MateriaSearch;
 use backend\models\Inscripcion;
 use backend\models\Acta;
 use common\models\FechaHelper;
+use backend\models\Cursada;
+use backend\models\search\CursadaSearch;
 /**
  * AlumnoController implements the CRUD actions for Alumno model.
  */
@@ -92,8 +94,8 @@ class AlumnoController extends Controller
     public function actionListarMateria($id)
     {
         $model=$this->findModelInscripcion($id);
-        $searchModel = new MateriaSearch();
-        $searchModel->carrera_id = $model->carrera_id;
+        $searchModel = new CursadaSearch();
+        $searchModel->alumno_id = $model->alumno_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('_inscripcion_materia', [
             'model' => $model, 
@@ -220,6 +222,15 @@ class AlumnoController extends Controller
     protected function findModelInscripcion($id)
     {
         if (($model = Inscripcion::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findModelCursada($id)
+    {
+        if (($model = Cursada::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

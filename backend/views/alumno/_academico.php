@@ -39,7 +39,7 @@ use yii\bootstrap\ButtonDropdown;
                 'imprimir'=> function ($url, $model, $key) {
                     return ButtonDropdown::widget([
                         'encodeLabel' => false, // if you're going to use html on the button label
-                        'label' => 'Imprimir',
+                        'label' => '<span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir',
                         'dropdown' => [
                             'encodeLabels' => false, // if you're going to use html on the items' labels
                             'items' => [
@@ -61,14 +61,14 @@ use yii\bootstrap\ButtonDropdown;
                             ],
                         ],
                         'options' => [
-                            'class' => 'btn-success',   // btn-success, btn-info, et cetera
+                            'class' => 'btn bg-navy',   // btn-success, btn-info, et cetera
                         ],
                         'split' => true,    // if you want a split button
                     ]);
                 },       
 
                 'listar' => function ($url, $model, $key) {
-                    return Html::a('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Inscribir materia/examen', ['listar-materia', 'id' => $key], [
+                    return Html::a('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Inscripciones a cursadas', ['listar-materia', 'id' => $key], [
                         'class' => 'btn btn-info',                        
                         'title'=>'inscribir en materia'
                     ]);

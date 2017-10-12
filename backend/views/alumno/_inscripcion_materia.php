@@ -43,7 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="box">
         <div class="box-header with-border">           
-        <h3 class="box-title">Seleccione las materias que cursara</h3>          
+        <h3 class="box-title">Listado de Materias Inscriptas</h3>     
+        <div class="pull-right">
+            <?= Html::a('<i class="fa  fa-plus"></i> Inscribir materia', ['cursada/create','id_alumno' => $model->alumno_id,'id_carrera'=>$model->carrera_id,'id_inscripcion'=>$model->id],['class' => 'btn btn-success']) ?>
+            </div>        
         </div>
         <div class="box-body">
         <?php Pjax::begin(['id'=>'grid-materia']); ?>    <?= GridView::widget([
@@ -51,34 +54,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterModel' => $searchModel,     
                 'hover'=>true,
                 'panel' => [
-                'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon glyphicon-file"></i>Lista de Materias</h3>',
+                'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon glyphicon-file"></i>Materias</h3>',
                 'type'=>'primary',
                 'footer'=>false
                 ],   
                 'export'=>false,      
                 'columns' => [
-                    ['class' => 'kartik\grid\SerialColumn'],           
-                                       
-                    'descripcion',
-                    [
-                    'attribute'=>'anio',
-                    'label'=>'Año',
-                    'filter'=>array("1"=>"1° AÑO","2"=>"2° AÑO","3"=>"3° AÑO","4"=>"4° AÑO","5"=>"5° AÑO"),
-                    'value'=>function($data){
-                        return $data->anioMateria;
-                    }
-
-                    ],
-
-                    ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{inscribir}'), 
-                    'buttons' => [
-                        'inscribir' => function ($url, $model, $key) {
-                                                    
-                            return Html::a('','#',['class' => 'modalButton glyphicon glyphicon-check','title'=>'Inscribir',]);
-                            
-                        } ,                        
-
-                    ]],
+                    ['class' => 'kartik\grid\SerialColumn'], 
+                    
+                    'fecha_inscripcion',                                       
+                    'materia_id',        
+ 
                 ],
             ]); ?>
         <?php Pjax::end(); ?></div>

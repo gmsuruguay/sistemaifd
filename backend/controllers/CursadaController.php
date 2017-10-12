@@ -61,12 +61,16 @@ class CursadaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id_alumno,$id_carrera,$id_inscripcion)
     {
         $model = new Cursada();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->alumno_id= $id_alumno;            
+            if($model->save()){
+                return $this->redirect(['/alumno/listar-materia','id'=>$id_inscripcion]);
+            }
+            
         } else {
             return $this->render('create', [
                 'model' => $model,

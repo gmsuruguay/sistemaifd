@@ -12,12 +12,15 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Inscripcion */
 /* @var $form yii\widgets\ActiveForm */
+$this->title = 'Inscripción a Carrera';
+$this->params['breadcrumbs'][] = ['label' => 'Legajo del Alumno', 'url' => ['/alumno/view','id'=>$alumno->id]];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="inscripcion-form">
     <div class="panel panel-default">
         <div class="panel-body">
-        <i class="fa fa-user"></i> <?=$id?>
+        <i class="fa fa-user"> </i> <?=$alumno->nombreCompleto?>
         </div>
     </div>
 

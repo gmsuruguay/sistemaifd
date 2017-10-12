@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Inscripcion;
+use backend\models\Alumno;
 use backend\models\search\InscripcionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -64,9 +65,9 @@ class InscripcionController extends Controller
      public function actionNuevo($id)
      {
          $model = new Inscripcion();
-         $model->alumno_id= $id;
+         $alumno= $this->findModelAlumno($id);         
          if ($model->load(Yii::$app->request->post()) ) {
-            
+             $model->alumno_id= $id;
              if($model->save()){
                 return $this->redirect(['/alumno/view', 'id' => $id]);
              }
@@ -74,7 +75,7 @@ class InscripcionController extends Controller
          } else {
              return $this->render('formulario', [
                  'model' => $model,
-                 'id' => $id,
+                 'alumno' => $alumno,
              ]);
          }
      }
@@ -139,6 +140,15 @@ class InscripcionController extends Controller
     protected function findModel($id)
     {
         if (($model = Inscripcion::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findModelAlumno($id)
+    {
+        if (($model = Alumno::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

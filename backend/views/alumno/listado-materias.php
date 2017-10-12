@@ -81,28 +81,31 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 
-<?= Html::button('Inscribir', ['class' => 'btn btn-success','id'=>'btn_inscribir']) ?>
-   
+
+<?= Html::a('Inscribir','#',['class' => 'btn btn-primary', 'id'=> 'btnInscribir']) ?>   
 
 <?php
  $script = <<< JS
- $("#btn_inscribir").click(function(){
- var url = "index.php?r=cursada/inscribir"; // El script a dónde se realizará la petición.
-    $.ajax({
-           type: "POST",
-           url: url,
-           data: $("#formulario").serialize(), // Adjuntar los campos del formulario enviado.
-           beforeSend: function() {
-              $("#respuesta").html('<div class="text-center"><i class="fa fa-spinner fa-pulse fa-5x"></i></div>');
-            },
-           success: function(data)
-           {              
-              $("#respuesta").html(data); // Mostrar la respuestas del script PHP.
-           }
-         });
 
-    return false; // Evitar ejecutar el submit del formulario.
- }); 
+$('#btnInscribir').on('click', function(e) {
+    e.preventDefault();
+    alert();
+    /*$("#btnInscribir").on('click',function(){
+    var url = "index.php?r=cursada/inscribir"; // El script a dónde se realizará la petición.
+    var keys = $('#grid').yiiGridView('getSelectedRows');
+    var fecha = $('#fecha').val();
+    $.ajax({
+       type: "POST", 
+       url: url,
+       data: {dni: $("#txt-dni").val()},
+       success: function(data) {
+            var objeto = JSON.parse(data);
+           $("#lb-nombre").text(objeto.nombre);
+           $("#acta-alumno_id").val(objeto.alumno_id);
+           $('#acta-nro_permiso').focus();
+       }
+    });*/
+}); 
  
 JS;
 $this->registerJs($script);

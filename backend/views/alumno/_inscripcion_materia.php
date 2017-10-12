@@ -45,7 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-header with-border">           
         <h3 class="box-title">Listado de Materias Inscriptas</h3>     
         <div class="pull-right">
-            <?= Html::a('<i class="fa  fa-plus"></i> Inscribir materia', ['cursada/create','id_alumno' => $model->alumno_id,'id_carrera'=>$model->carrera_id,'id_inscripcion'=>$model->id],['class' => 'btn btn-success']) ?>
+            <?php // echo Html::a('<i class="fa  fa-plus"></i> Inscribir materia', ['cursada/create','id_alumno' => $model->alumno_id,'id_carrera'=>$model->carrera_id,'id_inscripcion'=>$model->id],['class' => 'btn btn-success']) ?>
+            <?= Html::a('<i class="fa  fa-plus"></i> Inscribir materia', ['listar-materia','id'=>$model->id],['class' => 'btn btn-success']) ?>
             </div>        
         </div>
         <div class="box-body">

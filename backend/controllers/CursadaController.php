@@ -4,6 +4,8 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Cursada;
+use backend\models\Materia;
+use backend\models\search\MateriaSearch;
 use backend\models\search\CursadaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -62,6 +64,23 @@ class CursadaController extends Controller
      * @return mixed
      */
     public function actionCreate($id_alumno,$id_carrera,$id_inscripcion)
+    {
+        $model = new Cursada();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->alumno_id= $id_alumno;            
+            if($model->save()){
+                return $this->redirect(['/alumno/listar-materia','id'=>$id_inscripcion]);
+            }
+            
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionInscribir($id_alumno,$id_inscripcion)
     {
         $model = new Cursada();
 

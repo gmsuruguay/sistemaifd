@@ -33,8 +33,8 @@ class Inscripcion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['alumno_id', 'carrera_id', 'fecha', 'titulo_secundario_id', 'colegio_secundario_id'], 'required'],
-            [['alumno_id', 'carrera_id', 'nro_libreta', 'titulo_secundario_id', 'colegio_secundario_id'], 'integer'],
+            [['alumno_id', 'carrera_id', 'fecha'], 'required'],
+            [['alumno_id', 'carrera_id', 'nro_libreta'], 'integer'],
             [['fotocopia_dni', 'certificado_nacimiento', 'titulo_secundario', 'certificado_visual', 'certificado_auditivo', 'certificado_foniatrico', 'foto', 'constancia_cuil', 'planilla_prontuarial'], 'boolean'],
             [['fecha'], 'safe'],
             [['nro_legajo'], 'string','max'=>45],

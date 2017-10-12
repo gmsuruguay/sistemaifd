@@ -11,6 +11,10 @@ use yii\bootstrap\ButtonDropdown;
 ?>
 <div class="inscripcion-index">
 
+    <div class="pull-right">
+        <?= Html::a('<i class="fa  fa-plus"></i> Inscipción a carrera', ['inscripcion/nuevo','id' => $model->id],['class' => 'btn btn-success']) ?>
+    </div>   
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,        
         'columns' => [

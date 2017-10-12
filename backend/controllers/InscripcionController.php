@@ -57,6 +57,28 @@ class InscripcionController extends Controller
         ]);
     }
 
+     /**
+     * Registra una nueva inscripcion a una carrera desde la vista alumno/_academico.     
+     * @return mixed
+     */
+     public function actionNuevo($id)
+     {
+         $model = new Inscripcion();
+         $model->alumno_id= $id;
+         if ($model->load(Yii::$app->request->post()) ) {
+            
+             if($model->save()){
+                return $this->redirect(['/alumno/view', 'id' => $id]);
+             }
+            
+         } else {
+             return $this->render('formulario', [
+                 'model' => $model,
+                 'id' => $id,
+             ]);
+         }
+     }
+
     /**
      * Creates a new Inscripcion model.
      * If creation is successful, the browser will be redirected to the 'view' page.

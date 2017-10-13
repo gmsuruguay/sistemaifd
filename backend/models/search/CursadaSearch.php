@@ -51,7 +51,7 @@ class CursadaSearch extends Cursada
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['id' => SORT_DESC]],
+            'sort'=> ['defaultOrder' => ['fecha_inscripcion' => SORT_DESC]],
         ]);
 
         

@@ -158,3 +158,8 @@ a.desc:after {
     background-color: #337AB7;
     color: white !important;
 }
+
+.modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}

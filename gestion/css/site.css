@@ -160,6 +160,6 @@ a.desc:after {
 }
 
 .modal-body {
-    max-height: calc(100vh - 210px);
+    max-height: calc(105vh - 210px);
     overflow-y: auto;
 }

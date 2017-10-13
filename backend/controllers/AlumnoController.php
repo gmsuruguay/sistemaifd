@@ -111,7 +111,7 @@ class AlumnoController extends Controller
         $searchModel = new MateriaSearch();
         $searchModel->carrera_id = $model->carrera_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('listado-materias', [
+        return $this->renderAjax('listado-materias', [
             'model' => $model, 
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

@@ -4,26 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use mdm\admin\components\Helper;
 use yii\helpers\Url;
-//use yii\widgets\Pjax;
 use kartik\grid\GridView;
-use yii\bootstrap\Modal;
-use backend\models\search\CorrelatividadSearch;
 use yii\widgets\MaskedInput;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Carrera */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Carreras', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="carrera-view">
-
-    <div class="box">
-        <div class="box-header with-border">
-              <i class="fa fa-certificate"></i>
-              <h3 class="box-title"><?=$model->descripcionCarrera?></h3>                         
-        </div>        
-    </div> 
+<div class="carrera-view">   
 
     <!--
     Lista de materias para la carrera en cuestion
@@ -40,21 +27,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div >            
             </div>
     </div>
-    <div class="box">
-        <div class="box-header with-border">        
-            
-                    
-        </div>
-        <div class="box-body">
+    
           <?= GridView::widget([
                 'dataProvider' => $dataProvider,  
-                'filterModel' => $searchModel, 
-                'id'=>'grid',  
-                'pjax'=>true,  
+                //'filterModel' => $searchModel, 
+                'id'=>'grid',                  
                 'hover'=>true,
                 'panel' => [
-                'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon glyphicon-file"></i>Lista de Materias</h3>',
-                'type'=>'primary',
+                'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon glyphicon-file"></i>Selecione las Materias en las que se inscribira</h3>',
+                'type'=>'default',
                 'footer'=>false
                 ],   
                 'export'=>false,      
@@ -76,8 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]); ?>
        
-        </div>
-    </div> 
+     
 
 </div>
 
@@ -103,7 +83,13 @@ $('#btnInscribir').on('click', function(e) {
             url: url,
             data: datos,
             success: function(data) {
-               alert(data);   
+               if(data==1){
+                $(document).find('.modal').modal('hide');
+                $.pjax.reload({ container: '#grid-cursada' });
+               } 
+               else{
+                   alert("Ocurrio un problema durante la carga");
+               }  
             }
             });
             

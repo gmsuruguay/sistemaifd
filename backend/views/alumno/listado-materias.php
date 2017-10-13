@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
           <?= GridView::widget([
                 'dataProvider' => $dataProvider,  
                 'filterModel' => $searchModel, 
-                'id'=>'grid-materia',  
+                'id'=>'grid',  
                 'pjax'=>true,  
                 'hover'=>true,
                 'panel' => [
@@ -82,19 +82,39 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 
-<?= Html::a('Inscribir','#',['class' => 'btn btn-primary', 'id'=> 'btnInscribir']) ?>   
+<?= Html::a('Inscribir','#',['class' => 'btn btn-primary', 'id'=> 'btnInscribir','data-alumno'=>$model->alumno_id]) ?>   
 
 <?php
  $script = <<< JS
 
 $('#btnInscribir').on('click', function(e) {
-    e.preventDefault();
-    alert();
-    /*$("#btnInscribir").on('click',function(){
-    var url = "index.php?r=cursada/inscribir"; // El script a dónde se realizará la petición.
+    e.preventDefault();    
+    
+    var url = "index.php?r=cursada/create"; // El script a dónde se realizará la petición.
     var keys = $('#grid').yiiGridView('getSelectedRows');
     var fecha = $('#fecha').val();
-    $.ajax({
+    var materia = JSON.stringify(keys);
+    var id_alumno= $(this).data('alumno');  
+    var datos = {"fecha" : fecha, "id_alumno" : id_alumno,"materia" : materia};
+    if (fecha.length != 0){
+        if(keys.length != 0){
+            $.ajax({
+            type: "get", 
+            url: url,
+            data: datos,
+            success: function(data) {
+               alert(data);   
+            }
+            });
+            
+        }else{
+            sweetAlert("Oops...", "Debe seleccionar una o más materias", "error");
+        }
+    }else{
+        sweetAlert("Oops...", "Fecha no puede estar vacio", "error");
+    }
+        
+    /*$.ajax({
        type: "POST", 
        url: url,
        data: {dni: $("#txt-dni").val()},

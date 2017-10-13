@@ -68,7 +68,7 @@ use yii\bootstrap\ButtonDropdown;
                 },       
 
                 'listar' => function ($url, $model, $key) {
-                    return Html::a('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Inscripciones a cursadas', '#', [
+                    return Html::a('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Inscripciones a cursadas', ['inscripcion-cursada', 'id' => $key], [
                         'class' => 'btn btn-info',                        
                         'title'=>'inscribir en materia'
                     ]);

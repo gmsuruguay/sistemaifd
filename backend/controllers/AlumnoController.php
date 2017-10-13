@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
 use backend\models\search\InscripcionSearch;
-use backend\models\search\MateriaSearch;
+use backend\models\search\MateriaCursadaSearch;
 use backend\models\Inscripcion;
 use backend\models\Acta;
 use common\models\FechaHelper;
@@ -91,13 +91,27 @@ class AlumnoController extends Controller
         ]);
     }
 
-    public function actionListarMateria($id)
+    public function actionInscripcionCursada($id)
     {
         $model=$this->findModelInscripcion($id);
         $searchModel = new CursadaSearch();
         $searchModel->alumno_id = $model->alumno_id;
+        $searchModel->carrera = $model->carrera_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('_inscripcion_materia', [
+            'model' => $model, 
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionListarMateria($id)
+    {
+        $model=$this->findModelInscripcion($id);
+        $searchModel = new MateriaCursadaSearch();
+        $searchModel->carrera_id = $model->carrera_id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->renderAjax('listado-materias', [
             'model' => $model, 
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

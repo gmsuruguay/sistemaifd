@@ -13,6 +13,7 @@ use backend\models\Cursada;
 class CursadaSearch extends Cursada
 {
     public $alumno;
+    public $carrera;
     /**
      * @inheritdoc
      */
@@ -20,7 +21,7 @@ class CursadaSearch extends Cursada
     {
         return [
             [['id', 'condicion_id', 'alumno_id', 'materia_id'], 'integer'],
-            [['fecha_inscripcion', 'fecha_vencimiento','alumno','fecha'], 'safe'],
+            [['fecha_inscripcion', 'fecha_vencimiento','alumno','fecha_cierre','carrera'], 'safe'],
             [['nota'], 'number'],
         ];
     }
@@ -46,11 +47,11 @@ class CursadaSearch extends Cursada
         $query = Cursada::find();
 
         // add conditions that should always apply here
-        $query->joinWith(['alumno']);
+        $query->joinWith(['alumno','materia']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['id' => SORT_DESC]],
+            'sort'=> ['defaultOrder' => ['fecha_inscripcion' => SORT_DESC]],
         ]);
 
         
@@ -73,7 +74,7 @@ class CursadaSearch extends Cursada
         $query->andFilterWhere([
             'id' => $this->id,
             'fecha_inscripcion' => $this->fecha_inscripcion,
-            'fecha'=>$this->fecha,
+            'fecha_cierre'=>$this->fecha_cierre,
             'condicion_id' => $this->condicion_id,
             'alumno_id' => $this->alumno_id,
             'materia_id' => $this->materia_id,
@@ -81,7 +82,8 @@ class CursadaSearch extends Cursada
             'fecha_vencimiento' => $this->fecha_vencimiento,
         ]);
 
-        $query->orFilterWhere(['like', 'alumno.numero', $this->alumno])
+        $query->andFilterWhere(['=','materia.carrera_id',$this->carrera])
+              ->orFilterWhere(['like', 'alumno.numero', $this->alumno])
               ->orFilterWhere(['like', "concat_ws(' ',alumno.apellido,alumno.nombre)", $this->alumno]);
 
         return $dataProvider;

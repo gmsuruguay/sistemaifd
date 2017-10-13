@@ -10,7 +10,7 @@ use backend\models\search\CursadaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\helpers\Json;
 /**
  * CursadaController implements the CRUD actions for Cursada model.
  */
@@ -65,21 +65,26 @@ class CursadaController extends Controller
      */
     public function actionCreate($fecha,$id_alumno,$materia)
     {
-        $model = new Cursada();
-
-        echo $materia;die;
-
-        if ($model->load(Yii::$app->request->post())) {
-            $model->alumno_id= $id_alumno;            
-            if($model->save()){
-                return $this->redirect(['/alumno/listar-materia','id'=>$id_inscripcion]);
-            }
-            
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+        
+        //      
+        $fecha_inscripcion = Yii::$app->request->get('fecha');
+        $alumno_id = Yii::$app->request->get('id_alumno');
+        $materias = Yii::$app->request->get('materia');
+        if (!is_null($fecha_inscripcion)&&!is_null($alumno_id)&&!is_null($materias)){
+            $datos_materia=Json::decode($materias); 
+            foreach ($datos_materia as $id) {
+                $model = new Cursada();
+                $model->fecha_inscripcion = $fecha_inscripcion;
+                $model->alumno_id = $alumno_id;  
+                $model->materia_id = $id;
+                $model->save();
+            }             
+            echo 1; 
+   
+        } else{
+            echo 0;
+        } 
+        
     }
 
     public function actionInscribir($id_alumno,$id_inscripcion)

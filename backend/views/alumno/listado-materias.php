@@ -108,23 +108,12 @@ $('#btnInscribir').on('click', function(e) {
             });
             
         }else{
-            sweetAlert("Oops...", "Debe seleccionar una o más materias", "error");
+            sweetAlert("Atención", "Debe seleccionar una o más materias", "error");
         }
     }else{
-        sweetAlert("Oops...", "Fecha no puede estar vacio", "error");
-    }
-        
-    /*$.ajax({
-       type: "POST", 
-       url: url,
-       data: {dni: $("#txt-dni").val()},
-       success: function(data) {
-            var objeto = JSON.parse(data);
-           $("#lb-nombre").text(objeto.nombre);
-           $("#acta-alumno_id").val(objeto.alumno_id);
-           $('#acta-nro_permiso').focus();
-       }
-    });*/
+        sweetAlert("Atención", "Fecha no puede estar vacio", "error");
+    }        
+    
 }); 
  
 JS;

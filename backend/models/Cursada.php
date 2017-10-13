@@ -37,7 +37,7 @@ class Cursada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fecha_inscripcion', 'fecha_vencimiento','fecha'], 'safe'],
+            [['fecha_inscripcion', 'fecha_vencimiento','fecha_cierre'], 'safe'],
             [['alumno_id', 'materia_id'], 'required'],
             [['condicion_id', 'alumno_id', 'materia_id'], 'integer'],
             [['nota'], 'number'],
@@ -60,7 +60,7 @@ class Cursada extends \yii\db\ActiveRecord
             'materia_id' => 'Materia',
             'nota' => 'Nota',
             'fecha_vencimiento' => 'Fecha Vencimiento',
-            'fecha'=>'Fecha'
+            'fecha_cierre'=>'Fecha'
         ];
     }
 
@@ -98,8 +98,8 @@ class Cursada extends \yii\db\ActiveRecord
             $this->fecha_vencimiento = FechaHelper::fechaYMD($this->fecha_vencimiento);
         }  
 
-        if ($this->fecha != null) {           
-            $this->fecha = FechaHelper::fechaYMD($this->fecha);
+        if ($this->fecha_cierre != null) {           
+            $this->fecha_cierre = FechaHelper::fechaYMD($this->fecha_cierre);
         }  
         
         return parent::beforeValidate();

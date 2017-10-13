@@ -21,7 +21,7 @@ class CursadaSearch extends Cursada
     {
         return [
             [['id', 'condicion_id', 'alumno_id', 'materia_id'], 'integer'],
-            [['fecha_inscripcion', 'fecha_vencimiento','alumno','fecha','carrera'], 'safe'],
+            [['fecha_inscripcion', 'fecha_vencimiento','alumno','fecha_cierre','carrera'], 'safe'],
             [['nota'], 'number'],
         ];
     }
@@ -74,7 +74,7 @@ class CursadaSearch extends Cursada
         $query->andFilterWhere([
             'id' => $this->id,
             'fecha_inscripcion' => $this->fecha_inscripcion,
-            'fecha'=>$this->fecha,
+            'fecha_cierre'=>$this->fecha_cierre,
             'condicion_id' => $this->condicion_id,
             'alumno_id' => $this->alumno_id,
             'materia_id' => $this->materia_id,

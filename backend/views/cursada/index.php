@@ -63,11 +63,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     ], 
                     [
-                    'attribute'=>'fecha',
-                    'label'=>'Fecha',
+                    'attribute'=>'fecha_cierre',
+                    'label'=>'Fecha Cierre',
                     'format'=>'text',//raw, html
                     'content'=>function ($data){
-                        return FechaHelper::fechaDMY($data->fecha);
+                        return FechaHelper::fechaDMY($data->fecha_cierre);
                     }
                     ], 
                     'nota',                   

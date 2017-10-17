@@ -155,4 +155,9 @@ class Docente extends \yii\db\ActiveRecord
 
     }
 
+    public function getDescripcionLocalidad()
+    {
+        return $this->localidad ? $this->localidad->descripcion : ' - ';
+    }
+
 }

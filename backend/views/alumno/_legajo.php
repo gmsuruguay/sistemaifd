@@ -22,10 +22,16 @@ use mdm\admin\components\Helper;
                     return FechaHelper::fechaDMY($data->fecha_nacimiento);
                 }
             ], 
-            'lugar_nacimiento_id',
+            [
+            'label'=>'Lugar Nacimiento',
+            'value'=>$model->descripcionLocalidad,
+            ],
             'domicilio',
             'nro',
-            'localidad_id',
+            [
+            'label'=>'Localidad',
+            'value'=>$model->descripcionLocalidad,
+            ],
             'telefono',
             'celular',
             'email:email',

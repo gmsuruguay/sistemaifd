@@ -26,8 +26,10 @@
                         'icon' => 'fa fa-graduation-cap',
                         'url' => '#',
                         'items' => [                            
-                            ['label' => 'Listar', 'icon' => 'fa fa-list', 'url' => ['/alumno'],],
-                            ['label' => 'Agregar', 'icon' => 'fa fa-plus', 'url' => ['/alumno/create'],],                            
+                            ['label' => 'Listar Alumnos', 'icon' => 'fa fa-list', 'url' => ['/alumno'],],
+                            ['label' => 'Agregar Alumno', 'icon' => 'fa fa-plus', 'url' => ['/alumno/create'],],   
+                            ['label' => 'Listar Titulos', 'icon' => 'fa fa-vcard-o', 'url' => ['/titulo-secundario'],],    
+                            ['label' => 'Listar Colegios Secundarios', 'icon' => 'fa fa-university', 'url' => ['/colegio-secundario'],],                             
                         ],
                     ], 
                     [
@@ -45,11 +47,12 @@
                         'icon' => 'fa fa-user',
                         'url' => '#',
                         'items' => [                            
-                            ['label' => 'Listar', 'icon' => 'fa fa-list', 'url' => ['/docente'],],
-                            ['label' => 'Agregar', 'icon' => 'fa fa-plus', 'url' => ['/docente/create'],],                            
+                            ['label' => 'Listar Docentes', 'icon' => 'fa fa-list', 'url' => ['/docente'],],
+                            ['label' => 'Agregar Docente', 'icon' => 'fa fa-plus', 'url' => ['/docente/create'],],    
+                            ['label' => 'Listar Titulos Docentes', 'icon' => 'fa fa-vcard-o', 'url' => ['/titulo']],                          
                         ],
                     ],  
-                    ['label' => 'Titulos', 'icon' => 'fa fa-vcard-o', 'url' => ['/titulo']],  
+                   
                     ['label' => 'Localidades', 'icon' => 'fa fa-map-marker', 'url' => ['/localidad']], 
                     ['label' => 'Condición Cursada', 'icon' => 'fa fa-question-circle', 'url' => ['/condicion']],                  
                     [

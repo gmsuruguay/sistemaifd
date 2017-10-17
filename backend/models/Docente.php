@@ -160,4 +160,9 @@ class Docente extends \yii\db\ActiveRecord
         return $this->localidad ? $this->localidad->descripcion : ' - ';
     }
 
+    public function getDescripcionLocalidadNacimiento()
+    {
+        return $this->lugarNacimiento ? $this->lugarNacimiento->descripcion : ' - ';
+    }
+
 }

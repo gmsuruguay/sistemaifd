@@ -24,7 +24,7 @@ use mdm\admin\components\Helper;
             ], 
             [
             'label'=>'Lugar Nacimiento',
-            'value'=>$model->descripcionLocalidad,
+            'value'=>$model->descripcionLocalidadNacimiento,
             ],
             'domicilio',
             'nro',

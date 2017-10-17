@@ -150,6 +150,8 @@ use backend\models\ColegioSecundario;
          </div> 
          <div class="row">
             <div class="col-md-6">
+            <label class="control-label"><?=Html::button('Titulo Secundario', ['value'=>Url::to(['titulo-secundario/nuevo']),'class' => 'btn-link btnmodal'])?></label>
+            <?php Pjax::begin(['id'=>'select-titulo']); ?> 
             <?= $form->field($model, 'titulo_secundario_id')->widget(Select2::classname(), [                                            
                                                     'data' => TituloSecundario::getListaTitulos(),
                                                     'language' => 'es',
@@ -157,7 +159,7 @@ use backend\models\ColegioSecundario;
                                                     'pluginOptions' => [
                                                         'allowClear' => true
                                                     ],
-                                                    ]) ?>
+                                                    ])->label(false) ?> <?php Pjax::end(); ?>
             </div>  
             <div class="col-md-6">
             <?= $form->field($model, 'colegio_secundario_id')->widget(Select2::classname(), [                                            
@@ -217,7 +219,12 @@ use backend\models\ColegioSecundario;
             select($(this),refrescarSelectLocalidad);
         }            
         return false;
-    });         
+    });    
+
+$('body').on('beforeSubmit','form#titulo-secundario' , function(e){        
+    select($(this),refrescarSelectTitulo);
+    return false;
+});  
    
     
 JS;

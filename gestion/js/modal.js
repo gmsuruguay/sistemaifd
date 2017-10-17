@@ -83,3 +83,7 @@ function refrescarSelectLugar() {
 function refrescarSelectLocalidad() {
     $.pjax.reload({ container: '#select-localidad' });
 }
+
+function refrescarSelectTitulo() {
+    $.pjax.reload({ container: '#select-titulo' });
+}

@@ -87,3 +87,7 @@ function refrescarSelectLocalidad() {
 function refrescarSelectTitulo() {
     $.pjax.reload({ container: '#select-titulo' });
 }
+
+function refrescarSelectColegio() {
+    $.pjax.reload({ container: '#select-colegio' });
+}

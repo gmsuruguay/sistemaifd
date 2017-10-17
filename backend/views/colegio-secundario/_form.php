@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 
         <div class="box-body">
 
-            <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>           
+            <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true, 'placeholder'=>'Nombre del Colegio Secundario']) ?>           
             
         </div>  
         <div class="box-footer">

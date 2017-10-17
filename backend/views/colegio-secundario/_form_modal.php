@@ -8,11 +8,11 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="titulo-secundario-form">
+<div class="colegio-secundario-form">
     
-        <?php $form = ActiveForm::begin(['id'=>'titulo-secundario']); ?>
+        <?php $form = ActiveForm::begin(['id'=>'colegio-secundario']); ?>
 
-            <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true, 'placeholder'=>'Nombre del Titulo Secundario']) ?>           
+            <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true, 'placeholder'=>'Nombre del Colegio Secundario']) ?>           
         
         <div class="box-footer">
                 <?= Html::submitButton( '<i class="fa fa-save"> </i> Guardar', ['class' => 'btn btn-success', 'name' => 'signup-button']) ?>

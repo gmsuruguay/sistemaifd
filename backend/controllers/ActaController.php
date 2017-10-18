@@ -381,7 +381,7 @@ class ActaController extends Controller
                 $model->alumno_id = $ids[$i];
                 $model =  Acta::findOne([  'libro' => $model->libro, 
                                                 'folio'=> $model->folio,
-                                                'fecha_examen'=> $model->fecha_examen,
+                                                'fecha_examen'=> FechaHelper::fechaYMD($model->fecha_examen),
                                                 'condicion_id'=> $model->condicion_id,
                                                 'materia_id'=> $model->materia_id,
                                                 'alumno_id'=> $model->alumno_id]);

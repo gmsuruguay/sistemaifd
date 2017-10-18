@@ -66,12 +66,12 @@
                     ['label' => 'Localidades', 'icon' => 'fa fa-map-marker', 'url' => ['/localidad']], 
                     ['label' => 'Condición Cursada', 'icon' => 'fa fa-question-circle', 'url' => ['/condicion']],                  
                     [
-                        'label' => 'Usuarios',
-                        'icon' => 'fa fa-users',
+                        'label' => 'Configuración',
+                        'icon' => 'fa fa-cog',
                         'url' => '#',
                         'items' => [
-                            //['label' => 'Listar', 'icon' => 'fa fa-list', 'url' => ['/admin/user'],],
-                            ['label' => 'Listar', 'icon' => 'fa fa-list', 'url' => ['/user'],],
+                            ['label' => 'Sedes', 'icon' => 'fa fa-university', 'url' => ['/sede'],],
+                            ['label' => 'Usuarios', 'icon' => 'fa fa-users', 'url' => ['/user'],],
                             ['label' => 'Controladores', 'icon' => 'fa fa-code', 'url' => ['/admin/route'],],
                             ['label' => 'Roles', 'icon' => 'fa fa-lock', 'url' => ['/admin/role'],],
                         ],

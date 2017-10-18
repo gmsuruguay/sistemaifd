@@ -31,7 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'descripcion',
                 'duracion',
                 'cohorte',
-
+                'nro_resolucion',
+                /*[
+                'attribute'=>'sede_id',
+                'label'=>'Sede',
+                'format'=>'text',//raw, html
+                'content'=>function ($data){                   
+                    return $data->descripcionSede;
+                }                      
+                ],*/
                 ['class' => 'yii\grid\ActionColumn',
                 'template' => Helper::filterActionColumn('{view} {update}'),
                 ],

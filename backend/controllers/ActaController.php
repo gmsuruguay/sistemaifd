@@ -15,7 +15,7 @@ use yii\data\ActiveDataProvider;
 use yii\widgets\ActiveForm;
 use yii\web\Response;
 use yii\base\Exception;
-
+use common\models\FechaHelper;
 /**
  * ActaController implements the CRUD actions for Acta model.
  */
@@ -244,7 +244,7 @@ class ActaController extends Controller
             $notas = new ActiveDataProvider([
                 'query' => Acta::find()->where(['libro' => $model->libro, 
                                                     'folio'=> $model->folio,
-                                                    'fecha_examen'=> date('Y-m-d', strtotime($model->fecha_examen)),
+                                                    'fecha_examen'=>  FechaHelper::fechaYMD($model->fecha_examen),
                                                     'condicion_id'=> $model->condicion_id,
                                                     'materia_id'=> $model->materia_id])]);
 
@@ -264,16 +264,17 @@ class ActaController extends Controller
             {
                 $query =  Acta::find()->where(['libro' => $model->libro, 
                                                     'folio'=> $model->folio,
-                                                    'fecha_examen'=> date('Y-m-d', strtotime($model->fecha_examen)),
+                                                    'fecha_examen'=> FechaHelper::fechaYMD($model->fecha_examen),
                                                     'condicion_id'=> $model->condicion_id,
                                                     'materia_id'=> $model->materia_id])->all();
                 if(count($query)>0)
                 {
                     return  $this->renderPartial('_form_acta', ['model' => $model ,'dataProvider' => $query], true);
                 }
-                $query =  InscripcionExamen::find()->where(['fecha_examen'=> date('Y-m-d', strtotime($model->fecha_examen)),
+                $query =  InscripcionExamen::find()->where(['fecha_examen'=> FechaHelper::fechaYMD($model->fecha_examen),
                                                 'condicion_id'=> $model->condicion_id,
                                                 'materia_id'=> $model->materia_id])->all();
+
                 if(count($query)>0)
                 {
                     return  $this->renderPartial('_form_acta', ['model' => $model ,'dataProvider' => $query], true);
@@ -404,7 +405,7 @@ class ActaController extends Controller
         {
             $query =  Acta::find()->where([  'libro' => $model->libro, 
                                                 'folio'=> $model->folio,
-                                                'fecha_examen'=> date('Y-m-d', strtotime($model->fecha_examen)),
+                                                'fecha_examen'=>  FechaHelper::fechaYMD($model->fecha_examen),
                                                 'condicion_id'=> $model->condicion_id,
                                                 'materia_id'=> $model->materia_id])->all();
             foreach ($query as $q) {

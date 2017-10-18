@@ -35,6 +35,7 @@ $script = <<< JS
        data: $('#form-cabecera').serialize(),
        success: function(data) {   
             if(data == '0'){
+                console.log($('#form-cabecera').serialize());
                 return false;
             }
             $('#pag_uno').hide();   
@@ -147,7 +148,7 @@ $script = <<< JS
                     swal("Error", "No se pudo guardar el registro, compruebe que los datos esten correctamente ingresados.", "error");
                     break;
                   case '1':
-                    swal("Exito!", "El registro se actualizo corectamente.", "info"); 
+                    swal("Exito!", "El registro se actualizo correctamente.", "info"); 
                     $('#btn-desbloquear').html('<i class="fa  fa-lock fa-lg"></i>');
                     $('#btn-desbloquear').data('id','1');
                     $('#table-notas tbody td').each(function(index)

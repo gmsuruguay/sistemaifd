@@ -75,8 +75,6 @@ $condicion = Condicion::find()->all();
         </div>
         
         <div class="help-block"></div>
-        <?= Html::input('hidden', 'ant_libro', $model->libro) ?>
-        <?= Html::input('hidden', 'ant_folio', $model->folio) ?>
         
         <?php ActiveForm::end(); ?>
     </div>

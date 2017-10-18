@@ -38,7 +38,8 @@ class Acta extends \yii\db\ActiveRecord
     {
         return [
             [['libro', 'folio', 'condicion_id', 'alumno_id', 'materia_id'], 'integer'],
-            [['nota'], 'number'],
+            [['libro', 'folio', 'condicion_id', 'alumno_id', 'materia_id','fecha_examen'], 'required'],
+            [['nota'], 'number','min'=>0, 'max'=>10],
             [['asistencia'], 'boolean'],
             [['condicion_id', 'alumno_id', 'materia_id','nota'], 'required'],
             [['fecha_examen'], 'safe'],

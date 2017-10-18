@@ -150,12 +150,15 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
         $perfil = $this->findPerfil($model->id);
+        $role = $this->findRole($model->id);
         $model->scenario='update';
 
-        if ($model->load(Yii::$app->getRequest()->post()) && $perfil->load(Yii::$app->getRequest()->post()) ) {
-             
+        if ($model->load(Yii::$app->getRequest()->post()) && $perfil->load(Yii::$app->getRequest()->post()) && $role->load(Yii::$app->getRequest()->post()) ) {
+            $model->role= $role->item_name;           
+          
             if ($model->save()) {                
                 $perfil->save();
+                $role->save();
                 return $this->redirect(['index']);
             }
         }
@@ -163,6 +166,7 @@ class UserController extends Controller
         return $this->render('update', [
                 'model' => $model,
                 'perfil' => $perfil,
+                'role'=>$role,
         ]);
     }
 
@@ -198,6 +202,15 @@ class UserController extends Controller
     protected function findPerfil($id)
     {
         if (($model = Perfil::findOne(['user_id'=>$id])) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findRole($id)
+    {
+        if (($model = AuthAssignment::findOne(['user_id'=>$id])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

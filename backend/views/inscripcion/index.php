@@ -19,9 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box">
 
         <div class="box-header with-border">
-            <div class="pull-right">
-            <?= Html::a('<i class="fa  fa-plus"></i> Nuevo', ['create'], ['class' => 'btn btn-success']) ?>
-            </div> 
+            
         </div>
         <div class="box-body">
             <?= GridView::widget([

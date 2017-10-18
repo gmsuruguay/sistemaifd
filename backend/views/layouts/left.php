@@ -13,12 +13,12 @@
                     ['label' => 'Carreras', 'icon' => 'fa fa-certificate', 'url' => ['/carrera']],                   
                     //['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest], 
                     [
-                        'label' => 'Inscripciones',
+                        'label' => 'Inscripciones a Carrera',
                         'icon' => 'fa fa-pencil-square-o',
                         'url' => '#',
                         'items' => [                            
                             ['label' => 'Listar', 'icon' => 'fa fa-list', 'url' => ['/inscripcion'],],
-                            ['label' => 'Agregar', 'icon' => 'fa fa-plus', 'url' => ['/inscripcion/create'],],                            
+                           
                         ],
                     ],
                     [

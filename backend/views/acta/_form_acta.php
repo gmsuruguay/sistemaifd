@@ -88,13 +88,15 @@ use kartik\form\ActiveForm;
                             {
                                echo '<td class="editable" >'.Html::input('text', 'nota[]', $dp->nota, ['class' => 'form-control txt-input',
                                                                                                        'maxlength'=> '4',
+                                                                                                       'autocomplete'=>'off',
                                                                                                        'readonly'=>'readonly']).
                                 Html::hiddenInput('alumno_ids[]', $dp->alumno_id).'</td>';
                             }
                             else
                             {
                                 echo '<td class="editable" >'.Html::input('text', 'nota[]', '', ['class' => 'form-control',
-                                                                                                                        'maxlength'=> '4']).
+                                                                                                 'maxlength'=> '4',
+                                                                                                 'autocomplete'=> 'off']).
                                 Html::hiddenInput('alumno_ids[]', $dp->alumno_id).'</td>';
                             }
                             

@@ -5,8 +5,8 @@ namespace backend\models;
 use Yii;
 
 use common\models\FechaHelper;
-
-
+use backend\models\Condicion;
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "acta".
  *
@@ -135,6 +135,12 @@ class Acta extends \yii\db\ActiveRecord
     public function getDescripcionCondicion()
     {
         return $this->condicion ? $this->condicion->descripcion : 'Ninguno';
+    }
+
+    public function getListaCondicion()
+    {        
+        $sql = Condicion::find()->where(['id'=>[1,3]])->orderBy('descripcion')->all();
+        return ArrayHelper::map($sql, 'id', 'descripcion');
     }
 
 }

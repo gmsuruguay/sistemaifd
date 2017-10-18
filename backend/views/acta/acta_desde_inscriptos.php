@@ -7,7 +7,7 @@ use common\models\FechaHelper;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Acta */
 
-$this->title = 'Crear Acta';
+$this->title = 'Registrar Actas con Inscripción Previa a Examen';
 $this->params['breadcrumbs'][] = 'Acta';
 
 ?>

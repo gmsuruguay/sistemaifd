@@ -32,7 +32,7 @@
                             ['label' => 'Listar Colegios Secundarios', 'icon' => 'fa fa-university', 'url' => ['/colegio-secundario'],],                             
                         ],
                     ], 
-                    [
+                    /*[
                         'label' => 'Cursadas',
                         'icon' => 'fa fa-rocket',
                         'url' => '#',
@@ -40,8 +40,18 @@
                             ['label' => 'Listar', 'icon' => 'fa fa-list', 'url' => ['/cursada'],],
                             ['label' => 'Agregar', 'icon' => 'fa fa-plus', 'url' => ['/cursada/create'],],                            
                         ],
-                    ], 
-                    ['label' => 'Actas', 'icon' => 'fa fa-book', 'url' => ['/acta']],  
+                    ],*/ 
+                    
+                    [
+                        'label' => 'Actas',
+                        'icon' => 'fa fa-book',
+                        'url' => '#',
+                        'items' => [                            
+                            ['label' => 'Listar Folios', 'icon' => 'fa fa-list', 'url' => ['/acta'],],
+                            ['label' => 'Registrar Actas Historicas', 'icon' => 'fa fa-plus', 'url' => ['/acta/create'],],    
+                            ['label' => 'Registrar Actas con Inscripción', 'icon' => 'fa fa-plus', 'url' => ['/acta/load-from-inscripto']],                          
+                        ],
+                    ],  
                     [
                         'label' => 'Docentes',
                         'icon' => 'fa fa-user',

@@ -46,7 +46,7 @@ $condicion = Condicion::find()->all();
         </div>
         <div class="row">
             <div class="col-sm-4 col-md-4">
-                <?= $form->field($model, 'condicion_id')->label('Condición')->dropDownList(ArrayHelper::map($condicion, 'id', 'descripcion'), ['prompt'=>'-------------',]) ?>
+                <?= $form->field($model, 'condicion_id')->label('Condición')->dropDownList($model->listaCondicion, ['prompt'=>'-------------',]) ?>
             </div>
             <div class="col-sm-4 col-md-4">
                 <?= Html::label('Carreras') ?>

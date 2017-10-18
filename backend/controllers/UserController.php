@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\base\UserException;
 use yii\filters\VerbFilter;
 use backend\models\Perfil;
-
+use common\models\AuthAssignment;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -115,16 +115,21 @@ class UserController extends Controller
     {
         $model = new User();
         $perfil = new Perfil();
+        $role= new AuthAssignment();
         $model->scenario='create';
 
         if ($model->load(Yii::$app->getRequest()->post()) && $perfil->load(Yii::$app->getRequest()->post()) ) {
             $model->setPassword($model->password);
             $model->generateAuthKey();
-            //echo $model->tipo_usuario_id;            
+            //echo $model->role;            
             //die;
             if ($model->save()) {
                 $perfil->user_id = $model->id;
                 $perfil->save();
+                $role->item_name= $model->role;
+                $role->user_id = $model->id;
+                $role->created_at= time();
+                $role->save();
                 return $this->redirect(['index']);
             }
         }

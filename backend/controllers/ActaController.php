@@ -6,11 +6,15 @@ use Yii;
 use backend\models\Acta;
 use backend\models\Materia;
 use backend\models\Alumno;
+use backend\models\InscripcionExamen;
 use backend\models\search\ActaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
+use yii\widgets\ActiveForm;
+use yii\web\Response;
+use yii\base\Exception;
 
 /**
  * ActaController implements the CRUD actions for Acta model.
@@ -238,12 +242,176 @@ class ActaController extends Controller
             $model->condicion_id = $condicion_id;
             $model->materia_id = $materia_id;
             $notas = new ActiveDataProvider([
-                'query' => Acta::find()->where(['libro' => $libro, 'folio'=> $folio]),
-            ]);
+                'query' => Acta::find()->where(['libro' => $model->libro, 
+                                                    'folio'=> $model->folio,
+                                                    'fecha_examen'=> date('Y-m-d', strtotime($model->fecha_examen)),
+                                                    'condicion_id'=> $model->condicion_id,
+                                                    'materia_id'=> $model->materia_id])]);
 
             $_grid_notas = $this->renderPartial('_grid_notas', ['notas' => $notas],true);
             
             return $this->render('load', ['model' => $model ,'grid_notas' => $_grid_notas]);
         }
     }
+
+    public function actionLoadFromInscripto()
+    {
+
+        $model = new Acta();
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            if($model->condicion_id != '2')
+            {
+                $query =  Acta::find()->where(['libro' => $model->libro, 
+                                                    'folio'=> $model->folio,
+                                                    'fecha_examen'=> date('Y-m-d', strtotime($model->fecha_examen)),
+                                                    'condicion_id'=> $model->condicion_id,
+                                                    'materia_id'=> $model->materia_id])->all();
+                if(count($query)>0)
+                {
+                    return  $this->renderPartial('_form_acta', ['model' => $model ,'dataProvider' => $query], true);
+                }
+                $query =  InscripcionExamen::find()->where(['fecha_examen'=> date('Y-m-d', strtotime($model->fecha_examen)),
+                                                'condicion_id'=> $model->condicion_id,
+                                                'materia_id'=> $model->materia_id])->all();
+                if(count($query)>0)
+                {
+                    return  $this->renderPartial('_form_acta', ['model' => $model ,'dataProvider' => $query], true);
+                }
+                return '0';
+            }
+            return '0';
+
+        } else {
+            return $this->render('acta_desde_inscriptos', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionSaveNotas()
+    {
+        $model = new Acta();
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) 
+        {
+            $ids = Yii::$app->request->post('alumno_ids');
+            $notas = Yii::$app->request->post('nota');
+            $long = count($notas);
+
+            //Comprueba si estan correctos los datos ingresados.
+            for ($i=0; $i< $long; $i++) {
+               $model->nota = $notas[$i];
+               $model->alumno_id = $ids[$i];
+
+               if(!$model->validate())
+               {
+                    return '0';
+                    break;
+
+               }
+            }
+
+            //Comprueba que no se dupliquen las actas.
+            for ($i=0; $i< $long; $i++) {
+               $model->nota = $notas[$i];
+               $model->alumno_id = $ids[$i];
+               $query =  Acta::find()->where([  'libro' => $model->libro, 
+                                                'folio'=> $model->folio,
+                                                'fecha_examen'=> $model->fecha_examen,
+                                                'condicion_id'=> $model->condicion_id,
+                                                'materia_id'=> $model->materia_id,
+                                                'alumno_id'=> $model->alumno_id])->all();
+                if(count($query)>0)
+                {
+                    return  '1';
+                    break;
+                }
+
+            }
+
+            //Guarda los datos en la base de datos.
+            for ($i=0; $i< $long; $i++) {
+
+               $model = new Acta();
+               $model->load(Yii::$app->request->post());
+               if($notas[$i] > 0){
+                    $model->asistencia=1;
+                }else{
+                    $model->asistencia=0;
+                }
+               $model->nota = $notas[$i];
+               $model->alumno_id = $ids[$i];
+               $model->save();
+            }
+            $query =  Acta::find()->where(['libro' => $model->libro, 
+                                                    'folio'=> $model->folio,
+                                                    'fecha_examen'=> $model->fecha_examen,
+                                                    'condicion_id'=> $model->condicion_id,
+                                                    'materia_id'=> $model->materia_id])->all();
+            return  $this->renderPartial('_form_acta', ['model' => $model ,'dataProvider' => $query], true);
+            return '2';
+        }
+    }
+
+    public function actionUpdateNotas()
+    {
+        $model = new Acta();
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) 
+        {
+            $ids = Yii::$app->request->post('alumno_ids');
+            $notas = Yii::$app->request->post('nota');
+            $long = count($notas);
+
+            //Comprueba si estan correctos los datos ingresados.
+            for ($i=0; $i< $long; $i++) {
+               $model->nota = $notas[$i];
+               $model->alumno_id = $ids[$i];
+
+               if(!$model->validate())
+               {
+                    return '0';
+                    break;
+
+               }
+            }
+
+            //Actualiza los datos en la base de datos.
+            for ($i=0; $i< $long; $i++) {
+                $model->alumno_id = $ids[$i];
+                $model =  Acta::findOne([  'libro' => $model->libro, 
+                                                'folio'=> $model->folio,
+                                                'fecha_examen'=> $model->fecha_examen,
+                                                'condicion_id'=> $model->condicion_id,
+                                                'materia_id'=> $model->materia_id,
+                                                'alumno_id'=> $model->alumno_id]);
+               $model->load(Yii::$app->request->post());
+               if($notas[$i] > 0){
+                    $model->asistencia=1;
+                }else{
+                    $model->asistencia=0;
+                }
+               $model->nota = $notas[$i];
+               $model->save();
+            }
+            return '1';
+        }
+    }
+
+    public function actionDestroyedNotas()
+    {
+        $model = new Acta();
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) 
+        {
+            $query =  Acta::find()->where([  'libro' => $model->libro, 
+                                                'folio'=> $model->folio,
+                                                'fecha_examen'=> date('Y-m-d', strtotime($model->fecha_examen)),
+                                                'condicion_id'=> $model->condicion_id,
+                                                'materia_id'=> $model->materia_id])->all();
+            foreach ($query as $q) {
+                $q->delete();
+            }
+            return;
+        }
+    }
+
 }

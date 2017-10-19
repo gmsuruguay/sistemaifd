@@ -6,12 +6,16 @@ body {
 .wrap {
     min-height: 100%;
     height: auto;
-    margin: 0 auto -60px;
+    /*margin: 0 auto -60px;*/
     padding: 0 0 60px;
 }
 
 .wrap > .container {
     padding: 70px 15px 20px;
+}
+
+.wrap > .container > .site-login {
+    padding: 140px 15px 20px;
 }
 
 .footer {
@@ -117,4 +121,34 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+
+
+.app-home {
+    background-image: url('../img/home.jpg');
+    /* Nos aseguramos que la imagen de fondo este centrada vertical y
+    horizontalmente en todo momento */
+    background-position: center center;
+
+    /* La imagen de fondo no se repite */
+    background-repeat: no-repeat;
+
+    /* La imagen de fondo está fija en el viewport, de modo que no se mueva cuando
+        la altura del contenido supere la altura de la imagen. */
+    background-attachment: fixed;
+
+    /* La imagen de fondo se reescala cuando se cambia el ancho de ventana
+        del navegador */
+    background-size: cover;
+
+    /* Fijamos un color de fondo para que se muestre mientras se está
+        cargando la imagen de fondo o si hay problemas para cargarla  */
+    background-color: #464646;
+}
+.info{
+    padding: 25px 0;
+}
+
+.navbar-default{
+    padding: 15px;
 }

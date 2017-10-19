@@ -13,14 +13,23 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'authManager' => [
+        'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
+        ],    
+        'user' => [        
+        'identityClass' => 'common\models\User',
+        'loginUrl' => ['site/login'],
+        'enableAutoLogin' => true,
+        'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+        ], 
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],
-        'user' => [
+        /*'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
-        ],
+        ],*/
         'session' => [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-frontend',
@@ -45,6 +54,14 @@ return [
             ],
         ],
         */
+    ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            'site/signup', //Permisos permitidos solo de manera temporal por que no existen usuarios     
+                     
+
+        ]
     ],
     'params' => $params,
 ];

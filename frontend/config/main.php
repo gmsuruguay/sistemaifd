@@ -59,7 +59,8 @@ return [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
             'site/signup', //Permisos permitidos solo de manera temporal por que no existen usuarios     
-                     
+            'gii/*',//Permitir solo en desarrollo. 
+            //'alumno/index'       
 
         ]
     ],

@@ -28,21 +28,43 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'SURI',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-default navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-    ];
+   
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+        $menuItems = [
+            ['label' => 'Inicio', 'url' => ['/site/index']],
+            ['label' => 'Inscripción Materias', 'url' => ['#']],
+            ['label' => 'Inscripción Exámenes', 'url' => ['#']],
+            $menuItems[]=[
+                
+                'label' => 'Reportes',
+                'items' => [                 
+                    ['label' => 'Historia Academica', 'url' => ['#']],
+                    '<li class="divider"></li>',                
+                    ['label' => 'Regularidades', 'url' => ['#']],                 
+                ],       
+                   
+            ],
+            $menuItems[]=[
+                
+                'label' => 'Trámites',
+                'items' => [                 
+                    ['label' => 'Mis Datos Personales', 'url' => ['#']],
+                    '<li class="divider"></li>',                
+                    ['label' => 'Solicitud de Certificados', 'url' => ['#']],                 
+                ],       
+                   
+            ],
+            ['label' => 'Configuarión', 'url' => ['#']],
+        ];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

@@ -4,6 +4,7 @@ namespace backend\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use common\models\User;
 /**
  * This is the model class for table "alumno".
  *
@@ -60,6 +61,7 @@ class Alumno extends Docente
             [['lugar_nacimiento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['lugar_nacimiento_id' => 'id']],
             [['colegio_secundario_id'], 'exist', 'skipOnError' => true, 'targetClass' => ColegioSecundario::className(), 'targetAttribute' => ['colegio_secundario_id' => 'id']],
             [['titulo_secundario_id'], 'exist', 'skipOnError' => true, 'targetClass' => TituloSecundario::className(), 'targetAttribute' => ['titulo_secundario_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -184,6 +186,11 @@ class Alumno extends Docente
     public function getDescripcionColegio()
     {
         return $this->colegioSecundario ? $this->colegioSecundario->descripcion : ' - ';
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     

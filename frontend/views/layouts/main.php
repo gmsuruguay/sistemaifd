@@ -57,7 +57,7 @@ AppAsset::register($this);
                 
                 'label' => 'Trámites',
                 'items' => [                 
-                    ['label' => 'Mis Datos Personales', 'url' => ['#']],
+                    ['label' => 'Mis Datos Personales', 'url' => ['/alumno/legajo']],
                     '<li class="divider"></li>',                
                     ['label' => 'Solicitud de Certificados', 'url' => ['#']],                 
                 ],       
@@ -68,7 +68,7 @@ AppAsset::register($this);
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Cerrar Sesión (' . Yii::$app->user->identity->nombreAlumno . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()

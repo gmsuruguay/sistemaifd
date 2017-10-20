@@ -19,11 +19,22 @@ class AlumnoController extends Controller
         //$model= $this->findModel($id);
         //Busqueda de Inscripcion del alumno
         $searchModel = new InscripcionSearch();
-        $searchModel->alumno_id = 1; 
+        $searchModel->alumno_id = Yii::$app->user->identity->idAlumno; 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);       
 
         return $this->render('index', [                     
             'dataProvider' => $dataProvider,           
+        ]);
+    }
+
+    public function actionLegajo()
+    {
+        $id=Yii::$app->user->identity->idAlumno;
+        $model= $this->findModel($id);     
+             
+
+        return $this->render('legajo', [                     
+            'model' => $model,           
         ]);
     }
 

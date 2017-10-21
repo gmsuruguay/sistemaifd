@@ -8,11 +8,12 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\User;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
-
+use yii\web\HttpException;
 /**
  * Site controller
  */
@@ -80,7 +81,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionLogin()
+    /*public function actionLogin()
     {
         $this->layout='login';
 
@@ -97,6 +98,42 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }*/
+
+    public function actionLogin()
+    {
+        $this->layout='login';
+
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) ) {
+
+            $user= User::findByUsername($model->username);            
+                         
+            if($user->role=='ALUMNO'){
+                if($model->login()){
+                    return $this->goBack();
+                }else{
+                    return $this->render('login', [
+                        'model' => $model,
+                    ]);
+                }
+                
+            }else {                
+                throw new HttpException(403, 'Usted no esta autorizado para entrar a esta sección');
+            }               
+                             
+            
+        } else{
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
+        
+        
     }
 
     /**

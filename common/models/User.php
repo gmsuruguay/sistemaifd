@@ -266,6 +266,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->alumno ? $this->alumno->nombreCompleto : 'ninguno';
     }
 
+    public function getNombreRole()
+    {
+        return $this->role ;
+    }
+
     public function getListaRoles()
     {
         $query= $posts = Yii::$app->db->createCommand('SELECT * FROM auth_item WHERE type=1')->queryAll();

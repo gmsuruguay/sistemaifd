@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use common\models\FechaHelper;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\InscripcionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -29,7 +29,14 @@ $this->title = 'Carreras Inscriptas';
 			],           
             
             'nro_libreta',
-            'fecha',  
+            [
+            'attribute'=>'fecha',
+            'label'=>'Fecha Inscripción',
+            'format'=>'text',//raw, html
+            'content'=>function ($data){
+                return FechaHelper::fechaDMY($data->fecha);
+            }
+            ],   
                        
         ],
     ]); ?>

@@ -4,23 +4,21 @@ namespace frontend\controllers;
 
 use Yii;
 use backend\models\Alumno;
-use backend\models\search\AlumnoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use backend\models\search\InscripcionSearch;
-use backend\models\search\MateriaCursadaSearch;
+use yii\data\ActiveDataProvider;
 use backend\models\Inscripcion;
 
 class AlumnoController extends Controller
 {
     public function actionIndex()
-    {
-        //$model= $this->findModel($id);
-        //Busqueda de Inscripcion del alumno
-        $searchModel = new InscripcionSearch();
-        $searchModel->alumno_id = Yii::$app->user->identity->idAlumno; 
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);       
+    {   
+        $id_alumno= Yii::$app->user->identity->idAlumno; 
+        $query= Inscripcion::find()->where(['alumno_id'=>$id_alumno]);       
+        $dataProvider = new ActiveDataProvider([
+            'query'=>$query,
+        ]);       
 
         return $this->render('index', [                     
             'dataProvider' => $dataProvider,           

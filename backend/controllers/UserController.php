@@ -5,12 +5,16 @@ namespace backend\controllers;
 use Yii;
 use common\models\User;
 use backend\models\search\UserSearch;
+use backend\models\Sede;
+use backend\models\UsuarioSede;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\base\UserException;
 use yii\filters\VerbFilter;
 use backend\models\Perfil;
 use common\models\AuthAssignment;
+use yii\data\ActiveDataProvider;
+use yii\widgets\Pjax;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -183,6 +187,58 @@ class UserController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionAsignarSede($id)
+    {
+        $model = new UsuarioSede();
+        $model->user_id = $id;
+        $user = User::findOne($id);
+        $sedes = Sede::find()->all();
+        $dataProvider = new ActiveDataProvider([
+                'query' => UsuarioSede::find()->where(['user_id'=>$id]),
+            ]);
+
+        if(Yii::$app->request->isPjax)
+        {
+             return $this->render('asignar_sede', [
+                'model' => $model,
+                'dataProvider' => $dataProvider,
+                'sedes'=>$sedes,
+                'user' => $user,
+            ]);        
+        }
+        return $this->render('asignar_sede', [
+                'model' => $model,
+                'dataProvider' => $dataProvider,
+                'sedes'=>$sedes,
+                'user' => $user,
+        ]);
+    }
+
+    public function actionSaveSede()
+    {
+        $model = new UsuarioSede();
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->getRequest()->post()))
+        {
+            if(count(UsuarioSede::find()->where(['sede_id'=> $model->sede_id, 'user_id'=> $model->user_id])->all())>0)
+            {
+                return '0';
+            }
+            if($model->validate() && $model->save())
+            {
+                return '1';
+            }
+            return '0';
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionRemoveSede($id, $user_id)
+    {
+        $model = UsuarioSede::findOne($id);
+        $model->delete();
+
+        return $this->redirect(['asignar-sede', 'id' => $user_id]);
+    }
     /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -216,4 +272,5 @@ class UserController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }

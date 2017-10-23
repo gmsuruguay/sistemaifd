@@ -157,3 +157,9 @@ a.desc:after {
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.8);
 }
+
+.img-responsive2 {
+   
+    max-width: 70%;
+   
+}

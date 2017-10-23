@@ -29,7 +29,7 @@ AppAsset::register($this);
         
         <?php
         NavBar::begin([
-            'brandLabel' => 'SURI',
+            'brandLabel' =>  Html::img('@web/img/suri.png', ['width'=>'50%','alt'=>Yii::$app->name,'class'=>'pull-left'])."SURI",
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-default navbar-fixed-top',

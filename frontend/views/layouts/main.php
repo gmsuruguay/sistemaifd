@@ -24,11 +24,10 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'SURI',
+        'brandLabel' => Html::img('@web/img/suri.png', ['width'=>'50%','alt'=>Yii::$app->name,'class'=>'pull-left'])."SURI",
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-default navbar-fixed-top',
@@ -62,7 +61,7 @@ AppAsset::register($this);
                 ],       
                    
             ],
-            ['label' => 'Configuarión', 'url' => ['#']],
+            ['label' => 'Configuaración', 'url' => ['#']],
         ];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')

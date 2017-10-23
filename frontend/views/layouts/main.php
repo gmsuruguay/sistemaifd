@@ -61,7 +61,7 @@ AppAsset::register($this);
                 ],       
                    
             ],
-            ['label' => 'Configuración', 'url' => ['#']],
+            ['label' => 'Configuración', 'url' => ['/site/change-password']],
         ];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')

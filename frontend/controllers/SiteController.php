@@ -13,6 +13,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\ChangePassword;
 use yii\web\HttpException;
 /**
  * Site controller
@@ -250,4 +251,21 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
+    /**
+     * Reset password
+     * @return string
+     */
+     public function actionChangePassword()
+     {
+         $model = new ChangePassword();
+         if ($model->load(Yii::$app->getRequest()->post()) && $model->change()) {
+             Yii::$app->getSession()->setFlash('success', 'Cambio de contraseña realizada correctamente.');
+             return $this->goHome();           
+         }
+ 
+         return $this->render('change-password', [
+                 'model' => $model,
+         ]);
+     }
 }

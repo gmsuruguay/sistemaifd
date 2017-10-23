@@ -1,50 +1,68 @@
 <?php
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 use common\models\FechaHelper;
 use mdm\admin\components\Helper;
 
 $this->title = 'Datos Personales';
 ?>
 
-<h1><?= Html::encode($this->title) ?></h1>
-<?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [                   
-            'tipo_doc',
-            'numero',
-            'cuil',
-            'apellido',
-            'nombre',
-            'sexo',
-            'estado_civil',
-            'nacionalidad',
-            [
-            'label'=>'Fecha Nacimiento',
-            'value'=>function ($data){
-                    return FechaHelper::fechaDMY($data->fecha_nacimiento);
-                }
-            ], 
-            [
-            'label'=>'Lugar Nacimiento',
-            'value'=>$model->descripcionLocalidadNacimiento,
-            ],
-            'domicilio',
-            'nro',
-            [
-            'label'=>'Localidad',
-            'value'=>$model->descripcionLocalidad,
-            ],
-            'telefono',
-            'celular',
-            'email:email',
-            [
-            'label'=>'Titulo',
-            'value'=>$model->descripcionTitulo,
-            ],
-            [
-            'label'=>'Colegio',
-            'value'=>$model->descripcionColegio,
-            ],           
-        ],
-    ]) ?>
+<h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <?= Html::encode($this->title) ?></h3>
+<div class="panel panel-default">
+  
+  <div class="panel-body descripcion">
+  
+    <p>
+        Nombre completo: <?=$model->nombreCompleto?>
+        <br>Sexo: <?=$model->sexo?>
+        <br>Estado civil: <?=$model->estado_civil?>
+        <br>Fecha de nacimiento:  <?=FechaHelper::fechaDMY($model->fecha_nacimiento)?>
+        <br>Lugar de nacimiento:  <?=$model->descripcionLocalidadNacimiento?>
+        <br>Nacionalidad: <?=$model->nacionalidad?>
+        
+        
+    </p>
+
+  </div>
+</div>
+<h3><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Datos de Contacto</h3>
+<div class="panel panel-default">
+  
+    <div class="panel-body descripcion">  
+        <p>
+            Domicilio: <?=$model->domicilio.' '.$model->nro?>
+            <br>Localidad: <?=$model->descripcionLocalidad?>
+            <br>Teléfono: <?=$model->telefono?>
+            <br>Celular:  <?=$model->celular?>
+            <br>E-mail:  <?=$model->email?>       
+            
+            
+        </p>
+    </div>
+        <p>
+            <?php          
+                
+                //if (Helper::checkRoute('update')) {
+                    echo Html::a(Yii::t('app', '<i class="fa  fa-pencil"></i> Modificar'), ['update', 'id' => $model->id], [
+                        'class' => 'btn btn-primary'                            
+                    ]);
+            // }  
+            
+            ?>   
+        </p>
+        
+  
+</div>
+
+<h3><span class="glyphicon glyphicon-education" aria-hidden="true"></span> Datos Académicos</h3>
+<div class="panel panel-default">
+  
+  <div class="panel-body descripcion">
+  
+    <p>
+        Colegio Secundario: <?=$model->descripcionColegio?>
+        <br>Titulo: <?=$model->descripcionTitulo?>         
+    </p>
+
+  </div>
+</div>
+

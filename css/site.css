@@ -163,3 +163,10 @@ a.desc:after {
     max-width: 70%;
    
 }
+h1,h2,h3{
+    font-weight: 700;
+}
+
+.descripcion{
+    font-size: 16px;
+}

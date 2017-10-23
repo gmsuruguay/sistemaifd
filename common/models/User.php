@@ -279,4 +279,16 @@ class User extends ActiveRecord implements IdentityInterface
         return ArrayHelper::map($query, 'name','name');
     }
 
+    /**
+     * Informa si el usuario tiene rol de PRECEPTOR
+     */
+    public function getIsPreceptor()
+    {
+        if($this->role == 'PRECEPTOR')
+        {
+            return true;
+        }
+        return false;
+    }
+
 }

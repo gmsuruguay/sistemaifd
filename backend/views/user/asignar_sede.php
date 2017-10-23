@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = 'Asignar sede';
              <?php $form = ActiveForm::begin(['id'=>'form-sede']); ?>
                 <div class='row'>
                     <div class='col-sm-8 col-md-10'>
-                        <?= $form->field($model, 'sede_id')->label(false)->dropDownList(ArrayHelper::map($sedes, 'id', 'descripcion'), ['class'=> 'form-control','prompt'=>'--Seleccionar Sede--',]) ?>
+                        <?= $form->field($model, 'sede_id')->label(false)->dropDownList(ArrayHelper::map($sedes, 'id', 'localidad'), ['class'=> 'form-control','prompt'=>'--Seleccionar Sede--',]) ?>
                          <?= $form->field($model, 'user_id')->label(false)->hiddenInput()?>
                     </div>
                     <div class='col-sm-4 col-md-2'>

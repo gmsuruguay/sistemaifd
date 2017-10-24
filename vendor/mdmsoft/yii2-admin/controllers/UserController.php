@@ -19,6 +19,7 @@ use yii\web\NotFoundHttpException;
 use yii\base\UserException;
 use yii\mail\BaseMailer;
 use backend\models\Perfil;
+use yii\web\HttpException;
 /**
  * User controller
  */
@@ -130,8 +131,7 @@ class UserController extends Controller
      * @return string
      */
     public function actionLogin()
-    {
-        //$this->layout='view_clean';
+    {       
 
         if (!Yii::$app->getUser()->isGuest) {
             return $this->goHome();
@@ -146,17 +146,52 @@ class UserController extends Controller
             ]);
         }
     }
+    /*
+    public function actionLogin()
+    {       
 
-    /**
-     * Logout
-     * @return string
-     */
-    public function actionLogout()
-    {
-        Yii::$app->getUser()->logout();
+        if (!Yii::$app->getUser()->isGuest) {
+            return $this->goHome();
+        }
 
-        return $this->goHome();
-    }
+        $model = new Login();
+
+        if ($model->load(Yii::$app->getRequest()->post()) ) {
+        
+            $user= User::findByUsername($model->username);            
+                        
+            if($user->role=='ALUMNO'){
+                if($model->login()){
+                    return $this->goBack();
+                }else{
+                    return $this->render('login', [
+                        'model' => $model,
+                    ]);
+                }
+                
+            }else {                
+                throw new HttpException(403, 'Usted no esta autorizado para entrar a esta sección');
+            }               
+                                
+            
+        } else{
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
+        
+        
+    }*/
+/**
+ * Logout
+ * @return string
+ */
+public function actionLogout()
+{
+    Yii::$app->getUser()->logout();
+
+    return $this->goHome();
+}
 
     /**
      * Signup new user

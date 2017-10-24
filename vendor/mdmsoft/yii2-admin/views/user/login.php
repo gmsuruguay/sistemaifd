@@ -9,8 +9,8 @@ use kartik\form\ActiveForm;
 $this->title = Yii::t('rbac-admin', 'Login');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-        <div class="site-login">    
-            <div class="login-box">
+<div class="site-login">    
+    <div class="login-box">
         <div class="login-logo">
         <img src="img/logo_ifd_header.png" class="img-responsive center-block"  alt="Logo"/>
             <!--<p><b>SURI </b></p>    
@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         </div>
         <!-- /.login-box-body -->
-        </div>
-        <!-- /.login-box -->
+    </div>
+    <!-- /.login-box -->
     
 </div>

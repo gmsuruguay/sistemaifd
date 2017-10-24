@@ -126,10 +126,17 @@ class UserController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionRestringirAcceso()
+    {
+        $this->layout='error';
+        return $this->render('error403');
+    }
+
     /**
      * Login
      * @return string
      */
+    /*
     public function actionLogin()
     {       
 
@@ -145,8 +152,8 @@ class UserController extends Controller
                     'model' => $model,
             ]);
         }
-    }
-    /*
+    }*/
+    
     public function actionLogin()
     {       
 
@@ -160,7 +167,7 @@ class UserController extends Controller
         
             $user= User::findByUsername($model->username);            
                         
-            if($user->role=='ALUMNO'){
+            if($user->role != 'ALUMNO'){
                 if($model->login()){
                     return $this->goBack();
                 }else{
@@ -170,7 +177,7 @@ class UserController extends Controller
                 }
                 
             }else {                
-                throw new HttpException(403, 'Usted no esta autorizado para entrar a esta sección');
+                return $this->redirect(['restringir-acceso']);
             }               
                                 
             
@@ -181,7 +188,7 @@ class UserController extends Controller
         }
         
         
-    }*/
+    }
 /**
  * Logout
  * @return string

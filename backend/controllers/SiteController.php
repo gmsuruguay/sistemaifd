@@ -63,7 +63,7 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
-    public function actionPrueba()
+    public function actionRestringirAcceso()
     {
         return $this->render('prueba');
     }

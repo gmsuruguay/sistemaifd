@@ -109,6 +109,7 @@ return [
         'allowActions' => [
             //'site/*', //Permisos permitidos solo de manera temporal por que no existen usuarios           
             'site/logout',
+            'admin/user/restringir-acceso',
             'admin/user/request-password-reset',
             'admin/user/signup',
             'gii/*',

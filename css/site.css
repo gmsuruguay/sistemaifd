@@ -10,11 +10,11 @@ body {
     padding: 0 0 60px;
 }
 
-.wrap > .container {
+.wrap>.container {
     padding: 70px 15px 20px;
 }
 
-.wrap > .container > .site-login {
+.wrap>.container>.site-login {
     padding: 140px 15px 20px;
 }
 
@@ -40,8 +40,11 @@ body {
     font-style: italic;
 }
 
+
 /* add sorting icons to gridview sort links */
-a.asc:after, a.desc:after {
+
+a.asc:after,
+a.desc:after {
     position: relative;
     top: 1px;
     display: inline-block;
@@ -99,74 +102,77 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 
+
 /* align the logout "link" (button in form) of the navbar */
-.nav li > form > button.logout {
+
+.nav li>form>button.logout {
     padding: 15px;
     border: none;
 }
 
 @media(max-width:767px) {
-    .nav li > form > button.logout {
-        display:block;
+    .nav li>form>button.logout {
+        display: block;
         text-align: left;
         width: 100%;
         padding: 10px 15px;
     }
 }
 
-.nav > li > form > button.logout:focus,
-.nav > li > form > button.logout:hover {
+.nav>li>form>button.logout:focus,
+.nav>li>form>button.logout:hover {
     text-decoration: none;
 }
 
-.nav > li > form > button.logout:focus {
+.nav>li>form>button.logout:focus {
     outline: none;
 }
-
 
 .app-home {
     background-image: url('../img/home.jpg');
     /* Nos aseguramos que la imagen de fondo este centrada vertical y
     horizontalmente en todo momento */
     background-position: center center;
-
     /* La imagen de fondo no se repite */
     background-repeat: no-repeat;
-
     /* La imagen de fondo está fija en el viewport, de modo que no se mueva cuando
         la altura del contenido supere la altura de la imagen. */
     background-attachment: fixed;
-
     /* La imagen de fondo se reescala cuando se cambia el ancho de ventana
         del navegador */
     background-size: cover;
-
     /* Fijamos un color de fondo para que se muestre mientras se está
         cargando la imagen de fondo o si hay problemas para cargarla  */
     background-color: #464646;
 }
-.info{
+
+.info {
     padding: 25px 0;
 }
 
-.navbar-default{
+.navbar-default {
     padding: 15px;
 }
 
-.box-login{
+.box-login {
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.8);
 }
 
 .img-responsive2 {
-   
     max-width: 70%;
-   
 }
-h1,h2,h3{
+
+h1,
+h2,
+h3 {
     font-weight: 700;
 }
 
-.descripcion{
+.descripcion {
     font-size: 16px;
+}
+
+.app-logo {
+    font-size: 25px;
 }

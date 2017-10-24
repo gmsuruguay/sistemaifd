@@ -2,38 +2,55 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use mdm\admin\components\Helper;
+use common\models\FechaHelper;
 /* @var $this yii\web\View */
 /* @var $model backend\models\CalendarioAcademico */
 
-$this->title = $model->id;
+$this->title = 'Detalle de la actividad académica';
 $this->params['breadcrumbs'][] = ['label' => 'Calendario Academicos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="calendario-academico-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
+    <div class="box">    
+        <div class="box-body"> 
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                [
+                'label'=>'Fecha Desde',
+                'value'=> FechaHelper::fechaDMY($model->fecha_desde),
+                ],
+                [
+                'label'=>'Fecha Hasta',
+                'value'=> FechaHelper::fechaDMY($model->fecha_hasta),
+                ],
+                'tipo_inscripcion',
+                'actividad',
             ],
         ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'fecha_desde',
-            'fecha_hasta',
-            'tipo_inscripcion',
-            'actividad',
-        ],
-    ]) ?>
-
+        </div>
+        <div class="btn-group box-footer">
+            <?php                   
+                
+                    
+                    if (Helper::checkRoute('update')) {
+                        echo Html::a(Yii::t('app', '<i class="fa  fa-pencil"></i> Editar'), ['update', 'id' => $model->id], [
+                            'class' => 'btn btn-primary'                            
+                        ]);
+                    }
+                    
+                    if (Helper::checkRoute('delete')) {
+                        echo Html::a(Yii::t('app', '<i class="fa  fa-trash"></i> Eliminar'), ['delete', 'id' => $model->id], [
+                            'class' => 'btn btn-danger',
+                            'data' => [
+                                'confirm' => Yii::t('yii', 'Está seguro de eliminar este registro ?'),
+                                'method' => 'post',
+                            ],
+                        ]);
+                    }            
+            ?>
+        </div>
+    </div>
 </div>

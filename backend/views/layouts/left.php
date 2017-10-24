@@ -64,7 +64,8 @@
                     ],  
                    
                     ['label' => 'Localidades', 'icon' => 'fa fa-map-marker', 'url' => ['/localidad']], 
-                    ['label' => 'Condición Cursada', 'icon' => 'fa fa-question-circle', 'url' => ['/condicion']],                  
+                    ['label' => 'Condición Cursada', 'icon' => 'fa fa-question-circle', 'url' => ['/condicion']], 
+                    ['label' => 'Calendario Académico', 'icon' => 'fa fa-calendar', 'url' => ['/calendario-academico'],],                 
                     [
                         'label' => 'Configuración',
                         'icon' => 'fa fa-cog',

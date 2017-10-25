@@ -41,7 +41,7 @@ class AlumnoController extends Controller
         ]);
     }
 
-    public function actionListarMateria($id)
+    /*public function actionListarMateria($id)
     {
         $model=$this->findModelInscripcion($id);
         $searchModel = new MateriaCursadaSearch();
@@ -50,6 +50,28 @@ class AlumnoController extends Controller
         return $this->render('listado-materias', [
             'model' => $model, 
             'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }*/
+
+    public function actionListarMateria($id)
+    {
+        $model=$this->findModelInscripcion($id);
+        
+        $materias_aprobadas = Acta::find()->select('materia_id')
+                            ->where(['alumno_id'=>Yii::$app->user->identity->idAlumno])
+                            ->andWhere(['>=','nota',4]);
+
+        $query = Materia::find()->where(['NOT IN', 'id', $materias_aprobadas ])->andWhere(['carrera_id' => $model->carrera_id]); 
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort'=> ['defaultOrder' => ['anio' => SORT_ASC]],
+        ]);
+
+        return $this->render('listado-materias', [
+            'model' => $model, 
+            //'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -102,7 +124,7 @@ class AlumnoController extends Controller
             if($this->estaAprobada($c->materia_id_correlativa) > 0){
                 return true; // La materia esta aprobada
             }else{
-                throw new NotFoundHttpException('Debe tener Aprobada la Materia '.Materia::descripcionCompletaMateria($c->materia_id_correlativa));
+                throw new NotFoundHttpException('Debe tener APROBADA la Materia '.Materia::descripcionCompletaMateria($c->materia_id_correlativa));
             }
         }    
         
@@ -113,7 +135,7 @@ class AlumnoController extends Controller
             if( ($this->estaRegular($c->materia_id_correlativa)> 0) || ($this->estaAprobada($c->materia_id_correlativa) > 0) ){
                 return true;
             }else{
-                throw new NotFoundHttpException('Debe tener Regularizada la Materia '.Materia::descripcionCompletaMateria($c->materia_id_correlativa));
+                throw new NotFoundHttpException('Debe tener REGULARIZADA la Materia '.Materia::descripcionCompletaMateria($c->materia_id_correlativa));
             }
         }        
 

@@ -13,6 +13,7 @@ use backend\models\search\MateriaCursadaSearch;
 use backend\models\Cursada;
 use backend\models\Correlatividad;
 use backend\models\Acta;
+use backend\models\Materia;
 
 class AlumnoController extends Controller
 {
@@ -63,6 +64,8 @@ class AlumnoController extends Controller
              
         if($existe>0){
             return true; // La materia esta aprobada
+        }else{
+            throw new NotFoundHttpException('Debe tener Aprobada la Materia '.Materia::descripcionCompletaMateria($id_correlativa));
         }
 
         // Verificación para las materias correlativas que necesiten estar REGULARES
@@ -75,6 +78,8 @@ class AlumnoController extends Controller
         
         if($existe_cursada>0){
             return true;
+        }else{
+            throw new NotFoundHttpException('Debe tener Regularizada la Materia '.Materia::descripcionCompletaMateria($id_correlativa));
         }
 
         return false;

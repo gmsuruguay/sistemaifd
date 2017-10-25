@@ -156,6 +156,12 @@ class Materia extends \yii\db\ActiveRecord
         return $this->descripcion.' - '.$this->anioMateria.' - '.$this->periodo;
     }
 
+    public static function descripcionCompletaMateria($id)
+    {
+        $materia= self::findOne($id);
+        return $materia->descripcion.' - '.$materia->anioMateria.' - '.$materia->periodo;
+    }
+
     public static function getListaMaterias()
     {        
         $sql = self::find()->orderBy('descripcion')->all();

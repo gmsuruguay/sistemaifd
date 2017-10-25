@@ -5,6 +5,7 @@ namespace backend\models;
 use Yii;
 use yii\helpers\ArrayHelper;
 use backend\models\Condicion;
+use backend\models\Cursada;
 /**
  * This is the model class for table "materia".
  *
@@ -198,6 +199,18 @@ class Materia extends \yii\db\ActiveRecord
         if($materia){
             $this->addError('descripcion', 'Ya existe una materia con el mismo nombre para esta Carrera');
         }
+    }
+
+    public function getExisteInscripcion($id){
+
+        $anio_inscripcion=date('Y');
+        
+        $existe= Cursada::find()
+        ->where(['materia_id'=>$id])
+        ->andWhere(['alumno_id'=>Yii::$app->user->identity->idAlumno])       
+        ->andWhere(['=','YEAR(fecha_inscripcion)',$anio_inscripcion])->count();
+
+        return $existe;
     }
     
 }

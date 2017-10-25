@@ -18,7 +18,11 @@ $this->title = 'Inscripción Materias';
     
           <?= GridView::widget([
                 'dataProvider' => $dataProvider,                   
-                           
+                'rowOptions' => function($model){
+                    if($model->getExisteInscripcion($model->id)>0){
+                            return ['class'=>'success'];
+                        }
+                },            
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],    
                                        
@@ -36,10 +40,7 @@ $this->title = 'Inscripción Materias';
                     ['class' => 'yii\grid\ActionColumn', 'template' => '{registrar}', 
                     'buttons' => [
                         'registrar' => function ($url, $model, $key) {
-                            return Html::a('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Inscribir', ['inscribir-materia', 'id' => $key], [
-                                'class' => 'btn btn-info',                        
-                                'title'=>'Inscribir'
-                            ]);
+                            return $model->getExisteInscripcion($model->id)==0 ? Html::a('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Inscribir', ['inscribir-materia', 'id' => $key], ['class' => 'btn btn-info','title'=>'Inscribir']) :' ';
                         },
         
                     ]],       

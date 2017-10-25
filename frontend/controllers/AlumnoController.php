@@ -66,11 +66,13 @@ class AlumnoController extends Controller
         }
 
         // Verificación para las materias correlativas que necesiten estar REGULARES
+        $fecha=date('Y-m-d');
         $existe_cursada= Cursada::find()
-        ->where(['materia_id'=>$id_correlativa, 'alumno_id'=>Yii::$app->user->identity->idAlumno])
+        ->where(['materia_id'=>$id_correlativa])
+        ->andWhere(['alumno_id'=>Yii::$app->user->identity->idAlumno])
         ->andWhere(['>=','nota',4])
-        ->andWhere(['<=','fecha_vencimiento',date('Y-m-d')])->count();
-
+        ->andWhere(['>=','fecha_vencimiento',$fecha])->count();
+        
         if($existe_cursada>0){
             return true;
         }

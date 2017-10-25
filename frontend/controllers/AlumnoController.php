@@ -55,14 +55,13 @@ class AlumnoController extends Controller
     }*/
 
     public function actionListarMateria($id)
-    {
-        $model=$this->findModelInscripcion($id);
+    {       
         
         $materias_aprobadas = Acta::find()->select('materia_id')
                             ->where(['alumno_id'=>Yii::$app->user->identity->idAlumno])
                             ->andWhere(['>=','nota',4]);
 
-        $query = Materia::find()->where(['NOT IN', 'id', $materias_aprobadas ])->andWhere(['carrera_id' => $model->carrera_id]); 
+        $query = Materia::find()->where(['NOT IN', 'id', $materias_aprobadas ])->andWhere(['carrera_id' => $id]); 
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -70,8 +69,7 @@ class AlumnoController extends Controller
         ]);
 
         return $this->render('listado-materias', [
-            'model' => $model, 
-            //'searchModel' => $searchModel,
+            
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -201,7 +199,7 @@ class AlumnoController extends Controller
         }
     }*/
 
-    public function actionInscribirMateria($id)
+    public function actionInscribirMateria($id, $id_carrera)
     {
         if($this->verificarCondicion($id)){ //Se verifica condición en otras materias
             $model = new Cursada();
@@ -210,9 +208,13 @@ class AlumnoController extends Controller
                     $model->alumno_id= Yii::$app->user->identity->idAlumno;
                     $model->materia_id = $id;
             
-                    if ($model->save()) {           
-                       
-                            echo "Exito";        
+                    if ($model->save()) {    
+                        
+                        Yii::$app->session->setFlash('success', "Su inscripción se realizo correctamente");
+                        return $this->redirect(['listar-materia',
+                            'id' => $id_carrera,
+                        ]);                     
+                                   
                         
                     } else {
                         echo "Error durante la inscripción";

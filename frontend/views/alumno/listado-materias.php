@@ -40,7 +40,7 @@ $this->title = 'Inscripción Materias';
                     ['class' => 'yii\grid\ActionColumn', 'template' => '{registrar}', 
                     'buttons' => [
                         'registrar' => function ($url, $model, $key) {
-                            return $model->getExisteInscripcion($model->id)==0 ? Html::a('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Inscribir', ['inscribir-materia', 'id' => $key], ['class' => 'btn btn-info','title'=>'Inscribir']) :' ';
+                            return $model->getExisteInscripcion($model->id)==0 ? Html::a('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Inscribir', ['inscribir-materia', 'id' => $key,'id_carrera'=>$model->idCarrera], ['class' => 'btn btn-info','title'=>'Inscribir']) :' ';
                         },
         
                     ]],       

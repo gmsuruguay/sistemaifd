@@ -51,7 +51,7 @@ $this->title = 'Carreras Inscriptas';
                             'items' => [
                                 [
                                     'label' => 'Materia',
-                                    'url' => ['listar-materia', 'id' => $key],                                                                       
+                                    'url' => ['listar-materia', 'id' => $model->carrera_id],                                                                       
                                 ],
                                 [
                                     'label' => 'Exámen',

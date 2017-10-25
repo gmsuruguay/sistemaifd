@@ -41,16 +41,8 @@ AppAsset::register($this);
             ['label' => 'Inicio', 'url' => ['/site/index']],
             //['label' => 'Inscripción Materias', 'url' => ['#']],
             //['label' => 'Inscripción Exámenes', 'url' => ['#']],
-            $menuItems[]=[
-                
-                'label' => 'Reportes',
-                'items' => [                 
-                    ['label' => 'Historia Academica', 'url' => ['#']],
-                    '<li class="divider"></li>',                
-                    ['label' => 'Regularidades', 'url' => ['#']],                 
-                ],       
-                   
-            ],
+            ['label' => 'Historia Academica', 'url' => ['#']],
+            
             $menuItems[]=[
                 
                 'label' => 'Trámites',

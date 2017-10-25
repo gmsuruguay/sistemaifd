@@ -152,6 +152,11 @@ class Materia extends \yii\db\ActiveRecord
         return $this->carrera ? $this->carrera->descripcion : '-Ninguno-';
     }
 
+    public function getIdCarrera()
+    {
+        return $this->carrera ? $this->carrera->id : '-Ninguno-';
+    }
+
     public function getDescripcionAnioMateria()
     {
         return $this->descripcion.' - '.$this->anioMateria.' - '.$this->periodo;

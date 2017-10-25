@@ -80,6 +80,21 @@ class AlumnoController extends Controller
         
     }
 
+    private function estaLibre($id)
+    {
+        // Verificación para las materias que necesiten estar REGULARES
+        $fecha=date('Y-m-d');
+
+        $existe= Cursada::find()
+        ->where(['materia_id'=>$id])
+        ->andWhere(['alumno_id'=>Yii::$app->user->identity->idAlumno])
+        ->andWhere(['<','nota',4])
+        ->orWhere(['<','fecha_vencimiento',$fecha])->count();
+
+        return $existe;
+        
+    }
+
     private function cumpleCondicion($c)
     {
         // Verificación para las materias correlativas que necesiten estar APROBADAS             
@@ -129,16 +144,21 @@ class AlumnoController extends Controller
     private function verificarCondicion($id)
     {
         $existe= Cursada::find()->where(['materia_id'=>$id, 'alumno_id'=>Yii::$app->user->identity->idAlumno])->count();
-        if($existe==0){
+        if($existe==0){ //Entra cuando no existe una inscripción de la misma.
             if ($this->verificarCorrelatividad($id)) { //Verificar la condición de las correlatividades
                return true;
             }
-        }
+        }elseif($this->estaAprobada($id) > 0){ // Existe pero debe verificar que no este aprobada
+            throw new NotFoundHttpException('No se puede inscribir, la materia '.Materia::descripcionCompletaMateria($id).' ya esta APROBADA');
+        }else{
+            if ($this->verificarCorrelatividad($id)) { //Verificar la condición de las correlatividades
+                return true;
+             }
+        }        
         
-        return false;
     }
 
-    public function actionInscribirMateria($id)
+    /*public function actionInscribirMateria($id)
     {
         if(!$this->verificarCondicion($id)){ //Se verifica si el alumno esta inscripto en la cursada
             return "No se puede Inscribir";  // Debe recibir un valor falso
@@ -157,6 +177,27 @@ class AlumnoController extends Controller
         } else {
             echo "Error durante la inscripción";
         }
+    }*/
+
+    public function actionInscribirMateria($id)
+    {
+        if($this->verificarCondicion($id)){ //Se verifica condición en otras materias
+            $model = new Cursada();
+            
+                    $model->fecha_inscripcion = date('Y-m-d');
+                    $model->alumno_id= Yii::$app->user->identity->idAlumno;
+                    $model->materia_id = $id;
+            
+                    if ($model->save()) {           
+                       
+                            echo "Exito";        
+                        
+                    } else {
+                        echo "Error durante la inscripción";
+                    }
+        }
+
+        
     }
 
     protected function findModel($id)

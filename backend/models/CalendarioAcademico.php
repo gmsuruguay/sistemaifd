@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use common\models\FechaHelper;
 
 /**
  * This is the model class for table "calendario_academico".
@@ -31,8 +32,7 @@ class CalendarioAcademico extends \yii\db\ActiveRecord
         return [
             [['fecha_desde', 'fecha_hasta', 'tipo_inscripcion', 'actividad'], 'required'],
             [['fecha_desde', 'fecha_hasta'], 'safe'],
-            [['tipo_inscripcion'], 'string'],
-            [['actividad'], 'string', 'max' => 750],
+            [['tipo_inscripcion','actividad'], 'string'],            
         ];
     }
 
@@ -48,5 +48,22 @@ class CalendarioAcademico extends \yii\db\ActiveRecord
             'tipo_inscripcion' => 'Tipo Inscripcion',
             'actividad' => 'Actividad',
         ];
+    }
+
+    /**
+    * Formatear fechas antes de insertar en base de datos
+    *
+    */
+    public function beforeValidate()
+    {
+        if ($this->fecha_desde != null) {           
+            $this->fecha_desde = FechaHelper::fechaYMD($this->fecha_desde);
+        }   
+        
+        if ($this->fecha_hasta != null) {           
+            $this->fecha_hasta = FechaHelper::fechaYMD($this->fecha_hasta);
+        }
+        
+        return parent::beforeValidate();
     }
 }

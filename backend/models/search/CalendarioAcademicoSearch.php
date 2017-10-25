@@ -47,6 +47,7 @@ class CalendarioAcademicoSearch extends CalendarioAcademico
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['fecha_desde' => SORT_ASC]],
         ]);
 
         $this->load($params);

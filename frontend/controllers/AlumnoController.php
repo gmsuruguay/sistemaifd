@@ -54,33 +54,53 @@ class AlumnoController extends Controller
         ]);
     }
 
-    private function cumpleCondicion($id_correlativa)
+    private function estaAprobada($id)
     {
-        // Verificación para las materias correlativas que necesiten estar APROBADAS
+        // Verificación para las materias que necesiten estar APROBADAS
         
         $existe= Acta::find()
-                ->where(['materia_id'=>$id_correlativa, 'alumno_id'=>Yii::$app->user->identity->idAlumno])
-                ->andWhere(['>=','nota',4])->count();
-             
-        if($existe>0){
-            return true; // La materia esta aprobada
-        }else{
-            throw new NotFoundHttpException('Debe tener Aprobada la Materia '.Materia::descripcionCompletaMateria($id_correlativa));
-        }
+        ->where(['materia_id'=>$id, 'alumno_id'=>Yii::$app->user->identity->idAlumno])
+        ->andWhere(['>=','nota',4])->count();
 
-        // Verificación para las materias correlativas que necesiten estar REGULARES
+        return $existe;
+    }
+
+    private function estaRegular($id)
+    {
+        // Verificación para las materias que necesiten estar REGULARES
         $fecha=date('Y-m-d');
-        $existe_cursada= Cursada::find()
-        ->where(['materia_id'=>$id_correlativa])
+
+        $existe= Cursada::find()
+        ->where(['materia_id'=>$id])
         ->andWhere(['alumno_id'=>Yii::$app->user->identity->idAlumno])
         ->andWhere(['>=','nota',4])
         ->andWhere(['>=','fecha_vencimiento',$fecha])->count();
+
+        return $existe;
         
-        if($existe_cursada>0){
-            return true;
-        }else{
-            throw new NotFoundHttpException('Debe tener Regularizada la Materia '.Materia::descripcionCompletaMateria($id_correlativa));
-        }
+    }
+
+    private function cumpleCondicion($c)
+    {
+        // Verificación para las materias correlativas que necesiten estar APROBADAS             
+        if ($c->tipo=='a') {
+            if($this->estaAprobada($c->materia_id_correlativa) > 0){
+                return true; // La materia esta aprobada
+            }else{
+                throw new NotFoundHttpException('Debe tener Aprobada la Materia '.Materia::descripcionCompletaMateria($c->materia_id_correlativa));
+            }
+        }    
+        
+
+        // Verificación para las materias correlativas que necesiten estar REGULARES       
+        
+        if ($c->tipo=='r') {
+            if( ($this->estaRegular($c->materia_id_correlativa)> 0) || ($this->estaAprobada($c->materia_id_correlativa) > 0) ){
+                return true;
+            }else{
+                throw new NotFoundHttpException('Debe tener Regularizada la Materia '.Materia::descripcionCompletaMateria($c->materia_id_correlativa));
+            }
+        }        
 
         return false;
     }
@@ -96,7 +116,7 @@ class AlumnoController extends Controller
                 // Si existe al menos una materia correlativa que no este regular o aprobada
                 // no se podra inscribir. Por lo tanto retorna falso
                 
-                if(!$this->cumpleCondicion($c->materia_id_correlativa)){ 
+                if(!$this->cumpleCondicion($c)){ 
                    return false;
                 }
              }

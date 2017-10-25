@@ -61,7 +61,7 @@ AppAsset::register($this);
             <?= $content ?>
         </div>
     </div>
-    <div class="info">
+    <!--<div class="info">
         <div class="container">
 
             <div class="row">
@@ -98,7 +98,7 @@ AppAsset::register($this);
             </div>
 
         </div>  
-    </div>
+    </div>-->
     
     
 

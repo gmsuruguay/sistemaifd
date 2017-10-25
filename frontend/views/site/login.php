@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
 
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-md-6 col-md-offset-3">
           <div class="box-login">
             <div class="box-body">
                 <h3 class="text-center">Iniciar Sesión</h3>

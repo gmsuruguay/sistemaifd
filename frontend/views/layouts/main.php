@@ -39,8 +39,8 @@ AppAsset::register($this);
     } else {
         $menuItems = [
             ['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Inscripción Materias', 'url' => ['#']],
-            ['label' => 'Inscripción Exámenes', 'url' => ['#']],
+            //['label' => 'Inscripción Materias', 'url' => ['#']],
+            //['label' => 'Inscripción Exámenes', 'url' => ['#']],
             $menuItems[]=[
                 
                 'label' => 'Reportes',

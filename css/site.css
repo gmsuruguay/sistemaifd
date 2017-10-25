@@ -125,7 +125,8 @@ a.desc:after {
 
 
 .app-home {
-    background-image: url('../img/home.jpg');
+   
+    background-image: url('../img/home.jpeg');
     /* Nos aseguramos que la imagen de fondo este centrada vertical y
     horizontalmente en todo momento */
     background-position: center center;

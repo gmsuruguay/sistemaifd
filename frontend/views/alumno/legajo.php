@@ -26,8 +26,21 @@ $this->title = 'Datos Personales';
 </div>
 <h3><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Datos de Contacto</h3>
 <div class="panel panel-default">
-  
-    <div class="panel-body descripcion">  
+    
+        
+   
+    <div class="panel-body descripcion"> 
+        <div class="pull-right">
+            <?php          
+                
+                //if (Helper::checkRoute('update')) {
+                    echo Html::a(Yii::t('app', '<i class="glyphicon glyphicon-pencil"></i> Actualizar'), ['update', 'id' => $model->id], [
+                        'class' => 'btn btn-primary'                            
+                    ]);
+            // }  
+            
+            ?>   
+        </div> 
         <p>
             Domicilio: <?=$model->domicilio.' '.$model->nro?>
             <br>Localidad: <?=$model->descripcionLocalidad?>
@@ -37,18 +50,9 @@ $this->title = 'Datos Personales';
             
             
         </p>
+        
     </div>
-        <p>
-            <?php          
-                
-                //if (Helper::checkRoute('update')) {
-                    echo Html::a(Yii::t('app', '<i class="fa  fa-pencil"></i> Modificar'), ['update', 'id' => $model->id], [
-                        'class' => 'btn btn-primary'                            
-                    ]);
-            // }  
-            
-            ?>   
-        </p>
+        
         
   
 </div>

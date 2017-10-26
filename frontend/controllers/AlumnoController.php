@@ -82,6 +82,7 @@ class AlumnoController extends Controller
         $searchModel = new CursadaSearch();
         $searchModel->alumno_id = Yii::$app->user->identity->idAlumno;
         $searchModel->carrera = $model->carrera_id;
+        $searchModel->periodo = date('Y');
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
        
         

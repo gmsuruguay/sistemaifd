@@ -14,6 +14,7 @@ class CursadaSearch extends Cursada
 {
     public $alumno;
     public $carrera;
+    public $periodo;
     /**
      * @inheritdoc
      */
@@ -21,7 +22,7 @@ class CursadaSearch extends Cursada
     {
         return [
             [['id', 'condicion_id', 'alumno_id', 'materia_id'], 'integer'],
-            [['fecha_inscripcion', 'fecha_vencimiento','alumno','fecha_cierre','carrera'], 'safe'],
+            [['fecha_inscripcion', 'fecha_vencimiento','alumno','fecha_cierre','carrera','periodo'], 'safe'],
             [['nota'], 'number'],
         ];
     }
@@ -83,6 +84,7 @@ class CursadaSearch extends Cursada
         ]);
 
         $query->andFilterWhere(['=','materia.carrera_id',$this->carrera])
+              ->andFilterWhere(['=','YEAR(fecha_inscripcion)',$this->periodo])
               ->orFilterWhere(['like', 'alumno.numero', $this->alumno])
               ->orFilterWhere(['like', "concat_ws(' ',alumno.apellido,alumno.nombre)", $this->alumno]);
 

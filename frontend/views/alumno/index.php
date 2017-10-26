@@ -38,7 +38,7 @@ $this->title = 'Carreras Inscriptas';
                 return FechaHelper::fechaDMY($data->fecha);
             }
             ], 
-            ['class' => 'yii\grid\ActionColumn', 'template' => '{inscribir}', 
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{inscribir} {inscripcion}', 
             
             'buttons' => [
 
@@ -69,7 +69,14 @@ $this->title = 'Carreras Inscriptas';
                         ],
                         'split' => true,    // if you want a split button
                     ]);
-                },       
+                },  
+                
+                'inscripcion'=> function ($url, $model, $key) {
+                    return Html::a('<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Mis inscripciones', ['ver-inscripciones', 'id' => $key], [
+                        'class' => 'btn btn-primary',                        
+                        'title'=>'inscribir en materia'
+                    ]);
+                },
 
 
             ]],             

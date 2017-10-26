@@ -117,7 +117,7 @@ class Cursada extends \yii\db\ActiveRecord
 
     public function getDescripcionMateria()
     {
-        return $this->materia ? $this->materia->descripcion : 'Ninguno';
+        return $this->materia ? $this->materia->descripcionAnioMateria : 'Ninguno';
     }
 
     public function getDescripcionCondicion()

@@ -13,6 +13,8 @@ use backend\models\Cursada;
 use backend\models\Correlatividad;
 use backend\models\Acta;
 use backend\models\Materia;
+use backend\models\Carrera;
+use backend\models\search\CursadaSearch;
 
 class AlumnoController extends Controller
 {
@@ -55,7 +57,8 @@ class AlumnoController extends Controller
 
     public function actionListarMateria($id)
     {       
-        
+        $carrera= $this->findModelCarrera($id);
+
         $materias_aprobadas = Acta::find()->select('materia_id')
                             ->where(['alumno_id'=>Yii::$app->user->identity->idAlumno])
                             ->andWhere(['>=','nota',4]);
@@ -68,7 +71,22 @@ class AlumnoController extends Controller
         ]);
 
         return $this->render('listado-materias', [
-            
+            'carrera'=>$carrera,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionVerInscripciones($id)
+    {
+        $model=$this->findModelInscripcion($id);
+        $searchModel = new CursadaSearch();
+        $searchModel->alumno_id = Yii::$app->user->identity->idAlumno;
+        $searchModel->carrera = $model->carrera_id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+       
+        
+        return $this->render('listado-inscripciones', [
+            'model' => $model,             
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -259,6 +277,15 @@ class AlumnoController extends Controller
     protected function findModelCursada($id)
     {
         if (($model = Cursada::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findModelCarrera($id)
+    {
+        if (($model = Carrera::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

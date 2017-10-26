@@ -9,7 +9,6 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use backend\models\Inscripcion;
-use backend\models\search\MateriaCursadaSearch;
 use backend\models\Cursada;
 use backend\models\Correlatividad;
 use backend\models\Acta;
@@ -224,6 +223,19 @@ class AlumnoController extends Controller
         
     }
 
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['legajo']);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
+
     protected function findModel($id)
     {
         if (($model = Alumno::findOne($id)) !== null) {
@@ -231,7 +243,7 @@ class AlumnoController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
+    }    
 
     protected function findModelInscripcion($id)
     {

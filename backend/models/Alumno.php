@@ -51,12 +51,15 @@ class Alumno extends Docente
     public function rules()
     {
         return [
-            [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento','colegio_secundario_id','titulo_secundario_id'], 'required'],
+            [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento'], 'required'],
             [['fecha_nacimiento', 'fecha_baja'], 'safe'],
             [['lugar_nacimiento_id', 'localidad_id', 'user_id'], 'integer'],
             [['tipo_doc', 'numero', 'cuil', 'sexo', 'estado_civil', 'nacionalidad', 'nro', 'telefono', 'celular'], 'string', 'max' => 45],            
             [['numero'],'unique'],
             [['apellido', 'nombre', 'domicilio', 'email'], 'string', 'max' => 450],
+            ['email', 'filter', 'filter' => 'trim'],           
+            ['email', 'email'],
+            ['email', 'unique','message' => 'Este Email ya existe.'],  
             [['localidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['localidad_id' => 'id']],
             [['lugar_nacimiento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['lugar_nacimiento_id' => 'id']],
             [['colegio_secundario_id'], 'exist', 'skipOnError' => true, 'targetClass' => ColegioSecundario::className(), 'targetAttribute' => ['colegio_secundario_id' => 'id']],

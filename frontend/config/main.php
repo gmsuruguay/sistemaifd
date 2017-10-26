@@ -61,6 +61,7 @@ return [
              //Permisos permitidos solo de manera temporal por que no existen usuarios     
             'gii/*',//Permitir solo en desarrollo.                 
             'site/logout',
+            'site/change-password',
             'admin/user/request-password-reset',            
             'admin/user/reset-password',                   
 

@@ -223,10 +223,12 @@ class AlumnoController extends Controller
         
     }
 
-    public function actionUpdate($id)
+    public function actionActualizar($id)
     {
+        
         $model = $this->findModel($id);
-
+        $model->scenario='actualizar';
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['legajo']);
         } else {

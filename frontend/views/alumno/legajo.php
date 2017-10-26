@@ -33,8 +33,8 @@ $this->title = 'Datos Personales';
         <div class="pull-right">
             <?php          
                 
-                if (Helper::checkRoute('update')) {
-                    echo Html::a(Yii::t('app', '<i class="glyphicon glyphicon-pencil"></i> Actualizar'), ['update', 'id' => $model->id], [
+                if (Helper::checkRoute('actualizar')) {
+                    echo Html::a(Yii::t('app', '<i class="glyphicon glyphicon-pencil"></i> Actualizar'), ['actualizar', 'id' => $model->id], [
                         'class' => 'btn btn-primary'                            
                     ]);
                 }  

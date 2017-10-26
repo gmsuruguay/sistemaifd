@@ -60,6 +60,7 @@ class Alumno extends Docente
             ['email', 'filter', 'filter' => 'trim'],           
             ['email', 'email'],
             ['email', 'unique','message' => 'Este Email ya existe.'],  
+            [['domicilio','email'], 'required', 'on'=>'actualizar'],
             [['localidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['localidad_id' => 'id']],
             [['lugar_nacimiento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['lugar_nacimiento_id' => 'id']],
             [['colegio_secundario_id'], 'exist', 'skipOnError' => true, 'targetClass' => ColegioSecundario::className(), 'targetAttribute' => ['colegio_secundario_id' => 'id']],
@@ -76,7 +77,15 @@ class Alumno extends Docente
         return [            
             'colegio_secundario_id' => 'Colegio Secundario',
             'titulo_secundario_id' => 'Titulo Secundario',
+            'localidad_id' => 'Localidad',
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['actualizar'] = ['domicilio','email','nro','localidad_id','telefono','celular'];              
+        return $scenarios;
     }
 
     /**

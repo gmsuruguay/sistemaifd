@@ -16,6 +16,9 @@ use backend\models\Acta;
 use common\models\FechaHelper;
 use backend\models\Cursada;
 use backend\models\search\CursadaSearch;
+use backend\models\Perfil;
+use common\models\AuthAssignment;
+use common\models\User;
 /**
  * AlumnoController implements the CRUD actions for Alumno model.
  */
@@ -249,6 +252,54 @@ class AlumnoController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionGenerarUsuario($id)
+    {
+        $alumno = $this->findModel($id);
+        $user = new User();
+        $perfil = new Perfil();
+        $role= new AuthAssignment();
+        //$user->scenario='create';
+
+        if ( !empty($alumno->email) ) {
+           
+            $password= '12345678';
+            $user->username = $alumno->numero; 
+            $user->email= $alumno->email;
+            $user->role='ALUMNO';
+            $user->created_at= time();
+            $user->updated_at= time();
+            $user->setPassword($password);
+            $user->generateAuthKey();
+            
+            //echo $model->role;            
+            //die;
+            if ($user->save()) {
+
+                $alumno->user_id= $user->id;
+                $alumno->save();
+
+                $perfil->user_id = $user->id;
+                $perfil->nombre = $alumno->nombre;
+                $perfil->apellido = $alumno->apellido;
+                $perfil->save();
+
+                $role->item_name= $user->role;
+                $role->user_id = $user->id;
+                $role->created_at= time();
+                $role->save();
+
+                Yii::$app->session->setFlash('success', "Se creo el usuario correctamente");
+                return $this->redirect(['index']);
+            }else{
+                throw new NotFoundHttpException('Error al generar el Usuario');
+            }
+        }else{
+            throw new NotFoundHttpException('Se necesita registrar primeramente el E-mail del Alumno, por favor actualice su legajo');
+        }
+
+        
     }
     
 }

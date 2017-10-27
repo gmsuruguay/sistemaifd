@@ -32,8 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'nombre',                       
                     'numero',                    
                     ['class' => 'yii\grid\ActionColumn',
-                    'template' => Helper::filterActionColumn('{view} {update}'),
-                    ],
+                    'template' => Helper::filterActionColumn('{view} {update} {usuario}'),
+                    'buttons' => [
+                        'usuario' => function ($url, $model, $key) {
+                            return is_null($model->user_id) ? Html::a('<span class="glyphicon glyphicon-user" aria-hidden="true"></span> ', ['generar-usuario', 'id' => $key], ['title'=>'Generar usuario']) : '';                          
+                         
+                        },
+
+                    ]],
                 ],
             ]); ?>
         </div>

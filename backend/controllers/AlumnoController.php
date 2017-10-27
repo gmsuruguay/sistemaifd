@@ -290,13 +290,13 @@ class AlumnoController extends Controller
                 $role->created_at= time();
                 $role->save();
 
-                Yii::$app->session->setFlash('success', "Se creo el usuario correctamente");
-                return $this->redirect(['index']);
+                echo 1; // El usuario se creo correctamente
+
             }else{
-                throw new NotFoundHttpException('Error al generar el Usuario');
+                echo 2; //Error al generar el Usuario
             }
         }else{
-            throw new NotFoundHttpException('Se necesita registrar primeramente el E-mail del Alumno, por favor actualice su legajo');
+            echo 3; //Se necesita registrar primeramente el E-mail del Alumno, por favor actualice su legajo
         }
 
         

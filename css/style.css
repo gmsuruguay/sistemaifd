@@ -62,3 +62,7 @@ h3 {
 .icon-block .material-icons {
     font-size: inherit;
 }
+
+.info {
+    background-color: #b2dfdb;
+}

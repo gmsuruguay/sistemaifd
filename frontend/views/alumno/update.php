@@ -14,21 +14,28 @@ $this->title="Actualizar datos de contacto";
 
 <div class="update-form">    
 
-        <h1><?=$this->title?></h1>
-        <?php $form = ActiveForm::begin(); ?>
+        <h3><?=$this->title?></h3>
+        <?php $form = ActiveForm::begin(['class'=>'col s12 m12']); ?>
 
         
 
-        <div class="row">
-            <div class="col-md-5">
-             <?= $form->field($model, 'domicilio')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col-md-1">
-            <?= $form->field($model, 'nro')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col-md-6">           
-            
-                <?= $form->field($model, 'localidad_id')->widget(Select2::classname(), [
+         <div class="row">
+                <?= $form->field($model, 'domicilio',['options'=>['class'=>'input-field col m9']])->begin() ?>
+                    <?= Html::activeInput('text',$model,'domicilio'); ?>
+                    <label for="alumno-domicilio">Domicilio</label>
+                    <?= Html::error($model,'origin',['class'=>'help-block help-block-error red-text text-darken-2']) ?>
+                <?= $form->field($model,'origin')->end() ?>
+
+                <?= $form->field($model, 'nro',['options'=>['class'=>'input-field col m3']])->begin() ?>
+                    <?= Html::activeInput('text',$model,'nro'); ?>
+                    <label for="alumno-nro">Nro</label>
+                    <?= Html::error($model,'origin',['class'=>'help-block help-block-error red-text text-darken-2']) ?>
+                <?= $form->field($model,'origin')->end() ?>             
+                   
+                  
+         </div>  
+         <div class="row">
+         <?= $form->field($model, 'localidad_id')->widget(Select2::classname(), [
 
                                 'data' => Localidad::getlistaLocalidades(),
                                 'language' => 'es',
@@ -39,37 +46,32 @@ $this->title="Actualizar datos de contacto";
                                 ])
 
                 ?>
-            </div>
-         </div>   
+         </div> 
          <div class="row">
-            <div class="col-md-3">
-            <?= $form->field($model, 'telefono',[
-                                'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-phone-alt"></i>']]
-                            ])->widget( MaskedInput::className(), [                           
-                            'mask' => '9',
-                            'clientOptions' => ['repeat' => 15, 'greedy' => false]
-                        ]) ?>
-            </div>
-            <div class="col-md-3">
-            <?= $form->field($model, 'celular',[
-                                'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-phone"></i>']]
-                            ])->widget( MaskedInput::className(), [                           
-                            'mask' => '9',
-                            'clientOptions' => ['repeat' => 15, 'greedy' => false]
-                        ]) ?>
-            </div>
-            <div class="col-md-6">
-            <?= $form->field($model, 'email',[
-                                                'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-envelope"></i>']]
-                                            ])->textInput(['placeholder'=>"Correo electrónico"])?>
-            </div>
+                 <?= $form->field($model, 'telefono',['options'=>['class'=>'input-field col m3']])->begin() ?>
+                    <?= Html::activeInput('text',$model,'telefono'); ?>
+                    <label for="alumno-telefono">Telefono</label>
+                    <?= Html::error($model,'origin',['class'=>'help-block help-block-error red-text text-darken-2']) ?>
+                <?= $form->field($model,'origin')->end() ?>
+
+                <?= $form->field($model, 'celular',['options'=>['class'=>'input-field col m3']])->begin() ?>
+                    <?= Html::activeInput('text',$model,'celular'); ?>
+                    <label for="alumno-celular">Celular</label>
+                    <?= Html::error($model,'origin',['class'=>'help-block help-block-error red-text text-darken-2']) ?>
+                <?= $form->field($model,'origin')->end() ?>
+
+                <?= $form->field($model, 'email',['options'=>['class'=>'input-field col m6']])->begin() ?>
+                    <?= Html::activeInput('email',$model,'email'); ?>
+                    <label for="alumno-email">E-mail</label>
+                    <?= Html::error($model,'origin',['class'=>'help-block help-block-error red-text text-darken-2']) ?>
+                <?= $form->field($model,'origin')->end() ?>
          </div> 
 
                                 
             
         
         <div class="form-group">
-                <?= Html::submitButton( '<i class="glyphicon glyphicon-floppy-disk"> </i> Guardar', ['class' => 'btn btn-success', 'name' => 'signup-button']) ?>
+        <?= Html::submitButton('<i class="material-icons left">save</i> GUARDAR', ['class' => 'btn waves-effect waves-light']) ?>
         </div>   
         <?php ActiveForm::end(); ?>
 

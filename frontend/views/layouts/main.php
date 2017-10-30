@@ -61,7 +61,7 @@ AppAsset::register($this);
     </main>
 
 
-    <footer class="page-footer grey lighten-1">    
+    <footer class="page-footer teal lighten-1">    
         <div class="footer-copyright">
         <div class="container">
             © 2017 SURI      

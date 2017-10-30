@@ -23,7 +23,11 @@ AppAsset::register($this);
 <body class="app-home">
 <?php $this->beginBody() ?>
 
-   
+    <header class="center-align logo-inicio">
+        <h2>SURI <?= Html::img('@web/img/suri.png', ['alt'=>Yii::$app->name,'class'=>'pull-left'])?></h2>
+        <h5> <b>SISTEMA UNICO DE REGISTRO INSTITUCIONAL </b> </h5>
+        
+    </header>
         
     <main class="container">        
             <?= $content ?>

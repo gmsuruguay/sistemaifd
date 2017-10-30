@@ -27,7 +27,11 @@
 }
 
 .site-login {
-    padding: 140px 15px 20px;
+    padding: 50px 15px 20px;
+}
+
+.logo-inicio {
+    margin-top: 40px;
 }
 
 .box-login {

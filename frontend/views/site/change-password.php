@@ -12,14 +12,14 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-signup">
     
 
-<h1><?= Html::encode($this->title) ?></h1>
+<h3><?= Html::encode($this->title) ?></h3>
 
     <div class="row">        
-        <div class="col-lg-6 col-lg-offset-3">
+        <div class="col m6 offset-m3">
             <div class="box ">
                 <div class="box-header with-border">
                     <i class="fa fa-user"></i>
-                    <h3 class="box-title">Cambiar Contraseña</h3>
+                    <h5 class="box-title">Cambiar Contraseña</h5>
                 </div>
                 <?php $form = ActiveForm::begin(['id' => 'form-change']); ?>
                 <div class="box-body">
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     
                 </div> 
                 <div class="box-footer">
-                    <?= Html::submitButton(Yii::t('app', 'Actualizar'), ['class' => 'btn btn-primary btn-block', 'name' => 'change-button']) ?>
+                <?= Html::submitButton('<i class="material-icons left">save</i> GUARDAR', ['class' => 'btn waves-effect waves-light']) ?>
                 </div>
                 <?php ActiveForm::end(); ?>
             </div> 

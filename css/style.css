@@ -1,4 +1,6 @@
 /* Custom Stylesheet */
+
+
 /**
  * Use this file to override Materialize files so you can update
  * the core Materialize files in the future
@@ -6,9 +8,43 @@
  * Made By MaterializeCSS.com
  */
 
-.icon-block {
-  padding: 0 15px;
+.app-home {
+    background-image: url('../img/home.jpeg');
+    /* Nos aseguramos que la imagen de fondo este centrada vertical y
+  horizontalmente en todo momento */
+    background-position: center center;
+    /* La imagen de fondo no se repite */
+    background-repeat: no-repeat;
+    /* La imagen de fondo está fija en el viewport, de modo que no se mueva cuando
+      la altura del contenido supere la altura de la imagen. */
+    background-attachment: fixed;
+    /* La imagen de fondo se reescala cuando se cambia el ancho de ventana
+      del navegador */
+    background-size: cover;
+    /* Fijamos un color de fondo para que se muestre mientras se está
+      cargando la imagen de fondo o si hay problemas para cargarla  */
+    background-color: #464646;
 }
+
+.site-login {
+    padding: 140px 15px 20px;
+}
+
+.box-login {
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 700;
+}
+
+.icon-block {
+    padding: 0 15px;
+}
+
 .icon-block .material-icons {
-	font-size: inherit;
+    font-size: inherit;
 }

@@ -13,7 +13,7 @@ $this->title = 'Mis Inscripciones';
 ?>
 <div class="inscripcion-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>   
+    <h3><?= Html::encode($this->title) ?></h3>   
     
         <?= DetailView::widget([
             'model' => $model,
@@ -32,13 +32,13 @@ $this->title = 'Mis Inscripciones';
         
         <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title"> Cursadas - Períodos lectivos vigentes </h3>
+              <h5 class="panel-title"> Cursadas - Períodos lectivos vigentes </h5>
             </div>
             <div class="panel-body">
            
             <?= GridView::widget([
                     'dataProvider' => $dataProvider,  
-                    'tableOptions' =>['class' => 'table table-striped'],                                         
+                    'tableOptions' =>['class' => 'table bordered responsive-table'],                                         
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'], 
                         

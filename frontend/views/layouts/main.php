@@ -25,7 +25,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>  
 
   <nav class="teal lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo"><?= Html::img('@web/img/logo_ifd_header.png', ['width'=>'80%','alt'=>Yii::$app->name,'class'=>'pull-left'])?></a>
+    <div class="nav-wrapper "><a id="logo-container" href="#" class="brand-logo"><?= Html::img('@web/img/logo_ifd_header.png', ['width'=>'80%','alt'=>Yii::$app->name,'class'=>'pull-left'])?></a>
       <ul class="right hide-on-med-and-down">      
        <?php if (Yii::$app->user->isGuest): ?>
         <li><a href="<?= Url::toRoute('/site/login')?>"><i class="material-icons left">account_circle</i>Iniciar Sesión</a></li>
@@ -34,7 +34,7 @@ AppAsset::register($this);
         <li><a href="<?= Url::toRoute('/alumno/legajo')?>"><i class="material-icons left">person</i>Mis Datos Personales</a></li>
         <li><a href="<?= Url::toRoute('/site/index')?>"><i class="material-icons left">description</i>Tramites</a></li>
         <li><a href="<?= Url::toRoute('/site/change-password')?>"><i class="material-icons left">settings</i>Configuración</a></li>  
-        <li><?= Html::a('<i class="material-icons left">power_settings_new</i> Cerrar Sesión', Url::to(['site/logout']), ['data-method' => 'POST']) ?></li>   
+        <li><?= Html::a('<i class="material-icons left">power_settings_new</i> Cerrar Sesión ('.Yii::$app->user->identity->nombreAlumno.')', Url::to(['site/logout']), ['data-method' => 'POST']) ?></li>     
        <?php endif ?>     
       </ul>
 
@@ -50,10 +50,7 @@ AppAsset::register($this);
       <?php endif ?>      
       </ul>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-    </div>
-    <div class="nav-content">
-      
-    </div>
+    </div>    
   </nav>
     
 

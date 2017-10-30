@@ -61,13 +61,13 @@ AppAsset::register($this);
     </main>
 
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
+    <footer class="page-footer grey lighten-1">    
+        <div class="footer-copyright">
+        <div class="container">
+            © 2017 SURI      
+        </div>
+        </div>
+    </footer>
 
 <?php $this->endBody() ?>
 </body>

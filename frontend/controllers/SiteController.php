@@ -15,6 +15,7 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\ChangePassword;
 use yii\web\HttpException;
+use yii\web\NotFoundHttpException;
 /**
  * Site controller
  */
@@ -112,7 +113,11 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) ) {
 
-            $user= User::findByUsername($model->username);            
+            $user= User::findByUsername($model->username);      
+            
+            if($user==null){
+                throw new NotFoundHttpException('Este usuario no existe');
+            }
                          
             if($user->role=='ALUMNO'){
                 if($model->login()){

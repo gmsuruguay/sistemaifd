@@ -35,17 +35,11 @@ $this->title="Actualizar datos de contacto";
                   
          </div>  
          <div class="row">
-         <?= $form->field($model, 'localidad_id')->widget(Select2::classname(), [
-
-                                'data' => Localidad::getlistaLocalidades(),
-                                'language' => 'es',
-                                'options' => ['placeholder' => 'Seleccione localidad'],
-                                'pluginOptions' => [
-                                    'allowClear' => true
-                                ],
-                                ])
-
-                ?>
+         <?php
+         $datos= Localidad::getListaLocalidades();
+         echo $form->field($model, 'localidad_id',['options'=>['class'=>'input-field col m12']])->dropDownList($datos, ['prompt'=>'Seleccione Localidad'])->label(false); 
+         
+         ?>
          </div> 
          <div class="row">
                  <?= $form->field($model, 'telefono',['options'=>['class'=>'input-field col m3']])->begin() ?>
@@ -77,3 +71,14 @@ $this->title="Actualizar datos de contacto";
 
 
 </div>
+
+
+<?php
+ $script = <<< JS
+
+$('select').material_select();   
+
+ 
+JS;
+$this->registerJs($script);
+?>

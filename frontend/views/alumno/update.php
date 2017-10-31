@@ -43,18 +43,21 @@ $this->title="Actualizar datos de contacto";
          </div> 
          <div class="row">
                  <?= $form->field($model, 'telefono',['options'=>['class'=>'input-field col m3']])->begin() ?>
+                    <i class="material-icons prefix">phone</i>
                     <?= Html::activeInput('text',$model,'telefono'); ?>
                     <label for="alumno-telefono">Telefono</label>
                     <?= Html::error($model,'origin',['class'=>'help-block help-block-error red-text text-darken-2']) ?>
                 <?= $form->field($model,'origin')->end() ?>
 
                 <?= $form->field($model, 'celular',['options'=>['class'=>'input-field col m3']])->begin() ?>
+                    <i class="material-icons prefix">phone_android</i>
                     <?= Html::activeInput('text',$model,'celular'); ?>
                     <label for="alumno-celular">Celular</label>
                     <?= Html::error($model,'origin',['class'=>'help-block help-block-error red-text text-darken-2']) ?>
                 <?= $form->field($model,'origin')->end() ?>
 
                 <?= $form->field($model, 'email',['options'=>['class'=>'input-field col m6']])->begin() ?>
+                    <i class="material-icons prefix">email</i>
                     <?= Html::activeInput('email',$model,'email'); ?>
                     <label for="alumno-email">E-mail</label>
                     <?= Html::error($model,'origin',['class'=>'help-block help-block-error red-text text-darken-2']) ?>

@@ -265,7 +265,7 @@ class SiteController extends Controller
      {
          $model = new ChangePassword();
          if ($model->load(Yii::$app->getRequest()->post()) && $model->change()) {
-             Yii::$app->getSession()->setFlash('success', 'Cambio de contraseña realizada correctamente.');
+             Yii::$app->getSession()->setFlash('success', 'Cambio de contraseña registrado correctamente.');
              return $this->goHome();           
          }
  

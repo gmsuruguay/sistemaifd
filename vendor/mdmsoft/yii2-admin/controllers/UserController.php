@@ -165,7 +165,12 @@ class UserController extends Controller
 
         if ($model->load(Yii::$app->getRequest()->post()) ) {
         
-            $user= User::findByUsername($model->username);            
+            $user= User::findByUsername($model->username);      
+            
+            if($user==null){
+                throw new NotFoundHttpException('Este usuario no existe');
+            }
+            
                         
             if($user->role != 'ALUMNO'){
                 if($model->login()){

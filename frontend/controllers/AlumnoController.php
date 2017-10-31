@@ -21,13 +21,10 @@ class AlumnoController extends Controller
     public function actionIndex()
     {   
         $id_alumno= Yii::$app->user->identity->idAlumno; 
-        $query= Inscripcion::find()->where(['alumno_id'=>$id_alumno]);       
-        $dataProvider = new ActiveDataProvider([
-            'query'=>$query,
-        ]);       
+        $model= Inscripcion::find()->where(['alumno_id'=>$id_alumno])->all();        
 
         return $this->render('index', [                     
-            'dataProvider' => $dataProvider,           
+            'model' => $model,           
         ]);
     }
 

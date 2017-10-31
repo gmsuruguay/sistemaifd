@@ -4,11 +4,9 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -18,70 +16,58 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
 <body>
-<?php $this->beginBody() ?>
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => Html::img('@web/img/suri.png', ['width'=>'50%','alt'=>Yii::$app->name,'class'=>'pull-left'])."SURI",
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-default navbar-fixed-top',
-        ],
-    ]);
-   
-    if (Yii::$app->user->isGuest) {       
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
-        $menuItems = [
-            ['label' => 'Inicio', 'url' => ['/site/index']],            
-            
-            $menuItems[]=[
-                
-                'label' => 'Trámites',
-                'items' => [                 
-                    ['label' => 'Mis Datos Personales', 'url' => ['/alumno/legajo']],
-                    '<li class="divider"></li>',                
-                    ['label' => 'Solicitud de Certificados', 'url' => ['#']],                 
-                ],       
-                   
-            ],
-            ['label' => 'Configuración', 'url' => ['/site/change-password']],
-        ];
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Cerrar Sesión (' . Yii::$app->user->identity->nombreAlumno . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
-    ?>
+<?php $this->beginBody() ?>  
 
-    <div class="container ">
+  <nav class="teal lighten-1" role="navigation">
+    <div class="nav-wrapper "><a id="logo-container" href="#" class="brand-logo"><?= Html::img('@web/img/logo_ifd_header.png', ['width'=>'80%','alt'=>Yii::$app->name,'class'=>'pull-left'])?></a>
+      <ul class="right hide-on-med-and-down">      
+       <?php if (Yii::$app->user->isGuest): ?>
+        <li><a href="<?= Url::toRoute('/site/login')?>"><i class="material-icons left">account_circle</i>Iniciar Sesión</a></li>
+       <?php else: ?>
+        <li><a href="<?= Url::toRoute('/site/index')?>"><i class="material-icons left">home</i>Inicio</a></li>
+        <li><a href="<?= Url::toRoute('/alumno/legajo')?>"><i class="material-icons left">person</i>Mis Datos Personales</a></li>
+        <li><a href="<?= Url::toRoute('/site/index')?>"><i class="material-icons left">description</i>Tramites</a></li>
+        <li><a href="<?= Url::toRoute('/site/change-password')?>"><i class="material-icons left">settings</i>Configuración</a></li>  
+        <li><?= Html::a('<i class="material-icons left">power_settings_new</i> Cerrar Sesión ('.Yii::$app->user->identity->nombreAlumno.')', Url::to(['site/logout']), ['data-method' => 'POST']) ?></li>     
+       <?php endif ?>     
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+      <?php if (Yii::$app->user->isGuest): ?>
+      <li><a href="<?= Url::toRoute('/site/login')?>"><i class="material-icons left">account_circle</i>Iniciar Sesión</a></li>
+      <?php else: ?>
+        <li><a href="<?= Url::toRoute('/site/index')?>"><i class="material-icons left">home</i>Inicio</a></li>
+        <li><a href="<?= Url::toRoute('/alumno/legajo')?>"><i class="material-icons left">person</i>Mis Datos Personales</a></li>
+        <li><a href="<?= Url::toRoute('/site/index')?>"><i class="material-icons left">description</i>Tramites</a></li>
+        <li><a href="<?= Url::toRoute('/site/change-password')?>"><i class="material-icons left">settings</i>Configuración</a></li>  
+        <li><?= Html::a('<i class="material-icons left">power_settings_new</i> Cerrar Sesión', Url::to(['site/logout']), ['data-method' => 'POST']) ?></li>   
+      <?php endif ?>      
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>    
+  </nav>
+    
+
+    <main class="container ">
         
-        <?= Alert::widget() ?>
+        <?php// Alert::widget() ?>
         <?= $content ?>
-    </div>
-</div>
+    </main>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
+    <footer class="page-footer teal lighten-1">    
+        <div class="footer-copyright">
+        <div class="container">
+            © 2017 SURI      
+        </div>
+        </div>
+    </footer>
 
 <?php $this->endBody() ?>
 </body>

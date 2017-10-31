@@ -10,7 +10,7 @@ $this->title = 'Datos Personales';
         <div class="col s12 m12">
             <div class="card">
                 <div class="card-content">
-                <h3><i class="material-icons medium left">person</i> <?= Html::encode($this->title) ?></h3>
+                <h4><i class="material-icons medium left">person</i> <?= Html::encode($this->title) ?></h4>
                 </div>
                 <div class="card-action">
                 
@@ -34,7 +34,7 @@ $this->title = 'Datos Personales';
         <div class="col s12 m12">
             <div class="card">
                 <div class="card-content">
-                <h3><i class="material-icons medium left">contact_mail</i> Datos de Contacto</h3>
+                <h4><i class="material-icons medium left">contact_mail</i> Datos de Contacto</h4>
                 </div>
                 <div class="card-action">
                 
@@ -69,7 +69,7 @@ $this->title = 'Datos Personales';
         <div class="col s12 m12">
             <div class="card">
                 <div class="card-content">
-                <h3><i class="material-icons medium left">school</i> Datos Académicos</h3>
+                <h4><i class="material-icons medium left">school</i> Datos Académicos</h4>
                 </div>
                 <div class="card-action">
                 

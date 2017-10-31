@@ -14,6 +14,7 @@ use backend\models\Correlatividad;
 use backend\models\Acta;
 use backend\models\Materia;
 use backend\models\Carrera;
+use backend\models\Pedido;
 use backend\models\search\CursadaSearch;
 
 class AlumnoController extends Controller
@@ -253,6 +254,38 @@ class AlumnoController extends Controller
             ]);
         }
     }
+
+    
+    public function actionTramites()
+    {
+        $id_alumno= Yii::$app->user->identity->idAlumno; 
+
+        $inscripcion= Inscripcion::find()->where(['alumno_id'=>$id_alumno])->all();   
+       
+        $model = new Pedido();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->alumno_id= $id_alumno;
+            $model->fecha_pedido = date('Y/m/d');
+            $model->estado = '0';
+            if($model->save())
+            {
+                 Yii::$app->session->setFlash('success',"Su pedido fue enviado correctamente!, podra retirarlo luego de 24 hs.");
+            }
+            else
+            {
+                 Yii::$app->session->setFlash('error',"No se pudo efectuar su pedido!");
+            }
+
+            return $this->redirect(['tramites']);
+        } else {
+            return $this->render('pedidos', [
+                'model' => $model,
+                'inscripcion'=>$inscripcion,
+            ]);
+        }
+    }
+    
 
     protected function findModel($id)
     {

@@ -74,8 +74,14 @@ class PedidoController extends Controller
     public function actionPrint($tipo, $carrera_id)
     {
         $mes=FechaHelper::obtenerMes(date('Y-m-d'));
-        $pdf = new Pdf(['marginTop'=> '12', 'marginBottom'=> '0', 'marginFooter'=>'0']);
-        $pdf = $pdf->api;
+        $pdf = new Pdf([
+            'marginTop'=> '12', 
+            'marginBottom'=> '0', 
+            'marginFooter'=>'0',       
+        ]);        
+        
+        $pdf = $pdf->api;     
+        $pdf->title="Constancias";   
         $stylesheet = file_get_contents('css/reporte.css');
         $pdf->WriteHTML($stylesheet,1);
 

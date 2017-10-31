@@ -73,3 +73,20 @@ h3 {
     margin-bottom: 10px;
     color: #737373;
 }
+
+
+/*Estilos Boton Alert*/
+
+.btn-card {
+    background: none;
+    border: none;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 15px;
+    color: white;
+    cursor: pointer;
+}
+
+
+/*Fin estilos Boton Alert*/

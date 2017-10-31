@@ -18,6 +18,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/materialize.js',
         'js/init.js',
+        'js/alert.js',
     ];
     public $depends = [       
         'yii\web\YiiAsset',

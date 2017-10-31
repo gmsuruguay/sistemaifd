@@ -10,7 +10,26 @@ use yii\widgets\MaskedInput;
 /* @var $model backend\models\Carrera */
 $this->title = 'Inscripción Materias';
 ?>
-<div class="carrera-view">   
+<div class="carrera-view">  
+
+    <?php if (Yii::$app->session->hasFlash('success')): ?>
+        <div class="row" id="alert_box">
+            <div class="col s12 m12">
+                <div class="card green">
+                    <div class="row">
+                        <div class="col s12 m10">
+                            <div class="card-content white-text">
+                                <?= Yii::$app->session->getFlash('success') ?>
+                            </div>
+                        </div>
+                        <div class="col s12 m2">
+                            <button class="btn-card" id="alert_close" aria-hidden="true">X</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    <?php endif; ?>
     <h3><?= Html::encode($this->title) ?></h3>
     <!--
     Lista de materias para la carrera en cuestion

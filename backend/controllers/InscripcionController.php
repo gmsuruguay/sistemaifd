@@ -161,12 +161,11 @@ class InscripcionController extends Controller
         $pdf = Yii::$app->pdf;
         $inscripcion = $this->findModel($id);
         $pdf->cssFile = 'css/reporte.css';
-        $pdf->options = ['title' => 'Certificado de Alumno Regular'];
+        $pdf->options = ['title' => 'Certificado de Alumno Regular'];    
         $pdf->content = $this->renderPartial('certificado_alumno_regular', [
             'inscripcion' =>$inscripcion,
-            'mes'=>$mes            
+            'mes'=>$mes,           
         ]);
-        
         
         return $pdf->render();
     }

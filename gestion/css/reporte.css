@@ -14,6 +14,11 @@ th, td {
 .centrar-text{
 	text-align: center;
 }
+
+.encabezado h6{
+    margin: 4px;
+}
+
 .derecha-text{
  	text-align: right;
 }
@@ -46,4 +51,13 @@ th, td {
 .pie{
     font-size: 10px;
     margin-top: 150px;
+}
+
+.sangria{
+     text-indent: 30px;
+}
+
+hr{
+    margin-top: 22px;
+    margin-bottom: 34px;
 }

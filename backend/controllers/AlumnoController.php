@@ -19,6 +19,7 @@ use backend\models\search\CursadaSearch;
 use backend\models\Perfil;
 use common\models\AuthAssignment;
 use common\models\User;
+use backend\models\Pedido;
 /**
  * AlumnoController implements the CRUD actions for Alumno model.
  */
@@ -300,6 +301,33 @@ class AlumnoController extends Controller
         }
 
         
+    }
+
+    public function actionTramites()
+    {
+        $inscripcion= Inscripcion::find()->where(['alumno_id'=>'1'])->all();
+        $model = new Pedido();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->alumno_id= '1';
+            $model->fecha_pedido = date('Y/m/d');
+            $model->estado = '0';
+            if($model->save())
+            {
+                 Yii::$app->session->setFlash('success',"Su pedido fue enviado correctamente!");
+            }
+            else
+            {
+                 Yii::$app->session->setFlash('error',"No se pudo efectuar su pedido!");
+            }
+
+            return $this->redirect(['tramites']);
+        } else {
+            return $this->render('pedidos', [
+                'model' => $model,
+                'inscripcion'=>$inscripcion,
+            ]);
+        }
     }
     
 }

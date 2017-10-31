@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = 'Asignar sede';
             <h3 class="box-title" >Preceptor:  <?= $user->perfilApellido?></h3>
         </div>
         <div class="box-body">
-             <?php $form = ActiveForm::begin(['id'=>'form-sede']); ?>
+             <?php $form = ActiveForm::begin(['id'=>'form-sede','options' => ['data-pjax' => true ]]); ?>
                 <div class='row'>
                     <div class='col-sm-8 col-md-10'>
                         <?= $form->field($model, 'sede_id')->label(false)->dropDownList(ArrayHelper::map($sedes, 'id', 'localidad'), ['class'=> 'form-control','prompt'=>'--Seleccionar Sede--',]) ?>

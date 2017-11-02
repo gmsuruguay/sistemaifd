@@ -14,7 +14,7 @@ $this->title="Inscripción a examen";
 
         <div class="row">
             <?= $form->field($model, 'materia_id',['options'=>['class'=>'input-field col m12']])->begin() ?>
-                <?= Html::activeDropDownList($model,'materia_id',$model->listaCondicion, ['prompt'=>'Seleccione materia']) ?>
+                <?= Html::activeDropDownList($model,'materia_id',$materias, ['prompt'=>'Seleccione materia']) ?>
                 <label for="">Materia</label>
                 <?= Html::error($model,'origin',['class'=>'help-block help-block-error red-text text-darken-2']) ?>
             <?= $form->field($model,'origin')->end() ?>

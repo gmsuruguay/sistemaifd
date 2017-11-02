@@ -62,9 +62,23 @@ class AlumnoController extends Controller
     
             if ($model->validate()) {
     
-                // form inputs are valid, do something here
+                $materia=$this->findModelMateria($model->materia_id);
+                if( ($model->condicion_id == 1) && $this->cumpleCondicionExamenLibre($materia) ){ //Para las materias libres
+                    
+                    $model->alumno_id = Yii::$app->user->identity->idAlumno;
+                    $model->fecha_inscripcion= date('Y-m-d');
+                    $model->condicion_id= $model->condicion_id;
+                    $model->materia_id= $model->materia_id;
+                    if($model->insert()){
+                        Yii::$app->session->setFlash('success', "Su inscripción se realizo correctamente");
+                        return $this->redirect(['form-inscripcion',
+                            'id' => $id,
+                        ]);  
+                    }
+                    
+                }
     
-                return;
+                
     
             }
     
@@ -78,6 +92,58 @@ class AlumnoController extends Controller
     
         ]);
     
+    }
+
+    private function cumpleCondicionExamenLibre($materia){
+        if( ($materia->condicion_examen_libre == 1) && $this->verificarCorrelatividadExamen($materia->id) ){ //Libre
+            return true;
+        }elseif( ($materia->condicion_examen_libre == 2) ){ //Libre Por Opcion
+            if($this->existeInscripcion($materia->id)){
+                if( $this->verificarCorrelatividadExamen($materia->id) ){
+                    return true;
+                }
+            }else{
+                throw new NotFoundHttpException('Debe haberse inscripto al menos una vez a la cursada de la Materia '.Materia::descripcionCompletaMateria($materia->id));
+            }                
+
+        }else{ // No se puede rendir libre
+            throw new NotFoundHttpException('No puede rendir Libre esta Materia');
+        }
+    }
+
+    //Verifica si existe al menos una inscripcion a la materia
+    private function existeInscripcion($id){
+
+        $existe= Cursada::find()
+                ->where(['materia_id'=>$id])
+                ->andWhere(['alumno_id'=>Yii::$app->user->identity->idAlumno])->count();
+
+        if($existe >0){
+            return true;
+        }
+
+        return false;
+
+    }
+
+    //Metodo que verifica si la materia tiene correlatividades
+    private function verificarCorrelatividadExamen($id)
+    {
+        $correlativas= Correlatividad::find()->where(['materia_id' => $id])->all();
+
+        if ($correlativas != null) { //Entra solo si existen correlativas para la materia
+           
+            foreach ($correlativas as $c) {
+                // Si existe al menos una materia correlativa que no este aprobada
+                // no se podra inscribir. Por lo tanto retorna falso
+                
+                if($this->estaAprobada($c->materia_id_correlativa) == 0){ //Significa que no esta aprobada
+                    throw new NotFoundHttpException('Debe tener APROBADA la Materia '.Materia::descripcionCompletaMateria($c->materia_id_correlativa));
+                }
+             }
+        }
+       
+        return true; //Retorna verdadero significa que la materia correlativa cumple la condicion o no tiene correlativas
     }
 
 
@@ -345,6 +411,15 @@ class AlumnoController extends Controller
     protected function findModelCarrera($id)
     {
         if (($model = Carrera::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findModelMateria($id)
+    {
+        if (($model = Materia::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -29,6 +29,11 @@ $this->title = 'Carreras Inscriptas';
                             'class' => 'btn waves-effect waves-light'                            
                         ]);
                     }  
+                    if (Helper::checkRoute('form-inscripcion')) {
+                        echo Html::a(Yii::t('app', '<i class="material-icons left">create</i> Inscribir examen'), ['form-inscripcion', 'id' => $m->carrera_id], [
+                            'class' => 'btn waves-effect waves-light'                            
+                        ]);
+                    }  
                     if(Helper::checkRoute('ver-inscripciones')){
                         echo Html::a('<i class="material-icons left">format_list_bulleted</i> Mis inscripciones', ['ver-inscripciones', 'id' => $m->id], [
                             'class' => 'btn waves-effect waves-light',                  

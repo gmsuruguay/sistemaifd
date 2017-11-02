@@ -16,6 +16,8 @@ use backend\models\Materia;
 use backend\models\Carrera;
 use backend\models\Pedido;
 use backend\models\search\CursadaSearch;
+use backend\models\InscripcionExamen;
+use yii\helpers\ArrayHelper;
 
 class AlumnoController extends Controller
 {
@@ -39,19 +41,45 @@ class AlumnoController extends Controller
             'model' => $model,           
         ]);
     }
+    
 
-    /*public function actionListarMateria($id)
+    public function actionFormInscripcion($id)    
     {
-        $model=$this->findModelInscripcion($id);
-        $searchModel = new MateriaCursadaSearch();
-        $searchModel->carrera_id = $model->carrera_id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('listado-materias', [
-            'model' => $model, 
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+        $carrera= $this->findModelCarrera($id);
+        
+        $materias_aprobadas = Acta::find()->select('materia_id')
+                            ->where(['alumno_id'=>Yii::$app->user->identity->idAlumno])
+                            ->andWhere(['>=','nota',4]);
+
+        $query = Materia::find()->where(['NOT IN', 'id', $materias_aprobadas ])->andWhere(['carrera_id' => $id])->all(); 
+         
+        $materias= ArrayHelper::map($query, 'id', 'descripcion');       
+
+        $model = new InscripcionExamen();    
+    
+    
+        if ($model->load(Yii::$app->request->post())) {
+    
+            if ($model->validate()) {
+    
+                // form inputs are valid, do something here
+    
+                return;
+    
+            }
+    
+        }  
+    
+    
+        return $this->render('form-inscripcion', [
+    
+            'model' => $model,
+            'materias'=>$materias,
+    
         ]);
-    }*/
+    
+    }
+
 
     public function actionListarMateria($id)
     {       

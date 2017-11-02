@@ -3,7 +3,8 @@
 namespace backend\models;
 
 use Yii;
-
+use backend\models\Condicion;
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "inscripcion_examen".
  *
@@ -36,7 +37,7 @@ class InscripcionExamen extends \yii\db\ActiveRecord
         return [
             [['fecha_inscripcion', 'fecha_examen', 'fecha_baja'], 'safe'],
             [['materia_id', 'alumno_id', 'condicion_id'], 'integer'],
-            [['condicion_id'], 'required'],
+            [['condicion_id','materia_id'], 'required'],
             [['alumno_id'], 'exist', 'skipOnError' => true, 'targetClass' => Alumno::className(), 'targetAttribute' => ['alumno_id' => 'id']],
             [['materia_id'], 'exist', 'skipOnError' => true, 'targetClass' => Materia::className(), 'targetAttribute' => ['materia_id' => 'id']],
         ];
@@ -52,9 +53,9 @@ class InscripcionExamen extends \yii\db\ActiveRecord
             'fecha_inscripcion' => 'Fecha Inscripcion',
             'fecha_examen' => 'Fecha Examen',
             'fecha_baja' => 'Fecha Baja',
-            'materia_id' => 'Materia ID',
-            'alumno_id' => 'Alumno ID',
-            'condicion_id' => 'Condicion ID',
+            'materia_id' => 'Materia',
+            'alumno_id' => 'Alumno',
+            'condicion_id' => 'Condicion',
         ];
     }
 
@@ -81,5 +82,11 @@ class InscripcionExamen extends \yii\db\ActiveRecord
         }  
         
         return parent::beforeValidate();
+    }
+
+    public function getListaCondicion()
+    {        
+        $sql = Condicion::find()->where(['id'=>[1,3]])->orderBy('descripcion')->all();
+        return ArrayHelper::map($sql, 'id', 'descripcion');
     }
 }

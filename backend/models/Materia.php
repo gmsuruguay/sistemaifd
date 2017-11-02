@@ -6,6 +6,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use backend\models\Condicion;
 use backend\models\Cursada;
+use backend\models\InscripcionExamen;
 /**
  * This is the model class for table "materia".
  *
@@ -215,6 +216,18 @@ class Materia extends \yii\db\ActiveRecord
         ->andWhere(['alumno_id'=>Yii::$app->user->identity->idAlumno])       
         ->andWhere(['=','YEAR(fecha_inscripcion)',$anio_inscripcion])->count();
 
+        return $existe;
+    }
+
+    public function getExisteInscripcionExamen($id){
+        
+        $anio_inscripcion=date('Y');
+        
+        $existe= InscripcionExamen::find()
+        ->where(['materia_id'=>$id])
+        ->andWhere(['alumno_id'=>Yii::$app->user->identity->idAlumno])       
+        ->andWhere(['=','YEAR(fecha_inscripcion)',$anio_inscripcion])->count();
+        // Falta verificar que sea para la misma fecha de examen
         return $existe;
     }
     

@@ -76,8 +76,22 @@ class AlumnoController extends Controller
                         ]);  
                     }
                     
+                }elseif(  ($model->condicion_id == 3) && ($this->estaRegular($model->materia_id) > 0) ){
+                    
+                    $model->alumno_id = Yii::$app->user->identity->idAlumno;
+                    $model->fecha_inscripcion= date('Y-m-d');
+                    $model->condicion_id= $model->condicion_id;
+                    $model->materia_id= $model->materia_id;
+                    if($model->insert()){
+                        Yii::$app->session->setFlash('success', "Su inscripción se realizo correctamente");
+                        return $this->redirect(['form-inscripcion',
+                            'id' => $id,
+                        ]);  
+                    }
+                }else{
+                    throw new NotFoundHttpException('No se puede inscribir, consulte su situación en preceptoria');
                 }
-    
+                
                 
     
             }

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use common\models\FechaHelper;
+use mdm\admin\components\Helper;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\CalendarioExamenSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -60,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'hora',
                     'aula',
 
-                    ['class' => 'yii\grid\ActionColumn'],
+                    ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{update} {delete}')],
                 ],
             ]); ?>
             </div>            

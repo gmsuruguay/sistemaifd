@@ -32,7 +32,7 @@ use backend\models\TurnoExamen
             
 
             <?= $model->isNewRecord ?$form->field($model, 'materia_id')->label('Materias')->dropDownList([], ['prompt'=>'Seleccione materia']) : 
-                        $form->field($model, 'materia_id')->label('Materias')->dropDownList(getListaMaterias())?>
+                        $form->field($model, 'materia_id')->label('Materias')->dropDownList(Materia::getListaMaterias())?>
             
             <?= $form->field($model, 'turno_examen_id')->dropDownList(TurnoExamen::getListaTurnos(),['prompt'=>'Seleccione turno de examen']) ?> 
            

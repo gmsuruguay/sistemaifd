@@ -35,7 +35,7 @@ class CalendarioExamen extends \yii\db\ActiveRecord
         return [
             [['carrera_id', 'materia_id','turno_examen_id', 'fecha_examen', 'hora'], 'required'],
             [['carrera_id', 'materia_id','turno_examen_id'], 'integer'],
-            [['materia_id','fecha_examen','turno_examen_id'],'unique','targetAttribute' => ['fecha_examen'],'message' => 'Ya existe una fecha de examen para la Materia actual.'],
+            [['materia_id','fecha_examen','turno_examen_id'],'unique','targetAttribute' => ['materia_id','fecha_examen','turno_examen_id'],'message' => 'Ya existe una fecha de examen para la Materia actual.'],
             [['fecha_examen'], 'safe'],
             [['hora', 'aula'], 'string', 'max' => 45],
             [['carrera_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carrera::className(), 'targetAttribute' => ['carrera_id' => 'id']],

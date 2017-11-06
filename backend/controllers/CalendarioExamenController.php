@@ -66,7 +66,8 @@ class CalendarioExamenController extends Controller
         $model = new CalendarioExamen();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', "Se agrego un nuevo registro correctamente");
+            return $this->redirect(['create']);
         } else {
             return $this->render('create', [
                 'model' => $model,

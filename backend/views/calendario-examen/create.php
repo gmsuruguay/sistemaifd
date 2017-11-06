@@ -11,6 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Calendario Examen', 'url' => ['ind
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="calendario-examen-create">   
+<?php $model->fecha_examen = $model->fecha_examen? date('d/m/Y', strtotime($model->fecha_examen)) : null; ?>
 
     <?= $this->render('_form', [
         'model' => $model,

@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-
+use common\models\FechaHelper;
 /**
  * This is the model class for table "calendario_examen".
  *
@@ -71,5 +71,14 @@ class CalendarioExamen extends \yii\db\ActiveRecord
     public function getMateria()
     {
         return $this->hasOne(Materia::className(), ['id' => 'materia_id']);
+    }
+
+    public function beforeValidate()
+    {
+        if ($this->fecha_examen != null) {           
+            $this->fecha_examen = FechaHelper::fechaYMD($this->fecha_examen);
+        }        
+        
+        return parent::beforeValidate();
     }
 }

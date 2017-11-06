@@ -81,4 +81,14 @@ class CalendarioExamen extends \yii\db\ActiveRecord
         
         return parent::beforeValidate();
     }
+
+    public function getDescripcionMateria()
+    {
+        return $this->materia ? $this->materia->descripcion : 'Ninguno';
+    }
+
+    public function getDescripcionCarrera()
+    {
+        return $this->carrera ? $this->carrera->descripcion : 'Ninguno';
+    }
 }

@@ -82,6 +82,14 @@ class Carrera extends \yii\db\ActiveRecord
         return $this->hasMany(Materia::className(), ['carrera_id' => 'id']);
     }
 
+    /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+    public function getCalendarioExamens() 
+    { 
+        return $this->hasMany(CalendarioExamen::className(), ['carrera_id' => 'id']);
+    } 
+
     /**
      * @return \yii\db\ActiveQuery
      */

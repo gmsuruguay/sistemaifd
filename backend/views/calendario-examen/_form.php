@@ -7,6 +7,7 @@ use kartik\select2\Select2;
 use backend\models\Materia;
 use yii\widgets\MaskedInput;
 use kartik\widgets\TimePicker;
+use backend\models\TurnoExamen
 /* @var $this yii\web\View */
 /* @var $model backend\models\CalendarioExamen */
 /* @var $form yii\widgets\ActiveForm */
@@ -33,6 +34,8 @@ use kartik\widgets\TimePicker;
             <?= $model->isNewRecord ?$form->field($model, 'materia_id')->label('Materias')->dropDownList([], ['prompt'=>'Seleccione materia']) : 
                         $form->field($model, 'materia_id')->label('Materias')->dropDownList(getListaMaterias())?>
             
+            <?= $form->field($model, 'turno_examen_id')->dropDownList(TurnoExamen::getListaTurnos(),['prompt'=>'Seleccione turno de examen']) ?> 
+           
             <?= $form->field($model, 'fecha_examen',[
                                 'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-calendar"></i>']]
                             ])->widget( MaskedInput::className(), [    

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use kartik\form\ActiveForm;
 use backend\models\Carrera;
+use backend\models\TurnoExamen;
 use kartik\select2\Select2;
 use backend\models\Materia;
 use kartik\widgets\DatePicker;
@@ -24,7 +25,11 @@ use kartik\widgets\DatePicker;
                 ]); ?>    
                 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                     <?= $form->field($model, 'turno_examen_id')->dropDownList(TurnoExamen::getListaTurnos(),['prompt'=>'Mostrar todos']) ?> 
+                    </div>                    
+                    
+                    <div class="col-md-3">
                         <?= $form->field($model, 'carrera_id')->widget(Select2::classname(), [
                     
                                                     'data' => Carrera::getListaCarreras(),
@@ -37,7 +42,7 @@ use kartik\widgets\DatePicker;
 
                                 ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <?= $form->field($model, 'materia_id')->widget(Select2::classname(), [
                 
                                                 'data' => Materia::getListaMaterias(),
@@ -50,7 +55,7 @@ use kartik\widgets\DatePicker;
 
                             ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                      <?= $form->field($model, 'fecha_examen')->widget(DatePicker::classname(), [
                             'options' => ['placeholder' => '',                            
                             ],

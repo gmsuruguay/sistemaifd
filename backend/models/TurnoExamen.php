@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "turno_examen".
  *
@@ -50,5 +50,11 @@ class TurnoExamen extends \yii\db\ActiveRecord
     public function getCalendarioExamens()
     {
         return $this->hasMany(CalendarioExamen::className(), ['turno_examen_id' => 'id']);
+    }
+
+    public static function getListaTurnos()
+    {        
+        $sql = self::find()->orderBy('descripcion')->all();
+        return ArrayHelper::map($sql, 'id', 'descripcion');
     }
 }

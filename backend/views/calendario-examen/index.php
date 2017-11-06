@@ -27,6 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'yii\grid\SerialColumn'],
 
                     [
+                    'attribute'=>'turno_examen_id',                   
+                    'format'=>'text',//raw, html
+                    'content'=>function ($data){
+                        return $data->descripcionTurno;
+                    }
+                    ], 
+                    [
                     'attribute'=>'carrera_id',                   
                     'format'=>'text',//raw, html
                     'content'=>function ($data){

@@ -18,7 +18,7 @@ class CalendarioExamenSearch extends CalendarioExamen
     public function rules()
     {
         return [
-            [['id', 'carrera_id', 'materia_id'], 'integer'],
+            [['id', 'carrera_id', 'materia_id','turno_examen_id'], 'integer'],
             [['fecha_examen', 'hora', 'aula'], 'safe'],
         ];
     }
@@ -61,6 +61,7 @@ class CalendarioExamenSearch extends CalendarioExamen
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'turno_examen_id'=>$this->turno_examen_id,
             'carrera_id' => $this->carrera_id,
             'materia_id' => $this->materia_id,
             'fecha_examen' => $this->fecha_examen,

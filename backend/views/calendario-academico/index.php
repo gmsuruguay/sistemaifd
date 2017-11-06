@@ -43,6 +43,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],                      
                     'tipo_inscripcion',
                     'actividad',
+                    [
+                    'attribute'=>'fecha_inicio_inscripcion',                    
+                    'format'=>'text',//raw, html
+                    'content'=>function ($data){
+                        return FechaHelper::fechaDMY($data->fecha_inicio_inscripcion);
+                    }
+                    ],  
+                    [
+                    'attribute'=>'fecha_fin_inscripcion',                    
+                    'format'=>'text',//raw, html
+                    'content'=>function ($data){
+                        return FechaHelper::fechaDMY($data->fecha_fin_inscripcion);
+                    }
+                    ],    
                     ['class' => 'yii\grid\ActionColumn',
                      'template' => Helper::filterActionColumn('{view} {update} {delete}'),
                     ],

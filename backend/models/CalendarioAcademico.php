@@ -30,9 +30,9 @@ class CalendarioAcademico extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fecha_desde', 'fecha_hasta', 'tipo_inscripcion', 'actividad'], 'required'],
-            [['fecha_desde', 'fecha_hasta'], 'safe'],
-            [['tipo_inscripcion','actividad'], 'string'],            
+            [['fecha_desde', 'fecha_hasta', 'tipo_inscripcion', 'actividad', 'fecha_inicio_inscripcion', 'fecha_fin_inscripcion'], 'required'],
+            [['fecha_desde', 'fecha_hasta', 'fecha_inicio_inscripcion', 'fecha_fin_inscripcion'], 'safe'],
+            [['tipo_inscripcion', 'actividad'], 'string'],       
         ];
     }
 
@@ -47,6 +47,8 @@ class CalendarioAcademico extends \yii\db\ActiveRecord
             'fecha_hasta' => 'Fecha Hasta',
             'tipo_inscripcion' => 'Tipo Inscripcion',
             'actividad' => 'Actividad',
+            'fecha_inicio_inscripcion' => 'Fecha Inicio Inscripcion',
+            'fecha_fin_inscripcion' => 'Fecha Fin Inscripcion',
         ];
     }
 
@@ -62,6 +64,14 @@ class CalendarioAcademico extends \yii\db\ActiveRecord
         
         if ($this->fecha_hasta != null) {           
             $this->fecha_hasta = FechaHelper::fechaYMD($this->fecha_hasta);
+        }
+
+        if ($this->fecha_inicio_inscripcion != null) {           
+            $this->fecha_inicio_inscripcion = FechaHelper::fechaYMD($this->fecha_inicio_inscripcion);
+        }
+
+        if ($this->fecha_fin_inscripcion != null) {           
+            $this->fecha_fin_inscripcion = FechaHelper::fechaYMD($this->fecha_fin_inscripcion);
         }
         
         return parent::beforeValidate();

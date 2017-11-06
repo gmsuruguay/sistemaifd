@@ -6,13 +6,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\CalendarioExamen */
 
-$this->title = 'Create Calendario Examen';
-$this->params['breadcrumbs'][] = ['label' => 'Calendario Examens', 'url' => ['index']];
+$this->title = 'Calendario de Examen';
+$this->params['breadcrumbs'][] = ['label' => 'Calendario Examen', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="calendario-examen-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="calendario-examen-create">   
 
     <?= $this->render('_form', [
         'model' => $model,

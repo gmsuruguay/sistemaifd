@@ -4,6 +4,8 @@ namespace backend\models;
 
 use Yii;
 use common\models\FechaHelper;
+use backend\models\Materia;
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "calendario_examen".
  *
@@ -103,5 +105,16 @@ class CalendarioExamen extends \yii\db\ActiveRecord
     public function getDescripcionTurno()
     {
         return $this->turnoExamen ? $this->turnoExamen->descripcion : 'Ninguno';
+    }
+
+    public function getListaMateria()
+    {
+        $materias= Materia::find()
+        ->where(['carrera_id'=> $this->carrera_id])
+        ->orderBy('descripcion')
+        ->all();
+
+        return ArrayHelper::map($materias, 'id', 'descripcion');
+
     }
 }

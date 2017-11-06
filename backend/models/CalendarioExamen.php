@@ -49,8 +49,8 @@ class CalendarioExamen extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'carrera_id' => 'Carrera ID',
-            'materia_id' => 'Materia ID',
+            'carrera_id' => 'Carrera',
+            'materia_id' => 'Materia',
             'fecha_examen' => 'Fecha Examen',
             'hora' => 'Hora',
             'aula' => 'Aula',

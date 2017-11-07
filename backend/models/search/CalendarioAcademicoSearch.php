@@ -18,8 +18,8 @@ class CalendarioAcademicoSearch extends CalendarioAcademico
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['fecha_desde', 'fecha_hasta', 'tipo_inscripcion', 'actividad'], 'safe'],
+            [['id','turno_examen_id'], 'integer'],
+            [[ 'tipo_inscripcion'], 'safe'],
         ];
     }
 
@@ -61,6 +61,7 @@ class CalendarioAcademicoSearch extends CalendarioAcademico
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'turno_examen_id'=>$this->turno_examen_id,
             'fecha_desde' => $this->fecha_desde,
             'fecha_hasta' => $this->fecha_hasta,
         ]);

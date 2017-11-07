@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use kartik\form\ActiveForm;
 use yii\widgets\MaskedInput;
+use backend\models\TurnoExamen;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\CalendarioAcademico */
@@ -35,6 +36,8 @@ use yii\widgets\MaskedInput;
             'PREINSCRIPCION'=> 'PREINSCRIPCION',       
         ];
         echo $form->field($model, 'tipo_inscripcion')->dropDownList($lista,['prompt'=>'Seleccione una opción']); ?>
+        
+        <?= $form->field($model, 'turno_examen_id')->dropDownList(TurnoExamen::getListaTurnos(),['prompt'=>'Seleccione turno de examen']) ?> 
 
         <?= $form->field($model, 'actividad')->textarea(['rows' => 6]) ?>  
 

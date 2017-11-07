@@ -107,6 +107,6 @@ class CalendarioAcademico extends \yii\db\ActiveRecord
 
     public function getDescripcionTurno()
     {
-        return $this->turnoExamen ? $this->turnoExamen->descripcion : 'Ninguno';
+        return $this->turnoExamen ? $this->turnoExamen->descripcion : 'No Aplica';
     }
 }

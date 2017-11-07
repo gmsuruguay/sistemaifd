@@ -25,7 +25,7 @@ $condicion = Condicion::find()->all();
 
         <?= $form->field($model, 'fecha_inscripcion')->label(false)->hiddenInput(['value'=> FechaHelper::fechaDMY($model->fecha_inscripcion)]) ?>
 
-        <?= $form->field($model, 'fecha')->label(false)->hiddenInput(['value'=> FechaHelper::fechaDMY($model->fecha)]) ?>
+        <?= $form->field($model, 'fecha_cierre')->label(false)->hiddenInput(['value'=> FechaHelper::fechaDMY($model->fecha_cierre)]) ?>
 
         <?= $form->field($model, 'materia_id')->label(false)->hiddenInput() ?>
 

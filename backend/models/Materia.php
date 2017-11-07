@@ -196,7 +196,7 @@ class Materia extends \yii\db\ActiveRecord
     public function getDescripcionCondicion()
     {
         return $this->condicion ? $this->condicion->descripcion : 'Ninguno';
-    }   
+    }  
 
     public function validateDescripcion()
     {
@@ -230,5 +230,19 @@ class Materia extends \yii\db\ActiveRecord
         // Falta verificar que sea para la misma fecha de examen
         return $existe;
     }
+
+    public function getCantidadAlumnos()
+    {
+        return Cursada::find()->where(['materia_id'=>$this->id, "YEAR(fecha_inscripcion)"=> date("Y")])->count();
+    } 
+
+    public function getEstaCerrado()
+    {
+        $countUno=  Cursada::find()->where(['materia_id'=>$this->id, "YEAR(fecha_inscripcion)"=> date("Y")])->count();
+        $countDos=  Cursada::find()->where(['materia_id'=>$this->id, "YEAR(fecha_inscripcion)"=> date("Y")])
+                                   ->andWhere(['between','nota', '0','10']) 
+                                   ->count();
+        return ($countUno == $countDos && $countUno > 0)? true:false;
+    } 
     
 }

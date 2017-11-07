@@ -14,6 +14,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use yii\data\ActiveDataProvider;
+use common\models\FechaHelper;
 
 /**
  * CursadaController implements the CRUD actions for Cursada model.
@@ -163,7 +164,7 @@ class CursadaController extends Controller
 
             return $this->redirect(['create-auto', 
                                     'fecha_inscripcion'=> $model->fecha_inscripcion,
-                                    'fecha'=> $model->fecha,
+                                    'fecha_cierre'=> $model->fecha_cierre,
                                     'materia_id'=> $model->materia_id,
                                     'fecha_vencimiento'=> $model->fecha_vencimiento]);
         } else {
@@ -203,25 +204,22 @@ class CursadaController extends Controller
         return '{"alumno_id": "0", "nombre":"Error."}';
     }
 
-    public function actionCreateAuto($fecha_inscripcion='00/00/0000', $fecha = '00/00/0000', $materia_id='0', $fecha_vencimiento='00/00/0000')
+    public function actionCreateAuto($fecha_inscripcion='00/00/0000', $fecha_cierre = '00/00/0000', $materia_id='0', $fecha_vencimiento='00/00/0000')
     {
         $model = new Cursada();
-        if (Yii::$app->request->isPjax) {
-            //return Yii::$app->request->isPjax->getId;
-        }
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) && $model->save()) {
            $dataProvider = new ActiveDataProvider([
-                'query' => Cursada::find()->where(['fecha_inscripcion' => $model->fecha_inscripcion, 'fecha'=> $model->fecha, 'materia_id'=> $model->materia_id]),
+                'query' => Cursada::find()->where(['fecha_inscripcion' => $model->fecha_inscripcion, 'fecha_cierre'=> $model->fecha_cierre, 'materia_id'=> $model->materia_id]),
             ]);
            return  $this->renderPartial('_grid_cursada', ['dataProvider' => $dataProvider]);
         } else {
             $model->fecha_inscripcion = $fecha_inscripcion;
-            $model->fecha = $fecha;
+            $model->fecha_cierre = $fecha_cierre;
             $model->materia_id = $materia_id;
             $model->fecha_vencimiento = $fecha_vencimiento;
             $dataProvider = new ActiveDataProvider([
-                'query' => Cursada::find()->where(['fecha_inscripcion' => date("Y-m-d", strtotime($fecha_inscripcion)), 'fecha'=> date("Y-m-d", strtotime($fecha)), 'materia_id'=> $materia_id]),
+                'query' => Cursada::find()->where(['fecha_inscripcion' => date("Y-m-d", strtotime($fecha_inscripcion)), 'fecha_cierre'=> date("Y-m-d", strtotime($fecha_cierre)), 'materia_id'=> $materia_id]),
             ]);
             $_grid_cursada = $this->renderPartial('_grid_cursada', ['dataProvider' => $dataProvider],true);
             
@@ -236,15 +234,15 @@ class CursadaController extends Controller
 
         return $this->redirect(['create-auto', 
                                     'fecha_inscripcion'=> $model->fecha_inscripcion,
-                                    'fecha'=> $model->fecha,
+                                    'fecha'=> $model->fecha_cierre,
                                     'materia_id'=> $model->materia_id,
                                     'fecha_vencimiento'=> $model->fecha_vencimiento]);
     }
 
-    public function actionUpdateAuto($fecha_inscripcion='00/00/0000', $fecha = '00/00/0000', $materia_id='0')
+    public function actionUpdateAuto($fecha_inscripcion='00/00/0000', $fecha_cierre = '00/00/0000', $materia_id='0')
     {
         $model = Cursada::findOne(['fecha_inscripcion' => date("Y-m-d", strtotime($fecha_inscripcion)),
-                                'fecha'=> date("Y-m-d", strtotime($fecha)),
+                                'fecha'=> date("Y-m-d", strtotime($fecha_cierre)),
                                 'materia_id'=> $materia_id,
             ]);
 
@@ -264,14 +262,14 @@ class CursadaController extends Controller
             //return print_r($modelFind);
             foreach ($modelFind as $m) {
                $m->fecha_inscripcion        =  $model->fecha_inscripcion;
-               $m->fecha        =  $model->fecha;
+               $m->fecha_cierre        =  $model->fecha_cierre;
                $m->materia_id   =  $model->materia_id;
                $m->fecha_vencimiento =  $model->fecha_vencimiento;
                $m->save();
             }
            return $this->redirect(['create-auto', 
                                     'fecha_inscripcion'=> $model->fecha_inscripcion,
-                                    'fecha'=> $model->fecha,
+                                    'fecha_cierre'=> $model->fecha_cierre,
                                     'materia_id'=> $model->materia_id,
                                     'fecha_vencimiento'=> $model->fecha_vencimiento]);
         } else {
@@ -283,10 +281,10 @@ class CursadaController extends Controller
         }
     }
 
-    public function actionDestroyedAllAuto($fecha_inscripcion='00/00/0000', $fecha = '00/00/0000', $materia_id='0')
+    public function actionDestroyedAllAuto($fecha_inscripcion='00/00/0000', $fecha_cierre = '00/00/0000', $materia_id='0')
     {
         $model = Cursada::find()->where(['fecha_inscripcion' => date("Y-m-d", strtotime($fecha_inscripcion)),
-                                'fecha'=> date("Y-m-d", strtotime($fecha)),
+                                'fecha_cierre'=> date("Y-m-d", strtotime($fecha_cierre)),
                                 'materia_id'=> $materia_id,
             ])->all();
 
@@ -295,6 +293,136 @@ class CursadaController extends Controller
         }
 
         return $this->redirect(['index-auto']);
+    }
+
+    public function actionCerrarCursada()
+    {
+        if (Yii::$app->request->isPjax) {
+            $query = Materia::find()->where(['carrera_id'=> Yii::$app->request->post('carrera')]);
+                                    //->where(["YEAR(fecha_inscripcion)"=> date("Y")])
+                                    //->select(['id','materia_id', 'COUNT(*) as cantidad'])
+                                    //->groupBy(['materia_id'])
+                                    //->having(["YEAR(fecha_inscripcion)"=> date("Y")]);
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+
+            return $this->renderAjax('cerrar_cursada', [
+                'dataProvider' => $dataProvider,
+                'show' => true,
+                'carrera_id'=>Yii::$app->request->post('carrera')
+            ]);
+        } else {
+            return $this->render('cerrar_cursada', [
+                'dataProvider' => '',
+                'show' => false,
+                'carrera_id'=>''
+            ]);
+        }
+    }
+
+
+    public function actionCerrarMateria($id)
+    {
+        if (($materia = Materia::findOne($id)) !== null) {
+            if(!$materia->estaCerrado){
+                $peticion =  Cursada::find()->where(['materia_id'=>$id, "YEAR(fecha_inscripcion)" => date("Y")])
+                                   ->all();
+                $query= [];
+                foreach ($peticion as $p) {
+                    if(($p->nota < 0 || $p->nota > 10) ||($p->nota =='')){
+                        array_push($query, $p);
+                    }
+                }
+                                   
+                 return $this->render('cerrar_materia_cursada', [
+                    'model' => new Cursada(),
+                    'query'=> $query,
+                    'materia' => $materia,
+                ]);
+            }
+            else{
+                $query =  Cursada::find()->where(['materia_id'=>$id, "YEAR(fecha_inscripcion)"=> date("Y")])->all();
+                 return $this->render('cerrar_materia_cursada', [
+                    'model' => $query[0],
+                    'query'=> $query,
+                    'materia' => $materia,
+                ]);
+            }
+
+
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }        
+       
+    }
+
+    public function actionSaveNotas()
+    {
+        if (Yii::$app->request->post()) 
+        {
+            
+            $ids = Yii::$app->request->post('ids');
+            $notas = Yii::$app->request->post('nota');
+            $long = count($notas);
+            if($long < 1){
+               return $this->redirect(['cerrar-cursada']);
+            }
+            
+            //Comprueba si estan correctos los datos ingresados.
+            for ($i=0; $i< $long; $i++) {
+                $model = $this->findModel($ids[$i]);
+                $model->load(Yii::$app->request->post());
+                $model->nota = $notas[$i];
+                //$model->fecha_cierre = FechaHelper::fechaYMD($model->fecha_cierre);
+                //$model->fecha_vencimiento= FechaHelper::fechaYMD($model->fecha_vencimiento);
+                
+               if(!($model->fecha_vencimiento !='' && $model->fecha_cierre != '') || !($model->nota >= 0 && $model->nota <= 10 && $model->nota != ''))
+               {
+                   Yii::$app->session->setFlash('warning', 'No se puedo guradar los datos.'); 
+                   return $this->redirect(['cerrar-materia', 'id'=>$model->materia_id]);
+                    break;
+
+               }
+            }
+            
+            //Guarda los datos en la base de datos.
+            for ($i=0; $i< $long; $i++) {
+                $model = $this->findModel($ids[$i]);
+                $model->load(Yii::$app->request->post());
+                $model->nota = $notas[$i];
+                switch ($model->materia->condicion_id) {
+                    case '2':
+                       if($model->nota >= 7){$model->condicion_id = '2';}else{$model->condicion_id = '1';}
+                       break;
+                    case '3':
+                       if($model->nota >= 4){$model->condicion_id = '3';}else{$model->condicion_id = '1';}
+                       break;   
+                   
+                   default:
+                       # code...
+                       break;
+               }
+               $model->save();
+            }
+            
+            return $this->redirect(['cerrar-materia', 'id'=>$model->materia_id]);
+        }
+    }
+
+     public function actionDestroyedNotas($id)
+    {
+        $model = new Cursada();
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) 
+        {
+            $query =  Cursada::find()->where(['materia_id'=>$id, "YEAR(fecha_inscripcion)" => date("Y")])
+                                   ->all();
+            foreach ($query as $q) {
+                $q->nota = '-3';
+                $q->save();
+            }
+            return;
+        }
     }
 
 }

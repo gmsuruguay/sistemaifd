@@ -350,7 +350,6 @@ class ActaController extends Controller
                                                     'condicion_id'=> $model->condicion_id,
                                                     'materia_id'=> $model->materia_id])->all();
             return  $this->renderPartial('_form_acta', ['model' => $model ,'dataProvider' => $query], true);
-            return '2';
         }
     }
 

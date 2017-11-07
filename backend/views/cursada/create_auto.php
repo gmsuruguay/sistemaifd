@@ -17,11 +17,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="pull-right">
             <?= Html::a('<i class="fa  fa-pencil"></i> Actualizar', ['update-auto', 
                                             'fecha_inscripcion' => $model->fecha_inscripcion, 
-                                            'fecha' => $model->fecha,
+                                            'fecha_cierre' => $model->fecha_cierre,
                                             'materia_id'=> $model->materia_id ], ['class' => 'btn btn-primary']) ?>
             <?= Html::a('<i class="fa  fa-trash"></i> Borrar', ['destroyed-all-auto', 
                                             'fecha_inscripcion' => $model->fecha_inscripcion, 
-                                            'fecha' => $model->fecha,
+                                            'fecha_cierre' => $model->fecha_cierre,
                                             'materia_id'=>$model->materia_id], ['class' => 'btn btn-danger',
                                                                         'data' => [
                                                                                 'confirm' => '¿Esta seguro de borrar el acta entera?',
@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'label'=> 'Fecha',
                         'value'=> function ($data){
-                                return FechaHelper::fechaDMY($data->fecha);
+                                return FechaHelper::fechaDMY($data->fecha_cierre);
                             }
                     ],
                     [

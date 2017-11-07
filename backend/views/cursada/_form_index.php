@@ -28,11 +28,11 @@ $carreras = Carrera::find()->all();
         </div>
 
         <div>
-            <?= $model->isNewRecord ? $form->field($model, 'fecha',[
+            <?= $model->isNewRecord ? $form->field($model, 'fecha_cierre',[
                                 'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-calendar"></i>']]
                             ])->widget( MaskedInput::className(), [    
                                             'clientOptions' => ['alias' =>  'date']
-                ]): $form->field($model, 'fecha')->textInput(['value'=> date('d/m/Y',strtotime($model->fecha))])?>
+                ]): $form->field($model, 'fecha_cierre')->textInput(['value'=> date('d/m/Y',strtotime($model->fecha_cierre))])?>
         </div>
 
         <div>
@@ -74,7 +74,7 @@ $carreras = Carrera::find()->all();
     </div>
 
     <?= Html::input('hidden', 'ant_f_i', $model->fecha_inscripcion) ?>
-    <?= Html::input('hidden', 'ant_f', $model->fecha) ?>
+    <?= Html::input('hidden', 'ant_f', $model->fecha_cierre) ?>
     <?= Html::input('hidden', 'ant_m_i', $model->materia_id) ?>
     <?= Html::input('hidden', 'ant_f_v', $model->fecha_vencimiento) ?>
     

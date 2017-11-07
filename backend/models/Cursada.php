@@ -38,6 +38,7 @@ class Cursada extends \yii\db\ActiveRecord
     {
         return [
             [['fecha_inscripcion', 'fecha_vencimiento','fecha_cierre'], 'safe'],
+            //[['fecha_inscripcion', 'fecha_vencimiento','fecha_cierre'], 'date'],
             [['alumno_id', 'materia_id'], 'required'],
             [['condicion_id', 'alumno_id', 'materia_id'], 'integer'],
             [['nota'], 'number'],
@@ -60,7 +61,7 @@ class Cursada extends \yii\db\ActiveRecord
             'materia_id' => 'Materia',
             'nota' => 'Nota',
             'fecha_vencimiento' => 'Fecha Vencimiento',
-            'fecha_cierre'=>'Fecha'
+            'fecha_cierre'=>'Fecha Cierre'
         ];
     }
 

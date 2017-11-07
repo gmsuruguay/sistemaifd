@@ -5,6 +5,7 @@ use yii\grid\GridView;
 use common\models\FechaHelper;
 use yii\bootstrap\ButtonDropdown;
 use mdm\admin\components\Helper;
+use backend\models\CalendarioAcademico;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\InscripcionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -29,7 +30,8 @@ $this->title = 'Carreras Inscriptas';
                             'class' => 'btn waves-effect waves-light'                            
                         ]);
                     }  
-                    if (Helper::checkRoute('form-inscripcion')) {
+                    
+                    if (Helper::checkRoute('form-inscripcion') && CalendarioAcademico::estaHabilitado('EXAMEN') ) {
                         echo Html::a(Yii::t('app', '<i class="material-icons left">create</i> Inscribir examen'), ['form-inscripcion', 'id' => $m->carrera_id], [
                             'class' => 'btn waves-effect waves-light'                            
                         ]);

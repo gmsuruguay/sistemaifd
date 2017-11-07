@@ -76,4 +76,24 @@ class CalendarioAcademico extends \yii\db\ActiveRecord
         
         return parent::beforeValidate();
     }
+
+    public static function estaHabilitado($tipo)
+    {
+        $fecha_actual= date('Y-m-d');
+        $calendario= self::find()
+                            ->where(['like', 'tipo_inscripcion', $tipo])
+                            ->andWhere(['>=', 'fecha_inicio_inscripcion', $fecha_actual])
+                            ->orderBy(['fecha_inicio_inscripcion' => SORT_ASC])
+                            ->limit(1)
+                            ->one();
+
+        if( $calendario != null ){            
+            if(($fecha_actual >= $calendario->fecha_inicio_inscripcion) && ($fecha_actual <= $calendario->fecha_fin_inscripcion)){
+                return true;
+            }
+            
+        }
+
+        return false;
+    }
 }

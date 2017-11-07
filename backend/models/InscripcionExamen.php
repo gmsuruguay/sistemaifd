@@ -75,14 +75,14 @@ class InscripcionExamen extends \yii\db\ActiveRecord
         return $this->hasOne(Materia::className(), ['id' => 'materia_id']);
     }
 
-    public function beforeValidate()
+    /*public function beforeValidate()
     {
         if ($this->fecha_examen != null) {           
             $this->fecha_examen = FechaHelper::fechaYMD($this->fecha_examen);
         }  
         
         return parent::beforeValidate();
-    }
+    }*/
 
     public function getListaCondicion()
     {        

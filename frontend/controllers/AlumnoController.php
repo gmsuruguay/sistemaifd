@@ -20,7 +20,7 @@ use backend\models\InscripcionExamen;
 use yii\helpers\ArrayHelper;
 use backend\models\CalendarioExamen;
 use backend\models\CalendarioAcademico;
-
+use common\models\FechaHelper;
 class AlumnoController extends Controller
 {
     public function actionIndex()
@@ -66,7 +66,8 @@ class AlumnoController extends Controller
                 ->where(['NOT IN', 'materia_id', $materias_aprobadas ])
                 ->andWhere(['carrera_id' => $id])      
                 ->andWhere(['turno_examen_id' => $calendario->turno_examen_id])                
-                ->all();  
+                ->all();    
+                
 
         //$materias= ArrayHelper::map($query, 'id', 'descripcion'); 
         $materias= ArrayHelper::map($query, 'id', 'descripcionMateria');       
@@ -78,42 +79,47 @@ class AlumnoController extends Controller
         if ($model->load(Yii::$app->request->post())) {
     
             if ($model->validate()) {
-                $c = $this->findModelExamen($model->materia_id);
-                //$materia=$this->findModelMateria($model->materia_id);
-                $materia=$this->findModelMateria($c->materia_id);
-                if( ($model->condicion_id == 1) && $this->cumpleCondicionExamenLibre($materia) ){ //Para las materias libres
+                $c = $this->findModelExamen($model->materia_id); //Busco la materia en el calendario de examen
+                
+                //Verifico que no este inscripta a una misma mesa de examen               
+                if(!$this->existeInscripcionExamen($c)){
+                
                     
-                    $model->alumno_id = Yii::$app->user->identity->idAlumno;
-                    $model->fecha_inscripcion= date('Y-m-d');
-                    $model->condicion_id= $model->condicion_id;
-                    //$model->materia_id= $model->materia_id;
-                    $model->materia_id= $c->materia_id;
-                    $model->fecha_examen= $c->fecha_examen;
-                    if($model->insert()){
-                        Yii::$app->session->setFlash('success', "Su inscripción se realizo correctamente");
-                        return $this->redirect(['form-inscripcion',
-                            'id' => $id,
-                        ]);  
+                    //$materia=$this->findModelMateria($model->materia_id);
+                    $materia=$this->findModelMateria($c->materia_id);
+                    if( ($model->condicion_id == 1) && $this->cumpleCondicionExamenLibre($materia) ){ //Para las materias libres
+                        
+                        $model->alumno_id = Yii::$app->user->identity->idAlumno;
+                        $model->fecha_inscripcion= date('Y-m-d');
+                        $model->condicion_id= $model->condicion_id;
+                        //$model->materia_id= $model->materia_id;
+                        $model->materia_id= $c->materia_id;
+                        $model->fecha_examen= $c->fecha_examen;
+                        if($model->insert()){
+                            Yii::$app->session->setFlash('success', "Su inscripción se realizo correctamente");
+                            return $this->redirect(['form-inscripcion',
+                                'id' => $id,
+                            ]);  
+                        }
+                        
+                    }elseif(  ($model->condicion_id == 3) && ($this->estaRegular($c->materia_id) > 0) ){
+                        
+                        $model->alumno_id = Yii::$app->user->identity->idAlumno;
+                        $model->fecha_inscripcion= date('Y-m-d');
+                        $model->condicion_id= $model->condicion_id;
+                        $model->materia_id= $c->materia_id;
+                        $model->fecha_examen= $c->fecha_examen;
+                        if($model->insert()){
+                            Yii::$app->session->setFlash('success', "Su inscripción se realizo correctamente");
+                            return $this->redirect(['form-inscripcion',
+                                'id' => $id,
+                            ]);  
+                        }
+                    }else{
+                        throw new NotFoundHttpException('No se puede inscribir, consulte su situación en preceptoria');
                     }
-                    
-                }elseif(  ($model->condicion_id == 3) && ($this->estaRegular($c->materia_id) > 0) ){
-                    
-                    $model->alumno_id = Yii::$app->user->identity->idAlumno;
-                    $model->fecha_inscripcion= date('Y-m-d');
-                    $model->condicion_id= $model->condicion_id;
-                    $model->materia_id= $c->materia_id;
-                    $model->fecha_examen= $c->fecha_examen;
-                    if($model->insert()){
-                        Yii::$app->session->setFlash('success', "Su inscripción se realizo correctamente");
-                        return $this->redirect(['form-inscripcion',
-                            'id' => $id,
-                        ]);  
-                    }
-                }else{
-                    throw new NotFoundHttpException('No se puede inscribir, consulte su situación en preceptoria');
+                
                 }
-                
-                
     
             }
     
@@ -127,6 +133,26 @@ class AlumnoController extends Controller
     
         ]);
     
+    }
+
+    private function existeInscripcionExamen($c){
+
+
+        $existe= InscripcionExamen::find()
+                                    ->where([
+                                            'materia_id'=>$c->materia_id,
+                                            'alumno_id'=>Yii::$app->user->identity->idAlumno,
+                                            'fecha_examen'=>$c->fecha_examen,
+                                            ])
+                                    ->one();
+        if($existe!=null){
+            throw new NotFoundHttpException('Ya se encuentra registrado en la mesa con fecha de examen '.FechaHelper::fechaDMY($c->fecha_examen) .' de la materia '.Materia::descripcionCompletaMateria($c->materia_id).' con el N° de inscripción '.$c->id);
+            
+        }
+
+        return false;
+        
+       
     }
 
     private function cumpleCondicionExamenLibre($materia){

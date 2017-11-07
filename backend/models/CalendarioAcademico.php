@@ -82,15 +82,12 @@ class CalendarioAcademico extends \yii\db\ActiveRecord
         $fecha_actual= date('Y-m-d');
         $calendario= self::find()
                             ->where(['like', 'tipo_inscripcion', $tipo])
-                            ->andWhere(['>=', 'fecha_inicio_inscripcion', $fecha_actual])
-                            ->orderBy(['fecha_inicio_inscripcion' => SORT_ASC])
-                            ->limit(1)
+                            ->andWhere(['<=', 'fecha_inicio_inscripcion', $fecha_actual])
+                            ->andWhere(['>=', 'fecha_fin_inscripcion', $fecha_actual])                            
                             ->one();
 
         if( $calendario != null ){            
-            if(($fecha_actual >= $calendario->fecha_inicio_inscripcion) && ($fecha_actual <= $calendario->fecha_fin_inscripcion)){
-                return true;
-            }
+                return true;          
             
         }
 

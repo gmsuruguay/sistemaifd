@@ -44,6 +44,14 @@ class TurnoExamen extends \yii\db\ActiveRecord
         ];
     }
 
+     /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+    public function getCalendarioAcademicos() 
+    { 
+        return $this->hasMany(CalendarioAcademico::className(), ['turno_examen_id' => 'id']);
+    } 
+
     /**
      * @return \yii\db\ActiveQuery
      */

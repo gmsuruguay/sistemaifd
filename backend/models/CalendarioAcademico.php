@@ -32,7 +32,9 @@ class CalendarioAcademico extends \yii\db\ActiveRecord
         return [
             [['fecha_desde', 'fecha_hasta', 'tipo_inscripcion', 'actividad', 'fecha_inicio_inscripcion', 'fecha_fin_inscripcion'], 'required'],
             [['fecha_desde', 'fecha_hasta', 'fecha_inicio_inscripcion', 'fecha_fin_inscripcion'], 'safe'],
-            [['tipo_inscripcion', 'actividad'], 'string'],       
+            [['tipo_inscripcion', 'actividad'], 'string'],  
+            [['turno_examen_id'], 'integer'],
+            [['turno_examen_id'], 'exist', 'skipOnError' => true, 'targetClass' => TurnoExamen::className(), 'targetAttribute' => ['turno_examen_id' => 'id']],     
         ];
     }
 
@@ -49,6 +51,7 @@ class CalendarioAcademico extends \yii\db\ActiveRecord
             'actividad' => 'Actividad',
             'fecha_inicio_inscripcion' => 'Fecha Inicio Inscripcion',
             'fecha_fin_inscripcion' => 'Fecha Fin Inscripcion',
+            'turno_examen_id' => 'Turno Examen',
         ];
     }
 
@@ -56,6 +59,14 @@ class CalendarioAcademico extends \yii\db\ActiveRecord
     * Formatear fechas antes de insertar en base de datos
     *
     */
+    /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+    public function getTurnoExamen() 
+    { 
+        return $this->hasOne(TurnoExamen::className(), ['id' => 'turno_examen_id']);
+    } 
+
     public function beforeValidate()
     {
         if ($this->fecha_desde != null) {           
@@ -92,5 +103,10 @@ class CalendarioAcademico extends \yii\db\ActiveRecord
         }
 
         return false;
+    }
+
+    public function getDescripcionTurno()
+    {
+        return $this->turnoExamen ? $this->turnoExamen->descripcion : 'Ninguno';
     }
 }

@@ -25,7 +25,7 @@ $this->title = 'Carreras Inscriptas';
                 </div>
                 <div class="card-action">
                     <?php 
-                    if (Helper::checkRoute('listar-materia')) {
+                    if (Helper::checkRoute('listar-materia') && CalendarioAcademico::estaHabilitado('CURSADA') ) {
                         echo Html::a(Yii::t('app', '<i class="material-icons left">create</i> Inscribir materia'), ['listar-materia', 'id' => $m->carrera_id], [
                             'class' => 'btn waves-effect waves-light'                            
                         ]);

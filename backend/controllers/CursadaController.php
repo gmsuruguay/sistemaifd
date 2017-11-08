@@ -379,7 +379,7 @@ class CursadaController extends Controller
                 
                if(!($model->fecha_vencimiento !='' && $model->fecha_cierre != '') || !($model->nota >= 0 && $model->nota <= 10 && $model->nota != ''))
                {
-                   Yii::$app->session->setFlash('warning', 'No se puedo guradar los datos.'); 
+                   Yii::$app->session->setFlash('warning', 'No se pudo gurdar los datos.'); 
                    return $this->redirect(['cerrar-materia', 'id'=>$model->materia_id]);
                     break;
 
@@ -392,10 +392,10 @@ class CursadaController extends Controller
                 $model->load(Yii::$app->request->post());
                 $model->nota = $notas[$i];
                 switch ($model->materia->condicion_id) {
-                    case '2':
+                    case '2': // Condicion de Materia Promocional
                        if($model->nota >= 7){$model->condicion_id = '2';}else{$model->condicion_id = '1';}
                        break;
-                    case '3':
+                    case '3': // Condicion de Materia Regular
                        if($model->nota >= 4){$model->condicion_id = '3';}else{$model->condicion_id = '1';}
                        break;   
                    

@@ -89,4 +89,9 @@ class InscripcionExamen extends \yii\db\ActiveRecord
         $sql = Condicion::find()->where(['id'=>[1,3]])->orderBy('descripcion')->all();
         return ArrayHelper::map($sql, 'id', 'descripcion');
     }
+
+    public function getDescripcionMateria()
+    {
+        return $this->materia ? $this->materia->descripcionAnioMateria : 'Ninguno';
+    }
 }

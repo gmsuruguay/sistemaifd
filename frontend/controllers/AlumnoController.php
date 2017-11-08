@@ -21,6 +21,8 @@ use yii\helpers\ArrayHelper;
 use backend\models\CalendarioExamen;
 use backend\models\CalendarioAcademico;
 use common\models\FechaHelper;
+use backend\models\search\InscripcionExamenSearch;
+
 class AlumnoController extends Controller
 {
     public function actionIndex()
@@ -232,16 +234,26 @@ class AlumnoController extends Controller
     public function actionVerInscripciones($id)
     {
         $model=$this->findModelInscripcion($id);
+
+        //Consulta de inscripciones a cursadas para el periodo vigente
         $searchModel = new CursadaSearch();
         $searchModel->alumno_id = Yii::$app->user->identity->idAlumno;
         $searchModel->carrera = $model->carrera_id;
         $searchModel->periodo = date('Y');
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        //Consulta de inscripciones a examenes para el periodo vigente
+        $searchModelExamen = new InscripcionExamenSearch();
+        $searchModelExamen->alumno_id = Yii::$app->user->identity->idAlumno;
+        $searchModelExamen->carrera = $model->carrera_id;
+        $searchModelExamen->periodo = date('Y');
+        $dataProviderExamen = $searchModelExamen->search(Yii::$app->request->queryParams);
        
         
         return $this->render('listado-inscripciones', [
             'model' => $model,             
             'dataProvider' => $dataProvider,
+            'dataProviderExamen' => $dataProviderExamen,
         ]);
     }
 

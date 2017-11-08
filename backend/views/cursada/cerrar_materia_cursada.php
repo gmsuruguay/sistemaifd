@@ -7,7 +7,7 @@ use kartik\form\ActiveForm;
 use yii\widgets\MaskedInput;
 /* @var $this yii\web\View */
 /* @var $model app\models\ActaExamen */
-
+$this->title="Registración de Notas";
 ?>
 
 <div class="acta-examen-view">

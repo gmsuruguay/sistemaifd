@@ -34,6 +34,11 @@ class CalendarioAcademico extends \yii\db\ActiveRecord
             [['fecha_desde', 'fecha_hasta', 'fecha_inicio_inscripcion', 'fecha_fin_inscripcion'], 'safe'],
             [['tipo_inscripcion', 'actividad'], 'string'],  
             [['turno_examen_id'], 'integer'],
+            ['turno_examen_id', 'required', 'when' => function($model){
+                return $model->tipo_inscripcion == 'EXAMEN';
+            }, 'whenClient' => "function (attribute, value){
+                 return $('#tipo').val() == 'EXAMEN';
+            }",],
             [['turno_examen_id'], 'exist', 'skipOnError' => true, 'targetClass' => TurnoExamen::className(), 'targetAttribute' => ['turno_examen_id' => 'id']],     
         ];
     }

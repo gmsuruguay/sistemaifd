@@ -163,3 +163,8 @@ a.desc:after {
     max-height: calc(105vh - 210px);
     overflow-y: auto;
 }
+
+.ocultar{
+    display: none;
+    
+}

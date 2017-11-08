@@ -35,7 +35,7 @@ use backend\models\TurnoExamen;
             'CURSADA'=>'CURSADA',
             'PREINSCRIPCION'=> 'PREINSCRIPCION',       
         ];
-        echo $form->field($model, 'tipo_inscripcion')->dropDownList($lista,['prompt'=>'Seleccione una opción']); ?>
+        echo $form->field($model, 'tipo_inscripcion')->dropDownList($lista,['prompt'=>'Seleccione una opción','id'=>'tipo']); ?>
         
         <?= $form->field($model, 'turno_examen_id')->dropDownList(TurnoExamen::getListaTurnos(),['prompt'=>'Seleccione turno de examen']) ?> 
 
@@ -61,3 +61,35 @@ use backend\models\TurnoExamen;
     </div>
     
 </div>
+
+<?php
+$script= <<< JS
+    
+    var op= $("#tipo option:selected").text();
+    
+    if (op!='EXAMEN') {
+        $('.field-calendarioacademico-turno_examen_id').addClass("ocultar"); 
+    }else{
+        $('.field-calendarioacademico-turno_examen_id').removeClass("ocultar"); 
+    }
+
+
+    $("#tipo").change(function(){
+        
+        var valor = $(this).val();  
+                
+                if (valor!='EXAMEN') {                    
+                 $('.field-calendarioacademico-turno_examen_id').addClass("ocultar");                
+                 
+                }else{
+                 $('.field-calendarioacademico-turno_examen_id').removeClass("ocultar"); 
+                                 
+                }
+
+    });
+   
+    
+  
+JS;
+$this->registerJS($script);
+?>

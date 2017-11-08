@@ -67,6 +67,8 @@
                     ['label' => 'Condición Cursada', 'icon' => 'fa fa-question-circle', 'url' => ['/condicion']], 
                     ['label' => 'Calendario Académico', 'icon' => 'fa fa-calendar', 'url' => ['/calendario-academico'],],  
                     ['label' => 'Calendario Examen', 'icon' => 'fa fa-calendar', 'url' => ['/calendario-examen'],],                                
+                    ['label' => 'Turno Examen', 'icon' => 'fa fa-list', 'url' => ['/turno-examen'],],                                
+                  
                     [
                         'label' => 'Configuración',
                         'icon' => 'fa fa-cog',

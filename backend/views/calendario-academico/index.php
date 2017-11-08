@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use mdm\admin\components\Helper;
 use common\models\FechaHelper;
+use backend\models\TurnoExamen;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\CalendarioAcademicoSearch */
@@ -40,9 +41,35 @@ $this->params['breadcrumbs'][] = $this->title;
                     'content'=>function ($data){
                         return FechaHelper::fechaDMY($data->fecha_hasta);
                     }
-                    ],                      
-                    'tipo_inscripcion',
+                    ], 
+                    [
+                    'attribute'=>'tipo_inscripcion',
+                    'filter'=>array("EXAMEN"=>"EXAMEN","CURSADA"=>"CURSADA","PREINSCRIPCION"=>"PREINSCRIPCION"),
+                    ],               
+                    
+                    [
+                    'attribute'=>'turno_examen_id',                   
+                    'format'=>'text',//raw, html
+                    'filter'=>TurnoExamen::getListaTurnos(),
+                    'content'=>function ($data){
+                        return $data->descripcionTurno;
+                    }
+                    ], 
                     'actividad',
+                    [
+                    'attribute'=>'fecha_inicio_inscripcion',                    
+                    'format'=>'text',//raw, html
+                    'content'=>function ($data){
+                        return FechaHelper::fechaDMY($data->fecha_inicio_inscripcion);
+                    }
+                    ],  
+                    [
+                    'attribute'=>'fecha_fin_inscripcion',                    
+                    'format'=>'text',//raw, html
+                    'content'=>function ($data){
+                        return FechaHelper::fechaDMY($data->fecha_fin_inscripcion);
+                    }
+                    ],    
                     ['class' => 'yii\grid\ActionColumn',
                      'template' => Helper::filterActionColumn('{view} {update} {delete}'),
                     ],

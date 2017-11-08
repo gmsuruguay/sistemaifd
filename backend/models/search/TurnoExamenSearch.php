@@ -5,12 +5,12 @@ namespace backend\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\CalendarioAcademico;
+use backend\models\TurnoExamen;
 
 /**
- * CalendarioAcademicoSearch represents the model behind the search form about `backend\models\CalendarioAcademico`.
+ * TurnoExamenSearch represents the model behind the search form about `backend\models\TurnoExamen`.
  */
-class CalendarioAcademicoSearch extends CalendarioAcademico
+class TurnoExamenSearch extends TurnoExamen
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class CalendarioAcademicoSearch extends CalendarioAcademico
     public function rules()
     {
         return [
-            [['id','turno_examen_id'], 'integer'],
-            [[ 'tipo_inscripcion'], 'safe'],
+            [['id'], 'integer'],
+            [['descripcion'], 'safe'],
         ];
     }
 
@@ -41,13 +41,12 @@ class CalendarioAcademicoSearch extends CalendarioAcademico
      */
     public function search($params)
     {
-        $query = CalendarioAcademico::find();
+        $query = TurnoExamen::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['fecha_desde' => SORT_ASC]],
         ]);
 
         $this->load($params);
@@ -61,13 +60,9 @@ class CalendarioAcademicoSearch extends CalendarioAcademico
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'turno_examen_id'=>$this->turno_examen_id,
-            'fecha_desde' => $this->fecha_desde,
-            'fecha_hasta' => $this->fecha_hasta,
         ]);
 
-        $query->andFilterWhere(['like', 'tipo_inscripcion', $this->tipo_inscripcion])
-            ->andFilterWhere(['like', 'actividad', $this->actividad]);
+        $query->andFilterWhere(['like', 'descripcion', $this->descripcion]);
 
         return $dataProvider;
     }

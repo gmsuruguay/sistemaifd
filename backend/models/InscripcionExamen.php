@@ -75,18 +75,23 @@ class InscripcionExamen extends \yii\db\ActiveRecord
         return $this->hasOne(Materia::className(), ['id' => 'materia_id']);
     }
 
-    public function beforeValidate()
+    /*public function beforeValidate()
     {
         if ($this->fecha_examen != null) {           
             $this->fecha_examen = FechaHelper::fechaYMD($this->fecha_examen);
         }  
         
         return parent::beforeValidate();
-    }
+    }*/
 
     public function getListaCondicion()
     {        
         $sql = Condicion::find()->where(['id'=>[1,3]])->orderBy('descripcion')->all();
         return ArrayHelper::map($sql, 'id', 'descripcion');
+    }
+
+    public function getDescripcionMateria()
+    {
+        return $this->materia ? $this->materia->descripcionAnioMateria : 'Ninguno';
     }
 }

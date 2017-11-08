@@ -5,12 +5,12 @@ namespace backend\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\CalendarioAcademico;
+use backend\models\CalendarioExamen;
 
 /**
- * CalendarioAcademicoSearch represents the model behind the search form about `backend\models\CalendarioAcademico`.
+ * CalendarioExamenSearch represents the model behind the search form about `backend\models\CalendarioExamen`.
  */
-class CalendarioAcademicoSearch extends CalendarioAcademico
+class CalendarioExamenSearch extends CalendarioExamen
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class CalendarioAcademicoSearch extends CalendarioAcademico
     public function rules()
     {
         return [
-            [['id','turno_examen_id'], 'integer'],
-            [[ 'tipo_inscripcion'], 'safe'],
+            [['id', 'carrera_id', 'materia_id','turno_examen_id'], 'integer'],
+            [['fecha_examen', 'hora', 'aula'], 'safe'],
         ];
     }
 
@@ -41,13 +41,13 @@ class CalendarioAcademicoSearch extends CalendarioAcademico
      */
     public function search($params)
     {
-        $query = CalendarioAcademico::find();
+        $query = CalendarioExamen::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['fecha_desde' => SORT_ASC]],
+            'sort'=> ['defaultOrder' => ['fecha_examen' => SORT_DESC]],
         ]);
 
         $this->load($params);
@@ -62,12 +62,13 @@ class CalendarioAcademicoSearch extends CalendarioAcademico
         $query->andFilterWhere([
             'id' => $this->id,
             'turno_examen_id'=>$this->turno_examen_id,
-            'fecha_desde' => $this->fecha_desde,
-            'fecha_hasta' => $this->fecha_hasta,
+            'carrera_id' => $this->carrera_id,
+            'materia_id' => $this->materia_id,
+            'fecha_examen' => $this->fecha_examen,
         ]);
 
-        $query->andFilterWhere(['like', 'tipo_inscripcion', $this->tipo_inscripcion])
-            ->andFilterWhere(['like', 'actividad', $this->actividad]);
+        $query->andFilterWhere(['like', 'hora', $this->hora])
+            ->andFilterWhere(['like', 'aula', $this->aula]);
 
         return $dataProvider;
     }

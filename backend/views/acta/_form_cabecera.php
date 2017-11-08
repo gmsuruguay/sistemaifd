@@ -59,7 +59,7 @@ $condicion = Condicion::find()->all();
                                                     'onchange' => '$.get("'.Url::toRoute('acta/change-carrera').'",{carreraId: $(this).val()})
                                                                     .done(function(data)
                                                                     {
-                                                                        $("select#acta-materia_id").html(data);
+                                                                        $("select#calendarioexamen-materia_id").html(data);
                                                                     });'
                                                 ]) 
                                                 ?> 

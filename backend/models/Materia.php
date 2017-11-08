@@ -122,6 +122,14 @@ class Materia extends \yii\db\ActiveRecord
         return $this->hasMany(MateriaAsignada::className(), ['materia_id' => 'id']);
     }
 
+    /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+    public function getCalendarioExamens() 
+    { 
+        return $this->hasMany(CalendarioExamen::className(), ['materia_id' => 'id']);
+    } 
+
     public function getAnioMateria()
     {      
         $anio="";

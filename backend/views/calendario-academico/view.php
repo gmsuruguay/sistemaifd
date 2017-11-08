@@ -27,7 +27,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value'=> FechaHelper::fechaDMY($model->fecha_hasta),
                 ],
                 'tipo_inscripcion',
+                [
+                'label'=>'Turno Examen',
+                'value'=>$model->descripcionTurno,
+                ],
                 'actividad',
+                [
+                'label'=>'Fecha inicio inscripción',
+                'value'=> FechaHelper::fechaDMY($model->fecha_inicio_inscripcion),
+                ],
+                [
+                'label'=>'Fecha fin inscripción',
+                'value'=> FechaHelper::fechaDMY($model->fecha_fin_inscripcion),
+                ],
             ],
         ]) ?>
         </div>

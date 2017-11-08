@@ -232,4 +232,17 @@ class MateriaController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionListar($id)    {
+        
+
+        $materias= Materia::find()
+                            ->where(['carrera_id'=> $id])
+                            ->all();
+        echo '<option> Seleccione materia </option>';
+        foreach ($materias as $m)
+        {
+            echo '<option value="'.$m->id.'">'.$m->descripcion.'</option>';
+        }
+    }
 }

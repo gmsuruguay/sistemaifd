@@ -14,7 +14,7 @@ $this->title = 'Mis Inscripciones';
 <div class="inscripcion-view">
 
     <h3><?= Html::encode($this->title) ?></h3>   
-    
+        <div class="card-panel">
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [                
@@ -28,16 +28,51 @@ $this->title = 'Mis Inscripciones';
             ],
         ]) ?> 
 
+        </div>
+        
     
         
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h5 class="panel-title"> Cursadas - Períodos lectivos vigentes </h5>
+        <div class="card">
+            <div class="card-content">
+              <h5 class="card-title"> Cursadas - Períodos lectivos vigentes </h5>
             </div>
-            <div class="panel-body">
+            <div class="card-action">
            
             <?= GridView::widget([
                     'dataProvider' => $dataProvider,  
+                    'tableOptions' =>['class' => 'table bordered responsive-table'],                                         
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'], 
+                        
+                        [
+                        'attribute'=>'fecha_inscripcion',                        
+                        'format'=>'text',//raw, html
+                        'content'=>function ($data){
+                            return FechaHelper::fechaDMY($data->fecha_inscripcion);
+                        }
+                        ], 
+                                                             
+                        [
+                        'attribute'=>'materia_id',                        
+                        'format'=>'text',//raw, html
+                        'content'=>function ($data){
+                            return $data->descripcionMateria;
+                        }
+                        ],    
+    
+                    ],
+            ]);?>
+             </div>
+        </div>
+
+        <div class="card">
+            <div class="card-content">
+              <h5 class="card-title"> Exámenes - Períodos lectivos vigentes </h5>
+            </div>
+            <div class="card-action">
+           
+            <?= GridView::widget([
+                    'dataProvider' => $dataProviderExamen,  
                     'tableOptions' =>['class' => 'table bordered responsive-table'],                                         
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'], 
@@ -56,6 +91,13 @@ $this->title = 'Mis Inscripciones';
                         'format'=>'text',//raw, html
                         'content'=>function ($data){
                             return $data->descripcionMateria;
+                        }
+                        ],  
+                        [
+                        'attribute'=>'fecha_examen',                        
+                        'format'=>'text',//raw, html
+                        'content'=>function ($data){
+                            return FechaHelper::fechaDMY($data->fecha_examen);
                         }
                         ],    
     

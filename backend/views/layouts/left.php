@@ -32,15 +32,15 @@
                             ['label' => 'Listar Colegios Secundarios', 'icon' => 'fa fa-university', 'url' => ['/colegio-secundario'],],                             
                         ],
                     ], 
-                    /*[
+                    [
                         'label' => 'Cursadas',
                         'icon' => 'fa fa-rocket',
                         'url' => '#',
                         'items' => [                            
                             ['label' => 'Listar', 'icon' => 'fa fa-list', 'url' => ['/cursada'],],
-                            ['label' => 'Agregar', 'icon' => 'fa fa-plus', 'url' => ['/cursada/create'],],                            
+                            ['label' => 'Registrar Cierre Cursada', 'icon' => 'fa fa-edit', 'url' => ['/cursada/cerrar-cursada'],],                            
                         ],
-                    ],*/ 
+                    ],
                     
                     [
                         'label' => 'Actas',

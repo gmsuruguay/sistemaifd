@@ -42,6 +42,12 @@ $this->title = 'Carreras Inscriptas';
                             
                         ]);
                     }
+                    if(Helper::checkRoute('ver-inscripciones')){
+                        echo Html::a('<i class="material-icons left">format_list_bulleted</i> Mis inscripciones', ['ver-inscripciones', 'id' => $m->id], [
+                            'class' => 'btn waves-effect waves-light',                  
+                            
+                        ]);
+                    }
                     ?>
                 </div>
                 </div>

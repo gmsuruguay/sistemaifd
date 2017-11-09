@@ -257,6 +257,36 @@ class AlumnoController extends Controller
         ]);
     }
 
+    public function actionHistorialAcademico($id)
+    {
+        $model=$this->findModelInscripcion($id);
+
+        //Consulta en actas                    
+        $alumno = $model->alumno_id;
+        $carrera = $model->carrera_id;        
+        $query = Acta::find()
+                 ->joinWith(['materia'])
+                 ->where(['alumno_id' => $alumno])                
+                 ->andWhere(['asistencia'=>1])                            
+                 ->andWhere(['materia.carrera_id' => $carrera])
+                 ->orderBy('materia.anio')
+                 ->all();
+
+        //Consulta de regulares
+        $query = Cursada::find()
+                ->joinWith(['materia'])
+                ->where(['alumno_id' => $alumno])                                             
+                ->andWhere(['materia.carrera_id' => $carrera])
+                ->orderBy('materia.anio')
+                ->all();
+       
+        
+        return $this->render('historia-academica', [
+            'model' => $model,             
+            
+        ]);
+    }
+
     private function estaAprobada($id)
     {
         // Verificación para las materias que necesiten estar APROBADAS

@@ -43,7 +43,7 @@ $this->title = 'Carreras Inscriptas';
                         ]);
                     }
                     if(Helper::checkRoute('historial-academico')){
-                        echo Html::a('<i class="material-icons left">format_list_bulleted</i> Mi historia academica', ['historial-academico', 'id' => $m->id], [
+                        echo Html::a('<i class="material-icons left">school</i> Mi historia academica', ['historial-academico', 'id' => $m->id], [
                             'class' => 'btn waves-effect waves-light',                  
                             
                         ]);

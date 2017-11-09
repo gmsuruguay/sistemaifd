@@ -77,15 +77,8 @@ class AlumnoController extends Controller
         //Busqueda de Inscripcion del alumno
         $searchModel = new InscripcionSearch();
         $searchModel->alumno_id = $id; 
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        //Busqueda de Inscripcion en materia del alumno
-        /*$searchModel_cursada = new InscripcionMateriaSearch();
-        $searchModel_cursada->alumno_id= $alumno->id;
-        $dataProvider_cursada = $searchModel_cursada->search(Yii::$app->request->queryParams);*/
-
-        //Busqueda de Materias segun la carrera del alumno
-
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams); 
+        
         return $this->render('view', [
             'model' => $model,
             'searchModel' => $searchModel,
@@ -106,6 +99,41 @@ class AlumnoController extends Controller
             'model' => $model, 
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionHistorialAcademico($id)
+    {
+        $connection = \Yii::$app->db;
+        $model=$this->findModelInscripcion($id);
+        $alumno = $model->alumno_id;
+        $carrera = $model->carrera_id; 
+        
+        //Consulta en actas y cursadas                 
+        
+
+        $sql= 'SELECT m.descripcion, m.anio, nota, fecha_examen as fecha, c.descripcion as condicion, :examen as tipo  FROM acta
+        JOIN materia as m on m.id = acta.materia_id
+        JOIN condicion as c on c.id = acta.condicion_id
+        WHERE m.carrera_id=:carrera AND alumno_id=:alumno AND asistencia = 1
+        UNION ALL
+        SELECT m.descripcion, m.anio, nota, fecha_cierre as fecha, c.descripcion as condicion, :cursada as tipo FROM cursada
+        JOIN materia as m on m.id = cursada.materia_id
+        JOIN condicion as c on c.id = cursada.condicion_id
+        WHERE m.carrera_id =:carrera AND alumno_id =:alumno
+        ORDER BY fecha DESC';
+
+        $query = $connection->createCommand($sql);
+        $query->bindValue(":carrera", $carrera);
+        $query->bindValue(":alumno", $alumno);
+        $query->bindValue(":examen", 'EXAMEN');
+        $query->bindValue(":cursada", 'CURSADA');
+
+        $materias= $query->queryAll();
+        
+        return $this->render('historia-academica', [
+            'model' => $model,  
+            'materias' => $materias,             
         ]);
     }
 

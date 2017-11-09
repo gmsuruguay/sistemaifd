@@ -32,7 +32,7 @@ use yii\bootstrap\ButtonDropdown;
             
             'nro_libreta',
             'fecha',  
-            ['class' => 'yii\grid\ActionColumn', 'template' => '{imprimir} {listar}', 
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{imprimir} {listar} {historial-academico}', 
 
             'buttons' => [
 
@@ -73,6 +73,15 @@ use yii\bootstrap\ButtonDropdown;
                         'title'=>'inscribir en materia'
                     ]);
                 },
+
+                'historial-academico' => function ($url, $model, $key) {
+                    return Html::a('<span class="glyphicon glyphicon-list" aria-hidden="true"></span> Historia academica', ['historial-academico', 'id' => $key], [
+                        'class' => 'btn btn-primary',                        
+                        'title'=>'inscribir en materia'
+                    ]);
+                },
+
+                
 
             ]],             
         ],

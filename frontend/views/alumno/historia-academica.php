@@ -31,7 +31,7 @@ $this->title = 'Mi Historia Academica';
 
         </div>
 
-
+    <div class="card">
     <table  width="100%">
         <thead>     
           <tr>  
@@ -47,14 +47,17 @@ $this->title = 'Mi Historia Academica';
             <?php foreach ($materias as $dato): ?>
             <tr>
                 <td><?=$dato['descripcion'] ?></td>  
-                <td><?=$dato['periodo'] ?></td>  
+                <td><?=$dato['anio'] ?></td>  
                 <td><?=$dato['nota'] ?></td>  
-                <td><?=FechaHelper::fechaDMY($dato['fecha']) ?></td>                  
+                <td><?=FechaHelper::fechaDMY($dato['fecha']) ?></td>    
+                <td><?=$dato['condicion'] ?></td>                
                 <td><?=$dato['tipo'] ?></td>  
                        
             </tr>
             <?php endforeach; ?>
         </tbody>                
     </table>
+    </div>
+    
 
 </div>

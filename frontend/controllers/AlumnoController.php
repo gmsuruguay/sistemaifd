@@ -263,26 +263,20 @@ class AlumnoController extends Controller
         $model=$this->findModelInscripcion($id);
         $alumno = $model->alumno_id;
         $carrera = $model->carrera_id; 
-        //Consulta en actas                    
-        /*       
-        $query = Acta::find()
-                 ->joinWith(['materia'])
-                 ->where(['alumno_id' => $alumno])                
-                 ->andWhere(['asistencia'=>1])                            
-                 ->andWhere(['materia.carrera_id' => $carrera])
-                 ->orderBy('materia.anio')
-                 ->all();*/
+        
+        //Consulta en actas y cursadas                 
+        
 
-        $sql= 'SELECT m.descripcion, m.periodo, nota, fecha_examen as fecha, c.descripcion as condicion, :examen as tipo  FROM acta
+        $sql= 'SELECT m.descripcion, m.anio, nota, fecha_examen as fecha, c.descripcion as condicion, :examen as tipo  FROM acta
         JOIN materia as m on m.id = acta.materia_id
         JOIN condicion as c on c.id = acta.condicion_id
         WHERE m.carrera_id=:carrera AND alumno_id=:alumno AND asistencia = 1
         UNION ALL
-        SELECT m.descripcion, m.periodo, nota, fecha_cierre as fecha, c.descripcion as condicion, :cursada as tipo FROM cursada
+        SELECT m.descripcion, m.anio, nota, fecha_cierre as fecha, c.descripcion as condicion, :cursada as tipo FROM cursada
         JOIN materia as m on m.id = cursada.materia_id
         JOIN condicion as c on c.id = cursada.condicion_id
         WHERE m.carrera_id =:carrera AND alumno_id =:alumno
-        ORDER BY fecha';
+        ORDER BY fecha DESC';
 
         $query = $connection->createCommand($sql);
         $query->bindValue(":carrera", $carrera);

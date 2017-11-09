@@ -40,7 +40,7 @@ $this->title = 'Mi Historia Academica';
             <th>Calificación</th>               
             <th>Fecha</th>                
             <th>Condición</th>   
-              
+            <th>Tipo</th>     
           </tr>
         </thead> 
         <tbody>
@@ -50,7 +50,7 @@ $this->title = 'Mi Historia Academica';
                 <td><?=$dato['periodo'] ?></td>  
                 <td><?=$dato['nota'] ?></td>  
                 <td><?=FechaHelper::fechaDMY($dato['fecha']) ?></td>                  
-                <td><?=$dato['condicion'] ?></td>  
+                <td><?=$dato['tipo'] ?></td>  
                        
             </tr>
             <?php endforeach; ?>

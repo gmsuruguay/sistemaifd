@@ -273,12 +273,12 @@ class AlumnoController extends Controller
                  ->orderBy('materia.anio')
                  ->all();*/
 
-        $sql= 'SELECT m.descripcion, m.periodo, nota, fecha_examen as fecha, c.descripcion as condicion  FROM acta
+        $sql= 'SELECT m.descripcion, m.periodo, nota, fecha_examen as fecha, c.descripcion as condicion, :examen as tipo  FROM acta
         JOIN materia as m on m.id = acta.materia_id
         JOIN condicion as c on c.id = acta.condicion_id
-        WHERE m.carrera_id=:carrera AND alumno_id=:alumno
+        WHERE m.carrera_id=:carrera AND alumno_id=:alumno AND asistencia = 1
         UNION ALL
-        SELECT m.descripcion, m.periodo, nota, fecha_cierre as fecha, c.descripcion as condicion  FROM cursada
+        SELECT m.descripcion, m.periodo, nota, fecha_cierre as fecha, c.descripcion as condicion, :cursada as tipo FROM cursada
         JOIN materia as m on m.id = cursada.materia_id
         JOIN condicion as c on c.id = cursada.condicion_id
         WHERE m.carrera_id =:carrera AND alumno_id =:alumno
@@ -287,6 +287,8 @@ class AlumnoController extends Controller
         $query = $connection->createCommand($sql);
         $query->bindValue(":carrera", $carrera);
         $query->bindValue(":alumno", $alumno);
+        $query->bindValue(":examen", 'EXAMEN');
+        $query->bindValue(":cursada", 'CURSADA');
 
         $materias= $query->queryAll();
         

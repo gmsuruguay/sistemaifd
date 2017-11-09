@@ -259,30 +259,40 @@ class AlumnoController extends Controller
 
     public function actionHistorialAcademico($id)
     {
+        $connection = \Yii::$app->db;
         $model=$this->findModelInscripcion($id);
-
-        //Consulta en actas                    
         $alumno = $model->alumno_id;
-        $carrera = $model->carrera_id;        
+        $carrera = $model->carrera_id; 
+        //Consulta en actas                    
+        /*       
         $query = Acta::find()
                  ->joinWith(['materia'])
                  ->where(['alumno_id' => $alumno])                
                  ->andWhere(['asistencia'=>1])                            
                  ->andWhere(['materia.carrera_id' => $carrera])
                  ->orderBy('materia.anio')
-                 ->all();
+                 ->all();*/
 
-        //Consulta de regulares
-        $query = Cursada::find()
-                ->joinWith(['materia'])
-                ->where(['alumno_id' => $alumno])                                             
-                ->andWhere(['materia.carrera_id' => $carrera])
-                ->orderBy('materia.anio')
-                ->all();
-       
+        $sql= 'SELECT m.descripcion, m.periodo, nota, fecha_examen as fecha, c.descripcion as condicion  FROM acta
+        JOIN materia as m on m.id = acta.materia_id
+        JOIN condicion as c on c.id = acta.condicion_id
+        WHERE m.carrera_id=:carrera AND alumno_id=:alumno
+        UNION ALL
+        SELECT m.descripcion, m.periodo, nota, fecha_cierre as fecha, c.descripcion as condicion  FROM cursada
+        JOIN materia as m on m.id = cursada.materia_id
+        JOIN condicion as c on c.id = cursada.condicion_id
+        WHERE m.carrera_id =:carrera AND alumno_id =:alumno
+        ORDER BY fecha';
+
+        $query = $connection->createCommand($sql);
+        $query->bindValue(":carrera", $carrera);
+        $query->bindValue(":alumno", $alumno);
+
+        $materias= $query->queryAll();
         
         return $this->render('historia-academica', [
-            'model' => $model,             
+            'model' => $model,  
+            'materias' => $materias,           
             
         ]);
     }

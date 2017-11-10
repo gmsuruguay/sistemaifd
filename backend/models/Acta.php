@@ -139,7 +139,7 @@ class Acta extends \yii\db\ActiveRecord
 
     public function getListaCondicion()
     {        
-        $sql = Condicion::find()->where(['id'=>[1,3]])->orderBy('descripcion')->all();
+        $sql = Condicion::find()->where(['id'=>[1,2,3]])->orderBy('descripcion')->all();
         return ArrayHelper::map($sql, 'id', 'descripcion');
     }
 

@@ -26,7 +26,8 @@ use backend\models\Autoridades;
 
 <table  width="100%">
     <thead>     
-      <tr>  
+      <tr> 
+        <th>#</th> 
         <th>Espacio Curricular</th>           
         <th>Año</th>
         <th>Calificación</th>               
@@ -37,8 +38,9 @@ use backend\models\Autoridades;
       </tr>
     </thead> 
     <tbody>
-        <?php foreach ($analitico as $dato): ?>
+        <?php foreach ($analitico as $i=>$dato): ?>
         <tr>
+            <td><?=($i+1)?></td>
             <td><?=$dato->descripcionMateria ?></td>  
             <td><?=$dato->anioMateria .'/'.$dato->periodoMateria ?></td>  
             <td><?=$dato->nota ?></td>  

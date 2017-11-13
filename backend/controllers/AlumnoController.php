@@ -219,14 +219,14 @@ class AlumnoController extends Controller
     }
 
     public function actionImprimirAnalitico($id){
-        
+                //Muestra solo materias aprobadas.
                 $model=$this->findModelInscripcion($id);              
                 $alumno = $model->alumno_id;
                 $carrera = $model->carrera_id;        
                 $query = Acta::find()
                          ->joinWith(['materia'])
                          ->where(['alumno_id' => $alumno])                
-                         ->andWhere(['asistencia'=>1])                            
+                         ->andWhere(['>=','nota',4])                            
                          ->andWhere(['materia.carrera_id' => $carrera])
                          ->orderBy('materia.anio')
                          ->all();

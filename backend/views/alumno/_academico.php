@@ -32,14 +32,14 @@ use yii\bootstrap\ButtonDropdown;
             
             'nro_libreta',
             'fecha',  
-            ['class' => 'yii\grid\ActionColumn', 'template' => '{imprimir} {listar} {historial-academico}', 
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{imprimir} {listar} {historial-academico} {listar-regularidades}', 
 
             'buttons' => [
 
                 'imprimir'=> function ($url, $model, $key) {
                     return ButtonDropdown::widget([
                         'encodeLabel' => false, // if you're going to use html on the button label
-                        'label' => '<span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir',
+                        'label' => '<span class="glyphicon glyphicon-list" aria-hidden="true"></span> Acciones',
                         'dropdown' => [
                             'encodeLabels' => false, // if you're going to use html on the items' labels
                             'items' => [
@@ -54,6 +54,24 @@ use yii\bootstrap\ButtonDropdown;
                                     'linkOptions' => ['target'=>'_blank'],
                                     'visible' => true,  // if you want to hide an item based on a condition, use this
                                 ],
+                                [
+                                    'label' => 'Inscripción a Cursada',
+                                    'url' => ['inscripcion-cursada', 'id' => $key],
+                                    //'linkOptions' => ['target'=>'_blank'],
+                                    'visible' => true,  // if you want to hide an item based on a condition, use this
+                                ],
+                                [
+                                    'label' => 'Historia Academica',
+                                    'url' => ['historial-academico', 'id' => $key],
+                                    //'linkOptions' => ['target'=>'_blank'],
+                                    'visible' => true,  // if you want to hide an item based on a condition, use this
+                                ],
+                                [
+                                    'label' => 'Regularidades',
+                                    'url' => ['listar-regularidades', 'id' => $key],
+                                    //'linkOptions' => ['target'=>'_blank'],
+                                    'visible' => true,  // if you want to hide an item based on a condition, use this
+                                ],
                                 
                             ],
                             'options' => [
@@ -61,13 +79,13 @@ use yii\bootstrap\ButtonDropdown;
                             ],
                         ],
                         'options' => [
-                            'class' => 'btn bg-navy',   // btn-success, btn-info, et cetera
+                            'class' => 'btn btn-info',   // btn-success, btn-info, et cetera
                         ],
                         'split' => true,    // if you want a split button
                     ]);
                 },       
 
-                'listar' => function ($url, $model, $key) {
+                /*'listar' => function ($url, $model, $key) {
                     return Html::a('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Inscripciones a cursadas', ['inscripcion-cursada', 'id' => $key], [
                         'class' => 'btn btn-info',                        
                         'title'=>'inscribir en materia'
@@ -77,9 +95,16 @@ use yii\bootstrap\ButtonDropdown;
                 'historial-academico' => function ($url, $model, $key) {
                     return Html::a('<span class="glyphicon glyphicon-list" aria-hidden="true"></span> Historia academica', ['historial-academico', 'id' => $key], [
                         'class' => 'btn btn-primary',                        
-                        'title'=>'inscribir en materia'
+                        'title'=>'Historia academica'
                     ]);
                 },
+                'listar-regularidades' => function ($url, $model, $key) {
+                    return Html::a('<span class="glyphicon glyphicon-list" aria-hidden="true"></span> Regularidades', ['listar-academico', 'id' => $key], [
+                        'class' => 'btn btn-primary',                        
+                        'title'=>'Regularidades'
+                    ]);
+                },*/
+
 
                 
 

@@ -131,4 +131,14 @@ class Cursada extends \yii\db\ActiveRecord
         $sql = Condicion::find()->where(['id'=>[1,2,3]])->orderBy('descripcion')->all();
         return ArrayHelper::map($sql, 'id', 'descripcion');
     }
+
+    public function getAnioMateria()
+    {
+        return $this->materia ? $this->materia->anio : null;
+    }
+
+    public function getPeriodoMateria()
+    {
+        return $this->materia ? $this->materia->periodo : null;
+    }
 }

@@ -12,14 +12,14 @@ use kartik\form\ActiveForm;
 /* @var $model backend\models\Acta */
 $carreras = Carrera::find()->all();
 
-$this->title = 'Finalizar Cursada';
+$this->title = 'Registrar Cierre de Cursada';
 $this->params['breadcrumbs'][] = ['label' => 'Cursada', 'url' => ['index']];
 
 ?>
 <div class="acta-create">
 	<div class="box">
      	<div class="box-header with-border">            
-            <h3 class="box-title">Finalizar Cursada</h3>         
+            <h3 class="box-title">Materias</h3>         
         </div>
 
     	<div class="box-body">

@@ -293,6 +293,29 @@ class AlumnoController extends Controller
         ]);
     }
 
+    public function actionListarRegularidades($id)
+    {
+        $model=$this->findModelInscripcion($id);              
+        $alumno = $model->alumno_id;
+        $carrera = $model->carrera_id;        
+        $query = Cursada::find();
+        $query->joinWith(['materia']);
+        $query->where(['alumno_id' => $alumno])                
+                 ->andWhere(['cursada.condicion_id'=>3])                            
+                 ->andWhere(['=','materia.carrera_id',$carrera]);               
+                 
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort'=> ['defaultOrder' => ['fecha_cierre' => SORT_DESC]],
+        ]);
+
+        return $this->render('materias_regulares', [
+            'model' => $model,  
+            'dataProvider' => $dataProvider,  
+        ]);
+    }
+
     private function estaAprobada($id)
     {
         // Verificación para las materias que necesiten estar APROBADAS

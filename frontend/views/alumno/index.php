@@ -48,6 +48,13 @@ $this->title = 'Carreras Inscriptas';
                             
                         ]);
                     }
+
+                    if(Helper::checkRoute('listar-regularidades')){
+                        echo Html::a('<i class="material-icons left">format_list_bulleted</i> Regularidades', ['listar-regularidades', 'id' => $m->id], [
+                            'class' => 'btn waves-effect waves-light',                  
+                            
+                        ]);
+                    }
                     ?>
                 </div>
                 </div>

@@ -12,40 +12,30 @@ use common\models\FechaHelper;
 /* @var $model backend\models\Inscripcion */
 
 $this->title = 'Regularidades';
-$this->params['breadcrumbs'][] = ['label' => 'Alumnos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->nombreAlumno, 'url' => ['view', 'id' => $model->alumno_id]];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="materias-regulares-view">
-
-    <div class="box">
-        <div class="box-header with-border">
-              <i class="fa fa-user"></i>
-              <h3 class="box-title"><?=$model->nombreAlumno?></h3> 
-                         
-        </div>
-
-        <div class="box-body">  
-        <?= DetailView::widget([
-            'model' => $model,
-            'attributes' => [                
-                
-                [
-                'label'=>'Carrera',
-                'value'=>$model->descripcionCarrera,  
-                ],
-                'nro_libreta',
-                
+    <h3><?= Html::encode($this->title) ?></h3>
+    <div class="card-panel">
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [                
+            
+            [
+            'label'=>'Carrera',
+            'value'=>$model->descripcionCarrera,  
             ],
-        ]) ?> 
-        </div>
-    </div> 
+            'nro_libreta',
+            
+        ],
+    ]) ?> 
 
-    <div class="box">
-        <div class="box-header with-border">           
-        <h3 class="box-title">Lista </h3>    
-       
-        <div class="box-body">
+    </div>
+
+    <div class="card">
+        <div class="card-content">           
+        <h3 class="card-title">Lista </h3>    
+        </div>
+        <div class="card-action">
 
         <?= GridView::widget([
                 'dataProvider' => $dataProvider,              

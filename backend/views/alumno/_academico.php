@@ -83,30 +83,7 @@ use yii\bootstrap\ButtonDropdown;
                         ],
                         'split' => true,    // if you want a split button
                     ]);
-                },       
-
-                /*'listar' => function ($url, $model, $key) {
-                    return Html::a('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Inscripciones a cursadas', ['inscripcion-cursada', 'id' => $key], [
-                        'class' => 'btn btn-info',                        
-                        'title'=>'inscribir en materia'
-                    ]);
-                },
-
-                'historial-academico' => function ($url, $model, $key) {
-                    return Html::a('<span class="glyphicon glyphicon-list" aria-hidden="true"></span> Historia academica', ['historial-academico', 'id' => $key], [
-                        'class' => 'btn btn-primary',                        
-                        'title'=>'Historia academica'
-                    ]);
-                },
-                'listar-regularidades' => function ($url, $model, $key) {
-                    return Html::a('<span class="glyphicon glyphicon-list" aria-hidden="true"></span> Regularidades', ['listar-academico', 'id' => $key], [
-                        'class' => 'btn btn-primary',                        
-                        'title'=>'Regularidades'
-                    ]);
-                },*/
-
-
-                
+                },                 
 
             ]],             
         ],

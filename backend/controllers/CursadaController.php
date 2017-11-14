@@ -15,6 +15,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use yii\data\ActiveDataProvider;
 use common\models\FechaHelper;
+use backend\models\search\InscripcionCursadaSearch;
 
 /**
  * CursadaController implements the CRUD actions for Cursada model.
@@ -42,7 +43,7 @@ class CursadaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new CursadaSearch();
+        $searchModel = new InscripcionCursadaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

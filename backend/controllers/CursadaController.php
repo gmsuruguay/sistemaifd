@@ -428,4 +428,19 @@ class CursadaController extends Controller
         }
     }
 
+    public function actionImprimirInscripcionCursada($id,$anio)
+    {
+        $model =  Cursada::find()->where(['materia_id'=>$id, "YEAR(fecha_inscripcion)" => $anio])->all();
+
+        $pdf = Yii::$app->pdf;        
+        $pdf->cssFile = 'css/reporte.css';
+        $pdf->options = ['title' => 'Inscripciones'];
+        $pdf->content = $this->renderPartial('reporte_inscripciones_cursada', [
+            'model' => $model,
+            'id'=>$id,            
+        ]);        
+        
+        return $pdf->render();
+    }
+
 }

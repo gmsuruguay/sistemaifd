@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'buttons' => [
                         
                         'detalle' => function ($url,$model,$key) {
-                                return Html::a('Action', ['listar','id'=>$model['id']]);
+                                return Html::a('<span class="glyphicon glyphicon-print" aria-hidden="true"></span>', ['imprimir-inscripcion-cursada','id'=>$model['id'],'anio'=>$model['anio'] ], ['target'=>'_blank']);
                         },
                     ],
                     ],

@@ -55,10 +55,10 @@ class InscripcionCursadaSearch extends Cursada
             $totalCount = Yii::$app->db->createCommand($cant,[':anio'=>$this->anio])
             ->queryScalar();
     
-            $sql='SELECT m.id,m.descripcion as materia, COUNT(*) as cant FROM cursada 
+            $sql='SELECT m.id,YEAR(fecha_inscripcion) as anio,m.descripcion as materia, COUNT(*) as cant FROM cursada 
             JOIN materia as m ON m.id=cursada.materia_id
             WHERE YEAR(fecha_inscripcion)=:anio
-            GROUP BY m.periodo,m.id,m.descripcion';
+            GROUP BY m.periodo,YEAR(fecha_inscripcion),m.id,m.descripcion';
             
     
             // add conditions that should always apply here
@@ -86,10 +86,10 @@ class InscripcionCursadaSearch extends Cursada
         $totalCount = Yii::$app->db->createCommand($cant,[':materia' => $this->materia_id, ':anio'=>$this->anio])
         ->queryScalar();
 
-        $sql='SELECT m.id,m.descripcion as materia, COUNT(*) as cant FROM cursada 
+        $sql='SELECT m.id,YEAR(fecha_inscripcion) as anio,m.descripcion as materia, COUNT(*) as cant FROM cursada 
         JOIN materia as m ON m.id=cursada.materia_id
         WHERE cursada.materia_id=:materia AND YEAR(fecha_inscripcion)=:anio
-        GROUP BY m.periodo,m.id,m.descripcion';
+        GROUP BY m.periodo,YEAR(fecha_inscripcion),m.id,m.descripcion';
         
 
         // add conditions that should always apply here

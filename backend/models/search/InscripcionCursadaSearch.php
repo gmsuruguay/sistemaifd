@@ -11,19 +11,17 @@ use backend\models\Cursada;
  * CursadaSearch represents the model behind the search form about `backend\models\Cursada`.
  */
 class InscripcionCursadaSearch extends Cursada
-{
-    public $alumno;
-    public $carrera;
-    public $periodo;
+{   
+    
+    public $anio;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'condicion_id', 'alumno_id', 'materia_id'], 'integer'],
-            [['fecha_inscripcion', 'fecha_vencimiento','alumno','fecha_cierre','carrera','periodo'], 'safe'],
-            [['nota'], 'number'],
+            [['id', 'materia_id','anio'], 'integer'],
+            [['fecha_inscripcion'], 'safe'],           
         ];
     }
 
@@ -45,14 +43,52 @@ class InscripcionCursadaSearch extends Cursada
      */
     public function search($params)
     {
-        $cant= 'SELECT COUNT(DISTINCT m.descripcion,m.periodo)
-                FROM cursada
-                JOIN materia as m ON m.id=cursada.materia_id';
-        $totalCount = Yii::$app->db->createCommand($cant)
+        $this->load($params);
+
+        if( is_null($this->materia_id) || empty($this->materia_id) ) {
+
+            $cant= 'SELECT COUNT(DISTINCT m.id,m.descripcion,m.periodo)
+            FROM cursada        
+            JOIN materia as m ON m.id=cursada.materia_id
+            WHERE YEAR(fecha_inscripcion)=:anio';
+            
+            $totalCount = Yii::$app->db->createCommand($cant,[':anio'=>$this->anio])
+            ->queryScalar();
+    
+            $sql='SELECT m.id,m.descripcion as materia, COUNT(*) as cant FROM cursada 
+            JOIN materia as m ON m.id=cursada.materia_id
+            WHERE YEAR(fecha_inscripcion)=:anio
+            GROUP BY m.periodo,m.id,m.descripcion';
+            
+    
+            // add conditions that should always apply here
+           
+    
+            $dataProvider = new SqlDataProvider([
+                'sql' => $sql,
+                'params' => [':anio'=>$this->anio],
+                'totalCount' => $totalCount,
+                'pagination' => [
+                    'pageSize' => 20,
+                ],
+                //'sort'=> ['defaultOrder' => ['fecha_inscripcion' => SORT_DESC]],
+            ]);        
+            
+            return $dataProvider;
+        }        
+        
+
+        $cant= 'SELECT COUNT(DISTINCT m.id,m.descripcion,m.periodo)
+        FROM cursada        
+        JOIN materia as m ON m.id=cursada.materia_id
+        WHERE cursada.materia_id=:materia AND YEAR(fecha_inscripcion)=:anio';
+        
+        $totalCount = Yii::$app->db->createCommand($cant,[':materia' => $this->materia_id, ':anio'=>$this->anio])
         ->queryScalar();
 
         $sql='SELECT m.id,m.descripcion as materia, COUNT(*) as cant FROM cursada 
         JOIN materia as m ON m.id=cursada.materia_id
+        WHERE cursada.materia_id=:materia AND YEAR(fecha_inscripcion)=:anio
         GROUP BY m.periodo,m.id,m.descripcion';
         
 
@@ -61,39 +97,14 @@ class InscripcionCursadaSearch extends Cursada
 
         $dataProvider = new SqlDataProvider([
             'sql' => $sql,
+            'params' => [':materia' => $this->materia_id, ':anio'=>$this->anio],
             'totalCount' => $totalCount,
             'pagination' => [
                 'pageSize' => 20,
             ],
             //'sort'=> ['defaultOrder' => ['fecha_inscripcion' => SORT_DESC]],
-        ]);        
-        
+        ]);      
 
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        // grid filtering conditions
-        /*$query->andFilterWhere([
-            'id' => $this->id,
-            'fecha_inscripcion' => $this->fecha_inscripcion,
-            'fecha_cierre'=>$this->fecha_cierre,
-            'condicion_id' => $this->condicion_id,
-            'alumno_id' => $this->alumno_id,
-            'materia_id' => $this->materia_id,
-            'nota' => $this->nota,
-            'fecha_vencimiento' => $this->fecha_vencimiento,
-        ]);
-
-        $query->andFilterWhere(['=','materia.carrera_id',$this->carrera])
-              ->andFilterWhere(['=','YEAR(fecha_inscripcion)',$this->periodo])
-              ->orFilterWhere(['like', 'alumno.numero', $this->alumno])
-              ->orFilterWhere(['like', "concat_ws(' ',alumno.apellido,alumno.nombre)", $this->alumno]);/
-              */
         return $dataProvider;
     }
 }

@@ -22,7 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="box-body">
             <?= GridView::widget([
-                'dataProvider' => $dataProvider,               
+                'dataProvider' => $dataProvider,   
+                'showOnEmpty'=>false,            
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],                                  
                    

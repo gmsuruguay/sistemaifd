@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\models\Materia;
 use kartik\select2\Select2;
-use backend\models\Cursada;
+use backend\models\Condicion;
 use kartik\widgets\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model backend\models\search\ActaSearch */
@@ -24,12 +24,10 @@ use kartik\widgets\DatePicker;
                 ]); ?>    
                 
                 <div class="row">
-                    <div class="col-md-6">
-                    <?php                        
-                            echo $form->field($model, 'anio')->dropDownList(Cursada::getListaPeriodo());
-                    ?>
+                    <div class="col-md-4">
+                    <?= $form->field($model, 'alumno')->textInput(['placeholder'=>'Buscar por DNI o Apellido y Nombre']) ?>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <?= $form->field($model, 'materia_id')->widget(Select2::classname(), [
                 
                                                 'data' => Materia::getListaMaterias(),
@@ -41,8 +39,23 @@ use kartik\widgets\DatePicker;
                                                 ])
 
                             ?>
-                    </div>                  
-                 
+                    </div>                        
+                    
+                    <div class="col-md-4">
+                    <?= $form->field($model, 'condicion_id')->widget(Select2::classname(), [
+                                
+                                                                'data' => $model->getlistaCondicion(),
+                                                                'language' => 'es',
+                                                                'options' => ['placeholder' => 'Mostrar todos'],
+                                                                'pluginOptions' => [
+                                                                    'allowClear' => true
+                                                                ],
+                                                                ])
+
+                                            ?>
+                    </div>
+                   
+                    
                 </div>               
                  
                 <div class="form-group">

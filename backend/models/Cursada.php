@@ -23,6 +23,7 @@ use backend\models\Condicion;
  */
 class Cursada extends \yii\db\ActiveRecord
 {
+    public $anio;
     /**
      * @inheritdoc
      */
@@ -40,7 +41,7 @@ class Cursada extends \yii\db\ActiveRecord
             [['fecha_inscripcion', 'fecha_vencimiento','fecha_cierre'], 'safe'],
             //[['fecha_inscripcion', 'fecha_vencimiento','fecha_cierre'], 'date'],
             [['alumno_id', 'materia_id'], 'required'],
-            [['condicion_id', 'alumno_id', 'materia_id'], 'integer'],
+            [['anio','condicion_id', 'alumno_id', 'materia_id'], 'integer'],
             [['nota'], 'number'],
             [['alumno_id'], 'exist', 'skipOnError' => true, 'targetClass' => Alumno::className(), 'targetAttribute' => ['alumno_id' => 'id']],
             [['condicion_id'], 'exist', 'skipOnError' => true, 'targetClass' => Condicion::className(), 'targetAttribute' => ['condicion_id' => 'id']],
@@ -140,5 +141,12 @@ class Cursada extends \yii\db\ActiveRecord
     public function getPeriodoMateria()
     {
         return $this->materia ? $this->materia->periodo : null;
+    }
+
+    public static function getListaPeriodo()
+    {        
+        $sql= 'SELECT DISTINCT YEAR(fecha_inscripcion) AS anio FROM cursada ORDER BY anio DESC';
+        $query = self::findBySql($sql)->all();	
+        return ArrayHelper::map($query, 'anio', 'anio');
     }
 }

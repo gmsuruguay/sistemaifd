@@ -44,6 +44,8 @@ class CursadaController extends Controller
     public function actionIndex()
     {
         $searchModel = new InscripcionCursadaSearch();
+        $searchModel->anio= date('Y');
+        $searchModel->materia_id= null;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

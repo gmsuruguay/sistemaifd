@@ -91,9 +91,8 @@ AppAsset::register($this);
                 </div>
             </div>
         </div>        
-    <?php endif; ?>
+    <?php endif; ?>        
         
-        <?php// Alert::widget() ?>
         <?= $content ?>
     </main>
 

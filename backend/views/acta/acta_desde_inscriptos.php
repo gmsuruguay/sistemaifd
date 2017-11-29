@@ -35,7 +35,7 @@ $script = <<< JS
        data: $('#form-cabecera').serialize(),
        success: function(data) {   
             if(data == '0'){
-                console.log($('#form-cabecera').serialize());
+                swal("Información", "No se encontraron alumnos inscriptos en esta materia.", "info");
                 return false;
             }
             $('#pag_uno').hide();   

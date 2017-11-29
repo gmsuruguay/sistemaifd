@@ -48,8 +48,7 @@ use kartik\form\ActiveForm;
         
         <div class="box-body">
             <div class="pull-right">
-            <?php echo $dataProvider[0]->className() == 'backend\models\Acta'?Html::a('<i class="fa  fa-lock fa-lg"></i>', '', ['id' => 'btn-desbloquear','data-id'=>'1']).
-                                                                 Html::a('<i class="fa  fa-trash fa-lg"></i>', ['destroyed-notas'], ['id' => 'btn-eliminar']) :'';?>
+            <?php echo $dataProvider[0]->className() == 'backend\models\Acta'?Html::a('<i class="fa  fa-trash fa-lg"></i>', ['destroyed-notas'], ['id' => 'btn-eliminar']) :'';?>
             </div>  
             
             <?php $form = ActiveForm::begin([
@@ -84,22 +83,12 @@ use kartik\form\ActiveForm;
                             echo '<td>'.$i.'</td>';
                             echo '<td>'.$dp->alumno->apellido.'</td>';
                             echo '<td class="editable">'.$dp->alumno->numero.'</td>';
-                            if($dp->className() == 'backend\models\Acta')
-                            {
-                               echo '<td class="editable" >'.Html::input('text', 'nota[]', $dp->nota, ['class' => 'form-control txt-input',
+                           
+                                 echo '<td class="editable" >'.Html::input('text', 'nota[]', $dp->nota, ['class' => 'form-control txt-input',
                                                                                                        'maxlength'=> '4',
                                                                                                        'autocomplete'=>'off',
                                                                                                        'readonly'=>'readonly']).
                                 Html::hiddenInput('alumno_ids[]', $dp->alumno_id).'</td>';
-                            }
-                            else
-                            {
-                                echo '<td class="editable" >'.Html::input('text', 'nota[]', '', ['class' => 'form-control',
-                                                                                                 'maxlength'=> '4',
-                                                                                                 'autocomplete'=> 'off']).
-                                Html::hiddenInput('alumno_ids[]', $dp->alumno_id).'</td>';
-                            }
-                           
                             echo '</tr>';
                             $i++;
                         }
@@ -109,8 +98,7 @@ use kartik\form\ActiveForm;
             <?php ActiveForm::end(); ?>
         
             <div class="pull-right">
-                <?php echo $dp->className() != 'backend\models\Acta'? Html::a('GUARDAR', ['save-notas'], ['class' => 'btn btn-success btn-sm', 'id'=> 'btn-guardar-notas']):
-                                                                 Html::a('ACTUALIZAR', ['update-notas'], ['class' => 'btn btn-success btn-sm', 'id'=> 'btn-actualizar-notas']);?> 
+                <?php echo $dp->className() != 'backend\models\Acta'? Html::a('GUARDAR', ['save-notas-prom'], ['class' => 'btn btn-success btn-sm', 'id'=> 'btn-guardar-notas']):'';?> 
             </div>
         </div>
 </div>

@@ -7,6 +7,7 @@ use backend\models\Acta;
 use backend\models\Materia;
 use backend\models\Alumno;
 use backend\models\InscripcionExamen;
+use backend\models\Cursada;
 use backend\models\search\ActaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -281,6 +282,27 @@ class ActaController extends Controller
                 }
                 return '0';
             }
+            else
+            {
+                $query =  Acta::find()->where(['libro' => $model->libro, 
+                                                    'folio'=> $model->folio,
+                                                    'fecha_examen'=> FechaHelper::fechaYMD($model->fecha_examen),
+                                                    'condicion_id'=> $model->condicion_id,
+                                                    'materia_id'=> $model->materia_id])->all();
+                if(count($query)>0)
+                {
+                    return  $this->renderPartial('_form_acta_prom', ['model' => $model ,'dataProvider' => $query], true);
+                }
+                $query =  Cursada::find()->where(['fecha_cierre'=> FechaHelper::fechaYMD($model->fecha_examen),
+                                                'condicion_id'=> $model->condicion_id,
+                                                'materia_id'=> $model->materia_id])->all();
+
+                if(count($query)>0)
+                {
+                    return  $this->renderPartial('_form_acta_prom', ['model' => $model ,'dataProvider' => $query], true);
+                }
+                return '0';
+            }
             return '0';
 
         } else {
@@ -291,6 +313,16 @@ class ActaController extends Controller
     }
 
     public function actionSaveNotas()
+    {
+        return $this->saveNotas('_form_acta');
+    }
+
+    public function actionSaveNotasProm()
+    {
+        return $this->saveNotas('_form_acta_prom');
+    }
+
+    private function saveNotas($view)
     {
         $model = new Acta();
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) 
@@ -349,7 +381,7 @@ class ActaController extends Controller
                                                     'fecha_examen'=> $model->fecha_examen,
                                                     'condicion_id'=> $model->condicion_id,
                                                     'materia_id'=> $model->materia_id])->all();
-            return  $this->renderPartial('_form_acta', ['model' => $model ,'dataProvider' => $query], true);
+            return  $this->renderPartial($view, ['model' => $model ,'dataProvider' => $query], true);
         }
     }
 

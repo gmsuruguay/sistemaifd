@@ -12,7 +12,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use kartik\mpdf\Pdf;
 use common\models\FechaHelper;
-use yii\widgets\Pjax;
+//use yii\widgets\Pjax;
 /**
  * PedidoController implements the CRUD actions for Pedido model.
  */
@@ -21,7 +21,7 @@ class PedidoController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
+    /*public function behaviors()
     {
         return [
             'verbs' => [
@@ -31,30 +31,59 @@ class PedidoController extends Controller
                 ],
             ],
         ];
+    }*/
+
+    public function actionCargarFecha($carreraId, $impreso)
+    {
+        $fechas= Pedido::find()
+                            ->where(['carrera_id'=> $carreraId, 'estado'=> $impreso])
+                            ->groupBy(['fecha_pedido'])
+                            ->orderBy(['fecha_pedido'=>SORT_ASC])
+                            ->all();
+        echo '<option value="">---Selecciona fecha---</option>';
+        foreach ($fechas as $f)
+        {
+            echo '<option value="'.$f->fecha_pedido.'">'.FechaHelper::fechaDMY($f->fecha_pedido).'</option>';
+        }
     }
 
     /**
      * 
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($impreso = '0')
     {
-         if(Yii::$app->request->isPjax)
+         if(Yii::$app->request->isAjax)
         {
-            $constancias = new ActiveDataProvider([
-                'query' => Pedido::find()->where(['estado'=>'0','tipo'=> 'c', 'carrera_id'=>Yii::$app->request->post('carrera')]),
-            ]);
+            if(Yii::$app->request->post('fecha') == ''){
+                $constancias = new ActiveDataProvider([
+                    'query' => Pedido::find()->where(['estado'=>$impreso,'tipo'=> 'c', 'carrera_id'=>Yii::$app->request->post('carrera')]),
+                ]);
 
-            $analiticos = new ActiveDataProvider([
-                'query' => Pedido::find()->where(['estado'=>'0', 'tipo'=>'a', 'carrera_id'=>Yii::$app->request->post('carrera')]),
-            ]);
+                $analiticos = new ActiveDataProvider([
+                    'query' => Pedido::find()->where(['estado'=>$impreso, 'tipo'=>'a', 'carrera_id'=>Yii::$app->request->post('carrera')]),
+                ]);
+            }
+            else{
+                $constancias = new ActiveDataProvider([
+                    'query' => Pedido::find()->where(['estado'=>$impreso,'tipo'=> 'c', 'carrera_id'=>Yii::$app->request->post('carrera'), 'fecha_pedido'=>Yii::$app->request->post('fecha')]),
+                ]);
 
-            return $this->renderAjax('index', [
+                $analiticos = new ActiveDataProvider([
+                    'query' => Pedido::find()->where(['estado'=>$impreso, 'tipo'=>'a', 'carrera_id'=>Yii::$app->request->post('carrera'),'fecha_pedido'=>Yii::$app->request->post('fecha')]),
+                ]);
+            }
+           
+
+            return $this->renderPartial('_grid_views', [
                 'constancias' => $constancias,
                 'analiticos'=> $analiticos,
                 'carrera_id'=>Yii::$app->request->post('carrera'),
+                'fecha'=> Yii::$app->request->post('fecha'),
+                'impreso'=> $impreso,
             ]);  
         }
+        else{
         $constancias = new ActiveDataProvider([
             'query' => Pedido::find()->where(['estado'=>'0','tipo'=> 'm']),
         ]);
@@ -66,12 +95,14 @@ class PedidoController extends Controller
             'constancias' => $constancias,
             'analiticos'=> $analiticos,
             'carrera_id'=>'',
-        ]);
+            'fecha'=> '',
+            'impreso'=> $impreso,
+            ]);
+        }
     }
-
     
 
-    public function actionPrint($tipo, $carrera_id)
+    public function actionPrint($tipo, $carrera_id, $estado, $fecha)
     {
         $mes=FechaHelper::obtenerMes(date('Y-m-d'));
         $pdf = new Pdf([
@@ -87,10 +118,20 @@ class PedidoController extends Controller
 
         if($tipo == 'c')
         { 
-            $constancias = Pedido::find()->where(['estado'=>'0','tipo'=> 'c', 'carrera_id'=>$carrera_id])->all();
+            if($fecha=='')
+            {
+                $constancias = Pedido::find()->where(['estado'=>'0','tipo'=> 'c', 'carrera_id'=>$carrera_id, 'estado'=> $estado])->all();
+            }
+            else{
+                $constancias = Pedido::find()->where(['estado'=>'0','tipo'=> 'c', 'carrera_id'=>$carrera_id, 'estado'=> $estado, 'fecha_pedido'=>$fecha])->all();
+            }
             $length = count($constancias);
             $paginador = 1;
             foreach($constancias as $c) {
+                $model= Pedido::findOne($c->id);
+                $model->estado = '1';                
+                $model->save();               
+                        
                 if($c->cantidad > 1)
                 {
                     $length = $length + $c->cantidad  - 1;
@@ -131,13 +172,19 @@ class PedidoController extends Controller
                             $paginador++;
                     }        
                 }
-                        
+               
             }
             return $pdf->Output();
         }
         else
         {
-            $analiticos = Pedido::find()->where(['estado'=>'0', 'tipo'=>'a','carrera_id'=>$carrera_id])->all();
+            if($fecha=='')
+            {
+                $analiticos = Pedido::find()->where(['estado'=>'0', 'tipo'=>'a','carrera_id'=>$carrera_id, 'estado'=> $estado])->all();
+            }
+            else{
+                $analiticos = Pedido::find()->where(['estado'=>'0', 'tipo'=>'a','carrera_id'=>$carrera_id, 'estado'=> $estado, 'fecha_pedido'=>$fecha])->all();
+            }
             $length = count($analiticos);
             $paginador = 1;
             foreach($analiticos as $a) {
@@ -180,7 +227,9 @@ class PedidoController extends Controller
                 { 
                     $pdf->AddPage();
                     $paginador++;
-                }                
+                }  
+                $a->estado = '1';
+                $a->save();              
             }
             return $pdf->Output();
         }

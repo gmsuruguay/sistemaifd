@@ -31,7 +31,7 @@ class Pedido extends \yii\db\ActiveRecord
         return [
             [['alumno_id', 'carrera_id','cantidad', 'tipo'], 'required'],
             [['alumno_id', 'carrera_id'], 'integer'],
-            ['cantidad','integer','min'=>1,'max'=>2],
+            ['cantidad','integer','min'=>1,'max'=>10],
             [['fecha_pedido'], 'safe'],
             [['estado'], 'boolean'],
             [['tipo'], 'string', 'max' => 1],

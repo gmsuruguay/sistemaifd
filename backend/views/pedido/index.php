@@ -10,15 +10,14 @@ use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$carreras = Carrera::find()->all();
 
-$this->title = 'Pedidos';
+$this->title = 'Lista de solicitudes de Certificados';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pedido-index">
     <div class="box">
         <div class="box-header with-border">            
-            <h3 class="box-title"> <?= ($impreso=='0')?'Pedidos de certificados de Alumnos':'Reimpresión de certificados de Alumnos'?></h3>            
+            <h3 class="box-title"> <?= ($impreso=='0')?'Certificados de Alumnos':'Reimpresión de Certificados de Alumnos'?></h3>            
         </div>
         <div class='box-body'>
 
@@ -26,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php $form = ActiveForm::begin(['id'=>'formulario', 'options' => ['data-pjax' => false ]]); ?>
                     <div class='row'>
                         <div class='col-sm-6 col-md-6'>
-                            <?= Html::dropDownList('carrera', $carrera_id,ArrayHelper::map($carreras, 'id', 'descripcion'), ['class'=> 'form-control','prompt'=>'--Seleccionar Carrera--', 'onchange' => '$.get("'.Url::toRoute('pedido/cargar-fecha').'",{carreraId: $(this).val(), impreso:'.$impreso.'})
+                            <?= Html::dropDownList('carrera', $carrera_id,Carrera::getListaCarreras(), ['class'=> 'form-control','prompt'=>'--Seleccionar Carrera--', 'onchange' => '$.get("'.Url::toRoute('pedido/cargar-fecha').'",{carreraId: $(this).val(), impreso:'.$impreso.'})
                                                                     .done(function(data)
                                                                     {
                                                                         $("select#fecha").html(data);

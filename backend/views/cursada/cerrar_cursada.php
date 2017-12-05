@@ -10,7 +10,6 @@ use kartik\form\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Acta */
-$carreras = Carrera::find()->all();
 
 $this->title = 'Registrar Cierre de Cursada';
 $this->params['breadcrumbs'][] = ['label' => 'Cursada', 'url' => ['index']];
@@ -27,7 +26,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Cursada', 'url' => ['index']];
                 <?php $form = ActiveForm::begin(['action'=>['cerrar-cursada'],'id'=>'form-carreras', 'options' => ['data-pjax' => true ]]); ?>
                     <div class='row'>
                         <div class='col-sm-8 col-md-10'>
-                            <?= Html::dropDownList('carrera', $carrera_id,ArrayHelper::map($carreras, 'id', 'descripcion'), ['class'=> 'form-control','prompt'=>'--Seleccionar Carrera--',]) ?>
+                            <?= Html::dropDownList('carrera', $carrera_id,Carrera::getListaCarreras(), ['class'=> 'form-control','prompt'=>'--Seleccionar Carrera--',]) ?>
                         </div>
                         <div class='col-sm-4 col-md-2'>
                             <?= Html::submitButton('ACEPTAR', ['class' => 'btn  btn-primary']) ?>

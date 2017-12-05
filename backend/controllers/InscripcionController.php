@@ -38,6 +38,7 @@ class InscripcionController extends Controller
     public function actionIndex()
     {
         $searchModel = new InscripcionSearch();
+        
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -53,8 +54,11 @@ class InscripcionController extends Controller
      */
     public function actionView($id)
     {
+        $model=$this->findModel($id);
+        $alumno= $this->findModelAlumno($model->alumno_id);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'alumno'=> $alumno,
         ]);
     }
 
@@ -69,7 +73,8 @@ class InscripcionController extends Controller
          if ($model->load(Yii::$app->request->post()) ) {
              $model->alumno_id= $id;
              if($model->save()){
-                return $this->redirect(['/alumno/view', 'id' => $id]);
+                Yii::$app->session->setFlash('success', "Su inscripción se realizo correctamente");
+                return $this->redirect(['view', 'id' => $model->id]);
              }
             
          } else {
@@ -90,6 +95,7 @@ class InscripcionController extends Controller
         $model = new Inscripcion();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "Su inscripción se realizo correctamente");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -116,6 +122,8 @@ class InscripcionController extends Controller
             ]);
         }
     }
+    
+
 
     /**
      * Deletes an existing Inscripcion model.

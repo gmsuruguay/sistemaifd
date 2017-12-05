@@ -61,6 +61,8 @@ class Docente extends \yii\db\ActiveRecord
             ['email', 'unique', 'message' => 'Este email ya existe.'],
             [['localidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['localidad_id' => 'id']],
             [['lugar_nacimiento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['lugar_nacimiento_id' => 'id']],
+            [['sede_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sede::className(), 'targetAttribute' => ['sede_id' => 'id']],
+            
         ];
     }
 
@@ -90,7 +92,7 @@ class Docente extends \yii\db\ActiveRecord
             'email' => 'Email',
             'fecha_baja' => 'Fecha Baja',
             'user_id' => 'User',
-            'ubicacion_legajo'=>'Lugar de Residencia de Legajo',
+            'sede_id'=>'Lugar de Residencia de Legajo',
         ];
     }
 
@@ -125,6 +127,14 @@ class Docente extends \yii\db\ActiveRecord
     {
         return $this->hasMany(TituloDocente::className(), ['docente_id' => 'id']);
     }
+
+    /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+    public function getSede() 
+    { 
+        return $this->hasOne(Sede::className(), ['id' => 'sede_id']);
+    } 
 
     /**
     * Formatear fechas antes de insertar en base de datos

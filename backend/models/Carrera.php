@@ -99,7 +99,18 @@ class Carrera extends \yii\db\ActiveRecord
     }
 
     public static function getListaCarreras()
-    {        
+    {
+        if(Yii::$app->user->identity->role=='PRECEPTOR'){
+            
+            $session = Yii::$app->session;
+            $sede_id = $session->get('sede');
+
+            $sql = self::find()            
+            ->where(['=', 'sede_id', $sede_id])
+            ->orderBy('descripcion')->all();
+            return ArrayHelper::map($sql, 'id', 'descripcion');
+        }
+
         $sql = self::find()->orderBy('descripcion')->all();
         return ArrayHelper::map($sql, 'id', 'descripcion');
     }

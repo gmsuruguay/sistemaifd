@@ -74,6 +74,8 @@ return [
             'gii/*',//Permitir solo en desarrollo.                 
             'site/logout',
             'site/change-password',
+            'site/request-password-reset',
+            'site/reset-password',  
             'admin/user/request-password-reset',            
             'admin/user/reset-password',                   
 

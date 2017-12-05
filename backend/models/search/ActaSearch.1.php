@@ -5,23 +5,24 @@ namespace backend\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Inscripcion;
+use backend\models\Acta;
 
 /**
- * InscripcionSearch represents the model behind the search form about `backend\models\Inscripcion`.
+ * ActaSearch represents the model behind the search form about `backend\models\Acta`.
  */
-class InscripcionSearch extends Inscripcion
+class ActaSearch extends Acta
 {
     public $alumno;
-    public $sede;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'alumno_id', 'carrera_id', 'nro_libreta','sede'], 'integer'],
-            [['fecha', 'observacion','alumno','nro_legajo'], 'safe'],
+            [['id', 'libro', 'folio', 'condicion_id', 'alumno_id', 'materia_id', 'nro_permiso'], 'integer'],
+            [['nota'], 'number'],
+            [['asistencia'], 'boolean'],
+            [['fecha_examen', 'resolucion','alumno'], 'safe'],
         ];
     }
 
@@ -43,11 +44,10 @@ class InscripcionSearch extends Inscripcion
      */
     public function search($params)
     {
-        $query = Inscripcion::find()->orderBy(['id' => SORT_DESC]);
+        $query = Acta::find();
 
         // add conditions that should always apply here
-        $query->joinWith(['alumno','carrera']);
-        
+        $query->joinWith(['alumno']);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -70,25 +70,20 @@ class InscripcionSearch extends Inscripcion
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'nro_legajo' => $this->nro_legajo,
+            'libro' => $this->libro,
+            'folio' => $this->folio,
+            'nota' => $this->nota,
+            'asistencia' => $this->asistencia,
+            'condicion_id' => $this->condicion_id,
             'alumno_id' => $this->alumno_id,
-            'carrera_id' => $this->carrera_id,
-            'nro_libreta' => $this->nro_libreta,
-            'fecha' => $this->fecha,
-            //'carrera.sede_id' => 1,
+            'materia_id' => $this->materia_id,
+            'fecha_examen' => $this->fecha_examen,
+            'nro_permiso' => $this->nro_permiso,
         ]);
 
-        $query->orFilterWhere(['like', 'alumno.numero', $this->alumno])
+        $query->andFilterWhere(['like', 'resolucion', $this->resolucion])
+              ->orFilterWhere(['like', 'alumno.numero', $this->alumno])
               ->orFilterWhere(['like', "concat_ws(' ',alumno.apellido,alumno.nombre)", $this->alumno]);
-
-        if(Yii::$app->user->identity->role=='PRECEPTOR'){
-            
-        $session = Yii::$app->session;
-        $sede_id = $session->get('sede');
-        $query->andFilterWhere(['=', 'carrera.sede_id', $sede_id]);
-        
-        }
-              
 
         return $dataProvider;
     }

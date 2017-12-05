@@ -11,7 +11,7 @@ use backend\models\Alumno;
  * AlumnoSearch represents the model behind the search form about `backend\models\Alumno`.
  */
 class AlumnoSearch extends Alumno
-{
+{    
     /**
      * @inheritdoc
      */
@@ -44,7 +44,7 @@ class AlumnoSearch extends Alumno
         $query = Alumno::find();
 
         // add conditions that should always apply here
-
+       
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -67,19 +67,10 @@ class AlumnoSearch extends Alumno
             'user_id' => $this->user_id,
         ]);
 
-        $query->andFilterWhere(['like', 'tipo_doc', $this->tipo_doc])
-            ->andFilterWhere(['like', 'numero', $this->numero])
-            ->andFilterWhere(['like', 'cuil', $this->cuil])
+        $query->andFilterWhere(['like', 'numero', $this->numero])            
             ->andFilterWhere(['like', 'apellido', $this->apellido])
-            ->andFilterWhere(['like', 'nombre', $this->nombre])
-            ->andFilterWhere(['like', 'sexo', $this->sexo])
-            ->andFilterWhere(['like', 'estado_civil', $this->estado_civil])
-            ->andFilterWhere(['like', 'nacionalidad', $this->nacionalidad])
-            ->andFilterWhere(['like', 'domicilio', $this->domicilio])
-            ->andFilterWhere(['like', 'nro', $this->nro])
-            ->andFilterWhere(['like', 'telefono', $this->telefono])
-            ->andFilterWhere(['like', 'celular', $this->celular])
-            ->andFilterWhere(['like', 'email', $this->email]);
+            ->andFilterWhere(['like', 'nombre', $this->nombre]);
+          
 
         return $dataProvider;
     }

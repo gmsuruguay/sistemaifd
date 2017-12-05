@@ -32,7 +32,7 @@ use backend\models\TipoUsuario;
                                     <?= $form->field($model, 'password',[
                                         'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-lock"></i>']]
                                     ])->passwordInput(['placeholder'=>"Contraseña"])->label('* Password') ?>
-                                    <p class="help-block">La contraseña debe contener como minimo 6 letras</p>
+                                    <p class="help-block">La contraseña debe contener como minimo 8 caracteres, puede utilizar letras y numeros</p>
                                 </div>
                             </div>
 

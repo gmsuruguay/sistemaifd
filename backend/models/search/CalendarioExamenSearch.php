@@ -44,6 +44,7 @@ class CalendarioExamenSearch extends CalendarioExamen
         $query = CalendarioExamen::find();
 
         // add conditions that should always apply here
+        $query->joinWith(['carrera']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -69,6 +70,14 @@ class CalendarioExamenSearch extends CalendarioExamen
 
         $query->andFilterWhere(['like', 'hora', $this->hora])
             ->andFilterWhere(['like', 'aula', $this->aula]);
+
+        if(Yii::$app->user->identity->role=='PRECEPTOR'){
+            
+            $session = Yii::$app->session;
+            $sede_id = $session->get('sede');
+            $query->andFilterWhere(['=', 'carrera.sede_id', $sede_id]);
+        
+        }
 
         return $dataProvider;
     }

@@ -30,8 +30,7 @@ use yii\helpers\Url;
                                             'clientOptions' => ['alias' =>  'date']
                 ])->textInput(['value'=>date('d/m/Y')]) ?>
             <?= $form->field($model, 'nro_legajo')->textInput(['maxlength' => true]) ?>
-            <label class="control-label" for"inscripcion-alumno_id"><?=Html::button('Alumno', ['value'=>Url::to(['alumno/nuevo']),'class' => 'btn-link btnmodal'])?></label>
-            <?php Pjax::begin(['id'=>'select-alumno']); ?>
+            
             <?= $form->field($model, 'alumno_id')->widget(Select2::classname(), [                                            
                                                     'data' => Alumno::getListaAlumnos(),
                                                     'language' => 'es',
@@ -39,8 +38,8 @@ use yii\helpers\Url;
                                                     'pluginOptions' => [
                                                         'allowClear' => true
                                                     ],
-                                                    ])->label(false) ?>
-            <?php Pjax::end(); ?>
+                                                    ]) ?>
+           
             <?= $form->field($model, 'carrera_id')->widget(Select2::classname(), [                                            
                                                     'data' => Carrera::getListaCarreras(),
                                                     'language' => 'es',
@@ -85,35 +84,3 @@ use yii\helpers\Url;
 
 </div>
 
-<?php 
-      Modal::begin([
-        'header' => '<h3 class="text-center modal-title"><i class="fa fa-user"></i> Nuevo Alumno</h3>',
-        'class'=>'modal',
-        'size'=>'modal-lg', 
-        'clientOptions' => ['backdrop' => 'static'],  
-         ]);
-
-        echo "<div class='modalContent'></div>";
-        
-      Modal::end();      
-
-?>
-
-<?php
- $script = <<< JS
- 
- $('.btnmodal').click(function(){
-	$('.modal').modal('show')
-	.find('.modalContent')
-	.load($(this).attr('value'));
-});
-
- $('body').on('beforeSubmit','form#alumno' , function(e){             
-        ajax($(this),refrescarSelect);
-        return false;
-    });         
-   
-    
-JS;
-$this->registerJs($script);
-?>

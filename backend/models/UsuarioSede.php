@@ -55,6 +55,6 @@ class UsuarioSede extends \yii\db\ActiveRecord
     public function getSede() 
     { 
          return $this->hasOne(Sede::className(), ['id' => 'sede_id']);
-    }
+    }   
 
 }

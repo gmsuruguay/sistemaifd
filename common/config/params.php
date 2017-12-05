@@ -1,7 +1,7 @@
 <?php
 return [
-     'adminEmail' => 'mcperico.soporte@gmail.com',
-     'supportEmail' => 'mcperico.soporte@gmail.com',
-     'user.passwordResetTokenExpire'=> 3600,
-     'title' => 'Sistema de Rentas Municipal',  
+    'adminEmail' => 'tic.studioweb@gmail.com',
+    'supportEmail' => 'tic.studioweb@gmail.com',
+    'title' => 'SURI',
+    'user.passwordResetTokenExpire' => '3600',
 ];

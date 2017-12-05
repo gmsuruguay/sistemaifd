@@ -11,7 +11,7 @@ use common\models\User;
 class ResetPasswordForm extends Model
 {
     public $password;
-
+    public $password_repeat;
     /**
      * @var \common\models\User
      */
@@ -43,8 +43,18 @@ class ResetPasswordForm extends Model
     public function rules()
     {
         return [
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+           ['password', 'string', 'min' => 8],
+           [['password','password_repeat'], 'required'],
+           ['password', 'match', 'pattern' => "/^.{8,16}$/", 'message' => 'Mínimo 8 y máximo 16 caracteres'], 
+           ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message'=>'Las contraseñas no coinciden'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'password' => 'Contraseña nueva',           
+            'password_repeat' => 'Confirmar contraseña',
         ];
     }
 

@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Alumno;
 use backend\models\search\AlumnoSearch;
+use backend\models\search\AlumnoInscriptoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -66,6 +67,21 @@ class AlumnoController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    /*public function actionIndex()
+    {
+        $searchModel = new AlumnoInscriptoSearch();
+        $searchModel->numero='32107892';
+        $searchModel->apellido='CRUZ';
+        $searchModel->nombre='NATALIA';
+        $searchModel->sede=2;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }*/
 
     /**
      * Displays a single Alumno model.
@@ -179,12 +195,25 @@ class AlumnoController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    /*public function actionCreate()
     {
         $model = new Alumno();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }*/
+
+    public function actionCreate()
+    {
+        $model = new Alumno();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['/inscripcion/nuevo', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -222,6 +251,19 @@ class AlumnoController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionUpdateAlumno($id,$cod)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['/inscripcion/view', 'id' => $cod]);
         } else {
             return $this->render('update', [
                 'model' => $model,

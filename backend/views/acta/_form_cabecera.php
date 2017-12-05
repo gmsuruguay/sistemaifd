@@ -14,8 +14,7 @@ use yii\widgets\MaskedInput;
 /* @var $this yii\web\View */
 /* @var $model app\models\ActaExamen */
 /* @var $form yii\widgets\ActiveForm */
-$carreras = Carrera::find()->all();
-$condicion = Condicion::find()->all();
+
 ?>
 
 <div class="acta-form">
@@ -52,7 +51,7 @@ $condicion = Condicion::find()->all();
                 <?= Html::label('Carreras') ?>
                 <?= Html::dropDownList('carrera', 
                                                 $model->isNewRecord ? '': $model->materia->carrera->id,  
-                                                ArrayHelper::map($carreras, 'id', 'descripcion'),
+                                                Carrera::getListaCarreras(),
                                                 [
                                                     'prompt'=>'-------------',
                                                     'class'=> 'form-control',

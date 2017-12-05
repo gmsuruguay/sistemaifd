@@ -21,3 +21,9 @@
     transform: translate(-50%, -50%);
     font-size: 25px;
 }
+.app-info {
+    padding: 5px 5px 5px 15px;
+    line-height: 1;   
+    left: 55px;
+    color:white;
+}

@@ -45,7 +45,7 @@ $condicion = Condicion::find()->all();
             <?= Html::label('Carreras') ?>
             <?= Html::dropDownList('carrera', 
                                             $model->isNewRecord ? '': $model->materia->carrera->id,  
-                                            ArrayHelper::map($carreras, 'id', 'descripcion'),
+                                            Carrera::getListaCarreras(),
                                             [
                                                 'prompt'=>'-------------',
                                                 'class'=> 'form-control',

@@ -70,7 +70,7 @@ class User extends ActiveRecord implements IdentityInterface
 
             [['username','email','password','role'], 'required', 'on'=>'create'],
             [['email'], 'required', 'on'=>'update'],
-            ['password', 'match', 'pattern' => "/^.{8,16}$/", 'message' => 'Mínimo 6 y máximo 16 caracteres'], 
+            ['password', 'match', 'pattern' => "/^.{8,16}$/", 'message' => 'Mínimo 8 y máximo 16 caracteres'], 
             //[['tipo_usuario_id'], 'required'],
             //[['tipo_usuario_id'], 'integer'],
             //[['tipo_usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => TipoUsuario::className(), 'targetAttribute' => ['tipo_usuario_id' => 'id']],

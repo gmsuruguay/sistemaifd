@@ -179,6 +179,20 @@ class Materia extends \yii\db\ActiveRecord
 
     public static function getListaMaterias()
     {        
+        //
+        
+        if(Yii::$app->user->identity->role=='PRECEPTOR'){
+            
+            $session = Yii::$app->session;
+            $sede_id = $session->get('sede');
+
+            $sql = self::find()
+            ->joinWith(['carrera'])
+            ->where(['=', 'sede_id', $sede_id])
+            ->orderBy('materia.descripcion')->all();
+            return ArrayHelper::map($sql, 'id', 'descripcion');
+        }
+        
         $sql = self::find()->orderBy('descripcion')->all();
         return ArrayHelper::map($sql, 'id', 'descripcion');
     }

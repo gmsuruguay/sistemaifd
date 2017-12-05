@@ -44,51 +44,59 @@ class InscripcionCursadaSearch extends Cursada
     public function search($params)
     {
         $this->load($params);
+        
+        $session = Yii::$app->session;
+        $sede_id = $session->get('sede');
 
         if( is_null($this->materia_id) || empty($this->materia_id) ) {
 
-            $cant= 'SELECT COUNT(DISTINCT m.id,m.descripcion,m.periodo)
-            FROM cursada        
-            JOIN materia as m ON m.id=cursada.materia_id
-            WHERE YEAR(fecha_inscripcion)=:anio';
+                $cant= 'SELECT COUNT(DISTINCT m.id,m.descripcion,m.periodo)
+                FROM cursada        
+                JOIN materia as m ON m.id=cursada.materia_id
+                JOIN carrera as c ON c.id=m.carrera_id
+                WHERE YEAR(fecha_inscripcion)=:anio AND sede_id=:sede';                
+                
+                $totalCount = Yii::$app->db->createCommand($cant,[':anio'=>$this->anio, ':sede'=>$sede_id])
+                ->queryScalar();
+        
+                $sql='SELECT m.id,YEAR(fecha_inscripcion) as anio,m.descripcion as materia, COUNT(*) as cant FROM cursada 
+                JOIN materia as m ON m.id=cursada.materia_id
+                JOIN carrera as c ON c.id=m.carrera_id
+                WHERE YEAR(fecha_inscripcion)=:anio  AND sede_id=:sede
+                GROUP BY m.periodo,YEAR(fecha_inscripcion),m.id,m.descripcion';
+                
+        
+                // add conditions that should always apply here
             
-            $totalCount = Yii::$app->db->createCommand($cant,[':anio'=>$this->anio])
-            ->queryScalar();
-    
-            $sql='SELECT m.id,YEAR(fecha_inscripcion) as anio,m.descripcion as materia, COUNT(*) as cant FROM cursada 
-            JOIN materia as m ON m.id=cursada.materia_id
-            WHERE YEAR(fecha_inscripcion)=:anio
-            GROUP BY m.periodo,YEAR(fecha_inscripcion),m.id,m.descripcion';
-            
-    
-            // add conditions that should always apply here
-           
-    
-            $dataProvider = new SqlDataProvider([
-                'sql' => $sql,
-                'params' => [':anio'=>$this->anio],
-                'totalCount' => $totalCount,
-                'pagination' => [
-                    'pageSize' => 20,
-                ],
-                //'sort'=> ['defaultOrder' => ['fecha_inscripcion' => SORT_DESC]],
-            ]);        
-            
-            return $dataProvider;
+        
+                $dataProvider = new SqlDataProvider([
+                    'sql' => $sql,
+                    'params' => [':anio'=>$this->anio, ':sede'=>$sede_id],
+                    'totalCount' => $totalCount,
+                    'pagination' => [
+                        'pageSize' => 20,
+                    ],
+                    //'sort'=> ['defaultOrder' => ['fecha_inscripcion' => SORT_DESC]],
+                ]);              
+                
+                return $dataProvider;            
+        
         }        
         
 
         $cant= 'SELECT COUNT(DISTINCT m.id,m.descripcion,m.periodo)
         FROM cursada        
         JOIN materia as m ON m.id=cursada.materia_id
-        WHERE cursada.materia_id=:materia AND YEAR(fecha_inscripcion)=:anio';
+        JOIN carrera as c ON c.id=m.carrera_id
+        WHERE cursada.materia_id=:materia AND YEAR(fecha_inscripcion)=:anio AND sede_id=:sede';
         
-        $totalCount = Yii::$app->db->createCommand($cant,[':materia' => $this->materia_id, ':anio'=>$this->anio])
+        $totalCount = Yii::$app->db->createCommand($cant,[':materia' => $this->materia_id, ':anio'=>$this->anio, ':sede'=>$sede_id])
         ->queryScalar();
 
         $sql='SELECT m.id,YEAR(fecha_inscripcion) as anio,m.descripcion as materia, COUNT(*) as cant FROM cursada 
         JOIN materia as m ON m.id=cursada.materia_id
-        WHERE cursada.materia_id=:materia AND YEAR(fecha_inscripcion)=:anio
+        JOIN carrera as c ON c.id=m.carrera_id
+        WHERE cursada.materia_id=:materia AND YEAR(fecha_inscripcion)=:anio AND sede_id=:sede
         GROUP BY m.periodo,YEAR(fecha_inscripcion),m.id,m.descripcion';
         
 
@@ -97,7 +105,7 @@ class InscripcionCursadaSearch extends Cursada
 
         $dataProvider = new SqlDataProvider([
             'sql' => $sql,
-            'params' => [':materia' => $this->materia_id, ':anio'=>$this->anio],
+            'params' => [':materia' => $this->materia_id, ':anio'=>$this->anio, ':sede'=>$sede_id],
             'totalCount' => $totalCount,
             'pagination' => [
                 'pageSize' => 20,

@@ -33,18 +33,30 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <div class="box-body">  
-            <?= DetailView::widget([
-            'model' => $model,
-            'attributes' => [               
-               
-                'duracion',
-                'cohorte',
-                [
-                'label'=>'Sede',
-                'value'=>$model->descripcionSede,
-                ],
-            ],
-            ]) ?>     
+            <table class="table" style="width:100%">
+                <tr>
+                    <th>Duración en años</th>
+                    <td><?=$model->duracion ?></td>
+                    <th>Cohorte</th>
+                    <td><?=$model->cohorte ?></td>
+                    <th>Validez Nacional</th>
+                    <td><?=$model->validez_nacional ?></td>
+                </tr>
+                <tr>
+                    <th>Cantidad Materias</th>
+                    <td><?=$model->cantidad_materias ?></td>
+                    <th>Cantidad Horas</th>
+                    <td><?=$model->cantidad_horas ?></td>
+                    <th>Nro. Resolución</th>
+                    <td><?=$model->nro_resolucion ?></td>
+                </tr>
+                <tr>
+                    <th>Sede</th>
+                    <td colspan="5"><?=$model->descripcionSede ?></td>
+                </tr>            
+            </table>
+
+            
         </div>
     </div> 
 

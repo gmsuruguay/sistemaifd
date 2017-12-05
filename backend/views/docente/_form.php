@@ -9,6 +9,7 @@ use backend\models\Titulo;
 use yii\widgets\Pjax;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use backend\models\Sede;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Docente */
 /* @var $form yii\widgets\ActiveForm */
@@ -148,13 +149,8 @@ use yii\helpers\Url;
                                             ])->textInput(['placeholder'=>"Correo electrónico"])?>
             </div>
          </div>       
-         <?php
-         $lista=[
-            'EL CARMEN'=>'EL CARMEN',
-            'MONTERRICO'=>'MONTERRICO',
-            'PERICO'=>'PERICO',                       
-        ]; ?>
-         <?= $form->field($model, 'ubicacion_legajo')->dropDownList($lista,['prompt'=>'Seleccione el lugar de residencia del legajo']); ?>
+               
+         <?= $form->field($model, 'sede_id')->dropDownList(Sede::getListaSedes(),['prompt'=>'Seleccione el lugar de residencia del legajo']); ?>
         </div>                              
         <div class="box-footer">
                 <?= Html::submitButton( '<i class="fa fa-save"> </i> Guardar', ['class' => 'btn btn-success', 'name' => 'signup-button']) ?>

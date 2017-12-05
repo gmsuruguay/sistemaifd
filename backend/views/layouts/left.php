@@ -1,7 +1,23 @@
+<?php
+use  yii\web\Session;
+use backend\models\Sede;
+?>
 <aside class="main-sidebar">
 
     <section class="sidebar">      
-        
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            
+            <div class="app-info text-center">
+                <p><b><?php
+                 if(Yii::$app->user->identity->role=='PRECEPTOR'){
+                 $session = Yii::$app->session;
+                 $sede_id = $session->get('sede');
+                 echo Sede::getNombre($sede_id);
+                 }
+                ?></b></p>              
+            </div>
+        </div>
 
         <?= dmstr\widgets\Menu::widget(
             [
@@ -12,22 +28,14 @@
                     ['label' => 'Inicio', 'icon' => 'fa fa-home', 'url' => ['/site']],  
                     ['label' => 'Carreras', 'icon' => 'fa fa-certificate', 'url' => ['/carrera']],                   
                     //['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest], 
-                    [
-                        'label' => 'Inscripciones a Carrera',
-                        'icon' => 'fa fa-pencil-square-o',
-                        'url' => '#',
-                        'items' => [                            
-                            ['label' => 'Listar', 'icon' => 'fa fa-list', 'url' => ['/inscripcion'],],
-                           
-                        ],
-                    ],
+                    
                     [
                         'label' => 'Alumnos',
                         'icon' => 'fa fa-graduation-cap',
                         'url' => '#',
-                        'items' => [                            
-                            ['label' => 'Listar Alumnos', 'icon' => 'fa fa-list', 'url' => ['/alumno'],],
-                            ['label' => 'Agregar Alumno', 'icon' => 'fa fa-plus', 'url' => ['/alumno/create'],],   
+                        'items' => [         
+                            ['label' => 'Listar Alumnos Inscriptos', 'icon' => 'fa fa-user', 'url' => ['/inscripcion'],],                   
+                            ['label' => 'Administrar Alumnos', 'icon' => 'fa fa-users', 'url' => ['/alumno'],],                             
                             ['label' => 'Listar Titulos', 'icon' => 'fa fa-vcard-o', 'url' => ['/titulo-secundario'],],    
                             ['label' => 'Listar Colegios Secundarios', 'icon' => 'fa fa-university', 'url' => ['/colegio-secundario'],],                             
                         ],

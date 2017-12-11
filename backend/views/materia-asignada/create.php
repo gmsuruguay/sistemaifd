@@ -44,9 +44,18 @@ $this->params['breadcrumbs'][] = 'Asignar Materias';
                         return $data->descripcionMateria;
                     }
                     ],
-                    'fecha_alta',
-                    'fecha_baja',
-
+                    [
+                    'label'=> 'Fecha Alta',
+                    'value'=> function ($data){
+                        return date('d/m/Y',strtotime($data->fecha_alta));
+                    }
+                    ],
+                    [
+                    'label'=> 'Fecha Baja',
+                    'value'=> function ($data){
+                        return ($data->fecha_baja=='')?'------':date('d/m/Y',strtotime($data->fecha_baja));
+                    }
+                    ],
                     ['class' => 'yii\grid\ActionColumn', 'template' => '{update}{delete}'],
                 ],
             ]); ?>

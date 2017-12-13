@@ -11,7 +11,7 @@ $this->title = 'Materias';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="materia-index">
-
+<?=$this->render('_search', ['model' => $searchModel])?>
 <div class="box">
 
         <div class="box-header">
@@ -20,16 +20,30 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="box-body">               
             <?php Pjax::begin(); ?>    <?= GridView::widget([
-                    'dataProvider' => $dataProvider,
-                    'filterModel' => $searchModel,
+                    'dataProvider' => $dataProvider,                    
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
 
                         'id',
                         'descripcion',
-                        'carrera_id',
-                        'anio',
-                        'estado:boolean',
+                        [
+                        'attribute'=>'carrera_id',
+                        'value'=>function($data){
+                            return $data->descripcionCarrera;
+                        }
+                        ],
+                        [
+                        'attribute'=>'anio',
+                        'value'=>function($data){
+                            return $data->anioMateria;
+                        }
+                        ],
+                        [
+                        'attribute'=>'estado',
+                        'value'=>function($data){
+                            return $data->estadoMateria;
+                        }
+                        ],
 
                         ['class' => 'yii\grid\ActionColumn'],
                     ],

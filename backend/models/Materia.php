@@ -57,7 +57,7 @@ class Materia extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'descripcion' => 'Descripcion',
-            'carrera_id' => 'Carrera ID',
+            'carrera_id' => 'Carrera',
             'anio' => 'Año',
             'periodo' => 'Periodo',
             'estado' => 'Estado',
@@ -266,5 +266,13 @@ class Materia extends \yii\db\ActiveRecord
                                    ->count();
         return ($countUno == $countDos && $countUno > 0)? true:false;
     } 
+
+    public function getEstadoMateria()
+    {      
+        if($this->estado==1){
+            return 'ASIGNADA';
+        }
+        return 'DISPONIBLE';
+    }
     
 }

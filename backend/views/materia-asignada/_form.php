@@ -10,7 +10,7 @@ use yii\widgets\MaskedInput;
 /* @var $this yii\web\View */
 /* @var $model backend\models\MateriaAsignada */
 /* @var $form yii\widgets\ActiveForm */
-$carreras = Carrera::find()->all();
+//$carreras = Carrera::find()->all();
 //$idCarrera= $model->materia->carrera->id;
 ?>
 

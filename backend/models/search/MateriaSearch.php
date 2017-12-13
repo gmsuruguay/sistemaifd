@@ -45,7 +45,7 @@ class MateriaSearch extends Materia
         $query = Materia::find();
 
         // add conditions that should always apply here
-
+        $query->joinWith(['carrera']);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort'=> ['defaultOrder' => ['anio' => SORT_ASC]],
@@ -69,6 +69,14 @@ class MateriaSearch extends Materia
         $query->andFilterWhere(['like', 'descripcion', $this->descripcion])
             ->andFilterWhere(['like', 'periodo', $this->periodo])
             ->andFilterWhere(['like', 'anio', $this->anio]);
+
+        if(Yii::$app->user->identity->role=='PRECEPTOR'){
+            
+        $session = Yii::$app->session;
+        $sede_id = $session->get('sede');
+        $query->andFilterWhere(['=', 'carrera.sede_id', $sede_id]);
+        
+        }
 
         return $dataProvider;
     }

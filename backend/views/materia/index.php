@@ -12,25 +12,29 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="materia-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<div class="box">
 
-    <p>
-        <?= Html::a('Create Materia', ['nuevo'], ['class' => 'btn btn-success']) ?>
-    </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+        <div class="box-header">
+            <h3 class="box-title">Listado de Materias</h3>
+        </div>
 
-            'id',
-            'descripcion',
-            'carrera_id',
-            'anio',
-            'estado:boolean',
+        <div class="box-body">               
+            <?php Pjax::begin(); ?>    <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-<?php Pjax::end(); ?></div>
+                        'id',
+                        'descripcion',
+                        'carrera_id',
+                        'anio',
+                        'estado:boolean',
+
+                        ['class' => 'yii\grid\ActionColumn'],
+                    ],
+                ]); ?>
+            <?php Pjax::end(); ?></div>
+        </div>
+</div>
+ 

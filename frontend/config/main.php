@@ -76,6 +76,10 @@ return [
             'site/change-password',
             'site/request-password-reset',
             'site/reset-password',  
+            'site/activar-cuenta',
+            'site/signup', 
+            'site/validation',
+            'site/preinscripcion', 
             'admin/user/request-password-reset',            
             'admin/user/reset-password',                   
 

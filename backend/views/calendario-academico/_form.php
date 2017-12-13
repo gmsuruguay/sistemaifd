@@ -33,7 +33,7 @@ use backend\models\TurnoExamen;
         $lista=[
             'EXAMEN'=>'EXAMEN',
             'CURSADA'=>'CURSADA',
-            //'PREINSCRIPCION'=> 'PREINSCRIPCION',       
+            'PREINSCRIPCION'=> 'PREINSCRIPCION',       
         ];
         echo $form->field($model, 'tipo_inscripcion')->dropDownList($lista,['prompt'=>'Seleccione una opción','id'=>'tipo']); ?>
         

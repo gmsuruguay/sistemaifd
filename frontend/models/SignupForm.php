@@ -1,6 +1,7 @@
 <?php
 namespace frontend\models;
 
+use Yii;
 use yii\base\Model;
 use common\models\User;
 
@@ -12,6 +13,11 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    public $retypePassword;
+    public $tipo_doc;
+    public $numero;
+    public $apellido;
+    public $nombre;
 
 
     /**
@@ -20,19 +26,35 @@ class SignupForm extends Model
     public function rules()
     {
         return [
-            ['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            [['tipo_doc', 'numero', 'apellido', 'nombre'], 'required'],
+            [['apellido', 'nombre'], 'string', 'max' => 450],
+            [['tipo_doc', 'numero'], 'string', 'max' => 45],  
+            ['numero', 'unique', 'targetClass' => '\backend\models\Alumno', 'message' => 'Este numero ya existe.'],
+            ['username', 'filter', 'filter' => 'trim'],           
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este nombre de Usuario ya existe.'],
+            ['username', 'string', 'min' => 6], 
+            ['username', 'match', 'pattern' => '/^[0-9a-z]+$/i', 'message' => 'Sólo se aceptan letras y numeros'], 
 
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
-
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este Email ya existe.'],
+            
             ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            ['password', 'match', 'pattern' => "/^.{8,16}$/", 'message' => 'Mínimo 8 y máximo 16 caracteres'], 
+            [['retypePassword'], 'compare', 'compareAttribute' => 'password'],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'password' => 'Contraseña',            
+            'retypePassword' => 'Confirmar contraseña',
         ];
     }
 
@@ -54,5 +76,35 @@ class SignupForm extends Model
         $user->generateAuthKey();
         
         return $user->save() ? $user : null;
+    }
+
+    public function sendEmail()
+    {
+        /* @var $user User */
+        $user = User::findOne([            
+            'email' => $this->email,
+        ]);
+
+        if (!$user) {
+            return false;
+        }
+        
+        if (!User::isPasswordResetTokenValid($user->password_reset_token)) {
+            $user->generatePasswordResetToken();
+            if (!$user->save()) {
+                return false;
+            }
+        }
+
+        return Yii::$app
+            ->mailer
+            ->compose(
+                ['html' => 'activarCuentaToken-html', 'text' => 'activarCuentaToken-text'],
+                ['user' => $user]
+            )
+            ->setFrom([Yii::$app->params['supportEmail'] =>'SURI - SISTEMA UNICO DE REGISTRO INSTITUCIONAL'])
+            ->setTo($this->email)
+            ->setSubject('Activación de cuenta')
+            ->send();
     }
 }

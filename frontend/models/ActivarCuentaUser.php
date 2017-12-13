@@ -1,6 +1,7 @@
 <?php
 namespace frontend\models;
 
+
 use yii\base\Model;
 use yii\base\InvalidParamException;
 use common\models\User;
@@ -8,15 +9,13 @@ use common\models\User;
 /**
  * Password reset form
  */
-class ResetPasswordForm extends Model
+class ActivarCuentaUser extends Model
 {
-    public $password;
-    public $password_repeat;
+    
     /**
      * @var \common\models\User
      */
     private $_user;
-
 
     /**
      * Creates a form model given a token.
@@ -28,45 +27,25 @@ class ResetPasswordForm extends Model
     public function __construct($token, $config = [])
     {
         if (empty($token) || !is_string($token)) {
-            throw new InvalidParamException('Token no puede estar vacio..');
+            throw new InvalidParamException('Token no puede estar vacio.');
         }
-        $this->_user = User::findByPasswordResetToken($token);
+        $this->_user = User::findByToken($token);
         if (!$this->_user) {
             throw new InvalidParamException('Error con el Token.');
         }
         parent::__construct($config);
-    }
+    }  
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-           ['password', 'string', 'min' => 8],
-           [['password','password_repeat'], 'required'],
-           ['password', 'match', 'pattern' => "/^.{8,16}$/", 'message' => 'Mínimo 8 y máximo 16 caracteres'], 
-           ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message'=>'Las contraseñas no coinciden'],
-        ];
-    }
-
-    public function attributeLabels()
-    {
-        return [
-            'password' => 'Contraseña nueva',           
-            'password_repeat' => 'Confirmar contraseña',
-        ];
-    }
 
     /**
      * Resets password.
      *
      * @return bool if password was reset.
      */
-    public function resetPassword()
+    public function activar()
     {
         $user = $this->_user;
-        $user->setPassword($this->password);
+        $user->status=10;
         $user->removePasswordResetToken();
 
         return $user->save(false);

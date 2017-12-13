@@ -37,7 +37,7 @@ class Inscripcion extends \yii\db\ActiveRecord
             [['alumno_id', 'carrera_id', 'nro_libreta'], 'integer'],
             [['fotocopia_dni', 'certificado_nacimiento', 'titulo_secundario', 'certificado_visual', 'certificado_auditivo', 'certificado_foniatrico', 'foto', 'constancia_cuil', 'planilla_prontuarial'], 'boolean'],
             [['fecha'], 'safe'],
-            [['nro_legajo'], 'string','max'=>45],
+            [['nro_legajo','estado'], 'string','max'=>45],
             [['observacion'], 'string'],
             [['alumno_id'], 'exist', 'skipOnError' => true, 'targetClass' => Alumno::className(), 'targetAttribute' => ['alumno_id' => 'id']],
             [['carrera_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carrera::className(), 'targetAttribute' => ['carrera_id' => 'id']],
@@ -66,6 +66,7 @@ class Inscripcion extends \yii\db\ActiveRecord
             'foto' => 'Foto',
             'constancia_cuil' => 'Constancia Cuil',
             'planilla_prontuarial' => 'Planilla Prontuarial',
+            'estado'=>'Estado'
         ];
     }
 
@@ -125,6 +126,14 @@ class Inscripcion extends \yii\db\ActiveRecord
             return "PRESENTADO";
         }
         return "FALTANTE";
+    }
+
+    public static function existePreinscripcion($id)
+    {
+        $existe= self::find()->where( [ 'alumno_id' => $id, 'estado'=>'p' ] )
+        ->exists(); 
+
+        return $existe;
     }
 
 

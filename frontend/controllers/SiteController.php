@@ -14,8 +14,13 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\ChangePassword;
+use frontend\models\ActivarCuentaUser;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
+use backend\models\Alumno;
+use common\models\AuthAssignment;
+use yii\widgets\ActiveForm;
+use backend\models\CalendarioAcademico;
 /**
  * Site controller
  */
@@ -74,7 +79,7 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {
+    {        
         return $this->redirect(['/alumno/index']);
     }
 
@@ -182,9 +187,14 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionAbout()
+    public function actionPreinscripcion()
     {
-        return $this->render('about');
+        if ( CalendarioAcademico::estaHabilitado('PREINSCRIPCION') ) {
+            return $this->render('preinscripcion');
+        }else{
+            Yii::$app->session->setFlash('error', 'Lo sentimos, todavia no inicio el periodo de inscripción');
+            return $this->goHome();
+        }
     }
 
     /**
@@ -192,21 +202,88 @@ class SiteController extends Controller
      *
      * @return mixed
      */
+    
+    public function actionValidation()
+    {
+        $model = new SignupForm();       
+
+        if ( Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+                Yii::$app->response->format = 'json';
+                return ActiveForm::validate($model);
+        }        
+
+    }
+
     public function actionSignup()
     {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
+        if ( CalendarioAcademico::estaHabilitado('PREINSCRIPCION') ) {
+            $model = new SignupForm();
+            $alumno = new Alumno();
+            $user = new User();
+            $role= new AuthAssignment();       
+
+            if ($model->load(Yii::$app->getRequest()->post())  ) {
+                
+                $user->username = $model->numero; 
+                $user->email= $model->email;
+                $user->role='ALUMNO';
+                $user->created_at= time();
+                $user->updated_at= time();
+                $user->setPassword($model->password);
+                $user->generateAuthKey();
+                $user->status=0;
+                //echo $model->role;            
+                //die;
+                if ($user->save()) {
+                    
+                    $alumno->apellido = $model->apellido;
+                    $alumno->nombre = $model->nombre;
+                    $alumno->tipo_doc = $model->tipo_doc;
+                    $alumno->numero = $model->numero;
+                    $alumno->email = $user->email;
+                    $alumno->user_id= $user->id;
+                    $alumno->save();                
+
+                    $role->item_name= $user->role;
+                    $role->user_id = $user->id;
+                    $role->created_at= time();
+                    $role->save();
+
+                    if ($model->sendEmail()) {
+                        Yii::$app->session->setFlash('success', 'Revise su correo electrónico para obtener más instrucciones.');
+        
+                        return $this->goHome();
+                    } else {
+                        Yii::$app->session->setFlash('error', 'Lo sentimos, ocurrio un error');
+                    }
+                    
                 }
             }
+
+            return $this->render('signup', [
+                    'model' => $model,                
+            ]);
+        }else{
+            Yii::$app->session->setFlash('error', 'Lo sentimos, todavia no inicio el periodo de inscripción');
+            return $this->goHome();
+        }
+    }
+
+    public function actionActivarCuenta($token)
+    {
+        try {
+            $model = new ActivarCuentaUser($token);
+        } catch (InvalidParamException $e) {
+            throw new BadRequestHttpException($e->getMessage());
         }
 
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
+        if ($model->activar()) {
+            Yii::$app->session->setFlash('success', 'Su cuenta se activo exitosamente, ahora puede ingresar al sistema ingresando con su dni como usuario y la contraseña que registro en el sistema.');
+
+            return $this->goHome();
+        }        
     }
+
 
     /**
      * Requests password reset.

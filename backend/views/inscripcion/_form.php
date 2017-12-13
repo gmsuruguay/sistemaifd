@@ -74,6 +74,8 @@ use yii\helpers\Url;
 
             <?= $form->field($model, 'observacion')->textarea(['rows' => 6]) ?>
 
+            <?= $form->field($model, 'estado')->radioList(array('p'=>'PREINSCRIPTO','i'=>'INSCRIPTO')); ?>
+
         </div>                              
         <div class="box-footer">
                 <?= Html::submitButton( '<i class="fa fa-save"> </i> Guardar', ['class' => 'btn btn-success', 'name' => 'signup-button']) ?>

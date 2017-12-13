@@ -22,17 +22,91 @@ use backend\models\CalendarioExamen;
 use backend\models\CalendarioAcademico;
 use common\models\FechaHelper;
 use backend\models\search\InscripcionExamenSearch;
+use  yii\web\Session;
 
 class AlumnoController extends Controller
 {
     public function actionIndex()
-    {   
+    {  
         $id_alumno= Yii::$app->user->identity->idAlumno; 
-        $model= Inscripcion::find()->where(['alumno_id'=>$id_alumno])->all();        
+        $model= Inscripcion::find()->where(['alumno_id'=>$id_alumno])->all();
+
+        $preinscripcion=Inscripcion::existePreinscripcion($id_alumno);
+        if($preinscripcion){
+            $this->layout='main2';
+            return $this->render('index-preinscripcion', [                     
+                'model' => $model,           
+            ]);
+        }         
+                
 
         return $this->render('index', [                     
             'model' => $model,           
         ]);
+    }
+
+    public function actionRegistrarCarrera()
+    {
+        $this->layout='main2';
+        $model = new Inscripcion();   
+        $alumno= $this->findModel(Yii::$app->user->identity->idAlumno);              
+        if ($model->load(Yii::$app->request->post()) ) {
+            $model->alumno_id= Yii::$app->user->identity->idAlumno; 
+            $model->estado='p';
+            $model->fecha=date('Y-m-d');
+            if($model->save()){
+                $session = Yii::$app->session;                
+                $session->set('id_carrera', $model->carrera_id);
+                Yii::$app->session->setFlash('success', "Por favor complete el formulario con sus datos personales");
+                return $this->redirect(['actualizar-legajo', 'id' => $alumno->id]);               
+               
+            }
+           
+        } else {
+            return $this->render('form-carrera', [
+                'model' => $model,                
+            ]);
+        }
+    }
+
+    public function actionActualizarLegajo($id)
+    {       
+        $this->layout='main2';
+        $model= $this->findModel($id);   
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "Su inscripción a la carrera se realizo correctamente");          
+            return $this->redirect(['confirmar-inscripcion','id'=>$id]);
+        } else {
+            $model->nacionalidad='ARGENTINA';
+            return $this->render('update-inscripcion', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionConfirmarInscripcion($id)
+    {       
+        $this->layout='main2';
+        $model= $this->findModel($id);   
+        return $this->render('view-inscripcion', [                     
+            'model' => $model,           
+        ]);
+    }
+
+    
+    public function actionImprimirFormulario($id){
+        
+        $mes=FechaHelper::obtenerMes(date('Y-m-d'));
+        $pdf = Yii::$app->pdf;
+        $inscripcion = $this->findModelInscripcion($id);
+        $pdf->cssFile = 'css/reporte.css';
+        $pdf->options = ['title' => 'Formulario de Inscripción'];    
+        $pdf->content = $this->renderPartial('formulario_inscripcion', [
+            'inscripcion' =>$inscripcion,
+            'mes'=>$mes,           
+        ]);
+        
+        return $pdf->render();
     }
 
     public function actionLegajo()
@@ -49,92 +123,96 @@ class AlumnoController extends Controller
 
     public function actionFormInscripcion($id)    
     {
-        $carrera= $this->findModelCarrera($id);
-        
-        $materias_aprobadas = Acta::find()->select('materia_id')
-                            ->where(['alumno_id'=>Yii::$app->user->identity->idAlumno])
-                            ->andWhere(['>=','nota',4]);
+        if ( CalendarioAcademico::estaHabilitado('EXAMEN') ) {
+            $carrera= $this->findModelCarrera($id);
+            
+            $materias_aprobadas = Acta::find()->select('materia_id')
+                                ->where(['alumno_id'=>Yii::$app->user->identity->idAlumno])
+                                ->andWhere(['>=','nota',4]);
 
-        //$query = Materia::find()->where(['NOT IN', 'id', $materias_aprobadas ])->andWhere(['carrera_id' => $id])->all(); 
-        $fecha_actual= date('Y-m-d');
+            //$query = Materia::find()->where(['NOT IN', 'id', $materias_aprobadas ])->andWhere(['carrera_id' => $id])->all(); 
+            $fecha_actual= date('Y-m-d');
 
-        $calendario= CalendarioAcademico::find()
-        ->where(['tipo_inscripcion'=>'EXAMEN'])
-        ->andWhere(['<=', 'fecha_inicio_inscripcion', $fecha_actual])
-        ->andWhere(['>=', 'fecha_fin_inscripcion', $fecha_actual])                            
-        ->one();
+            $calendario= CalendarioAcademico::find()
+            ->where(['tipo_inscripcion'=>'EXAMEN'])
+            ->andWhere(['<=', 'fecha_inicio_inscripcion', $fecha_actual])
+            ->andWhere(['>=', 'fecha_fin_inscripcion', $fecha_actual])                            
+            ->one();
 
-        $query = CalendarioExamen::find()
-                ->where(['NOT IN', 'materia_id', $materias_aprobadas ])
-                ->andWhere(['carrera_id' => $id])      
-                ->andWhere(['turno_examen_id' => $calendario->turno_examen_id])                
-                ->all();    
-                
-
-        //$materias= ArrayHelper::map($query, 'id', 'descripcion'); 
-        $materias= ArrayHelper::map($query, 'id', 'descripcionMateria');       
-        
-
-        $model = new InscripcionExamen();    
-    
-    
-        if ($model->load(Yii::$app->request->post())) {
-    
-            if ($model->validate()) {
-                $c = $this->findModelExamen($model->materia_id); //Busco la materia en el calendario de examen
-                
-                //Verifico que no este inscripta a una misma mesa de examen               
-                if(!$this->existeInscripcionExamen($c)){
-                
+            $query = CalendarioExamen::find()
+                    ->where(['NOT IN', 'materia_id', $materias_aprobadas ])
+                    ->andWhere(['carrera_id' => $id])      
+                    ->andWhere(['turno_examen_id' => $calendario->turno_examen_id])                
+                    ->all();    
                     
-                    //$materia=$this->findModelMateria($model->materia_id);
-                    $materia=$this->findModelMateria($c->materia_id);
-                    if( ($model->condicion_id == 1) && $this->cumpleCondicionExamenLibre($materia) ){ //Para las materias libres
+
+            //$materias= ArrayHelper::map($query, 'id', 'descripcion'); 
+            $materias= ArrayHelper::map($query, 'id', 'descripcionMateria');       
+            
+
+            $model = new InscripcionExamen();    
+        
+        
+            if ($model->load(Yii::$app->request->post())) {
+        
+                if ($model->validate()) {
+                    $c = $this->findModelExamen($model->materia_id); //Busco la materia en el calendario de examen
+                    
+                    //Verifico que no este inscripta a una misma mesa de examen               
+                    if(!$this->existeInscripcionExamen($c)){
+                    
                         
-                        $model->alumno_id = Yii::$app->user->identity->idAlumno;
-                        $model->fecha_inscripcion= date('Y-m-d');
-                        $model->condicion_id= $model->condicion_id;
-                        //$model->materia_id= $model->materia_id;
-                        $model->materia_id= $c->materia_id;
-                        $model->fecha_examen= $c->fecha_examen;
-                        if($model->insert()){
-                            Yii::$app->session->setFlash('success', "Su inscripción se realizo correctamente");
-                            return $this->redirect(['form-inscripcion',
-                                'id' => $id,
-                            ]);  
+                        //$materia=$this->findModelMateria($model->materia_id);
+                        $materia=$this->findModelMateria($c->materia_id);
+                        if( ($model->condicion_id == 1) && $this->cumpleCondicionExamenLibre($materia) ){ //Para las materias libres
+                            
+                            $model->alumno_id = Yii::$app->user->identity->idAlumno;
+                            $model->fecha_inscripcion= date('Y-m-d');
+                            $model->condicion_id= $model->condicion_id;
+                            //$model->materia_id= $model->materia_id;
+                            $model->materia_id= $c->materia_id;
+                            $model->fecha_examen= $c->fecha_examen;
+                            if($model->insert()){
+                                Yii::$app->session->setFlash('success', "Su inscripción se realizo correctamente");
+                                return $this->redirect(['form-inscripcion',
+                                    'id' => $id,
+                                ]);  
+                            }
+                            
+                        }elseif(  ($model->condicion_id == 3) && ($this->estaRegular($c->materia_id) > 0) ){
+                            
+                            $model->alumno_id = Yii::$app->user->identity->idAlumno;
+                            $model->fecha_inscripcion= date('Y-m-d');
+                            $model->condicion_id= $model->condicion_id;
+                            $model->materia_id= $c->materia_id;
+                            $model->fecha_examen= $c->fecha_examen;
+                            if($model->insert()){
+                                Yii::$app->session->setFlash('success', "Su inscripción se realizo correctamente");
+                                return $this->redirect(['form-inscripcion',
+                                    'id' => $id,
+                                ]);  
+                            }
+                        }else{
+                            throw new NotFoundHttpException('No se puede inscribir, consulte su situación en preceptoria');
                         }
-                        
-                    }elseif(  ($model->condicion_id == 3) && ($this->estaRegular($c->materia_id) > 0) ){
-                        
-                        $model->alumno_id = Yii::$app->user->identity->idAlumno;
-                        $model->fecha_inscripcion= date('Y-m-d');
-                        $model->condicion_id= $model->condicion_id;
-                        $model->materia_id= $c->materia_id;
-                        $model->fecha_examen= $c->fecha_examen;
-                        if($model->insert()){
-                            Yii::$app->session->setFlash('success', "Su inscripción se realizo correctamente");
-                            return $this->redirect(['form-inscripcion',
-                                'id' => $id,
-                            ]);  
-                        }
-                    }else{
-                        throw new NotFoundHttpException('No se puede inscribir, consulte su situación en preceptoria');
+                    
                     }
-                
+        
                 }
-    
-            }
-    
-        }  
-    
-    
-        return $this->render('form-inscripcion', [
-    
-            'model' => $model,
-            'materias'=>$materias,
-    
-        ]);
-    
+        
+            }  
+        
+        
+            return $this->render('form-inscripcion', [
+        
+                'model' => $model,
+                'materias'=>$materias,
+        
+            ]);
+        }else{
+            Yii::$app->session->setFlash('error', 'Lo sentimos, todavia no inicio el periodo de inscripción a examen');
+            return $this->goHome();
+        }
     }
 
     private function existeInscripcionExamen($c){
@@ -211,24 +289,29 @@ class AlumnoController extends Controller
 
 
     public function actionListarMateria($id)
-    {       
-        $carrera= $this->findModelCarrera($id);
+    {
+        if ( CalendarioAcademico::estaHabilitado('CURSADA') ) {       
+            $carrera= $this->findModelCarrera($id);
 
-        $materias_aprobadas = Acta::find()->select('materia_id')
-                            ->where(['alumno_id'=>Yii::$app->user->identity->idAlumno])
-                            ->andWhere(['>=','nota',4]);
+            $materias_aprobadas = Acta::find()->select('materia_id')
+                                ->where(['alumno_id'=>Yii::$app->user->identity->idAlumno])
+                                ->andWhere(['>=','nota',4]);
 
-        $query = Materia::find()->where(['NOT IN', 'id', $materias_aprobadas ])->andWhere(['carrera_id' => $id]); 
+            $query = Materia::find()->where(['NOT IN', 'id', $materias_aprobadas ])->andWhere(['carrera_id' => $id]); 
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'sort'=> ['defaultOrder' => ['anio' => SORT_ASC]],
-        ]);
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+                'sort'=> ['defaultOrder' => ['anio' => SORT_ASC]],
+            ]);
 
-        return $this->render('listado-materias', [
-            'carrera'=>$carrera,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('listado-materias', [
+                'carrera'=>$carrera,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            Yii::$app->session->setFlash('error', 'Lo sentimos, todavia no inicio el periodo de inscripción');
+            return $this->goHome();
+        }
     }
 
     public function actionVerInscripciones($id)

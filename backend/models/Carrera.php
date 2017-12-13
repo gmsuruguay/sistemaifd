@@ -126,11 +126,30 @@ class Carrera extends \yii\db\ActiveRecord
         return $this->sede ? $this->sede->descripcionSede : ' - ';
     }
 
+    public function getDescripcionCarreraSede()
+    {
+        return $this->descripcion.'-'.$this->descripcionSede;
+    }
+
     public static function  nombreCarrera($id)
     {        
         $model = self::find()->where(['id'=>$id])->one();
         if($model){
            return  $model->descripcion;
         }
+    }
+
+    public static function  modelCarrera($id)
+    {        
+        $model = self::find()->where(['id'=>$id])->one();
+        if($model){
+           return  $model;
+        }
+    }
+
+    public static function getListaCarrerasSede()
+    {
+        $sql = self::find()->orderBy('descripcion')->all();
+        return ArrayHelper::map($sql, 'id', 'descripcionCarreraSede');
     }
 }

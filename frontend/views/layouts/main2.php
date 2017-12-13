@@ -6,6 +6,7 @@
 use yii\helpers\Html;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -20,8 +21,35 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="app-home">
-<?php if (Yii::$app->session->hasFlash('success')): ?>
+<body>
+<?php $this->beginBody() ?>  
+
+  <nav class="teal lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo"><?= Html::img('@web/img/logo_ifd_header.png', ['width'=>'80%','alt'=>Yii::$app->name,'class'=>'pull-left'])?></a>
+      <ul class="right hide-on-med-and-down">      
+       <?php if (Yii::$app->user->isGuest): ?>
+        <li><a href="<?= Url::toRoute('/site/login')?>"><i class="material-icons left">account_circle</i>Iniciar Sesión</a></li>
+       <?php else: ?>
+        <li><a href="<?= Url::toRoute('/site/index')?>"><i class="material-icons left">home</i>Inicio</a></li>        
+        <li><?= Html::a('<i class="material-icons left">power_settings_new</i> Cerrar Sesión ('.Yii::$app->user->identity->nombreAlumno.')', Url::to(['site/logout']), ['data-method' => 'POST']) ?></li>     
+       <?php endif ?>     
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+      <?php if (Yii::$app->user->isGuest): ?>
+      <li><a href="<?= Url::toRoute('/site/login')?>"><i class="material-icons left">account_circle</i>Iniciar Sesión</a></li>
+      <?php else: ?>
+        <li><a href="<?= Url::toRoute('/site/index')?>"><i class="material-icons left">home</i>Inicio</a></li>        
+        <li><?= Html::a('<i class="material-icons left">power_settings_new</i> Cerrar Sesión', Url::to(['site/logout']), ['data-method' => 'POST']) ?></li>   
+      <?php endif ?>      
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>    
+  </nav>
+    
+
+    <main class="container ">
+    <?php if (Yii::$app->session->hasFlash('success')): ?>
         <div class="row" id="alert_box">
             <div class="col s12 m12">
                 <div class="card green">
@@ -57,21 +85,19 @@ AppAsset::register($this);
                 </div>
             </div>
         </div>        
-    <?php endif; ?> 
-
-<?php $this->beginBody() ?>
-
-    <header class="center-align logo-inicio">
-        <h2>SURI <?= Html::img('@web/img/suri.png', ['alt'=>Yii::$app->name,'class'=>'pull-left'])?></h2>
-        <h5> <b>SISTEMA UNICO DE REGISTRO INSTITUCIONAL </b> </h5>
+    <?php endif; ?>        
         
-    </header>
-        
-    <main class="container">  
-           
-    <?= $content ?>
+        <?= $content ?>
     </main>
-   
+
+
+    <footer class="page-footer teal lighten-1">    
+        <div class="footer-copyright">
+        <div class="container">
+            © 2017 SURI      
+        </div>
+        </div>
+    </footer>
 
 <?php $this->endBody() ?>
 </body>

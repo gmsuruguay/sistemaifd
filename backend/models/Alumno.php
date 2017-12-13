@@ -51,7 +51,7 @@ class Alumno extends Docente
     public function rules()
     {
         return [
-            [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento','colegio_secundario_id','titulo_secundario_id'], 'required'],
+            [['tipo_doc', 'numero', 'apellido', 'nombre'], 'required'],
             [['fecha_nacimiento', 'fecha_baja'], 'safe'],
             [['lugar_nacimiento_id', 'localidad_id', 'user_id'], 'integer'],
             [['tipo_doc', 'numero', 'cuil', 'sexo', 'estado_civil', 'nacionalidad', 'nro', 'telefono', 'celular'], 'string', 'max' => 45],            
@@ -78,6 +78,7 @@ class Alumno extends Docente
             'colegio_secundario_id' => 'Colegio Secundario',
             'titulo_secundario_id' => 'Titulo Secundario',
             'localidad_id' => 'Localidad',
+            'tipo_doc' => 'Tipo de Documento',
         ];
     }
 

@@ -75,8 +75,14 @@ class MateriaAsignadaController extends Controller
             'query' => MateriaAsignada::find()->where(['docente_id' => $docente_id]),
         ]);
        
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['create', 'docente_id' => $model->docente_id]);
+        if ($model->load(Yii::$app->request->post()) ) {
+            if($model->save()){
+                $materia=$this->findModelMateria($model->materia_id);
+                $materia->estado=1;
+                $materia->update();
+                return $this->redirect(['create', 'docente_id' => $model->docente_id]);
+            }
+            
         } else {
             return $this->render('create', [
                 'dataProvider' => $dataProvider,
@@ -95,10 +101,25 @@ class MateriaAsignadaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $id_materia_ant= $model->materia_id;
         $materias = Materia::find()->where(['carrera_id'=> $model->materia->carrera->id])->all();
         
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['create', 'docente_id' => $model->docente_id]);
+        if ($model->load(Yii::$app->request->post()) ) {
+            if($model->save()){
+                if($id_materia_ant!=$model->materia_id){
+                    // Seteo a 0 (Disponible) el estado de la materia anterior 
+                    $materia=$this->findModelMateria($id_materia_ant);
+                    $materia->estado=0;
+                    $materia->update();
+
+                    // Seteo a 1 (Asignada) el estado de la materia nueva 
+                    $materia=$this->findModelMateria($model->materia_id);
+                    $materia->estado=1;
+                    $materia->update();
+                }
+                
+                return $this->redirect(['create', 'docente_id' => $model->docente_id]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -137,4 +158,14 @@ class MateriaAsignadaController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    protected function findModelMateria($id)
+    {
+        if (($model = Materia::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
 }

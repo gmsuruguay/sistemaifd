@@ -21,7 +21,7 @@ use yii\widgets\MaskedInput;
                 'action' => ['materia-asignada/create'],
                 ]*/); ?>
     <div class="row">
-        <div class="col-md-6">  
+        <div class="col-md-4">  
             <?= Html::label('Carreras') ?>
                     <?= Html::dropDownList('carrera', 
                                             $model->isNewRecord ? '': $model->materia->carrera->id, 
@@ -37,13 +37,13 @@ use yii\widgets\MaskedInput;
                                             ]) 
                                             ?> 
         </div>
-        <div class="col-md-6"> 
+        <div class="col-md-4"> 
             <?= Html::label('Materias') ?>
           <!--  <select id="materiaasignada-materia_id" class="form-control" name="MateriaAsignada[materia_id]" aria-required="true"></select>-->
              <?= $model->isNewRecord ?$form->field($model, 'materia_id')->label(false)->dropDownList([]) : 
                     $form->field($model, 'materia_id')->label(false)->dropDownList(ArrayHelper::map($materias, 'id', 'descripcion'))?>
         </div>
-        <div class="col-md-6"> 
+        <div class="col-md-4"> 
              <?= $model->isNewRecord ? $form->field($model, 'fecha_alta',[
                                     'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-calendar"></i>']]
                                 ])->widget( MaskedInput::className(), [    
@@ -54,17 +54,7 @@ use yii\widgets\MaskedInput;
                                                     'clientOptions' => ['alias' =>  'date'], 
                         ])->textInput(['value'=> date('d/m/Y',strtotime($model->fecha_alta))])?>
         </div>
-        <div class="col-md-6"> 
-            <?= $model->isNewRecord ? $form->field($model, 'fecha_baja',[
-                                    'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-calendar"></i>']]
-                                ])->widget( MaskedInput::className(), [    
-                                                'clientOptions' => ['alias' =>  'date']
-                    ]): $form->field($model, 'fecha_baja',[
-                                        'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-calendar"></i>']]
-                                    ])->widget( MaskedInput::className(), [    
-                                                    'clientOptions' => ['alias' =>  'date'], 
-                        ])->textInput(['value'=> ($model->fecha_baja == '')?'':date('d/m/Y',strtotime($model->fecha_baja))])?>
-        </div>
+        
     </div>
 
 	

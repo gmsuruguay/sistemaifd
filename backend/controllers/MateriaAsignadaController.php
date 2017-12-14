@@ -138,9 +138,19 @@ class MateriaAsignadaController extends Controller
     {
         $model = $this->findModel($id);
         $docente_id = $model->docente_id;
-        $model->delete();
+        $model->fecha_baja=date('Y-m-d');
+        if($model->update()){
+             // Seteo a 0 (Disponible) el estado de la materia 
+            $materia=$this->findModelMateria($model->materia_id);
+            $materia->estado=0;
+            $materia->update();
+            return $this->redirect(['create', 'docente_id'=> $docente_id]);
+        }else{
+            throw new NotFoundHttpException('Ocurrio un error durante la baja');
+        }
 
-        return $this->redirect(['create', 'docente_id'=> $docente_id]);
+
+        
     }
 
     /**

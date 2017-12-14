@@ -102,7 +102,7 @@ class MateriaAsignadaController extends Controller
     {
         $model = $this->findModel($id);
         $id_materia_ant= $model->materia_id;
-        $materias = Materia::find()->where(['carrera_id'=> $model->materia->carrera->id])->all();
+        $materias = Materia::find()->where(['carrera_id'=> $model->materia->carrera->id ,'estado'=>0])->all();
         
         if ($model->load(Yii::$app->request->post()) ) {
             if($model->save()){

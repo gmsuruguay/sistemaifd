@@ -190,7 +190,7 @@ class DocenteController extends Controller
     public function actionChangeCarrera($carreraId)
     {
         $materias= Materia::find()
-                            ->where(['carrera_id'=> $carreraId])
+                            ->where(['carrera_id'=> $carreraId,'estado'=>0])
                             ->all();
         echo "<option>--------------</option>" ; 
         foreach ($materias as $m)

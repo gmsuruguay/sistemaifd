@@ -12,8 +12,8 @@ use yii\bootstrap\Modal;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Materia */
 
-$this->title = 'Detalle de Materias Correlativas';
-$this->params['breadcrumbs'][] = ['label' => 'Materias', 'url' => ['carrera/view','id' =>$model->carrera_id]];
+$this->title = 'Detalle de Materia';
+$this->params['breadcrumbs'][] = ['label' => 'Materias', 'url' => ['index','id' =>$model->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="materia-view">
@@ -48,9 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box">
             <div class="box-header with-border">           
                 <h3 class="box-title">Correlatividades</h3>
-                <div class="pull-right">
-                <?= Html::a('<i class="fa  fa-plus"></i> Agregar materia', ['correlatividad/create','id' => $model->id,'carrera_id'=>$model->carrera_id,'anio'=>$model->anio],['class' => 'btn btn-success modalButton']) ?>
-                </div>            
+                          
             </div>
             <div class="box-body">   
                 <?php Pjax::begin(['id'=>'grid-correlativas']); ?>
@@ -74,27 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 }
                                 return 'REGULAR';
                             }
-                            ],
-
-                            ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{delete}'), 
-                            'buttons' => [                             
-                                 
-                                'delete' => function ($url, $model, $key) {
-                                    
-                                    return Html::a('', ['correlatividad/delete', 'id'=>$key], [
-                                        'class' => 'fa fa-trash', 
-                                        'title'=>'Eliminar',
-                                        'data' => [
-                                                        'confirm' => 'Está seguro de eliminar este elemento?',
-                                                        'method' => 'post',
-                                                    ],
-                                    ]);
-                                    
-                                },
-        
-                            ]],
-                        
-                        
+                            ],                        
                         ],
                     ]); ?>
                 <?php Pjax::end(); ?>
@@ -103,31 +81,3 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 
-
-<?php 
-      Modal::begin([
-        'header' => '<h3 class="text-center modal-title"><i class="fa fa-file"></i> Materia</h3>',
-        'id'=>'ModalId',
-        'class'=>'modal',
-        'size'=>'modal-lg', 
-        'clientOptions' => ['backdrop' => 'static'],  
-         ]);
-
-        echo "<div class='modalContent'></div>";
-        
-      Modal::end();
-
-      
-
-      $script = <<< JS
-    
-    $('body').on('beforeSubmit','form#materia-correlativa' , function(e){        
-        ajax($(this),refrescarGridCorrelatividad);
-        return false;
-    });    
-   
-    
-JS;
-$this->registerJs($script);
-
-?>

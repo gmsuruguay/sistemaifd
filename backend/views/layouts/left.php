@@ -26,7 +26,9 @@ use backend\models\Sede;
                     ['label' => 'Menu', 'options' => ['class' => 'header']],
                     //['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii']],
                     ['label' => 'Inicio', 'icon' => 'fa fa-home', 'url' => ['/site']],  
-                    ['label' => 'Carreras', 'icon' => 'fa fa-certificate', 'url' => ['/carrera']],                   
+                    ['label' => 'Carreras', 'icon' => 'fa fa-certificate', 'url' => ['/carrera']],   
+                    ['label' => 'Materias', 'icon' => 'fa fa-leanpub', 'url' => ['/materia']],   
+                    
                     //['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest], 
                     
                     [

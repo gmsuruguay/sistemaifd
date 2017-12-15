@@ -134,7 +134,7 @@ class MateriaAsignadaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionBaja($id)
     {
         $model = $this->findModel($id);
         $docente_id = $model->docente_id;

@@ -66,7 +66,7 @@ class MateriaSearch extends Materia
             'estado' => $this->estado,
         ]);
 
-        $query->andFilterWhere(['like', 'descripcion', $this->descripcion])
+        $query->andFilterWhere(['like', 'materia.descripcion', $this->descripcion])
             ->andFilterWhere(['like', 'periodo', $this->periodo])
             ->andFilterWhere(['like', 'anio', $this->anio]);
 

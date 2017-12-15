@@ -39,7 +39,7 @@ use kartik\select2\Select2;
                             ?>
                     </div>
                     <div class="col-md-4">
-                        <?= $form->field($model, 'estado')->checkbox() ?>
+                        <?= $form->field($model, 'estado')->dropDownList(['0'=>'DISPONIBLE','1'=>'ASIGNADA'],['prompt'=>'Mostrar todos']); ?>
                     </div>                    
                     
                 </div>  

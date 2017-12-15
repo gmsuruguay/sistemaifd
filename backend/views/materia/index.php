@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use mdm\admin\components\Helper;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\MateriaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -45,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
                         ],
 
-                        ['class' => 'yii\grid\ActionColumn'],
+                        ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{view}')],
                     ],
                 ]); ?>
             <?php Pjax::end(); ?></div>

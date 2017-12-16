@@ -9,6 +9,7 @@ use mdm\admin\components\Helper;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 use yii\bootstrap\Modal;
+use common\models\FechaHelper;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Materia */
 
@@ -80,4 +81,43 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
 </div>
+<!--Docentes asignados -->
+<div class="docentes-index">
+    <div class="box">
+            <div class="box-header with-border">           
+                <h3 class="box-title">Docente a cargo</h3>                          
+            </div>
+            <div class="box-body">   
+               
+                    <?= GridView::widget([
+                        'dataProvider' => $docentes_dataProvider,        
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+                            
+                            [
+                            'attribute'=> 'fecha_alta',
+                            'value'=> function ($data){
+                                return FechaHelper::fechaDMY($data->fecha_alta);
+                            }
+                            ],
+                            [
+                            'attribute'=> 'docente_id',
+                            'value'=> function ($data){
+                                return $data->docenteACargo;
+                            }
+                            ], 
+                            [
+                            'attribute'=> 'fecha_baja',
+                            'value'=> function ($data){
+                                return FechaHelper::fechaDMY($data->fecha_baja);
+                            }
+                            ],                       
+                        ],
+                    ]); ?>
+               
+            </div>
+    </div>
+
+</div>
+
 

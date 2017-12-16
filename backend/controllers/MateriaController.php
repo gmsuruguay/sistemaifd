@@ -13,6 +13,7 @@ use yii\data\ActiveDataProvider;
 use backend\models\search\CorrelatividadSearch;
 use yii\widgets\ActiveForm;
 use backend\models\Carrera;
+use backend\models\MateriaAsignada;
 /**
  * MateriaController implements the CRUD actions for Materia model.
  */
@@ -116,11 +117,18 @@ class MateriaController extends Controller
         $searchModel = new CorrelatividadSearch();
         $searchModel->materia_id= $model->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
+
+        $query = MateriaAsignada::find()->where(['materia_id'=>$id]);
+
+        $docentes_dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort'=> ['defaultOrder' => ['fecha_alta' => SORT_DESC]],
+        ]);
+
         return $this->render('view', [
-            'model' => $model, 
-            'searchModel' => $searchModel,
+            'model' => $model,            
             'dataProvider' => $dataProvider,
+            'docentes_dataProvider'=>$docentes_dataProvider,
         ]);
        
     }

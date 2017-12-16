@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                      'buttons' => [
                         'carrera'=>function ($url, $model, $key) {
                                             
-                            return Html::a('', ['/materia-asignada/create', 'docente_id'=>$model->id], ['class' => 'fa fa-random', 'title'=>'Cargar cursos a cargo']);
+                            return Html::a('', ['/materia-asignada/create', 'docente_id'=>$model->id], ['class' => 'fa fa-random', 'title'=>'Asignar materias a cargo']);
                             
                         },
                     ]

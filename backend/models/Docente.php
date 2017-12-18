@@ -49,9 +49,9 @@ class Docente extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento'], 'required'],
+            [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento','sede_id'], 'required'],
             [['fecha_nacimiento', 'fecha_baja'], 'safe'],
-            [['fecha_nacimiento','fecha_baja'], 'date', 'format'=>'php:Y/m/d'],
+            //[['fecha_nacimiento','fecha_baja'], 'date', 'format'=>'php:Y/m/d'],
             [['lugar_nacimiento_id', 'localidad_id', 'user_id'], 'integer'],
             [['numero'],'unique'],
             [['nro_legajo', 'tipo_doc', 'numero', 'cuil', 'sexo', 'estado_civil', 'nacionalidad', 'nro', 'telefono', 'celular'], 'string', 'max' => 45],

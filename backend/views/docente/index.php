@@ -37,12 +37,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     'nombre',                       
                     'numero',                    
 
-                    ['class' => 'yii\grid\ActionColumn','template' => '{view}{update}{delete} {carrera}', 
+                    ['class' => 'yii\grid\ActionColumn','template' => Helper::filterActionColumn('{view}{update}{baja}{carrera}'), 
                      'buttons' => [
                         'carrera'=>function ($url, $model, $key) {
                                             
                             return Html::a('', ['/materia-asignada/create', 'docente_id'=>$model->id], ['class' => 'fa fa-random', 'title'=>'Asignar materias a cargo']);
                             
+                        },
+
+                        'baja' => function ($url, $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> ', ['baja','id'=>$key], 
+                            ['title'=>'Dar de baja',
+                                'data' => [
+                                'confirm' => 'Esta seguro de dar de baja ?',
+                                'method' => 'post',
+                            ]
+                            ]);                          
+                         
                         },
                     ]
                 ],]

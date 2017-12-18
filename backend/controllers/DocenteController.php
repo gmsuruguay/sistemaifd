@@ -6,6 +6,7 @@ use Yii;
 use backend\models\Docente;
 use backend\models\Carrera;
 use backend\models\Materia;
+use backend\models\MateriaAsignada;
 use backend\models\search\DocenteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -164,11 +165,47 @@ class DocenteController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionBaja($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->fecha_baja = date('Y-m-d');
+        if( $model->update() ){
 
-        return $this->redirect(['index']);
+            // Baja en materias asignadas
+            $this->bajaMateriasAsignadas($id);
+
+            Yii::$app->session->setFlash('success', "Se realizo la baja correctamente");            
+            return $this->redirect(['index']);
+
+       }else{
+           throw new NotFoundHttpException('Ocurrio un error durante la baja');
+       }
+
+       
+    }
+
+    protected function bajaMateriasAsignadas($id)
+    {
+        //Busco materias asignadas a los docentes
+        $materias= MateriaAsignada::find()
+        ->where(['docente_id'=> $id])
+        ->andWhere(['fecha_baja' => null])
+        ->all();
+
+        foreach ($materias as $m) {
+            $m->fecha_baja= date('Y-m-d');
+            $m->update();
+            $this->materiaDisponible($m->materia_id);   // Seteo a 0 (Disponible) el estado de la materia         
+        }
+        
+    }
+
+    protected function materiaDisponible($id)
+    {
+        // Seteo a 0 (Disponible) el estado de la materia 
+        $materia=$this->findModelMateria($id);
+        $materia->estado=0;
+        $materia->update();
     }
 
     /**
@@ -209,6 +246,15 @@ class DocenteController extends Controller
     protected function findModel($id)
     {
         if (($model = Docente::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findModelMateria($id)
+    {
+        if (($model = Materia::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

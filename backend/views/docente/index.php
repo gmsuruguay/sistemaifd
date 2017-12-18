@@ -29,6 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
+                'rowOptions' => function($model){
+                    if(!is_null($model->fecha_baja)){
+                            return ['class'=>'danger'];
+                        }
+                }, 
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                    
@@ -55,6 +60,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]);                          
                          
                         },
+                    ],
+                    'visibleButtons' => [
+                        'update' => function ($model, $key, $index) {
+                            return is_null($model->fecha_baja) ? true : false;
+                         },
+                        'baja' => function ($model, $key, $index) {
+                            return is_null($model->fecha_baja) ? true : false;
+                        },
+                        'carrera' => function ($model, $key, $index) {
+                            return is_null($model->fecha_baja) ? true : false;
+                        }
                     ]
                 ],]
             ]); ?>

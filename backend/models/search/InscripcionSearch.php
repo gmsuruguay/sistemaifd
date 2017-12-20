@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Inscripcion;
-
+use common\models\HelperSede;
 /**
  * InscripcionSearch represents the model behind the search form about `backend\models\Inscripcion`.
  */
@@ -21,7 +21,7 @@ class InscripcionSearch extends Inscripcion
     {
         return [
             [['id', 'alumno_id', 'carrera_id', 'nro_libreta','sede'], 'integer'],
-            [['fecha', 'observacion','alumno','nro_legajo'], 'safe'],
+            [['fecha', 'observacion','alumno','nro_legajo','estado'], 'safe'],
         ];
     }
 
@@ -75,17 +75,15 @@ class InscripcionSearch extends Inscripcion
             'carrera_id' => $this->carrera_id,
             'nro_libreta' => $this->nro_libreta,
             'fecha' => $this->fecha,
-            //'carrera.sede_id' => 1,
+            'estado' => $this->estado,
         ]);
 
         $query->orFilterWhere(['like', 'alumno.numero', $this->alumno])
               ->orFilterWhere(['like', "concat_ws(' ',alumno.apellido,alumno.nombre)", $this->alumno]);
 
-        if(Yii::$app->user->identity->role=='PRECEPTOR'){
-            
-        $session = Yii::$app->session;
-        $sede_id = $session->get('sede');
-        $query->andFilterWhere(['=', 'carrera.sede_id', $sede_id]);
+        if(Yii::$app->user->identity->role=='PRECEPTOR'){            
+       
+        $query->andFilterWhere(['=', 'carrera.sede_id', HelperSede::obtenerSede()]);
         
         }
               

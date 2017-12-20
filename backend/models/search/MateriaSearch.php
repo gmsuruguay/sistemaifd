@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Materia;
-
+use common\models\HelperSede;
 /**
  * MateriaSearch represents the model behind the search form about `backend\models\Materia`.
  */
@@ -72,9 +72,8 @@ class MateriaSearch extends Materia
 
         if(Yii::$app->user->identity->role=='PRECEPTOR'){
             
-        $session = Yii::$app->session;
-        $sede_id = $session->get('sede');
-        $query->andFilterWhere(['=', 'carrera.sede_id', $sede_id]);
+        
+        $query->andFilterWhere(['=', 'carrera.sede_id', HelperSede::obtenerSede()]);
         
         }
 

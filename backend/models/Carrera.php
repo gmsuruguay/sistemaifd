@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use common\models\HelperSede;
 use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "carrera".
@@ -20,7 +21,8 @@ class Carrera extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
-     */
+     */    
+
     public static function tableName()
     {
         return 'carrera';
@@ -100,13 +102,10 @@ class Carrera extends \yii\db\ActiveRecord
 
     public static function getListaCarreras()
     {
-        if(Yii::$app->user->identity->role=='PRECEPTOR'){
+        if(Yii::$app->user->identity->role=='PRECEPTOR'){            
             
-            $session = Yii::$app->session;
-            $sede_id = $session->get('sede');
-
             $sql = self::find()            
-            ->where(['=', 'sede_id', $sede_id])
+            ->where(['sede_id'=> HelperSede::obtenerSede()])
             ->orderBy('descripcion')->all();
             return ArrayHelper::map($sql, 'id', 'descripcion');
         }
@@ -115,8 +114,10 @@ class Carrera extends \yii\db\ActiveRecord
         return ArrayHelper::map($sql, 'id', 'descripcion');
     }
 
-    public static function cantidad(){        	
-        $cantidad = self::find()->count();
+    public static function cantidad(){   
+        
+
+        $cantidad = self::find()->where(['sede_id'=>HelperSede::obtenerSede()])->count();
         return $cantidad;        
 
     }

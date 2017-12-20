@@ -7,6 +7,8 @@ use yii\helpers\ArrayHelper;
 use backend\models\Condicion;
 use backend\models\Cursada;
 use backend\models\InscripcionExamen;
+use common\models\HelperSede;
+
 /**
  * This is the model class for table "materia".
  *
@@ -181,14 +183,11 @@ class Materia extends \yii\db\ActiveRecord
     {        
         //
         
-        if(Yii::$app->user->identity->role=='PRECEPTOR'){
+        if(Yii::$app->user->identity->role=='PRECEPTOR'){            
             
-            $session = Yii::$app->session;
-            $sede_id = $session->get('sede');
-
             $sql = self::find()
             ->joinWith(['carrera'])
-            ->where(['=', 'sede_id', $sede_id])
+            ->where(['sede_id'=> HelperSede::obtenerSede()])
             ->orderBy('materia.descripcion')->all();
             return ArrayHelper::map($sql, 'id', 'descripcion');
         }
@@ -273,6 +272,16 @@ class Materia extends \yii\db\ActiveRecord
             return 'ASIGNADA';
         }
         return 'DISPONIBLE';
+    }
+
+    public static function cantidadDisponible(){  
+       
+        $cantidad = self::find()->joinWith(['carrera'])
+                    ->where(['materia.estado' => 0])
+                    ->andWhere(['sede_id'=> HelperSede::obtenerSede()])
+                    ->count();
+        return $cantidad;        
+
     }
     
 }

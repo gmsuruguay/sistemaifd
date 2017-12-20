@@ -45,7 +45,7 @@ class InscripcionController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-    }
+    }    
 
     /**
      * Displays a single Inscripcion model.

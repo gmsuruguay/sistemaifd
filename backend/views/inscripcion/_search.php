@@ -38,11 +38,14 @@ use backend\models\Carrera;
 
                             ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                      <?= $form->field($model, 'nro_legajo') ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                      <?= $form->field($model, 'nro_libreta') ?>
+                    </div>
+                    <div class="col-md-2">
+                     <?= $form->field($model, 'estado') ?>
                     </div>
                     
                 </div>

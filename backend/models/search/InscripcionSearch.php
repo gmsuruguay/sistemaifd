@@ -87,8 +87,7 @@ class InscripcionSearch extends Inscripcion
         $sede_id = $session->get('sede');
         $query->andFilterWhere(['=', 'carrera.sede_id', $sede_id]);
         
-        }
-              
+        }              
 
         return $dataProvider;
     }

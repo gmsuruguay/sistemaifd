@@ -21,8 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="box-header with-border">
             <div class="pull-right">
-            <?= Html::a('<i class="fa  fa-plus"></i> Nueva Inscripción S/Legajo', ['/alumno/create'], ['class' => 'btn btn-success']) ?>
-            <?= Html::a('<i class="fa  fa-plus"></i> Nueva Inscripción C/Legajo', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('<i class="fa  fa-plus"></i> Nueva Inscripción', ['/alumno/create'], ['class' => 'btn btn-success']) ?>
+            <?php // Html::a('<i class="fa  fa-plus"></i> Nueva Inscripción C/Legajo', ['create'], ['class' => 'btn btn-success']) ?>
             </div> 
         </div>
         <div class="box-body">

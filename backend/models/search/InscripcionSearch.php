@@ -20,7 +20,7 @@ class InscripcionSearch extends Inscripcion
     public function rules()
     {
         return [
-            [['id', 'alumno_id', 'carrera_id', 'nro_libreta','sede'], 'integer'],
+            [['id', 'alumno_id', 'carrera_id', 'nro_libreta','sede','estado'], 'integer'],
             [['fecha', 'observacion','alumno','nro_legajo'], 'safe'],
         ];
     }
@@ -75,6 +75,7 @@ class InscripcionSearch extends Inscripcion
             'carrera_id' => $this->carrera_id,
             'nro_libreta' => $this->nro_libreta,
             'fecha' => $this->fecha,
+            'estado'=> $this->estado,
             //'carrera.sede_id' => 1,
         ]);
 

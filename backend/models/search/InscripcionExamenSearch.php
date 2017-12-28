@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\InscripcionExamen;
+use common\models\HelperSede;
 
 /**
  * InscripcionExamenSearch represents the model behind the search form about `backend\models\InscripcionExamen`.
@@ -48,7 +49,7 @@ class InscripcionExamenSearch extends InscripcionExamen
         $query = InscripcionExamen::find();
 
         // add conditions that should always apply here
-        $query->joinWith(['alumno','materia']);
+        $query->joinWith(['alumno','materia','materia.carrera']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -85,6 +86,13 @@ class InscripcionExamenSearch extends InscripcionExamen
         ->andFilterWhere(['=','YEAR(fecha_inscripcion)',$this->periodo])
         ->orFilterWhere(['like', 'alumno.numero', $this->alumno])
         ->orFilterWhere(['like', "concat_ws(' ',alumno.apellido,alumno.nombre)", $this->alumno]);
+
+        if(Yii::$app->user->identity->role=='PRECEPTOR'){
+            
+            
+            $query->andFilterWhere(['=', 'carrera.sede_id', HelperSede::obtenerSede()]);
+        
+        }
 
         return $dataProvider;
     }

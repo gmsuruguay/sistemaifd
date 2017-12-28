@@ -10,30 +10,37 @@ use yii\widgets\ActiveForm;
 
 <div class="inscripcion-examen-search">
 
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
+   
+<div class="box">
+            <div class="box-header with-border">                         
+                <h3 class="box-title"><i class="fa fa-filter"></i> Criterios de búsqueda</h3>
+            </div>
+            <div class="box-body">
+                <?php $form = ActiveForm::begin([
+                    'action' => ['index'],
+                    'method' => 'get',
+                ]); ?>    
+                
+                <div class="row">
+                    <div class="col-md-6">
+                    <?= $form->field($model, 'id')->textInput(['placeholder'=>'Buscar por nro. de permiso']) ?>
+                    
+                    </div>
+                    <div class="col-md-6">
+                    <?= $form->field($model, 'alumno')->textInput(['placeholder'=>'Buscar por DNI o Apellido y Nombre']) ?>
 
-    <?= $form->field($model, 'id') ?>
+                    </div>                  
+                 
+                </div>               
+                 
+                <div class="form-group">
+                    <?= Html::submitButton('<i class="fa fa-search"></i> Buscar', ['class' => 'btn btn-primary']) ?>
+                  
+                </div>
 
-    <?= $form->field($model, 'fecha_inscripcion') ?>
-
-    <?= $form->field($model, 'fecha_examen') ?>
-
-    <?= $form->field($model, 'fecha_baja') ?>
-
-    <?= $form->field($model, 'materia_id') ?>
-
-    <?php // echo $form->field($model, 'alumno_id') ?>
-
-    <?php // echo $form->field($model, 'condicion_id') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+                <?php ActiveForm::end(); ?>
+            </div>
     </div>
 
-    <?php ActiveForm::end(); ?>
 
 </div>

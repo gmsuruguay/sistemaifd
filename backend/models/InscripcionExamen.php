@@ -49,7 +49,7 @@ class InscripcionExamen extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id' => 'Nro. Permiso',
             'fecha_inscripcion' => 'Fecha Inscripcion',
             'fecha_examen' => 'Fecha Examen',
             'fecha_baja' => 'Fecha Baja',
@@ -93,5 +93,10 @@ class InscripcionExamen extends \yii\db\ActiveRecord
     public function getDescripcionMateria()
     {
         return $this->materia ? $this->materia->descripcionAnioMateria : 'Ninguno';
+    }
+
+    public function getDatoCompletoAlumno()
+    {
+        return $this->alumno ? $this->alumno->datoAlumno : '-Ninguno-';
     }
 }

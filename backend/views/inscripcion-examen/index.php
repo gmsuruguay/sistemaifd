@@ -2,37 +2,59 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use common\models\FechaHelper;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\InscripcionExamenSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Inscripcion Examens';
+$this->title = 'Permisos de Examen';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="inscripcion-examen-index">
+   
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="box">
+        <div class="box-header with-border">            
+            <h3 class="box-title">Listado de Permisos de Examen</h3>  
+                      
+        </div>
+        <div class="box-body">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,                
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
 
-    <p>
-        <?= Html::a('Create Inscripcion Examen', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+                    'id',       
+                    [
+                    'attribute'=>'fecha_examen',
+                    'value'=>function($data){
+                        return FechaHelper::fechaDMY($data->fecha_examen);
+                    }
+                    ],
+                    [
+                    'attribute'=>'materia_id',
+                    'value'=>function($data){
+                        return $data->descripcionMateria;
+                    }
 
-            'id',
-            'fecha_inscripcion',
-            'fecha_examen',
-            'fecha_baja',
-            'materia_id',
-            // 'alumno_id',
-            // 'condicion_id',
+                    ],      
+                    [
+                    'attribute'=>'alumno',                    
+                    'format'=>'text',//raw, html
+                    'content'=>function ($data){      
+                        $url = Url::to(['alumno/view', 'id'=>$data->alumno_id]);
+                        $opciones = [];
+                        return Html::a($data->datoCompletoAlumno, $url, $opciones);             
+                        
+                    }
+                    ], 
+                
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]); ?>
+        </div>
+    </div>
 </div>

@@ -47,9 +47,18 @@ use backend\models\Sede;
                         'icon' => 'fa fa-rocket',
                         'url' => '#',
                         'items' => [                            
-                            ['label' => 'Listar', 'icon' => 'fa fa-list', 'url' => ['/cursada'],],
+                            ['label' => 'Listar Inscripciones', 'icon' => 'fa fa-list', 'url' => ['/cursada'],],
                             ['label' => 'Registrar Cierre Cursada', 'icon' => 'fa fa-edit', 'url' => ['/cursada/cerrar-cursada'],],                            
                         ],
+                    ],
+                    [
+                        'label' => 'Examen',
+                        'icon' => 'fa fa-newspaper-o',
+                        'url' => '#',
+                        'items' => [                            
+                            ['label' => 'Listar Permisos solicitados', 'icon' => 'fa fa-list', 'url' => ['/inscripcion-examen'],],
+                            ['label' => 'Calendario Examen', 'icon' => 'fa fa-calendar', 'url' => ['/calendario-examen'],],                                
+                            ['label' => 'Turno Examen', 'icon' => 'fa fa-list', 'url' => ['/turno-examen'],],                         ],
                     ],
                     
                     [
@@ -76,8 +85,7 @@ use backend\models\Sede;
                     ['label' => 'Localidades', 'icon' => 'fa fa-map-marker', 'url' => ['/localidad']], 
                     ['label' => 'Condición Cursada', 'icon' => 'fa fa-question-circle', 'url' => ['/condicion']], 
                     ['label' => 'Calendario Académico', 'icon' => 'fa fa-calendar', 'url' => ['/calendario-academico'],],  
-                    ['label' => 'Calendario Examen', 'icon' => 'fa fa-calendar', 'url' => ['/calendario-examen'],],                                
-                    ['label' => 'Turno Examen', 'icon' => 'fa fa-list', 'url' => ['/turno-examen'],],                                
+                                                   
                   
                     [
                         'label' => 'Configuración',

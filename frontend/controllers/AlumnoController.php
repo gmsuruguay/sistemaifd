@@ -52,7 +52,7 @@ class AlumnoController extends Controller
         $alumno= $this->findModel(Yii::$app->user->identity->idAlumno);              
         if ($model->load(Yii::$app->request->post()) ) {
             $model->alumno_id= Yii::$app->user->identity->idAlumno; 
-            $model->estado='p';
+            $model->estado=0; // Estado Pre-inscripto
             $model->fecha=date('Y-m-d');
             if($model->save()){
                 $session = Yii::$app->session;                

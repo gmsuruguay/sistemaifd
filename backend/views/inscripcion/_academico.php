@@ -50,6 +50,11 @@ use mdm\admin\components\Helper;
                 [
                 'label'=>'Planilla Prontuarial',
                 'value'=>$model->getDocumentacion($model->planilla_prontuarial),
+                ],
+                [
+                'label'=>'Estado',
+                'format'=>'raw',
+                'value'=>$model->estado == 0 ? Html::tag('span','Preinscripto',['class'=> 'label label-info']) : Html::tag('span','Inscripto',['class'=> 'label label-success']),
                 ]
             ],
         ]) ?>                                                           

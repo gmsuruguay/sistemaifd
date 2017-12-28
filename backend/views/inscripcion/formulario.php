@@ -70,6 +70,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'planilla_prontuarial')->checkbox() ?>       
 
             <?= $form->field($model, 'observacion')->textarea(['rows' => 6]) ?>
+            
+            <?= $form->field($model, 'estado')->radioList(array('p'=>'PREINSCRIPTO','i'=>'INSCRIPTO')); ?>
 
         </div>                              
         <div class="box-footer">

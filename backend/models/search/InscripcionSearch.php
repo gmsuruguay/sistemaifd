@@ -20,8 +20,8 @@ class InscripcionSearch extends Inscripcion
     public function rules()
     {
         return [
-            [['id', 'alumno_id', 'carrera_id', 'nro_libreta','sede'], 'integer'],
-            [['fecha', 'observacion','alumno','nro_legajo','estado'], 'safe'],
+            [['id', 'alumno_id', 'carrera_id', 'nro_libreta','sede','estado'], 'integer'],
+            [['fecha', 'observacion','alumno','nro_legajo'], 'safe'],
         ];
     }
 
@@ -75,7 +75,8 @@ class InscripcionSearch extends Inscripcion
             'carrera_id' => $this->carrera_id,
             'nro_libreta' => $this->nro_libreta,
             'fecha' => $this->fecha,
-            'estado' => $this->estado,
+            'estado'=> $this->estado,
+            //'carrera.sede_id' => 1,
         ]);
 
         $query->orFilterWhere(['like', 'alumno.numero', $this->alumno])
@@ -85,8 +86,7 @@ class InscripcionSearch extends Inscripcion
        
         $query->andFilterWhere(['=', 'carrera.sede_id', HelperSede::obtenerSede()]);
         
-        }
-              
+        }              
 
         return $dataProvider;
     }

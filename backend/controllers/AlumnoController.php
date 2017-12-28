@@ -213,6 +213,7 @@ class AlumnoController extends Controller
         $model = new Alumno();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('info', "Por favor complete el formulario con los datos académicos");
             return $this->redirect(['/inscripcion/nuevo', 'id' => $model->id]);
         } else {
             return $this->render('create', [

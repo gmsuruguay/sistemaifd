@@ -127,10 +127,10 @@ class Inscripcion extends \yii\db\ActiveRecord
         }
         return "FALTANTE";
     }
-
+    
     public static function existePreinscripcion($id)
     {
-        $existe= self::find()->where( [ 'alumno_id' => $id, 'estado'=>'p' ] )
+        $existe= self::find()->where( [ 'alumno_id' => $id, 'estado'=>0 ] )
         ->exists(); 
 
         return $existe;

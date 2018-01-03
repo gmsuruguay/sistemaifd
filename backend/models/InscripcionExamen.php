@@ -21,6 +21,9 @@ use yii\helpers\ArrayHelper;
  */
 class InscripcionExamen extends \yii\db\ActiveRecord
 {
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+
     /**
      * @inheritdoc
      */
@@ -35,6 +38,7 @@ class InscripcionExamen extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['estado', 'default', 'value' => self::STATUS_INACTIVE],
             [['fecha_inscripcion', 'fecha_examen', 'fecha_baja'], 'safe'],
             [['materia_id', 'alumno_id', 'condicion_id'], 'integer'],
             [['condicion_id','materia_id'], 'required'],

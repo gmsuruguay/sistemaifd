@@ -106,6 +106,36 @@ class InscripcionExamenController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionActivar($id)
+    {
+        $model = $this->findModel($id);
+        $model->estado = 1;
+        if( $model->update() ){
+
+            // Se cambio al estado activo
+            Yii::$app->session->setFlash('success', "Se autorizo correctamente el permiso de examen solicitado");            
+            return $this->redirect(['index']);
+
+       }else{
+           throw new NotFoundHttpException('Ocurrio un error');
+       }
+    }
+
+    public function actionDesactivar($id)
+    {
+        $model = $this->findModel($id);
+        $model->estado = 0;
+        if( $model->update() ){
+
+            // Se cambio al estado activo
+            Yii::$app->session->setFlash('success', "Se desactivo correctamente el permiso de examen solicitado");            
+            return $this->redirect(['index']);
+
+       }else{
+           throw new NotFoundHttpException('Ocurrio un error');
+       }
+    }
+
     /**
      * Finds the InscripcionExamen model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

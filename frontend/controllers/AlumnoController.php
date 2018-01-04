@@ -650,4 +650,29 @@ class AlumnoController extends Controller
         }
     }
 
+    protected function findModelInscripcionExamen($id)
+    {
+        if (($model = InscripcionExamen::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionImprimirPermiso($id)
+    {
+        $model= $this->findModelInscripcionExamen($id);
+        $mes=FechaHelper::obtenerMes(date('Y-m-d'));
+        $pdf = Yii::$app->pdf;        
+        $pdf->cssFile = 'css/reporte.css';
+        $pdf->options = ['title' => 'Permiso de Exámen'];
+        $pdf->content = $this->renderPartial('reporte-permiso-examen', [
+            'model' => $model,
+            'mes'=>$mes,                        
+        ]);
+        
+        
+        return $pdf->render();
+    }
+
 }

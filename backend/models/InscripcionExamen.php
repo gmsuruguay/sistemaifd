@@ -88,6 +88,15 @@ class InscripcionExamen extends \yii\db\ActiveRecord
         return parent::beforeValidate();
     }*/
 
+     /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+    public function getCondicion() 
+    { 
+        return $this->hasOne(Condicion::className(), ['id' => 'condicion_id']);
+    } 
+
+
     public function getListaCondicion()
     {        
         $sql = Condicion::find()->where(['id'=>[1,3]])->orderBy('descripcion')->all();
@@ -99,8 +108,17 @@ class InscripcionExamen extends \yii\db\ActiveRecord
         return $this->materia ? $this->materia->descripcionAnioMateria : 'Ninguno';
     }
 
+    public function getDescripcionCondicion()
+    {
+        return $this->condicion ? $this->condicion->descripcion : 'Ninguno';
+    }
+
     public function getDatoCompletoAlumno()
     {
         return $this->alumno ? $this->alumno->datoAlumno : '-Ninguno-';
+    }
+
+    public function getNombreAlumno(){
+        return $this->alumno ? $this->alumno->nombreCompleto : ' - ';
     }
 }

@@ -99,7 +99,34 @@ $this->title = 'Mis Inscripciones';
                         'content'=>function ($data){
                             return FechaHelper::fechaDMY($data->fecha_examen);
                         }
-                        ],    
+                        ], 
+                        [
+                        'attribute'=>'estado',                                       
+                        'format'=>'raw',
+                        'value'=>function($data){                   
+        
+                            switch ($data->estado) {
+                                case 1: //Estado activo
+                                    return 'Activo';
+                                    break;
+                                case 0: //Estado pendiente
+                                    return 'Pendiente';
+                                    break;                                                                       
+                            }       
+                            
+                        }
+                        ],
+    
+                        ['class' => 'yii\grid\ActionColumn', 'template' => '{imprimir-permiso} {baja-examen}', 
+                        'buttons' => [
+                            'imprimir-permiso' => function ($url, $model, $key) {
+                                return Html::a('<i class="material-icons left">print</i>', ['imprimir-permiso', 'id' => $key], ['title'=>'Imprimir','target'=>'_blank']);
+                            },
+                            'baja-examen' => function ($url, $model, $key) {
+                                return Html::a('<i class="material-icons left">highlight_off</i>', ['baja-examen', 'id' => $key], ['title'=>'Baja']);
+                            },
+            
+                        ]],    
     
                     ],
             ]);?>

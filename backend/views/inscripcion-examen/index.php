@@ -62,6 +62,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     break;
                                 case 0: //Estado pendiente
                                     return Html::tag('span','Pendiente',['class'=> 'label label-warning']);
+                                    break;  
+                                case 2: //Estado Anulado
+                                    return Html::tag('span','Anulado',['class'=> 'label label-danger']);
                                     break;                                                                       
                             }       
                             

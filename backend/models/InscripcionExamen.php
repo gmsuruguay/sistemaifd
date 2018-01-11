@@ -23,6 +23,7 @@ class InscripcionExamen extends \yii\db\ActiveRecord
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
+    const STATUS_BAJA = 2;
 
     /**
      * @inheritdoc
@@ -40,7 +41,7 @@ class InscripcionExamen extends \yii\db\ActiveRecord
         return [
             ['estado', 'default', 'value' => self::STATUS_INACTIVE],
             [['fecha_inscripcion', 'fecha_examen', 'fecha_baja'], 'safe'],
-            [['materia_id', 'alumno_id', 'condicion_id'], 'integer'],
+            [['materia_id', 'alumno_id', 'condicion_id','estado'], 'integer'],
             [['condicion_id','materia_id'], 'required'],
             [['alumno_id'], 'exist', 'skipOnError' => true, 'targetClass' => Alumno::className(), 'targetAttribute' => ['alumno_id' => 'id']],
             [['materia_id'], 'exist', 'skipOnError' => true, 'targetClass' => Materia::className(), 'targetAttribute' => ['materia_id' => 'id']],

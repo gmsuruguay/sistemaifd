@@ -111,6 +111,9 @@ $this->title = 'Mis Inscripciones';
                                     break;
                                 case 0: //Estado pendiente
                                     return 'Pendiente';
+                                    break;
+                                case 2: //Estado pendiente
+                                    return 'Anulado';
                                     break;                                                                       
                             }       
                             
@@ -123,7 +126,15 @@ $this->title = 'Mis Inscripciones';
                                 return Html::a('<i class="material-icons left">print</i>', ['imprimir-permiso', 'id' => $key], ['title'=>'Imprimir','target'=>'_blank']);
                             },
                             'baja-examen' => function ($url, $model, $key) {
-                                return Html::a('<i class="material-icons left">highlight_off</i>', ['baja-examen', 'id' => $key], ['title'=>'Baja']);
+                                return Html::a('<i class="material-icons left">highlight_off</i>', 
+                                ['baja-examen', 'id' => $key],
+                                [
+                                'title'=>'Baja',
+                                'data' => [
+                                    'confirm' => 'Esta seguro de realizar la baja a esta mesa de exámen?',
+                                    'method' => 'post',
+                                ],
+                                ]);
                             },
             
                         ]],    

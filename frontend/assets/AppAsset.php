@@ -20,8 +20,10 @@ class AppAsset extends AssetBundle
         'js/materialize.js',
         'js/init.js',
         'js/alert.js',
+        'js/yii_overrides.js',   
     ];
     public $depends = [       
         'yii\web\YiiAsset',
+        'backend\assets\SweetAlertAsset', 
     ];
 }

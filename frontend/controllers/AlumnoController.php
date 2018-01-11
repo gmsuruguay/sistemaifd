@@ -675,4 +675,22 @@ class AlumnoController extends Controller
         return $pdf->render();
     }
 
+    public function actionBajaExamen($id)
+    {
+        $inscripcion = $this->findModelInscripcionExamen($id);
+        $inscripcion->estado = InscripcionExamen::STATUS_BAJA;
+        $inscripcion->fecha_baja = date('Y-m-d');
+      
+        if($inscripcion->update())
+        {
+             Yii::$app->session->setFlash('success',"La baja a la mesa de exámen se realizo con exito.");
+             return $this->redirect(['index']);
+        }
+        else
+        {
+             Yii::$app->session->setFlash('error',"No se pudo efectuar la baja, intentelo nuevamente.");
+             return $this->redirect(['index']);
+        }
+    }
+
 }

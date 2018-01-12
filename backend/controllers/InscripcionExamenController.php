@@ -109,7 +109,7 @@ class InscripcionExamenController extends Controller
     public function actionActivar($id)
     {
         $model = $this->findModel($id);
-        $model->estado = 1;
+        $model->estado = InscripcionExamen::STATUS_ACTIVE;
         if( $model->update() ){
 
             // Se cambio al estado activo
@@ -124,7 +124,7 @@ class InscripcionExamenController extends Controller
     public function actionDesactivar($id)
     {
         $model = $this->findModel($id);
-        $model->estado = 0;
+        $model->estado =InscripcionExamen::STATUS_INACTIVE;
         if( $model->update() ){
 
             // Se cambio al estado activo

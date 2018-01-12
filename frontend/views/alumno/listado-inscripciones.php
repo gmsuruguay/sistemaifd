@@ -137,7 +137,18 @@ $this->title = 'Mis Inscripciones';
                                 ]);
                             },
             
-                        ]],    
+                        ],
+                        'visibleButtons' => [
+                            
+                            'imprimir-permiso' => function ($model, $key, $index) {
+                                return ($model->estado == 2) ? false : true;
+                            },
+                            'baja-examen' => function ($model, $key, $index) {
+                                return ($model->estado == 2) ? false : true;
+                            },
+                        ]
+                    
+                    ],    
     
                     ],
             ]);?>

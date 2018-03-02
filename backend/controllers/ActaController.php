@@ -9,6 +9,7 @@ use backend\models\Alumno;
 use backend\models\InscripcionExamen;
 use backend\models\Cursada;
 use backend\models\search\ActaSearch;
+use backend\models\search\ActaInscripcionExamenSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -17,6 +18,7 @@ use yii\widgets\ActiveForm;
 use yii\web\Response;
 use yii\base\Exception;
 use common\models\FechaHelper;
+use backend\models\CalendarioExamen;
 /**
  * ActaController implements the CRUD actions for Acta model.
  */
@@ -52,6 +54,31 @@ class ActaController extends Controller
         ]);
     }
 
+    //Lista las inscripciones a examen
+    public function actionListarInscripciones()
+    {
+        $searchModel = new ActaInscripcionExamenSearch();
+        $searchModel->anio= date('Y');
+        $searchModel->materia_id= null;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('lista', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionListarFecha($cod){
+
+        $fechas= CalendarioExamen::find()->where(['materia_id'=>$cod])->orderBy('fecha_examen')->all();
+
+        echo '<option value="">---Selecciona fecha---</option>';
+        foreach ($fechas as $f)
+        {
+            echo '<option value="'.$f->fecha_examen.'">'.FechaHelper::fechaDMY($f->fecha_examen).'</option>';
+        }
+
+    }
     /**
      * Displays a single Acta model.
      * @param integer $id

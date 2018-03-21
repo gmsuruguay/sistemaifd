@@ -19,6 +19,10 @@ use yii\web\Response;
 use yii\base\Exception;
 use common\models\FechaHelper;
 use backend\models\CalendarioExamen;
+use yii\db\Query;
+use yii\helpers\Html;
+
+
 /**
  * ActaController implements the CRUD actions for Acta model.
  */
@@ -56,17 +60,9 @@ class ActaController extends Controller
 
     //Lista las inscripciones a examen
     public function actionListarInscripciones()
-    {
-        $searchModel = new ActaInscripcionExamenSearch();
-        $searchModel->anio= date('Y');
-        $searchModel->materia_id= null;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('lista', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+    {      
+        return $this->render('lista');
+    }  
     
     public function actionListarFecha($cod){
 
@@ -78,6 +74,43 @@ class ActaController extends Controller
             echo '<option value="'.$f->fecha_examen.'">'.FechaHelper::fechaDMY($f->fecha_examen).'</option>';
         }
 
+    }
+
+    public function actionConsultar($cod,$fecha)
+    {  
+       $activo=1; 
+       $sql='SELECT m.id,m.descripcion as materia , COUNT(i.materia_id) AS cant FROM inscripcion_examen as i JOIN materia as m on m.id=i.materia_id WHERE i.materia_id=:materia AND i.fecha_examen=:fecha_examen AND i.estado=:estado GROUP BY m.id,materia';
+       $materia= \Yii::$app->db->createCommand($sql);
+       $materia->bindValue(':materia', $cod);
+       $materia->bindValue(':fecha_examen', $fecha);
+       $materia->bindValue(':estado', $activo);
+       $html = '<div class="box">';
+       $html .='<div class="box-body">';
+       $html .= '<table class="table table-condensed">';
+       $html .='<tbody>';
+       $html .='<tr>';       
+       $html .='<th>Materia</th>';                      
+       $html .='<th>Cantidad Alumnos</th>';
+       $html .='<th></th>'; 
+       $html .='</tr>';
+       if($model=$materia->queryAll()){
+        //echo json_encode($model);
+        foreach ($model as $value) {
+            $html .='<tr>';
+            $html .= Html::tag('td', $value['materia']);
+            $html .= Html::tag('td', $value['cant']);   
+            $html .= '<td><a href="#"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a></td>';         
+            $html .='</tr>';
+        }
+        $html .='</tbody>';
+        $html .='</table>';
+        $html .='</div>';
+        $html .='</div>';
+        echo $html;
+       }else{
+           echo 'No se encontraron resultados.';
+       }      
+     
     }
     /**
      * Displays a single Acta model.

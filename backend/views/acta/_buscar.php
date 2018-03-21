@@ -4,8 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\models\Materia;
 use kartik\select2\Select2;
-use backend\models\Cursada;
-use kartik\widgets\DatePicker;
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\search\ActaSearch */
 /* @var $form yii\widgets\ActiveForm */

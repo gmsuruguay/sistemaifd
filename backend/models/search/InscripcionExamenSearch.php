@@ -73,7 +73,7 @@ class InscripcionExamenSearch extends InscripcionExamen
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            'inscripcion_examen.id' => $this->id,
             'fecha_inscripcion' => $this->fecha_inscripcion,
             'fecha_examen' => $this->fecha_examen,
             'fecha_baja' => $this->fecha_baja,

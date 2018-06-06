@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-12-2017 a las 02:58:28
+-- Tiempo de generación: 05-06-2018 a las 21:02:21
 -- Versión del servidor: 5.7.14
 -- Versión de PHP: 5.6.25
 
@@ -529,7 +529,13 @@ INSERT INTO `alumno` (`id`, `tipo_doc`, `numero`, `cuil`, `apellido`, `nombre`, 
 (440, 'dni', '32452851', '20-3', 'SURUGUAY', 'MARTIN', '', '', 'ARGENTINA', '1985-11-14', NULL, '', '', NULL, '', '', 'gmsuruguay@gmail.com', NULL, 9, 1, 1),
 (441, 'dni', '32108792', '20-8', 'CRUZ ', 'NATALIA LORENA', '', 'CASADO', 'ARGENTINA', '1986-09-04', 1, 'EXODO ', '988', 1, '4917325', '154107856', '', NULL, NULL, 1, 1),
 (442, 'dni', '12345678', '', 'ARAMAYO', 'BELEN', '', '', 'ARGENTINA', '2000-01-01', NULL, '', '', NULL, '', '', '', NULL, NULL, 1, 1),
-(443, 'dni', '85231496', '', 'PEREZ', 'ENZO', '', '', 'ARGENTINA', '1985-01-25', NULL, '', '', NULL, '', '', '', NULL, NULL, 1, 1);
+(443, 'dni', '85231496', '', 'PEREZ', 'ENZO', '', '', 'ARGENTINA', '1985-01-25', NULL, '', '', NULL, '', '', '', NULL, NULL, 1, 1),
+(444, 'dni', '74185296', NULL, 'FICO', 'ROLY', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ge@email.com', NULL, 14, NULL, NULL),
+(445, 'dni', '12345685', NULL, 'TEVEZ', 'CARLOS', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'tic@gmail.com', NULL, 15, NULL, NULL),
+(446, 'dni', '96385274', NULL, 'NEYMAR', 'JUNIOR', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'studioweb@gmail.com', NULL, 16, NULL, NULL),
+(447, 'dni', '45612378', NULL, 'ZAPANA', 'HECTOR', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'web@gmail.com', NULL, 17, NULL, NULL),
+(448, 'dni', '31452852', NULL, 'VILTE', 'MELISA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'tic.studioweb@gmail.com', NULL, 18, NULL, NULL),
+(449, 'dni', '32654789', '20-3', 'CARBALLO', 'MELISA', 'F', 'SOLTERO', 'ARGENTINA', '1985-11-10', NULL, 'ALBERI', '85', 1, '4916458', '388956324', 'gmsuruguay@hotmail.com', NULL, 19, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -550,6 +556,13 @@ CREATE TABLE `auth_assignment` (
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 ('ADMINISTRADOR', '1', 1504054122),
 ('ALUMNO', '10', 1510696273),
+('ALUMNO', '13', 1512526116),
+('ALUMNO', '14', 1512526718),
+('ALUMNO', '15', 1512590816),
+('ALUMNO', '16', 1512597913),
+('ALUMNO', '17', 1512598265),
+('ALUMNO', '18', 1512598626),
+('ALUMNO', '19', 1512599371),
 ('ALUMNO', '3', 1508535857),
 ('ALUMNO', '4', 1508628889),
 ('ALUMNO', '7', 1509062795),
@@ -584,13 +597,19 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/admin/*', 2, NULL, NULL, NULL, 1504053920, 1504053920),
 ('/alumno/*', 2, NULL, NULL, NULL, 1504553174, 1504553174),
 ('/alumno/actualizar', 2, NULL, NULL, NULL, 1509070709, 1509070709),
+('/alumno/actualizar-legajo', 2, NULL, NULL, NULL, 1512614065, 1512614065),
+('/alumno/baja-examen', 2, NULL, NULL, NULL, 1515713239, 1515713239),
+('/alumno/confirmar-inscripcion', 2, NULL, NULL, NULL, 1512760910, 1512760910),
 ('/alumno/form-inscripcion', 2, NULL, NULL, NULL, 1509588772, 1509588772),
 ('/alumno/historial-academico', 2, NULL, NULL, NULL, 1510252946, 1510252946),
+('/alumno/imprimir-formulario', 2, NULL, NULL, NULL, 1512762766, 1512762766),
+('/alumno/imprimir-permiso', 2, NULL, NULL, NULL, 1515098730, 1515098730),
 ('/alumno/index', 2, NULL, NULL, NULL, 1508537858, 1508537858),
 ('/alumno/inscribir-materia', 2, NULL, NULL, NULL, 1508785829, 1508785829),
 ('/alumno/legajo', 2, NULL, NULL, NULL, 1508537799, 1508537799),
 ('/alumno/listar-materia', 2, NULL, NULL, NULL, 1504735722, 1504735722),
 ('/alumno/listar-regularidades', 2, NULL, NULL, NULL, 1510610253, 1510610253),
+('/alumno/registrar-carrera', 2, NULL, NULL, NULL, 1512611448, 1512611448),
 ('/alumno/tramites', 2, NULL, NULL, NULL, 1509481904, 1509481904),
 ('/alumno/update', 2, NULL, NULL, NULL, 1508985267, 1508985267),
 ('/alumno/ver-inscripciones', 2, NULL, NULL, NULL, 1510059146, 1510059146),
@@ -610,8 +629,10 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/cursada/*', 2, NULL, NULL, NULL, 1507321584, 1507321584),
 ('/docente/*', 2, NULL, NULL, NULL, 1504213029, 1504213029),
 ('/historia-academica/*', 2, NULL, NULL, NULL, 1505265060, 1505265060),
+('/inscripcion-examen/*', 2, NULL, NULL, NULL, 1514495936, 1514495936),
 ('/inscripcion/*', 2, NULL, NULL, NULL, 1504564372, 1504564372),
 ('/localidad/*', 2, NULL, NULL, NULL, 1504724176, 1504724176),
+('/materia-asignada/*', 2, NULL, NULL, NULL, 1513201844, 1513201844),
 ('/materia/*', 2, NULL, NULL, NULL, 1504704371, 1504704371),
 ('/pedido/*', 2, NULL, NULL, NULL, 1509481313, 1509481313),
 ('/sede/*', 2, NULL, NULL, NULL, 1508356774, 1508356774),
@@ -650,14 +671,20 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('ADMINISTRADOR', '/alumno/*'),
 ('PRECEPTOR', '/alumno/*'),
 ('ALUMNO', '/alumno/actualizar'),
+('ALUMNO', '/alumno/actualizar-legajo'),
+('ALUMNO', '/alumno/baja-examen'),
+('ALUMNO', '/alumno/confirmar-inscripcion'),
 ('ALUMNO', '/alumno/form-inscripcion'),
 ('ALUMNO', '/alumno/historial-academico'),
+('ALUMNO', '/alumno/imprimir-formulario'),
+('ALUMNO', '/alumno/imprimir-permiso'),
 ('ALUMNO', '/alumno/index'),
 ('ALUMNO', '/alumno/inscribir-materia'),
 ('ALUMNO', '/alumno/legajo'),
 ('ADMINISTRADOR', '/alumno/listar-materia'),
 ('ALUMNO', '/alumno/listar-materia'),
 ('ALUMNO', '/alumno/listar-regularidades'),
+('ALUMNO', '/alumno/registrar-carrera'),
 ('ALUMNO', '/alumno/tramites'),
 ('ALUMNO', '/alumno/ver-inscripciones'),
 ('ADMINISTRADOR', '/autoridades/*'),
@@ -685,10 +712,14 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('PRECEPTOR', '/docente/*'),
 ('ADMINISTRADOR', '/historia-academica/*'),
 ('PRECEPTOR', '/historia-academica/*'),
+('ADMINISTRADOR', '/inscripcion-examen/*'),
+('PRECEPTOR', '/inscripcion-examen/*'),
 ('ADMINISTRADOR', '/inscripcion/*'),
 ('PRECEPTOR', '/inscripcion/*'),
 ('ADMINISTRADOR', '/localidad/*'),
 ('PRECEPTOR', '/localidad/*'),
+('ADMINISTRADOR', '/materia-asignada/*'),
+('PRECEPTOR', '/materia-asignada/*'),
 ('ADMINISTRADOR', '/materia/*'),
 ('PRECEPTOR', '/materia/*'),
 ('ADMINISTRADOR', '/pedido/*'),
@@ -700,8 +731,10 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('ALUMNO', '/site/change-password'),
 ('ALUMNO', '/site/index'),
 ('ADMINISTRADOR', '/titulo-docente/*'),
+('PRECEPTOR', '/titulo-docente/*'),
 ('ADMINISTRADOR', '/titulo-secundario/*'),
 ('ADMINISTRADOR', '/titulo/*'),
+('PRECEPTOR', '/titulo/*'),
 ('ADMINISTRADOR', '/turno-examen/*'),
 ('ADMINISTRADOR', '/user/*');
 
@@ -763,7 +796,9 @@ INSERT INTO `calendario_academico` (`id`, `fecha_desde`, `fecha_hasta`, `tipo_in
 (1, '2017-11-13', '2017-11-17', 'EXAMEN', '2° TURNO DE EXAMEN', '2017-11-05', '2017-11-09', 2),
 (2, '2017-07-01', '2017-07-05', 'EXAMEN', '1° TURNO DE EXAMEN', '2017-06-25', '2017-06-30', 1),
 (4, '2017-11-01', '2017-11-10', 'CURSADA', 'INSCRIPCIONES A MATERIAS', '2017-11-01', '2017-11-10', 0),
-(5, '2017-02-01', '2017-02-10', 'PREINSCRIPCION', 'PREINSCRIPCION A CARRERAS', '2017-02-01', '2017-02-10', NULL);
+(5, '2017-02-01', '2017-02-10', 'PREINSCRIPCION', 'PREINSCRIPCION A CARRERAS', '2017-02-01', '2017-02-10', NULL),
+(6, '2017-12-11', '2017-12-15', 'PREINSCRIPCION', 'PREINSCRIPCION A CARRERA CICLO LECTIVO 2018', '2017-12-05', '2017-12-15', NULL),
+(7, '2018-01-16', '2018-01-31', 'EXAMEN', 'Examen', '2018-01-01', '2018-01-15', 2);
 
 -- --------------------------------------------------------
 
@@ -881,7 +916,8 @@ INSERT INTO `correlatividad` (`id`, `materia_id`, `materia_id_correlativa`, `tip
 (1, 2, 1, 'a'),
 (2, 2, 5, 'r'),
 (3, 4, 3, 'a'),
-(4, 6, 4, 'a');
+(4, 6, 4, 'a'),
+(5, 5, 1, 'a');
 
 -- --------------------------------------------------------
 
@@ -897,23 +933,24 @@ CREATE TABLE `cursada` (
   `materia_id` int(11) NOT NULL,
   `fecha_cierre` date DEFAULT NULL,
   `nota` decimal(6,2) DEFAULT NULL,
-  `fecha_vencimiento` date DEFAULT NULL
+  `fecha_vencimiento` date DEFAULT NULL,
+  `estado` bit(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `cursada`
 --
 
-INSERT INTO `cursada` (`id`, `fecha_inscripcion`, `condicion_id`, `alumno_id`, `materia_id`, `fecha_cierre`, `nota`, `fecha_vencimiento`) VALUES
-(1, '2016-10-24', NULL, 1, 1, NULL, NULL, NULL),
-(6, '2016-10-24', NULL, 1, 5, NULL, NULL, NULL),
-(7, '2017-10-25', NULL, 1, 5, NULL, NULL, NULL),
-(8, '2017-03-01', 1, 1, 3, '2017-11-07', '3.00', '2019-12-31'),
-(10, '2017-03-05', 2, 440, 3, '2017-11-07', '7.00', '2019-12-31'),
-(11, '2017-03-05', 1, 440, 6, '2017-11-09', '3.00', '2019-11-09'),
-(12, '2017-07-01', 3, 440, 7, '2017-11-13', '5.00', '2019-11-13'),
-(13, '2017-03-05', NULL, 1, 6, NULL, NULL, NULL),
-(14, '2017-03-01', 2, 441, 9, '2017-12-04', '9.00', '2019-12-04');
+INSERT INTO `cursada` (`id`, `fecha_inscripcion`, `condicion_id`, `alumno_id`, `materia_id`, `fecha_cierre`, `nota`, `fecha_vencimiento`, `estado`) VALUES
+(1, '2016-10-24', NULL, 1, 1, NULL, NULL, NULL, NULL),
+(6, '2016-10-24', NULL, 1, 5, NULL, NULL, NULL, NULL),
+(7, '2017-10-25', NULL, 1, 5, NULL, NULL, NULL, NULL),
+(8, '2017-03-01', 1, 1, 3, '2017-11-07', '3.00', '2019-12-31', NULL),
+(10, '2017-03-05', 2, 440, 3, '2017-11-07', '7.00', '2019-12-31', NULL),
+(11, '2017-03-05', 1, 440, 6, '2017-11-09', '3.00', '2019-11-09', NULL),
+(12, '2017-07-01', 3, 440, 7, '2017-11-13', '5.00', '2019-11-13', NULL),
+(13, '2017-03-05', NULL, 1, 6, NULL, NULL, NULL, NULL),
+(14, '2017-03-01', 2, 441, 9, '2017-12-04', '9.00', '2019-12-04', NULL);
 
 -- --------------------------------------------------------
 
@@ -951,7 +988,9 @@ CREATE TABLE `docente` (
 --
 
 INSERT INTO `docente` (`id`, `nro_legajo`, `tipo_doc`, `numero`, `cuil`, `apellido`, `nombre`, `sexo`, `estado_civil`, `nacionalidad`, `fecha_nacimiento`, `lugar_nacimiento_id`, `domicilio`, `nro`, `localidad_id`, `telefono`, `celular`, `email`, `fecha_baja`, `user_id`, `ubicacion_legajo`, `sede_id`) VALUES
-(1, '8549', 'dni', '30253865', '20-3', 'SOTO', 'DAVID', 'F', 'SOLTERO', 'ARGENTINA', '1982-12-12', 1, '', '', 1, '', '', '', NULL, NULL, NULL, 1);
+(1, '8549', 'dni', '30253865', '20-3', 'SOTO', 'DAVID', 'F', 'SOLTERO', 'ARGENTINA', '1982-12-12', 1, '', '', 1, '', '', '', NULL, NULL, NULL, 1),
+(2, '856', 'dni', '32485964', '20-6', 'GONZALEZ', 'PEDRO', 'M', 'CASADO', 'ARGENTINA', '1980-04-02', NULL, '', '', NULL, '', '', '', NULL, NULL, NULL, 1),
+(3, '1234', 'dni', '25859642', '', 'FARFAN', 'LEO', '', '', 'ARGENTINA', '1985-02-01', NULL, '', '', NULL, '', '', '', '2017-12-18', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -975,22 +1014,24 @@ CREATE TABLE `inscripcion` (
   `certificado_foniatrico` bit(1) DEFAULT NULL,
   `foto` bit(1) DEFAULT NULL,
   `constancia_cuil` bit(1) DEFAULT NULL,
-  `planilla_prontuarial` bit(1) DEFAULT NULL
+  `planilla_prontuarial` bit(1) DEFAULT NULL,
+  `estado` bit(1) DEFAULT NULL COMMENT '0 preinscriptos y 1 inscriptos'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `inscripcion`
 --
 
-INSERT INTO `inscripcion` (`id`, `nro_legajo`, `alumno_id`, `carrera_id`, `nro_libreta`, `fecha`, `observacion`, `fotocopia_dni`, `certificado_nacimiento`, `titulo_secundario`, `certificado_visual`, `certificado_auditivo`, `certificado_foniatrico`, `foto`, `constancia_cuil`, `planilla_prontuarial`) VALUES
-(1, 'LS1234', 1, 2, 1234, '2017-10-12', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0'),
-(2, '8521', 1, 1, 852, '2017-03-03', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0'),
-(3, '8521', 3, 2, 8521, '2017-10-26', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0'),
-(4, '1234', 440, 2, 1234, '2017-11-01', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0'),
-(5, '9764', 441, 3, 9764, '2017-11-29', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0'),
-(6, '986', 442, 3, 986, '2017-11-30', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0'),
-(7, '85', 443, 3, 85, '2017-11-30', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0'),
-(8, '784', 1, 3, 784, '2017-11-30', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0');
+INSERT INTO `inscripcion` (`id`, `nro_legajo`, `alumno_id`, `carrera_id`, `nro_libreta`, `fecha`, `observacion`, `fotocopia_dni`, `certificado_nacimiento`, `titulo_secundario`, `certificado_visual`, `certificado_auditivo`, `certificado_foniatrico`, `foto`, `constancia_cuil`, `planilla_prontuarial`, `estado`) VALUES
+(1, 'LS1234', 1, 2, 1234, '2017-10-12', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', NULL),
+(2, '8521', 1, 1, 852, '2017-03-03', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', NULL),
+(3, '8521', 3, 2, 8521, '2017-10-26', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', NULL),
+(4, '1234', 440, 2, 1234, '2017-11-01', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'1'),
+(5, '9764', 441, 3, 9764, '2017-11-29', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', NULL),
+(6, '986', 442, 3, 986, '2017-11-30', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', NULL),
+(7, '85', 443, 3, 85, '2017-11-30', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', NULL),
+(8, '784', 1, 3, 784, '2017-11-30', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', NULL),
+(13, '', 449, 2, NULL, '2017-12-12', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0', b'0');
 
 -- --------------------------------------------------------
 
@@ -1005,15 +1046,18 @@ CREATE TABLE `inscripcion_examen` (
   `fecha_baja` date DEFAULT NULL,
   `materia_id` int(11) DEFAULT NULL,
   `alumno_id` int(11) DEFAULT NULL,
-  `condicion_id` int(11) NOT NULL
+  `condicion_id` int(11) NOT NULL,
+  `estado` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `inscripcion_examen`
 --
 
-INSERT INTO `inscripcion_examen` (`id`, `fecha_inscripcion`, `fecha_examen`, `fecha_baja`, `materia_id`, `alumno_id`, `condicion_id`) VALUES
-(1, '2017-11-07', '2017-11-15', NULL, 6, 440, 1);
+INSERT INTO `inscripcion_examen` (`id`, `fecha_inscripcion`, `fecha_examen`, `fecha_baja`, `materia_id`, `alumno_id`, `condicion_id`, `estado`) VALUES
+(1, '2018-01-04', '2017-11-15', NULL, 6, 440, 1, 1),
+(2, '2018-01-04', '2017-11-15', NULL, 6, 339, 1, 1),
+(3, '2018-01-04', '2017-11-15', NULL, 6, 338, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1062,7 +1106,7 @@ INSERT INTO `materia` (`id`, `descripcion`, `carrera_id`, `anio`, `periodo`, `es
 (5, 'HISTORIA INGLESA', 1, '1', '1° C', b'0', 2, '1'),
 (6, 'BASE DE DATOS', 2, '2', '1° C', b'0', 2, '2'),
 (7, 'SISTEMA DE INFORMACION', 2, '2', '1° C', b'0', 3, '1'),
-(8, 'REDES Y COMUNICACIONES', 3, '1', 'ANUAL', b'0', 2, '1'),
+(8, 'REDES Y COMUNICACIONES', 3, '1', 'ANUAL', b'1', 2, '1'),
 (9, 'CLUSTERS', 3, '2', '1° C', b'0', 2, '3');
 
 -- --------------------------------------------------------
@@ -1078,6 +1122,18 @@ CREATE TABLE `materia_asignada` (
   `materia_id` int(11) NOT NULL,
   `fecha_baja` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `materia_asignada`
+--
+
+INSERT INTO `materia_asignada` (`id`, `fecha_alta`, `docente_id`, `materia_id`, `fecha_baja`) VALUES
+(1, '2017-05-01', 1, 9, '2017-12-13'),
+(2, '2017-01-07', 1, 8, NULL),
+(3, '2017-03-01', 2, 3, '2017-12-15'),
+(4, '2017-04-01', 2, 6, '2017-12-18'),
+(5, '2017-01-01', 3, 1, '2017-12-18'),
+(6, '2017-02-01', 3, 5, '2017-12-18');
 
 -- --------------------------------------------------------
 
@@ -1339,10 +1395,17 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_res
 (3, 'alumno', 'RcAqj1V001NPlh6Zftg5Qj6fFGuPOFlu', '$2y$13$KmkpZW3Dyr8yxOSAYaj.8OPBvc04TzK4DUwULwU6xhOIcF1zm3ZF6', NULL, 'alumno@gmail.com', 10, 1508535857, 1508777562, 'ALUMNO'),
 (7, '52279882', 'k6Eq0mMacCYpes6SZZal1KM7t6STU91r', '$2y$13$iFNKKetAfLJTjmUfXY5vKOOlQ.SbVKEfptSFZFne5ae9EWt8lTI16', NULL, 'morena@email.com', 10, 1509062794, 1509062794, 'ALUMNO'),
 (8, '78451296', 'bmdS-LcqVzGj1yq5YSJdXero9i-GCFU-', '$2y$13$O6AD1ByHAoJLF4y4J9RM9OHmH3BguHiccQKrKvarKzCcX3R309sdO', NULL, 'email@gmail.com', 10, 1509070585, 1509070585, 'ALUMNO'),
-(9, '32452851', 'IKJwDvEbFJRtEOcdmo7pKRcmxjS231ro', '$2y$13$orPcklPX3TX92XyPyhP66uru.FghuC5IaQnq5MUA1exwRd.zwA.yG', NULL, 'gmsuruguay@gmail.com', 10, 1509589406, 1512438147, 'ALUMNO'),
+(9, '32452851', 'IKJwDvEbFJRtEOcdmo7pKRcmxjS231ro', '$2y$13$GxvJXVDOeYTUh6XYHm3I1etoycPtshy25SsfUdK2fQtfEqeE3ZZPm', NULL, 'gmsuruguay@gmail.com', 10, 1509589406, 1512601199, 'ALUMNO'),
 (10, '40177491', 'gfIZMi0p93TZPUiuLYyvLf9vSGevbkUd', '$2y$13$QiNfnNbu3Q2.CGiKBj6pWOimtQoEMeY3IMhvegiu5DupBWeww5J16', NULL, 'email@email.com', 10, 1510696273, 1510696273, 'ALUMNO'),
 (11, 'PRECEP', 'KTzu0vHWMY4rG1OdSukAp432NGM98bBL', '$2y$13$4vY15Zpm0YLGc3CkpkAmm.3.UnSidVWB6OaAQJlimAbhVuxif7VtC', NULL, 'precep@email.com', 10, 1511822803, 1511822803, 'PRECEPTOR'),
-(12, 'PRECEM', '0I4t9cCVvRav5OBDlpxl_JVkTUMuHOJz', '$2y$13$DD3zq9CGttLgZCsi0TRcaOZrLujmPQ8hTkyPtiYmFCJ2TTbcfYRRC', NULL, 'precem@email.com', 10, 1511822859, 1511822859, 'PRECEPTOR');
+(12, 'PRECEM', '0I4t9cCVvRav5OBDlpxl_JVkTUMuHOJz', '$2y$13$DD3zq9CGttLgZCsi0TRcaOZrLujmPQ8hTkyPtiYmFCJ2TTbcfYRRC', NULL, 'precem@email.com', 10, 1511822859, 1511822859, 'PRECEPTOR'),
+(13, '12345678', 'fmLxIf8mZHvEbyT-tET38CrEDM_WGvIL', '$2y$13$unko5Vg3KGgCFs0uzHLN6uruL1mgfNwvcUbWhsiLfOkS8qJBzUgWi', NULL, 'oso@email.com', 0, 1512526116, 1512526116, 'ALUMNO'),
+(14, '74185296', 'dR6yuesN44mpCPBT1W7WSzpaZA1zacAn', '$2y$13$Uq5nVzzcs7wf0/j/dwSl.ucno8ThR8xwMe/9qMv12kwvuid/eScQC', NULL, 'ge@email.com', 0, 1512526717, 1512526717, 'ALUMNO'),
+(15, '12345685', 'jeN6tNsNITO0wzmwhWijDxATGLipOcyK', '$2y$13$xJ1ZNHOEA4RPwYAbMEj5wOkeNlyxiZWXqG771N2CYVWfMJkIy5x5K', NULL, 'tic@gmail.com', 0, 1512590816, 1512590816, 'ALUMNO'),
+(16, '96385274', 'nHlzALqFQMey6XLTyPwVM3WG4OWbbFKN', '$2y$13$EsZ1q6Wa0h80eoKawnUn4.qOCilc90lka.e.avD9Pw0MZzPBKP01W', 'JzCZYAP0JJKf3KQCn6m401GkFxwAP6hq_1512597913', 'studioweb@gmail.com', 0, 1512597912, 1512597913, 'ALUMNO'),
+(17, '45612378', 'IyYv0ajCafXJa-OdA4zA7veiUUCrVobE', '$2y$13$ECPdDQa/FANLsWfJk1TXqOody4Epkg/cNtGCWeG5/r7mJ7..owwa.', 'ZCCybsUXRYXXXxYcTlq5CubJ1hwUhVCO_1512598265', 'web@gmail.com', 0, 1512598264, 1512598265, 'ALUMNO'),
+(18, '31452852', 'a2CMX3oaclB3wOVFUppx4DHjJu_q9O9V', '$2y$13$atXo1K37lcpV/7/zagNAoO43n14Zf2TSOYHzTVKb5iZDNiiQ/78PC', 'JlMZTOhf5vGWltpNxXFILG2SqHiPxBwj_1512598626', 'tic.studioweb@gmail.com', 0, 1512598626, 1512598626, 'ALUMNO'),
+(19, '32654789', 'o1kvx328n4544mDxONdAPCRWHvU6ZuuV', '$2y$13$k66xjsWjUK205BICQIP9RuG6ADFfW6zxwQvTXNh89NkfyeJNPdzNq', NULL, 'gmsuruguay@hotmail.com', 10, 1512599371, 1512599854, 'ALUMNO');
 
 -- --------------------------------------------------------
 
@@ -1623,7 +1686,7 @@ ALTER TABLE `acta`
 -- AUTO_INCREMENT de la tabla `alumno`
 --
 ALTER TABLE `alumno`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=444;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=450;
 --
 -- AUTO_INCREMENT de la tabla `autoridades`
 --
@@ -1633,7 +1696,7 @@ ALTER TABLE `autoridades`
 -- AUTO_INCREMENT de la tabla `calendario_academico`
 --
 ALTER TABLE `calendario_academico`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `calendario_examen`
 --
@@ -1658,7 +1721,7 @@ ALTER TABLE `condicion`
 -- AUTO_INCREMENT de la tabla `correlatividad`
 --
 ALTER TABLE `correlatividad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `cursada`
 --
@@ -1668,17 +1731,17 @@ ALTER TABLE `cursada`
 -- AUTO_INCREMENT de la tabla `docente`
 --
 ALTER TABLE `docente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `inscripcion_examen`
 --
 ALTER TABLE `inscripcion_examen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `localidad`
 --
@@ -1693,7 +1756,7 @@ ALTER TABLE `materia`
 -- AUTO_INCREMENT de la tabla `materia_asignada`
 --
 ALTER TABLE `materia_asignada`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `menu`
 --
@@ -1748,7 +1811,7 @@ ALTER TABLE `turno_examen`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT de la tabla `usuario_sede`
 --
@@ -1772,7 +1835,8 @@ ALTER TABLE `acta`
 ALTER TABLE `alumno`
   ADD CONSTRAINT `fk_alumno_colegio_secundario1` FOREIGN KEY (`colegio_secundario_id`) REFERENCES `colegio_secundario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_alumno_localidad1` FOREIGN KEY (`localidad_id`) REFERENCES `localidad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_alumno_localidad2` FOREIGN KEY (`lugar_nacimiento_id`) REFERENCES `localidad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_alumno_localidad2` FOREIGN KEY (`lugar_nacimiento_id`) REFERENCES `localidad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_alumno_titulo_secundario1` FOREIGN KEY (`titulo_secundario_id`) REFERENCES `titulo_secundario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `auth_assignment`

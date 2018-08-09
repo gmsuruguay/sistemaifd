@@ -59,7 +59,7 @@ class ActaController extends Controller
     }
 
     //Lista las inscripciones a examen
-    public function actionListarInscripciones()
+    /*public function actionListarInscripciones()
     {      
         return $this->render('lista');
     }  
@@ -111,7 +111,7 @@ class ActaController extends Controller
            echo 'No se encontraron resultados.';
        }      
      
-    }
+    }*/
     /**
      * Displays a single Acta model.
      * @param integer $id

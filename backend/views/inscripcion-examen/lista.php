@@ -10,7 +10,7 @@ use mdm\admin\components\Helper;
 /* @var $searchModel backend\models\search\CursadaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Imprimir acta de exámen';
+$this->title = 'Imprimir listado';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cursada-index">

@@ -57,6 +57,7 @@ use backend\models\Sede;
                         'url' => '#',
                         'items' => [                            
                             ['label' => 'Listar Permisos solicitados', 'icon' => 'fa fa-list', 'url' => ['/inscripcion-examen'],],
+                            ['label' => 'Imprimir Listado', 'icon' => 'fa fa-print', 'url' => ['/inscripcion-examen/listar-inscripciones'],],
                             ['label' => 'Calendario Examen', 'icon' => 'fa fa-calendar', 'url' => ['/calendario-examen'],],                                
                             ['label' => 'Turno Examen', 'icon' => 'fa fa-list', 'url' => ['/turno-examen'],],                         ],
                     ],

@@ -66,14 +66,14 @@ use kartik\select2\Select2;
 $script = <<< JS
 $("#materia_select").change(function(){
     var id=$(this).val();
-    var url='index.php?r=acta/listar-fecha';
+    var url='index.php?r=inscripcion-examen/listar-fecha';
     $.get(url,{cod:id},function(data){
         $("select#fecha").html(data);
     });
 }); 
 
 $('#btn_buscar').click(function(){
-    var url = "index.php?r=acta/consultar"; // El script a dónde se realizará la petición.
+    var url = "index.php?r=inscripcion-examen/consultar"; // El script a dónde se realizará la petición.
     var materia= $('#materia_select').val();
     var fecha=$('#fecha').val();    
     $.ajax({

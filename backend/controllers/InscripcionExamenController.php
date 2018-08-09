@@ -8,7 +8,10 @@ use backend\models\search\InscripcionExamenSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use backend\models\CalendarioExamen;
+use common\models\FechaHelper;
+use yii\db\Query;
+use yii\helpers\Html;
 /**
  * InscripcionExamenController implements the CRUD actions for InscripcionExamen model.
  */
@@ -151,4 +154,59 @@ class InscripcionExamenController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+     //Lista las inscripciones a examen
+     public function actionListarInscripciones()
+     {      
+         return $this->render('lista');
+     }  
+     
+     public function actionListarFecha($cod){
+ 
+         $fechas= CalendarioExamen::find()->where(['materia_id'=>$cod])->orderBy('fecha_examen')->all();
+ 
+         echo '<option value="">---Selecciona fecha---</option>';
+         foreach ($fechas as $f)
+         {
+             echo '<option value="'.$f->fecha_examen.'">'.FechaHelper::fechaDMY($f->fecha_examen).'</option>';
+         }
+ 
+     }
+ 
+     public function actionConsultar($cod,$fecha)
+     {  
+        $activo=1; 
+        $sql='SELECT m.id,m.descripcion as materia , COUNT(i.materia_id) AS cant FROM inscripcion_examen as i JOIN materia as m on m.id=i.materia_id WHERE i.materia_id=:materia AND i.fecha_examen=:fecha_examen AND i.estado=:estado GROUP BY m.id,materia';
+        $materia= \Yii::$app->db->createCommand($sql);
+        $materia->bindValue(':materia', $cod);
+        $materia->bindValue(':fecha_examen', $fecha);
+        $materia->bindValue(':estado', $activo);
+        $html = '<div class="box">';
+        $html .='<div class="box-body">';
+        $html .= '<table class="table table-condensed">';
+        $html .='<tbody>';
+        $html .='<tr>';       
+        $html .='<th>Materia</th>';                      
+        $html .='<th>Cantidad Alumnos</th>';
+        $html .='<th></th>'; 
+        $html .='</tr>';
+        if($model=$materia->queryAll()){
+         //echo json_encode($model);
+         foreach ($model as $value) {
+             $html .='<tr>';
+             $html .= Html::tag('td', $value['materia']);
+             $html .= Html::tag('td', $value['cant']);   
+             $html .= '<td><a href="#"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a></td>';         
+             $html .='</tr>';
+         }
+         $html .='</tbody>';
+         $html .='</table>';
+         $html .='</div>';
+         $html .='</div>';
+         echo $html;
+        }else{
+            echo 'No se encontraron resultados.';
+        }      
+      
+     }
 }

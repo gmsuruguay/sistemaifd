@@ -21,7 +21,7 @@ $this->registerCssFile('@web/../../../css/site.css', ['depends' => 'yii\bootstra
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body>
+    <body style="background: #d2d6de;">
         <?php $this->beginBody() ?>       
         
         <div class="container">

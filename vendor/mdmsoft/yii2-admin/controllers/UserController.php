@@ -266,7 +266,7 @@ public function actionLogout()
      */
     public function actionRequestPasswordReset()
     {
-        //$this->layout='view_clean';
+        $this->layout='error';
 
         $model = new PasswordResetRequest();
         if ($model->load(Yii::$app->getRequest()->post()) && $model->validate()) {
@@ -290,7 +290,7 @@ public function actionLogout()
      */
     public function actionResetPassword($token)
     {
-        //$this->layout='view_clean';
+        $this->layout='error';
 
         try {
             $model = new ResetPassword($token);

@@ -172,6 +172,8 @@ class InscripcionExamenController extends Controller
          }
  
      }
+
+     //En caso de querer listar los alumnos inscriptos en la misma vista se procede a utilizar el siguiente metodo
  
      public function actionConsultar($cod,$fecha)
      {  
@@ -208,5 +210,24 @@ class InscripcionExamenController extends Controller
             echo 'No se encontraron resultados.';
         }      
       
+     }
+
+     public function actionImprimirInscripcionExamen()
+     {
+        $request = Yii::$app->request;
+        $fecha= $request->get('fecha');
+        $cod_materia= $request->get('materia_id');
+        
+        $model =  InscripcionExamen::find()->where(['materia_id'=>$cod_materia, 'fecha_examen' => $fecha, 'estado'=>1])->all();
+ 
+         $pdf = Yii::$app->pdf;        
+         $pdf->cssFile = 'css/reporte.css';
+         $pdf->options = ['title' => 'Inscripciones a Exámenes'];
+         $pdf->content = $this->renderPartial('reporte_inscripciones_examen', [
+             'model' => $model,
+             'id'=>$cod_materia,                         
+         ]);        
+         
+         return $pdf->render();
      }
 }

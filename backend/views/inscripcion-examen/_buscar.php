@@ -18,7 +18,12 @@ use kartik\select2\Select2;
                 <h3 class="box-title"><i class="fa fa-filter"></i> Criterios de búsqueda</h3>
             </div>
             <div class="box-body">
-                <?php $form = ActiveForm::begin(['id'=>'formulario']); ?>    
+                <?php $form = ActiveForm::begin([
+                    'id'=>'formulario',
+                    'action' => ['imprimir-inscripcion-examen'],
+                    'method' => 'get',
+                    'options'=>['target'=>'_blank']
+                    ]); ?>    
                 
                 <div class="row">
                     <div class="col-md-6">
@@ -51,7 +56,7 @@ use kartik\select2\Select2;
                 </div>               
                 <br> 
                 <div class="form-group">
-                    <?= Html::submitButton('<i class="fa fa-search"></i> Buscar', ['class' => 'btn btn-primary', 'id'=>'btn_buscar']) ?>
+                    <?= Html::submitButton('<i class="fa fa-print"></i> Imprimir', ['class' => 'btn btn-primary']) ?>
                   
                 </div>
 

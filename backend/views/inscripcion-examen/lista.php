@@ -13,7 +13,7 @@ use mdm\admin\components\Helper;
 $this->title = 'Imprimir listado';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="cursada-index">
+<div class="listado-index">
     <?=$this->render('_buscar')?>
           
         

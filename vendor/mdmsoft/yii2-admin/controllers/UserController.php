@@ -138,7 +138,7 @@ class UserController extends Controller
      * Login
      * @return string
      */
-    /*
+    
     
     public function actionLogin()
     {       
@@ -179,9 +179,10 @@ class UserController extends Controller
         }
         
         
-    } */
+    } 
 
-    public function actionLogin()
+    //Modo de logueo con usuario preceptor segun sede asignada
+    /*public function actionLogin()
     {       
 
         if (!Yii::$app->getUser()->isGuest) {
@@ -226,7 +227,7 @@ class UserController extends Controller
         }
         
         
-    }
+    }*/
 /**
  * Logout
  * @return string

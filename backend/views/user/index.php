@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     
 
-                    ['class' => 'yii\grid\ActionColumn','template' => '{view} {permisos}{sede}', 
+                    ['class' => 'yii\grid\ActionColumn','template' => '{view} {permisos}', 
                      'buttons' => [
                         'permisos'=>function ($url, $model, $key) {
                 	                		
@@ -71,11 +71,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             
                         },
 
-                        'sede'=>function ($url, $model, $key) {
+                        /*'sede'=>function ($url, $model, $key) {
                                             
                             return $model->isPreceptor?Html::a('<i class="fa fa-university" aria-hidden="true"></i>', ['/user/asignar-sede', 'id'=>$model->id], ['title'=>'Asignar sede']):'';
                             
-                        },
+                        },*/
                      ],
                     
                     

@@ -71,13 +71,13 @@ class CalendarioExamenSearch extends CalendarioExamen
         $query->andFilterWhere(['like', 'hora', $this->hora])
             ->andFilterWhere(['like', 'aula', $this->aula]);
 
-        if(Yii::$app->user->identity->role=='PRECEPTOR'){
+        /*if(Yii::$app->user->identity->role=='PRECEPTOR'){
             
             $session = Yii::$app->session;
             $sede_id = $session->get('sede');
             $query->andFilterWhere(['=', 'carrera.sede_id', $sede_id]);
         
-        }
+        }*/
 
         return $dataProvider;
     }

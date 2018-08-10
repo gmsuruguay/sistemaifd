@@ -86,12 +86,12 @@ class ActaSearch extends Acta
         $query->orFilterWhere(['like', 'alumno.numero', $this->alumno])
               ->orFilterWhere(['like', "concat_ws(' ',alumno.apellido,alumno.nombre)", $this->alumno]);
         
-        if(Yii::$app->user->identity->role=='PRECEPTOR'){
+        /*if(Yii::$app->user->identity->role=='PRECEPTOR'){
             
             
             $query->andFilterWhere(['=', 'carrera.sede_id', HelperSede::obtenerSede()]);
         
-        }
+        }*/
 
         return $dataProvider;
     }

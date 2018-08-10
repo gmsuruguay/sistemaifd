@@ -187,7 +187,7 @@ class Materia extends \yii\db\ActiveRecord
             
             $sql = self::find()
             ->joinWith(['carrera'])
-            ->where(['sede_id'=> HelperSede::obtenerSede()])
+            //->where(['sede_id'=> HelperSede::obtenerSede()])
             ->orderBy('materia.descripcion')->all();
             return ArrayHelper::map($sql, 'id', 'descripcion');
         }

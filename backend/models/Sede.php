@@ -87,9 +87,9 @@ class Sede extends \yii\db\ActiveRecord
         return ArrayHelper::map($sql, 'id', 'descripcionSede');
     }
 
-    public static function getNombre($id)
+    public static function getNombre()
     {        
-        $model = self::findOne($id);
+        $model = self::findOne(1);
         return 'SEDE '.$model->localidad;
     }
     

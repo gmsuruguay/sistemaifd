@@ -10,11 +10,12 @@ use backend\models\Sede;
             
             <div class="app-info text-center">
                 <p><b><?php
-                 if(Yii::$app->user->identity->role=='PRECEPTOR'){
+                /* if(Yii::$app->user->identity->role=='PRECEPTOR'){
                  $session = Yii::$app->session;
                  $sede_id = $session->get('sede');
-                 echo Sede::getNombre($sede_id);
-                 }
+                 echo Sede::getNombre();
+                 }*/
+                 echo Sede::getNombre();
                 ?></b></p>              
             </div>
         </div>

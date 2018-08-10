@@ -67,11 +67,11 @@ class CarreraSearch extends Carrera
             ->andFilterWhere(['like', 'cohorte', $this->cohorte])
             ->andFilterWhere(['like', 'nro_resolucion', $this->nro_resolucion]);
 
-            if(Yii::$app->user->identity->role=='PRECEPTOR'){                
+            /*if(Yii::$app->user->identity->role=='PRECEPTOR'){                
                
                 $query->andFilterWhere(['=', 'sede_id', HelperSede::obtenerSede()]);
             
-            }
+            }*/
 
 
         return $dataProvider;

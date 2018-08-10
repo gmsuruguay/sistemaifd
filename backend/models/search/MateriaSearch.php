@@ -70,12 +70,12 @@ class MateriaSearch extends Materia
             ->andFilterWhere(['like', 'periodo', $this->periodo])
             ->andFilterWhere(['like', 'anio', $this->anio]);
 
-        if(Yii::$app->user->identity->role=='PRECEPTOR'){
+        /*if(Yii::$app->user->identity->role=='PRECEPTOR'){
             
         
         $query->andFilterWhere(['=', 'carrera.sede_id', HelperSede::obtenerSede()]);
         
-        }
+        }*/
 
         return $dataProvider;
     }

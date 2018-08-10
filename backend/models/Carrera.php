@@ -105,7 +105,7 @@ class Carrera extends \yii\db\ActiveRecord
         if(Yii::$app->user->identity->role=='PRECEPTOR'){            
             
             $sql = self::find()            
-            ->where(['sede_id'=> HelperSede::obtenerSede()])
+            //->where(['sede_id'=> HelperSede::obtenerSede()])
             ->orderBy('descripcion')->all();
             return ArrayHelper::map($sql, 'id', 'descripcion');
         }

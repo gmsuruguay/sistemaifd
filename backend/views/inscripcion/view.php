@@ -4,81 +4,33 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Inscripcion */
+/* @var $model backend\models\Alumno */
 
-$this->title = 'Inscripción';
-$this->params['breadcrumbs'][] = ['label' => 'Inscripcions', 'url' => ['index']];
+$this->title = 'Legajo del Alumno';
+$this->params['breadcrumbs'][] = ['label' => 'Alumnos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="inscripcion-view">
 
-    <div class="box">
-        <div class="box-header with-border">
-            <i class="fa fa-file"></i>
-            <h3 class="box-title">Datos de Inscripción</h3>              
+    <div class="nav-tabs-custom">
+        <ul class="app-icono nav nav-tabs pull-right">  
+          <li class=""><a href="#datos_academicos" data-toggle="tab" aria-expanded="false"><i class="fa  fa-graduation-cap"></i> Datos Academicos</a></li>
+          <li class="active"><a href="#legajo" data-toggle="tab" aria-expanded="true"><i class="fa fa-file-text"></i> Datos Personales</a></li>          
+          <li class="pull-left header "><i class="fa fa-user"></i> <?=$alumno->nombreCompleto?></li>
+        </ul>
+        <div class="tab-content">   
+                    
+          <!-- /.tab-pane -->
+          <div class="tab-pane" id="datos_academicos">
+            <?php  echo $this->render('_academico', ['model'=>$model]); ?>
+          </div>
+          <!-- /.tab-pane -->
+          <div class="tab-pane active" id="legajo">
+            <?php  echo $this->render('_alumno', ['alumno' => $alumno,'model'=>$model]); ?>
+          </div>
+          <!-- /.tab-pane -->
         </div>
-
-        <div class="box-body">  
-        <?= DetailView::widget([
-            'model' => $model,
-            'attributes' => [
-                'nro_legajo',
-                [
-                'label'=>'Alumno',
-                'value'=>$model->datoCompletoAlumno,
-                ],
-                [
-                'label'=>'Carrera',
-                'value'=>$model->descripcionCarrera,
-                ],
-                'nro_libreta',
-                'fecha',
-                'observacion:ntext',
-                [
-                'label'=>'Titulo',
-                'value'=>$model->descripcionTitulo,
-                ],
-                [
-                'label'=>'Colegio',
-                'value'=>$model->descripcionColegio,
-                ],
-                [
-                'label'=>'Fotocopia DNI',
-                'value'=>$model->getDocumentacion($model->fotocopia_dni),
-                ],
-                [
-                'label'=>'Certificado Nacimiento',
-                'value'=>$model->getDocumentacion($model->certificado_nacimiento),
-                ],
-                [
-                'label'=>'Certificado Visual',
-                'value'=>$model->getDocumentacion($model->certificado_visual),
-                ],
-                [
-                'label'=>'Certificado Auditivo',
-                'value'=>$model->getDocumentacion($model->certificado_auditivo),
-                ],
-                [
-                'label'=>'Certificado Foniatrico',
-                'value'=>$model->getDocumentacion($model->certificado_foniatrico),
-                ],
-                [
-                'label'=>'Foto',
-                'value'=>$model->getDocumentacion($model->foto),
-                ],
-                [
-                'label'=>'Constancia de CUIL',
-                'value'=>$model->getDocumentacion($model->constancia_cuil),
-                ],
-                [
-                'label'=>'Planilla Prontuarial',
-                'value'=>$model->getDocumentacion($model->planilla_prontuarial),
-                ]
-            ],
-        ]) ?>  
-                                                            
-        </div>    
+        <!-- /.tab-content -->
     </div> 
-    
 
 </div>

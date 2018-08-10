@@ -32,7 +32,7 @@ use backend\models\TipoUsuario;
                                     <?= $form->field($model, 'password',[
                                         'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-lock"></i>']]
                                     ])->passwordInput(['placeholder'=>"Contraseña"])->label('* Password') ?>
-                                    <p class="help-block">La contraseña debe contener como minimo 6 letras</p>
+                                    <p class="help-block">La contraseña debe contener como minimo 8 caracteres, puede utilizar letras y numeros</p>
                                 </div>
                             </div>
 
@@ -43,8 +43,8 @@ use backend\models\TipoUsuario;
                             <h4>Datos de Perfil</h4> 
 
                             <?php
-                            $listData=TipoUsuario::getListaTipo();
-                            echo $form->field($model, 'tipo_usuario_id',[
+                            $listData=$model->listaRoles;
+                            echo $form->field($model, 'role',[
                                         'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-user"></i>']]
                                     ])->dropDownList($listData, 
 						        ['prompt'=>'Seleccione tipo'])->label('* Tipo usuario');

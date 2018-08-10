@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Materia;
-
+use common\models\HelperSede;
 /**
  * MateriaSearch represents the model behind the search form about `backend\models\Materia`.
  */
@@ -19,7 +19,7 @@ class MateriaSearch extends Materia
     {
         return [
             [['id', 'carrera_id'], 'integer'],
-            [['descripcion', 'anio','periodo'], 'safe'],
+            [['descripcion', 'anio'], 'safe'],
             [['estado'], 'boolean'],
         ];
     }
@@ -45,7 +45,7 @@ class MateriaSearch extends Materia
         $query = Materia::find();
 
         // add conditions that should always apply here
-
+        $query->joinWith(['carrera']);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort'=> ['defaultOrder' => ['anio' => SORT_ASC]],
@@ -66,9 +66,16 @@ class MateriaSearch extends Materia
             'estado' => $this->estado,
         ]);
 
-        $query->andFilterWhere(['like', 'descripcion', $this->descripcion])
+        $query->andFilterWhere(['like', 'materia.descripcion', $this->descripcion])
             ->andFilterWhere(['like', 'periodo', $this->periodo])
             ->andFilterWhere(['like', 'anio', $this->anio]);
+
+        if(Yii::$app->user->identity->role=='PRECEPTOR'){
+            
+        
+        $query->andFilterWhere(['=', 'carrera.sede_id', HelperSede::obtenerSede()]);
+        
+        }
 
         return $dataProvider;
     }

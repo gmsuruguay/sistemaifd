@@ -11,7 +11,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use backend\models\search\CorrelatividadSearch;
-
+use yii\widgets\ActiveForm;
+use backend\models\Carrera;
+use backend\models\MateriaAsignada;
 /**
  * MateriaController implements the CRUD actions for Materia model.
  */
@@ -30,6 +32,17 @@ class MateriaController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actionValidation()
+    {
+      $model = new Materia();
+
+      if ( Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
+            Yii::$app->response->format = 'json';
+            return ActiveForm::validate($model);
+        }  
+
     }
 
     /**
@@ -104,11 +117,18 @@ class MateriaController extends Controller
         $searchModel = new CorrelatividadSearch();
         $searchModel->materia_id= $model->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
+
+        $query = MateriaAsignada::find()->where(['materia_id'=>$id]);
+
+        $docentes_dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort'=> ['defaultOrder' => ['fecha_alta' => SORT_DESC]],
+        ]);
+
         return $this->render('view', [
-            'model' => $model, 
-            'searchModel' => $searchModel,
+            'model' => $model,            
             'dataProvider' => $dataProvider,
+            'docentes_dataProvider'=>$docentes_dataProvider,
         ]);
        
     }
@@ -119,18 +139,34 @@ class MateriaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    /*public function actionCreate()
+    public function actionNuevo($id)
     {
         $model = new Materia();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $carrera= Carrera::nombreCarrera($id);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->carrera_id= $id;
+            $model->estado = 0;
+            if($model->save()){
+                Yii::$app->session->setFlash('success', "Se agrego la materia correctamente");
+                return $this->redirect(['/carrera/view',
+                    'id' => $id,
+                ]);
+            }else {
+                return $this->render('_formulario', [
+                    'model' => $model,
+                    'carrera'=> $carrera,
+                    'id'=>$id
+                ]);
+            }
+            
         } else {
-            return $this->render('create', [
+            return $this->render('_formulario', [
                 'model' => $model,
+                'carrera'=> $carrera,
+                'id'=>$id
             ]);
         }
-    }*/
+    }
 
     public function actionCreate($id)
     {
@@ -202,6 +238,19 @@ class MateriaController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionListar($id)    {
+        
+
+        $materias= Materia::find()
+                            ->where(['carrera_id'=> $id])
+                            ->all();
+        echo '<option> Seleccione materia </option>';
+        foreach ($materias as $m)
+        {
+            echo '<option value="'.$m->id.'">'.$m->descripcion.'</option>';
         }
     }
 }

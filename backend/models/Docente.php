@@ -49,18 +49,20 @@ class Docente extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento'], 'required'],
+            [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento','sede_id'], 'required'],
             [['fecha_nacimiento', 'fecha_baja'], 'safe'],
-            [['fecha_nacimiento','fecha_baja'], 'date', 'format'=>'php:Y/m/d'],
+            //[['fecha_nacimiento','fecha_baja'], 'date', 'format'=>'php:Y/m/d'],
             [['lugar_nacimiento_id', 'localidad_id', 'user_id'], 'integer'],
             [['numero'],'unique'],
             [['nro_legajo', 'tipo_doc', 'numero', 'cuil', 'sexo', 'estado_civil', 'nacionalidad', 'nro', 'telefono', 'celular'], 'string', 'max' => 45],
-            [['apellido', 'nombre', 'domicilio'], 'string', 'max' => 450],
+            [['apellido', 'nombre', 'domicilio','ubicacion_legajo'], 'string', 'max' => 450],
             ['email', 'filter', 'filter' => 'trim'],           
             ['email', 'email'],
             ['email', 'unique', 'message' => 'Este email ya existe.'],
             [['localidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['localidad_id' => 'id']],
             [['lugar_nacimiento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['lugar_nacimiento_id' => 'id']],
+            [['sede_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sede::className(), 'targetAttribute' => ['sede_id' => 'id']],
+            
         ];
     }
 
@@ -90,6 +92,7 @@ class Docente extends \yii\db\ActiveRecord
             'email' => 'Email',
             'fecha_baja' => 'Fecha Baja',
             'user_id' => 'User',
+            'sede_id'=>'Lugar de Residencia de Legajo',
         ];
     }
 
@@ -125,6 +128,14 @@ class Docente extends \yii\db\ActiveRecord
         return $this->hasMany(TituloDocente::className(), ['docente_id' => 'id']);
     }
 
+    /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+    public function getSede() 
+    { 
+        return $this->hasOne(Sede::className(), ['id' => 'sede_id']);
+    } 
+
     /**
     * Formatear fechas antes de insertar en base de datos
     *
@@ -152,6 +163,16 @@ class Docente extends \yii\db\ActiveRecord
         $cantidad = self::find()->where(['fecha_baja' => null])->count();
         return $cantidad;        
 
+    }
+
+    public function getDescripcionLocalidad()
+    {
+        return $this->localidad ? $this->localidad->descripcion : ' - ';
+    }
+
+    public function getDescripcionLocalidadNacimiento()
+    {
+        return $this->lugarNacimiento ? $this->lugarNacimiento->descripcion : ' - ';
     }
 
 }

@@ -48,10 +48,10 @@ class ColegioSecundario extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getInscripcions()
-    {
-        return $this->hasMany(Inscripcion::className(), ['colegio_secundario_id' => 'id']);
-    }
+     public function getAlumnos() 
+     { 
+         return $this->hasMany(Alumno::className(), ['colegio_secundario_id' => 'id']);
+     } 
 
     public static function getListaColegios()
     {        

@@ -84,7 +84,7 @@ class CondicionController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->update()) {
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [

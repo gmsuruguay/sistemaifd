@@ -4,6 +4,7 @@ namespace backend\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use common\models\User;
 /**
  * This is the model class for table "alumno".
  *
@@ -50,45 +51,43 @@ class Alumno extends Docente
     public function rules()
     {
         return [
-            [['tipo_doc', 'numero', 'apellido', 'nombre', 'fecha_nacimiento'], 'required'],
+            [['tipo_doc', 'numero', 'apellido', 'nombre'], 'required'],
             [['fecha_nacimiento', 'fecha_baja'], 'safe'],
             [['lugar_nacimiento_id', 'localidad_id', 'user_id'], 'integer'],
             [['tipo_doc', 'numero', 'cuil', 'sexo', 'estado_civil', 'nacionalidad', 'nro', 'telefono', 'celular'], 'string', 'max' => 45],            
             [['numero'],'unique'],
             [['apellido', 'nombre', 'domicilio', 'email'], 'string', 'max' => 450],
+            ['email', 'filter', 'filter' => 'trim'],           
+            ['email', 'email'],
+            ['email', 'unique','message' => 'Este Email ya existe.'],  
+            [['domicilio','email'], 'required', 'on'=>'actualizar'],
             [['localidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['localidad_id' => 'id']],
             [['lugar_nacimiento_id'], 'exist', 'skipOnError' => true, 'targetClass' => Localidad::className(), 'targetAttribute' => ['lugar_nacimiento_id' => 'id']],
+            [['colegio_secundario_id'], 'exist', 'skipOnError' => true, 'targetClass' => ColegioSecundario::className(), 'targetAttribute' => ['colegio_secundario_id' => 'id']],
+            [['titulo_secundario_id'], 'exist', 'skipOnError' => true, 'targetClass' => TituloSecundario::className(), 'targetAttribute' => ['titulo_secundario_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    /*public function attributeLabels()
+    public function attributeLabels()
     {
-        return [
-            'id' => 'ID',
-            'nro_legajo' => 'Nro Legajo',
-            'tipo_doc' => 'Tipo Doc',
-            'numero' => 'Numero',
-            'cuil' => 'Cuil',
-            'apellido' => 'Apellido',
-            'nombre' => 'Nombre',
-            'sexo' => 'Sexo',
-            'estado_civil' => 'Estado Civil',
-            'nacionalidad' => 'Nacionalidad',
-            'fecha_nacimiento' => 'Fecha Nacimiento',
-            'lugar_nacimiento_id' => 'Lugar Nacimiento ID',
-            'domicilio' => 'Domicilio',
-            'nro' => 'Nro',
-            'localidad_id' => 'Localidad ID',
-            'telefono' => 'Telefono',
-            'celular' => 'Celular',
-            'email' => 'Email',
-            'fecha_baja' => 'Fecha Baja',
-            'user_id' => 'User ID',
+        return [            
+            'colegio_secundario_id' => 'Colegio Secundario',
+            'titulo_secundario_id' => 'Titulo Secundario',
+            'localidad_id' => 'Localidad',
+            'tipo_doc' => 'Tipo de Documento',
         ];
-    }*/
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['actualizar'] = ['domicilio','email','nro','localidad_id','telefono','celular'];              
+        return $scenarios;
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -121,6 +120,22 @@ class Alumno extends Docente
     {
         return $this->hasMany(Inscripcion::className(), ['alumno_id' => 'id']);
     }
+
+     /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+     public function getColegioSecundario() 
+     { 
+         return $this->hasOne(ColegioSecundario::className(), ['id' => 'colegio_secundario_id']);
+     } 
+
+    /** 
+    * @return \yii\db\ActiveQuery 
+    */ 
+    public function getTituloSecundario() 
+    { 
+        return $this->hasOne(TituloSecundario::className(), ['id' => 'titulo_secundario_id']);
+    } 
 
     /**
      * @return \yii\db\ActiveQuery
@@ -174,6 +189,21 @@ class Alumno extends Docente
     public function getDatoAlumno()
     {
        return $this->numero.' '.$this->apellido.' '.$this->nombre;
+    }
+
+    public function getDescripcionTitulo()
+    {
+        return $this->tituloSecundario ? $this->tituloSecundario->descripcion : ' - ';
+    }
+
+    public function getDescripcionColegio()
+    {
+        return $this->colegioSecundario ? $this->colegioSecundario->descripcion : ' - ';
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     

@@ -22,10 +22,10 @@ use backend\models\Carrera;
                 ]); ?>    
                 
                 <div class="row">
-                <div class="col-md-3">
+                    <div class="col-md-6">
                     <?= $form->field($model, 'alumno')->textInput(['placeholder'=>'Buscar por DNI o Apellido y Nombre']) ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                       <?= $form->field($model, 'carrera_id')->widget(Select2::classname(), [
                 
                                                 'data' => Carrera::getListaCarreras(),
@@ -38,11 +38,16 @@ use backend\models\Carrera;
 
                             ?>
                     </div>
-                    <div class="col-md-3">
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
                      <?= $form->field($model, 'nro_legajo') ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                      <?= $form->field($model, 'nro_libreta') ?>
+                    </div>
+                    <div class="col-md-4">
+                     <?= $form->field($model, 'estado')->dropDownList(['0'=>'PREINSCRIPTOS','1'=>'INSCRIPTOS'],['prompt'=>'Mostrar todos']) ?>
                     </div>
                     
                 </div>

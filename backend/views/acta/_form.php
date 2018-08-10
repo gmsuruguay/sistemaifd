@@ -19,33 +19,6 @@ $condicion = Condicion::find()->all();
 ?>
 
 <div class="acta-form">
-
-    <!--<?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'libro')->textInput() ?>
-
-    <?= $form->field($model, 'folio')->textInput() ?>
-
-    <?= $form->field($model, 'nota')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'asistencia')->checkbox() ?>
-
-    <?= $form->field($model, 'condicion_id')->textInput() ?>
-
-    <?= $form->field($model, 'alumno_id')->textInput() ?>
-
-    <?= $form->field($model, 'materia_id')->textInput() ?>
-
-    <?= $form->field($model, 'fecha_examen')->textInput() ?>
-
-    <?= $form->field($model, 'resolucion')->textInput(['maxlength' => true]) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>-->
-
     <?php $form = ActiveForm::begin([
                 'method' => 'post',
                 ]); ?>
@@ -66,13 +39,13 @@ $condicion = Condicion::find()->all();
     </div>
     <div class="row">
         <div class="col-sm-4 col-md-4">
-            <?= $form->field($model, 'condicion_id')->label('Condición')->dropDownList(ArrayHelper::map($condicion, 'id', 'descripcion')) ?>
+            <?= $form->field($model, 'condicion_id')->label('Condición')->dropDownList($model->listaCondicion) ?>
         </div>
         <div class="col-sm-4 col-md-4">
             <?= Html::label('Carreras') ?>
             <?= Html::dropDownList('carrera', 
                                             $model->isNewRecord ? '': $model->materia->carrera->id,  
-                                            ArrayHelper::map($carreras, 'id', 'descripcion'),
+                                            Carrera::getListaCarreras(),
                                             [
                                                 'prompt'=>'-------------',
                                                 'class'=> 'form-control',

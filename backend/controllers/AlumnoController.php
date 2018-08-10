@@ -5,15 +5,23 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Alumno;
 use backend\models\search\AlumnoSearch;
+use backend\models\search\AlumnoInscriptoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
 use backend\models\search\InscripcionSearch;
-use backend\models\search\MateriaSearch;
+use backend\models\search\MateriaCursadaSearch;
 use backend\models\Inscripcion;
 use backend\models\Acta;
 use common\models\FechaHelper;
+use backend\models\Cursada;
+use backend\models\search\CursadaSearch;
+use backend\models\Perfil;
+use common\models\AuthAssignment;
+use common\models\User;
+use backend\models\Pedido;
+use yii\data\ActiveDataProvider;
 /**
  * AlumnoController implements the CRUD actions for Alumno model.
  */
@@ -60,6 +68,21 @@ class AlumnoController extends Controller
         ]);
     }
 
+    /*public function actionIndex()
+    {
+        $searchModel = new AlumnoInscriptoSearch();
+        $searchModel->numero='32107892';
+        $searchModel->apellido='CRUZ';
+        $searchModel->nombre='NATALIA';
+        $searchModel->sede=2;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }*/
+
     /**
      * Displays a single Alumno model.
      * @param integer $id
@@ -71,15 +94,8 @@ class AlumnoController extends Controller
         //Busqueda de Inscripcion del alumno
         $searchModel = new InscripcionSearch();
         $searchModel->alumno_id = $id; 
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        //Busqueda de Inscripcion en materia del alumno
-        /*$searchModel_cursada = new InscripcionMateriaSearch();
-        $searchModel_cursada->alumno_id= $alumno->id;
-        $dataProvider_cursada = $searchModel_cursada->search(Yii::$app->request->queryParams);*/
-
-        //Busqueda de Materias segun la carrera del alumno
-
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams); 
+        
         return $this->render('view', [
             'model' => $model,
             'searchModel' => $searchModel,
@@ -89,11 +105,12 @@ class AlumnoController extends Controller
         ]);
     }
 
-    public function actionListarMateria($id)
+    public function actionInscripcionCursada($id)
     {
         $model=$this->findModelInscripcion($id);
-        $searchModel = new MateriaSearch();
-        $searchModel->carrera_id = $model->carrera_id;
+        $searchModel = new CursadaSearch();
+        $searchModel->alumno_id = $model->alumno_id;
+        $searchModel->carrera = $model->carrera_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('_inscripcion_materia', [
             'model' => $model, 
@@ -102,17 +119,102 @@ class AlumnoController extends Controller
         ]);
     }
 
+    public function actionHistorialAcademico($id)
+    {
+        $connection = \Yii::$app->db;
+        $model=$this->findModelInscripcion($id);
+        $alumno = $model->alumno_id;
+        $carrera = $model->carrera_id; 
+        
+        //Consulta en actas y cursadas                 
+        
+
+        $sql= 'SELECT m.descripcion, m.anio, nota, fecha_examen as fecha, c.descripcion as condicion, :examen as tipo  FROM acta
+        JOIN materia as m on m.id = acta.materia_id
+        JOIN condicion as c on c.id = acta.condicion_id
+        WHERE m.carrera_id=:carrera AND alumno_id=:alumno AND asistencia = 1 AND acta.condicion_id <> 2
+        UNION ALL
+        SELECT m.descripcion, m.anio, nota, fecha_cierre as fecha, c.descripcion as condicion, :cursada as tipo FROM cursada
+        JOIN materia as m on m.id = cursada.materia_id
+        JOIN condicion as c on c.id = cursada.condicion_id
+        WHERE m.carrera_id =:carrera AND alumno_id =:alumno
+        ORDER BY fecha DESC';
+
+        $query = $connection->createCommand($sql);
+        $query->bindValue(":carrera", $carrera);
+        $query->bindValue(":alumno", $alumno);
+        $query->bindValue(":examen", 'EXAMEN');
+        $query->bindValue(":cursada", 'CURSADA');
+
+        $materias= $query->queryAll();
+        
+        return $this->render('historia-academica', [
+            'model' => $model,  
+            'materias' => $materias,             
+        ]);
+    }
+
+    public function actionListarMateria($id)
+    {
+        $model=$this->findModelInscripcion($id);
+        $searchModel = new MateriaCursadaSearch();
+        $searchModel->carrera_id = $model->carrera_id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->renderAjax('listado-materias', [
+            'model' => $model, 
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionListarRegularidades($id)
+    {
+        $model=$this->findModelInscripcion($id);              
+        $alumno = $model->alumno_id;
+        $carrera = $model->carrera_id;        
+        $query = Cursada::find();
+        $query->joinWith(['materia']);
+        $query->where(['alumno_id' => $alumno])                
+                 ->andWhere(['cursada.condicion_id'=>3])                            
+                 ->andWhere(['=','materia.carrera_id',$carrera]);               
+                 
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort'=> ['defaultOrder' => ['fecha_cierre' => SORT_DESC]],
+        ]);
+
+        return $this->render('materias_regulares', [
+            'model' => $model,  
+            'dataProvider' => $dataProvider,  
+        ]);
+    }
+
     /**
      * Creates a new Alumno model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    /*public function actionCreate()
     {
         $model = new Alumno();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }*/
+
+    public function actionCreate()
+    {
+        $model = new Alumno();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('info', "Por favor complete el formulario con los datos académicos");
+            return $this->redirect(['/inscripcion/nuevo', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -157,6 +259,19 @@ class AlumnoController extends Controller
         }
     }
 
+    public function actionUpdateAlumno($id,$cod)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['/inscripcion/view', 'id' => $cod]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
+
     /**
      * Deletes an existing Alumno model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -171,14 +286,14 @@ class AlumnoController extends Controller
     }
 
     public function actionImprimirAnalitico($id){
-        
+                //Muestra solo materias aprobadas.
                 $model=$this->findModelInscripcion($id);              
                 $alumno = $model->alumno_id;
                 $carrera = $model->carrera_id;        
                 $query = Acta::find()
                          ->joinWith(['materia'])
                          ->where(['alumno_id' => $alumno])                
-                         ->andWhere(['asistencia'=>1])                            
+                         ->andWhere(['>=','nota',4])                            
                          ->andWhere(['materia.carrera_id' => $carrera])
                          ->orderBy('materia.anio')
                          ->all();
@@ -225,5 +340,62 @@ class AlumnoController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    
+
+    protected function findModelCursada($id)
+    {
+        if (($model = Cursada::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionGenerarUsuario($id)
+    {
+        $alumno = $this->findModel($id);
+        $user = new User();
+        $perfil = new Perfil();
+        $role= new AuthAssignment();
+        //$user->scenario='create';
+
+        if ( !empty($alumno->email) ) {
+           
+            $password= '12345678';
+            $user->username = $alumno->numero; 
+            $user->email= $alumno->email;
+            $user->role='ALUMNO';
+            $user->created_at= time();
+            $user->updated_at= time();
+            $user->setPassword($password);
+            $user->generateAuthKey();
+            
+            //echo $model->role;            
+            //die;
+            if ($user->save()) {
+
+                $alumno->user_id= $user->id;
+                $alumno->save();
+
+                $perfil->user_id = $user->id;
+                $perfil->nombre = $alumno->nombre;
+                $perfil->apellido = $alumno->apellido;
+                $perfil->save();
+
+                $role->item_name= $user->role;
+                $role->user_id = $user->id;
+                $role->created_at= time();
+                $role->save();
+
+                echo 1; // El usuario se creo correctamente
+
+            }else{
+                echo 2; //Error al generar el Usuario
+            }
+        }else{
+            echo 3; //Se necesita registrar primeramente el E-mail del Alumno, por favor actualice su legajo
+        }
+
+        
+    }
+
 }

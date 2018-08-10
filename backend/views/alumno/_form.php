@@ -8,6 +8,8 @@ use backend\models\Localidad;
 use yii\widgets\Pjax;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use backend\models\TituloSecundario;
+use backend\models\ColegioSecundario;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Alumno */
@@ -145,7 +147,35 @@ use yii\helpers\Url;
                                                 'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-envelope"></i>']]
                                             ])->textInput(['placeholder'=>"Correo electrónico"])?>
             </div>
-         </div>       
+         </div> 
+         <div class="row">
+         <div class="col-md-6">
+            <label class="control-label"><?=Html::button('Colegio Secundario', ['value'=>Url::to(['colegio-secundario/nuevo']),'class' => 'btn-link btnmodal'])?></label>
+            <?php Pjax::begin(['id'=>'select-colegio']); ?> 
+            <?= $form->field($model, 'colegio_secundario_id')->widget(Select2::classname(), [                                            
+                                                                'data' => ColegioSecundario::getListaColegios(),
+                                                                'language' => 'es',
+                                                                'options' => ['placeholder' => 'Seleccione colegio secundario'],
+                                                                'pluginOptions' => [
+                                                                    'allowClear' => true
+                                                                ],
+                                                                ])->label(false) ?> <?php Pjax::end(); ?>
+            </div>
+
+            <div class="col-md-6">
+            <label class="control-label"><?=Html::button('Titulo Secundario', ['value'=>Url::to(['titulo-secundario/nuevo']),'class' => 'btn-link btnmodal'])?></label>
+            <?php Pjax::begin(['id'=>'select-titulo']); ?> 
+            <?= $form->field($model, 'titulo_secundario_id')->widget(Select2::classname(), [                                            
+                                                    'data' => TituloSecundario::getListaTitulos(),
+                                                    'language' => 'es',
+                                                    'options' => ['placeholder' => 'Seleccione titulo secundario'],
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true
+                                                    ],
+                                                    ])->label(false) ?> <?php Pjax::end(); ?>
+            </div>  
+            
+         </div>      
 
         </div>                              
         <div class="box-footer">
@@ -160,7 +190,7 @@ use yii\helpers\Url;
 
 <?php 
       Modal::begin([
-        'header' => '<h3 class="text-center modal-title">Localidad</h3>',
+        'header' => '<h3 class="text-center modal-title">Registrar</h3>',
         'class'=>'modal',
         'size'=>'modal-md', 
         'clientOptions' => ['backdrop' => 'static'],  
@@ -193,7 +223,17 @@ use yii\helpers\Url;
             select($(this),refrescarSelectLocalidad);
         }            
         return false;
-    });         
+    });    
+
+$('body').on('beforeSubmit','form#titulo-secundario' , function(e){        
+    select($(this),refrescarSelectTitulo);
+    return false;
+});  
+
+$('body').on('beforeSubmit','form#colegio-secundario' , function(e){        
+    select($(this),refrescarSelectColegio);
+    return false;
+});  
    
     
 JS;

@@ -1,70 +1,51 @@
 <?php
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
-
+//use yii\bootstrap\ActiveForm;
+use kartik\form\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
+/* @var $model \mdm\admin\models\form\Login */
 
-$this->title = 'Sign In';
-
-$fieldOptions1 = [
-    'options' => ['class' => 'form-group has-feedback'],
-    'inputTemplate' => "{input}<span class='glyphicon glyphicon-envelope form-control-feedback'></span>"
-];
-
-$fieldOptions2 = [
-    'options' => ['class' => 'form-group has-feedback'],
-    'inputTemplate' => "{input}<span class='glyphicon glyphicon-lock form-control-feedback'></span>"
-];
+$this->title ='Login';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-
-<div class="login-box">
-    <div class="login-logo">
-        <a href="#"><b>Admin</b>LTE</a>
-    </div>
-    <!-- /.login-logo -->
-    <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
-
-        <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
-
-        <?= $form
-            ->field($model, 'username', $fieldOptions1)
-            ->label(false)
-            ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
-
-        <?= $form
-            ->field($model, 'password', $fieldOptions2)
-            ->label(false)
-            ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
-
-        <div class="row">
-            <div class="col-xs-8">
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-            </div>
-            <!-- /.col -->
-            <div class="col-xs-4">
-                <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
-            </div>
-            <!-- /.col -->
+        <div class="site-login">    
+            <div class="login-box">
+        <div class="login-logo">
+        <img src="img/logo_ifd_header.png" class="img-responsive center-block"  alt="Logo"/>
+            <!--<p><b>SURI </b></p>    
+            <h3>SISTEMA ÚNICO DE REGISTRO INSTITUCIONAL</h3>  -->     
         </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg"><?= Html::encode($this->title) ?></p>
 
+                <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+                <?= $form->field($model, 'username',[
+                    'feedbackIcon' => [
+                        'prefix' => 'fa fa-',
+                        'default' => 'user',
+                        'success' => 'check-circle',
+                        'error' => 'exclamation-circle',
+                    ]
+                ])->label('Usuario') ?>
+                <?= $form->field($model, 'password', [
+                    'feedbackIcon' => [
+                        'prefix' => 'fa fa-',
+                        'default' => 'lock',
+                        'success' => 'check-circle',
+                        'error' => 'exclamation-circle',                        
+                    ]
+                ])->passwordInput()->label('Contraseña') ?>               
+                
+                <div class="form-group">
+                    <?= Html::submitButton('Ingresar', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+                </div>
+                <?php ActiveForm::end(); ?>             
 
-        <?php ActiveForm::end(); ?>
-
-        <div class="social-auth-links text-center">
-            <p>- OR -</p>
-            <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in
-                using Facebook</a>
-            <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign
-                in using Google+</a>
         </div>
-        <!-- /.social-auth-links -->
-
-        <a href="#">I forgot my password</a><br>
-        <a href="register.html" class="text-center">Register a new membership</a>
-
-    </div>
-    <!-- /.login-box-body -->
-</div><!-- /.login-box -->
+        <!-- /.login-box-body -->
+        </div>
+        <!-- /.login-box -->
+    
+</div>

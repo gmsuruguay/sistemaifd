@@ -7,22 +7,31 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Request password reset';
+$this->title = 'Solicitud de recuperación de contraseña';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-request-password-reset">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div  class="center-align">
+    <h3><?= Html::encode($this->title) ?></h3>
 
-    <p>Please fill out your email. A link to reset password will be sent there.</p>
+    <p>Por favor complete el formulario. Recibira en su correo un enlace para restablecer su contraseña.</p>
+    </div>
+    
 
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col m6 offset-m3">
             <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
 
-                <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'email',['options'=>['class'=>'input-field col s12']])->begin() ?>
+                    <?= Html::activeInput('text',$model,'email',['autofocus' => true]); ?>
+                    <label for="passwordresetrequestform-email">Email</label>
+                    <?= Html::error($model,'origin',['class'=>'help-block help-block-error red-text text-darken-2']) ?>
+                <?= $form->field($model,'origin')->end() ?>
 
-                <div class="form-group">
-                    <?= Html::submitButton('Send', ['class' => 'btn btn-primary']) ?>
+               
+
+                <div class="center-align">
+                <?= Html::submitButton('ENVIAR <i class="material-icons right">send</i>', ['class' => 'btn waves-effect waves-light', 'name' => 'login-button']) ?>
                 </div>
 
             <?php ActiveForm::end(); ?>

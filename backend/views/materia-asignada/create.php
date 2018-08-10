@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\DetailView;
-
+use mdm\admin\components\Helper;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = 'Asignar Materias';
          <div class="box-body">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
@@ -44,10 +45,40 @@ $this->params['breadcrumbs'][] = 'Asignar Materias';
                         return $data->descripcionMateria;
                     }
                     ],
-                    'fecha_alta',
-                    'fecha_baja',
+                    [
+                    'label'=> 'Fecha Alta',
+                    'value'=> function ($data){
+                        return date('d/m/Y',strtotime($data->fecha_alta));
+                    }
+                    ],
+                    [
+                    'label'=> 'Fecha Baja',
+                    'value'=> function ($data){
+                        return ($data->fecha_baja=='')?'------':date('d/m/Y',strtotime($data->fecha_baja));
+                    }
+                    ],
+                    ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{update}{baja}'),
+                    'buttons' => [
+                        'baja' => function ($url, $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> ', ['baja','id'=>$key], 
+                            ['title'=>'Dar de baja',
+                                'data' => [
+                                'confirm' => 'Esta seguro de dar de baja la asignación de la materia?',
+                                'method' => 'post',
+                            ]
+                            ]);                          
+                         
+                        },
 
-                    ['class' => 'yii\grid\ActionColumn', 'template' => '{update}{delete}'],
+                    ],
+                    'visibleButtons' => [
+                        'update' => function ($model, $key, $index) {
+                            return is_null($model->fecha_baja) ? true : false;
+                         },
+                        'baja' => function ($model, $key, $index) {
+                        return is_null($model->fecha_baja) ? true : false;
+                        }
+                    ]],
                 ],
             ]); ?>
         </div>

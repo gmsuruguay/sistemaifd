@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Carrera;
-
+use common\models\HelperSede;
 /**
  * CarreraSearch represents the model behind the search form about `backend\models\Carrera`.
  */
@@ -19,7 +19,7 @@ class CarreraSearch extends Carrera
     {
         return [
             [['id', 'duracion'], 'integer'],
-            [['descripcion', 'cohorte'], 'safe'],
+            [['descripcion', 'cohorte','nro_resolucion'], 'safe'],
         ];
     }
 
@@ -64,7 +64,15 @@ class CarreraSearch extends Carrera
         ]);
 
         $query->andFilterWhere(['like', 'descripcion', $this->descripcion])
-            ->andFilterWhere(['like', 'cohorte', $this->cohorte]);
+            ->andFilterWhere(['like', 'cohorte', $this->cohorte])
+            ->andFilterWhere(['like', 'nro_resolucion', $this->nro_resolucion]);
+
+            if(Yii::$app->user->identity->role=='PRECEPTOR'){                
+               
+                $query->andFilterWhere(['=', 'sede_id', HelperSede::obtenerSede()]);
+            
+            }
+
 
         return $dataProvider;
     }

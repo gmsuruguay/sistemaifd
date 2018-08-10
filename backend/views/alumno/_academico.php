@@ -11,6 +11,10 @@ use yii\bootstrap\ButtonDropdown;
 ?>
 <div class="inscripcion-index">
 
+    <div class="pull-right">
+        <?= Html::a('<i class="fa  fa-plus"></i> Inscipción a carrera', ['inscripcion/nuevo','id' => $model->id],['class' => 'btn btn-success']) ?>
+    </div>   
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,        
         'columns' => [
@@ -28,14 +32,14 @@ use yii\bootstrap\ButtonDropdown;
             
             'nro_libreta',
             'fecha',  
-            ['class' => 'yii\grid\ActionColumn', 'template' => '{imprimir} {listar}', 
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{imprimir} {listar} {historial-academico} {listar-regularidades}', 
 
             'buttons' => [
 
                 'imprimir'=> function ($url, $model, $key) {
                     return ButtonDropdown::widget([
                         'encodeLabel' => false, // if you're going to use html on the button label
-                        'label' => 'Imprimir',
+                        'label' => '<span class="glyphicon glyphicon-list" aria-hidden="true"></span> Acciones',
                         'dropdown' => [
                             'encodeLabels' => false, // if you're going to use html on the items' labels
                             'items' => [
@@ -50,6 +54,24 @@ use yii\bootstrap\ButtonDropdown;
                                     'linkOptions' => ['target'=>'_blank'],
                                     'visible' => true,  // if you want to hide an item based on a condition, use this
                                 ],
+                                [
+                                    'label' => 'Inscripción a Cursada',
+                                    'url' => ['inscripcion-cursada', 'id' => $key],
+                                    //'linkOptions' => ['target'=>'_blank'],
+                                    'visible' => true,  // if you want to hide an item based on a condition, use this
+                                ],
+                                [
+                                    'label' => 'Historia Academica',
+                                    'url' => ['historial-academico', 'id' => $key],
+                                    //'linkOptions' => ['target'=>'_blank'],
+                                    'visible' => true,  // if you want to hide an item based on a condition, use this
+                                ],
+                                [
+                                    'label' => 'Regularidades',
+                                    'url' => ['listar-regularidades', 'id' => $key],
+                                    //'linkOptions' => ['target'=>'_blank'],
+                                    'visible' => true,  // if you want to hide an item based on a condition, use this
+                                ],
                                 
                             ],
                             'options' => [
@@ -57,18 +79,11 @@ use yii\bootstrap\ButtonDropdown;
                             ],
                         ],
                         'options' => [
-                            'class' => 'btn-success',   // btn-success, btn-info, et cetera
+                            'class' => 'btn btn-info',   // btn-success, btn-info, et cetera
                         ],
                         'split' => true,    // if you want a split button
                     ]);
-                },       
-
-                'listar' => function ($url, $model, $key) {
-                    return Html::a('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Inscribir materia/examen', ['listar-materia', 'id' => $key], [
-                        'class' => 'btn btn-info',                        
-                        'title'=>'inscribir en materia'
-                    ]);
-                },
+                },                 
 
             ]],             
         ],

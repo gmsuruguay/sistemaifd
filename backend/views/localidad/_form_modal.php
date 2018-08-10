@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
     
             <?php $form = ActiveForm::begin(['id'=>'localidad']); ?>
 
-                <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>           
+                <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true,'placeholder'=>'Nombre de la Localidad']) ?>           
           
             <div class="form-group">
                     <?= Html::submitButton( '<i class="fa fa-save"> </i> Guardar', ['class' => 'btn btn-success', 'name' => 'signup-button']) ?>

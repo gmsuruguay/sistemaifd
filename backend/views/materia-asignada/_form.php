@@ -1,15 +1,16 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\form\ActiveForm;
 use backend\models\Carrera;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\MateriaAsignada */
 /* @var $form yii\widgets\ActiveForm */
-$carreras = Carrera::find()->all();
+//$carreras = Carrera::find()->all();
 //$idCarrera= $model->materia->carrera->id;
 ?>
 
@@ -20,11 +21,11 @@ $carreras = Carrera::find()->all();
                 'action' => ['materia-asignada/create'],
                 ]*/); ?>
     <div class="row">
-        <div class="col-md-6">  
+        <div class="col-md-4">  
             <?= Html::label('Carreras') ?>
                     <?= Html::dropDownList('carrera', 
                                             $model->isNewRecord ? '': $model->materia->carrera->id, 
-                                            ArrayHelper::map($carreras, 'id', 'descripcion'),
+                                            Carrera::getListaCarreras(),
                                             [
                                                 'prompt'=>'-------------',
                                                 'class'=> 'form-control',
@@ -36,18 +37,24 @@ $carreras = Carrera::find()->all();
                                             ]) 
                                             ?> 
         </div>
-        <div class="col-md-6"> 
+        <div class="col-md-4"> 
             <?= Html::label('Materias') ?>
           <!--  <select id="materiaasignada-materia_id" class="form-control" name="MateriaAsignada[materia_id]" aria-required="true"></select>-->
              <?= $model->isNewRecord ?$form->field($model, 'materia_id')->label(false)->dropDownList([]) : 
                     $form->field($model, 'materia_id')->label(false)->dropDownList(ArrayHelper::map($materias, 'id', 'descripcion'))?>
         </div>
-        <div class="col-md-6"> 
-             <?= $form->field($model, 'fecha_alta')->textInput() ?>
+        <div class="col-md-4"> 
+             <?= $model->isNewRecord ? $form->field($model, 'fecha_alta',[
+                                    'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-calendar"></i>']]
+                                ])->widget( MaskedInput::className(), [    
+                                                'clientOptions' => ['alias' =>  'date']
+                    ]): $form->field($model, 'fecha_alta',[
+                                        'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-calendar"></i>']]
+                                    ])->widget( MaskedInput::className(), [    
+                                                    'clientOptions' => ['alias' =>  'date'], 
+                        ])->textInput(['value'=> date('d/m/Y',strtotime($model->fecha_alta))])?>
         </div>
-        <div class="col-md-6"> 
-            <?= $form->field($model, 'fecha_baja')->textInput() ?>
-        </div>
+        
     </div>
 
 	

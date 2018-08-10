@@ -66,12 +66,30 @@ class ColegioSecundarioController extends Controller
         $model = new ColegioSecundario();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionNuevo()
+    {
+        $model = new ColegioSecundario();
+        
+        if ($model->load(Yii::$app->request->post())) {
+            
+            if($model->save()){            
+                 echo 1;
+             }else{
+                 echo 0;
+             }
+         } else {
+             return $this->renderAjax('_form_modal', [
+                 'model' => $model,
+             ]);
+         }
     }
 
     /**
@@ -85,7 +103,7 @@ class ColegioSecundarioController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,

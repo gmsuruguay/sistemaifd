@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Inscripcion;
+use backend\models\Alumno;
 use backend\models\search\InscripcionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -37,13 +38,14 @@ class InscripcionController extends Controller
     public function actionIndex()
     {
         $searchModel = new InscripcionSearch();
+        
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-    }
+    }    
 
     /**
      * Displays a single Inscripcion model.
@@ -52,10 +54,36 @@ class InscripcionController extends Controller
      */
     public function actionView($id)
     {
+        $model=$this->findModel($id);
+        $alumno= $this->findModelAlumno($model->alumno_id);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'alumno'=> $alumno,
         ]);
     }
+
+     /**
+     * Registra una nueva inscripcion a una carrera desde la vista alumno/_academico.     
+     * @return mixed
+     */
+     public function actionNuevo($id)
+     {
+         $model = new Inscripcion();
+         $alumno= $this->findModelAlumno($id);         
+         if ($model->load(Yii::$app->request->post()) ) {
+             $model->alumno_id= $id;
+             if($model->save()){
+                Yii::$app->session->setFlash('success', "Su inscripción se realizo correctamente");
+                return $this->redirect(['view', 'id' => $model->id]);
+             }
+            
+         } else {
+             return $this->render('formulario', [
+                 'model' => $model,
+                 'alumno' => $alumno,
+             ]);
+         }
+     }
 
     /**
      * Creates a new Inscripcion model.
@@ -67,6 +95,7 @@ class InscripcionController extends Controller
         $model = new Inscripcion();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "Su inscripción se realizo correctamente");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -93,6 +122,8 @@ class InscripcionController extends Controller
             ]);
         }
     }
+    
+
 
     /**
      * Deletes an existing Inscripcion model.
@@ -123,18 +154,26 @@ class InscripcionController extends Controller
         }
     }
 
+    protected function findModelAlumno($id)
+    {
+        if (($model = Alumno::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
     public function actionImprimir($id){
         
         $mes=FechaHelper::obtenerMes(date('Y-m-d'));
         $pdf = Yii::$app->pdf;
         $inscripcion = $this->findModel($id);
         $pdf->cssFile = 'css/reporte.css';
-        $pdf->options = ['title' => 'Certificado de Alumno Regular'];
+        $pdf->options = ['title' => 'Certificado de Alumno Regular'];    
         $pdf->content = $this->renderPartial('certificado_alumno_regular', [
             'inscripcion' =>$inscripcion,
-            'mes'=>$mes            
+            'mes'=>$mes,           
         ]);
-        
         
         return $pdf->render();
     }

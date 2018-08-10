@@ -1,0 +1,93 @@
+/* Custom Stylesheet */
+
+
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.app-home {
+    background-image: url('../img/home.jpeg');
+    /* Nos aseguramos que la imagen de fondo este centrada vertical y
+  horizontalmente en todo momento */
+    background-position: center center;
+    /* La imagen de fondo no se repite */
+    background-repeat: no-repeat;
+    /* La imagen de fondo está fija en el viewport, de modo que no se mueva cuando
+      la altura del contenido supere la altura de la imagen. */
+    background-attachment: fixed;
+    /* La imagen de fondo se reescala cuando se cambia el ancho de ventana
+      del navegador */
+    background-size: cover;
+    /* Fijamos un color de fondo para que se muestre mientras se está
+      cargando la imagen de fondo o si hay problemas para cargarla  */
+    background-color: #464646;
+}
+
+.site-login {
+    padding: 50px 15px 20px;
+}
+
+.logo-inicio {
+    margin-top: 40px;
+}
+
+.box-login {
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-weight: 700;
+}
+
+.icon-block {
+    padding: 0 15px;
+}
+
+.icon-block .material-icons {
+    font-size: inherit;
+}
+
+.info {
+    background-color: #b2dfdb;
+}
+
+.help-block {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #737373;
+}
+
+
+/*Estilos Boton Alert*/
+
+.btn-card {
+    background: none;
+    border: none;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 15px;
+    color: white;
+    cursor: pointer;
+}
+
+
+/*Fin estilos Boton Alert*/

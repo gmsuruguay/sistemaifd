@@ -49,8 +49,8 @@ class MateriaAsignada extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'fecha_alta' => 'Fecha Alta',
-            'docente_id' => 'Docente ID',
-            'materia_id' => 'Materia ID',
+            'docente_id' => 'Docente',
+            'materia_id' => 'Materia',
             'fecha_baja' => 'Fecha Baja',
         ];
     }
@@ -73,7 +73,12 @@ class MateriaAsignada extends \yii\db\ActiveRecord
 
     public function getDescripcionMateria()
     {
-        return $this->materia->descripcion;
+        return $this->materia ? $this->materia->descripcion : '-';
+    }
+
+    public function getDocenteACargo()
+    {
+        return $this->docente ? $this->docente->nombreCompleto : '-';
     }
 
     public function beforeValidate()

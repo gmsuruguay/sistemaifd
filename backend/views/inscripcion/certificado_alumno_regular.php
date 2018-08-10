@@ -11,13 +11,13 @@ $this->title = 'Certificado de Alumno Regular';
         <h6>IES N° 6 - PERICO</h6>	 
 </header>
 <section class="contenedor margen-superior">
-    <p align="justify">
+    <p align="justify" class="sangria">
     Por la presente se hace constar que: <b><?= $inscripcion->nombreAlumno ?></b>  con    
-    D.N.I. <b><?=$inscripcion->alumno->numero?></b> es Alumno/a de ...... la Carrera
+    D.N.I. <b><?=$inscripcion->alumno->numero?></b> es Alumno/a de la Carrera
     <b><?= $inscripcion->descripcionCarrera ?></b> en este establecimiento.    
     </p>
 
-    <p align="justify">
+    <p align="justify" class="sangria">
     A solicitud del interesado y al solo efecto de ser presentada ante las autoridades que lo requieran,
      se expide la presente constancia que sella y firma en Ciudad Perico a los 
      <?=date('j')?> Días  del   mes <?= ucfirst($mes)?> del año  <?=date('Y')?>

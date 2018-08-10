@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use common\models\HelperSede;
 use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "carrera".
@@ -20,7 +21,8 @@ class Carrera extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
-     */
+     */    
+
     public static function tableName()
     {
         return 'carrera';
@@ -36,6 +38,7 @@ class Carrera extends \yii\db\ActiveRecord
             [['duracion'], 'integer'],
             [['descripcion'], 'string', 'max' => 450],
             [['cohorte','validez_nacional','cantidad_materias','cantidad_horas','nro_resolucion'], 'string', 'max' => 45],
+            [['sede_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sede::className(), 'targetAttribute' => ['sede_id' => 'id']],
         ];
     }
 
@@ -47,14 +50,23 @@ class Carrera extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'descripcion' => 'Descripción',
-            'duracion' => 'Duración',
+            'duracion' => 'Duración en años',
             'cohorte' => 'Cohorte',
             'validez_nacional',
             'cantidad_materias',
             'cantidad_horas',
-            'nro_resolucion'
+            'nro_resolucion',
+            'sede_id' => 'Sede',
         ];
     }
+
+    /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+     public function getSede() 
+     { 
+         return $this->hasOne(Sede::className(), ['id' => 'sede_id']);
+     } 
 
     /**
      * @return \yii\db\ActiveQuery
@@ -72,6 +84,14 @@ class Carrera extends \yii\db\ActiveRecord
         return $this->hasMany(Materia::className(), ['carrera_id' => 'id']);
     }
 
+    /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+    public function getCalendarioExamens() 
+    { 
+        return $this->hasMany(CalendarioExamen::className(), ['carrera_id' => 'id']);
+    } 
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -81,14 +101,56 @@ class Carrera extends \yii\db\ActiveRecord
     }
 
     public static function getListaCarreras()
-    {        
+    {
+        if(Yii::$app->user->identity->role=='PRECEPTOR'){            
+            
+            $sql = self::find()            
+            ->where(['sede_id'=> HelperSede::obtenerSede()])
+            ->orderBy('descripcion')->all();
+            return ArrayHelper::map($sql, 'id', 'descripcion');
+        }
+
         $sql = self::find()->orderBy('descripcion')->all();
         return ArrayHelper::map($sql, 'id', 'descripcion');
     }
 
-    public static function cantidad(){        	
-        $cantidad = self::find()->count();
+    public static function cantidad(){   
+        
+
+        $cantidad = self::find()->where(['sede_id'=>HelperSede::obtenerSede()])->count();
         return $cantidad;        
 
+    }
+
+    public function getDescripcionSede()
+    {
+        return $this->sede ? $this->sede->descripcionSede : ' - ';
+    }
+
+    public function getDescripcionCarreraSede()
+    {
+        return $this->descripcion.'-'.$this->descripcionSede;
+    }
+
+    public static function  nombreCarrera($id)
+    {        
+        $model = self::find()->where(['id'=>$id])->one();
+        if($model){
+           return  $model->descripcion;
+        }
+    }
+
+    public static function  modelCarrera($id)
+    {        
+        $model = self::find()->where(['id'=>$id])->one();
+        if($model){
+           return  $model;
+        }
+    }
+
+    public static function getListaCarrerasSede()
+    {
+        $sql = self::find()->orderBy('descripcion')->all();
+        return ArrayHelper::map($sql, 'id', 'descripcionCarreraSede');
     }
 }

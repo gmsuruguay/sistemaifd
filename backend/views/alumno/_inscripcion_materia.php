@@ -7,7 +7,7 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 use kartik\grid\GridView;
 use yii\bootstrap\Modal;
-
+use common\models\FechaHelper;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Inscripcion */
 
@@ -43,49 +43,64 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="box">
         <div class="box-header with-border">           
-        <h3 class="box-title">Seleccione las materias que cursara</h3>          
+        <h3 class="box-title">Listado de Materias Inscriptas</h3>     
+        <div class="pull-right">
+            <?php // echo Html::a('<i class="fa  fa-plus"></i> Inscribir materia', ['cursada/create','id_alumno' => $model->alumno_id,'id_carrera'=>$model->carrera_id,'id_inscripcion'=>$model->id],['class' => 'btn btn-success']) ?>
+            <?= Html::a('<i class="fa  fa-plus"></i> Inscribir materia', ['listar-materia','id'=>$model->id],['class' => 'btn btn-success modalButton']) ?>
+            </div>        
         </div>
         <div class="box-body">
-        <?php Pjax::begin(['id'=>'grid-materia']); ?>    <?= GridView::widget([
-                'dataProvider' => $dataProvider,  
-                'filterModel' => $searchModel,     
-                'hover'=>true,
-                'panel' => [
-                'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon glyphicon-file"></i>Lista de Materias</h3>',
-                'type'=>'primary',
-                'footer'=>false
-                ],   
-                'export'=>false,      
-                'columns' => [
-                    ['class' => 'kartik\grid\SerialColumn'],           
-                                       
-                    'descripcion',
-                    [
-                    'attribute'=>'anio',
-                    'label'=>'Año',
-                    'filter'=>array("1"=>"1° AÑO","2"=>"2° AÑO","3"=>"3° AÑO","4"=>"4° AÑO","5"=>"5° AÑO"),
-                    'value'=>function($data){
-                        return $data->anioMateria;
-                    }
-
+            <?= GridView::widget([
+                    'dataProvider' => $dataProvider,  
+                    'filterModel' => $searchModel,  
+                    'id'=>'grid-cursada',  
+                    'pjax'=>true,     
+                    'hover'=>true,
+                    'panel' => [
+                    'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon glyphicon-file"></i>Materias</h3>',
+                    'type'=>'primary',
+                    'footer'=>false
+                    ],   
+                    'export'=>false,      
+                    'columns' => [
+                        ['class' => 'kartik\grid\SerialColumn'], 
+                        
+                        [
+                        'attribute'=>'fecha_inscripcion',
+                        'label'=>'Fecha Inscripción',
+                        'format'=>'text',//raw, html
+                        'content'=>function ($data){
+                            return FechaHelper::fechaDMY($data->fecha_inscripcion);
+                        }
+                        ],                                       
+                        [
+                        'attribute'=>'materia_id',
+                        'label'=>'Materia',
+                        'format'=>'text',//raw, html
+                        'content'=>function ($data){
+                            return $data->descripcionMateria;
+                        }
+                        ],    
+    
                     ],
-
-                    ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{inscribir}'), 
-                    'buttons' => [
-                        'inscribir' => function ($url, $model, $key) {
-                                                    
-                            return Html::a('','#',['class' => 'modalButton glyphicon glyphicon-check','title'=>'Inscribir',]);
-                            
-                        } ,                        
-
-                    ]],
-                ],
-            ]); ?>
-        <?php Pjax::end(); ?></div>
+            ]);?>
         </div>
-    </div> 
-    
-
-    
+    </div>    
 
 </div>
+
+
+<?php 
+Modal::begin([
+'header' => '<h3 class="text-center modal-title"><i class="fa fa-file"></i> Materias</h3>',
+'id'=>'ModalId',
+'class'=>'modal',
+'size'=>'modal-lg', 
+'clientOptions' => ['backdrop' => 'static'],  
+    ]);
+
+echo "<div class='modalContent'></div>";
+
+Modal::end();
+
+?>

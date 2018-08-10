@@ -23,6 +23,7 @@ use backend\models\Condicion;
  */
 class Cursada extends \yii\db\ActiveRecord
 {
+    public $anio;
     /**
      * @inheritdoc
      */
@@ -37,9 +38,10 @@ class Cursada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fecha_inscripcion', 'fecha_vencimiento','fecha'], 'safe'],
+            [['fecha_inscripcion', 'fecha_vencimiento','fecha_cierre'], 'safe'],
+            //[['fecha_inscripcion', 'fecha_vencimiento','fecha_cierre'], 'date'],
             [['alumno_id', 'materia_id'], 'required'],
-            [['condicion_id', 'alumno_id', 'materia_id'], 'integer'],
+            [['anio','condicion_id', 'alumno_id', 'materia_id'], 'integer'],
             [['nota'], 'number'],
             [['alumno_id'], 'exist', 'skipOnError' => true, 'targetClass' => Alumno::className(), 'targetAttribute' => ['alumno_id' => 'id']],
             [['condicion_id'], 'exist', 'skipOnError' => true, 'targetClass' => Condicion::className(), 'targetAttribute' => ['condicion_id' => 'id']],
@@ -60,7 +62,7 @@ class Cursada extends \yii\db\ActiveRecord
             'materia_id' => 'Materia',
             'nota' => 'Nota',
             'fecha_vencimiento' => 'Fecha Vencimiento',
-            'fecha'=>'Fecha'
+            'fecha_cierre'=>'Fecha Cierre'
         ];
     }
 
@@ -98,8 +100,8 @@ class Cursada extends \yii\db\ActiveRecord
             $this->fecha_vencimiento = FechaHelper::fechaYMD($this->fecha_vencimiento);
         }  
 
-        if ($this->fecha != null) {           
-            $this->fecha = FechaHelper::fechaYMD($this->fecha);
+        if ($this->fecha_cierre != null) {           
+            $this->fecha_cierre = FechaHelper::fechaYMD($this->fecha_cierre);
         }  
         
         return parent::beforeValidate();
@@ -117,7 +119,7 @@ class Cursada extends \yii\db\ActiveRecord
 
     public function getDescripcionMateria()
     {
-        return $this->materia ? $this->materia->descripcion : 'Ninguno';
+        return $this->materia ? $this->materia->descripcionAnioMateria : 'Ninguno';
     }
 
     public function getDescripcionCondicion()
@@ -129,5 +131,22 @@ class Cursada extends \yii\db\ActiveRecord
     {        
         $sql = Condicion::find()->where(['id'=>[1,2,3]])->orderBy('descripcion')->all();
         return ArrayHelper::map($sql, 'id', 'descripcion');
+    }
+
+    public function getAnioMateria()
+    {
+        return $this->materia ? $this->materia->anio : null;
+    }
+
+    public function getPeriodoMateria()
+    {
+        return $this->materia ? $this->materia->periodo : null;
+    }
+
+    public static function getListaPeriodo()
+    {        
+        $sql= 'SELECT DISTINCT YEAR(fecha_inscripcion) AS anio FROM cursada ORDER BY anio DESC';
+        $query = self::findBySql($sql)->all();	
+        return ArrayHelper::map($query, 'anio', 'anio');
     }
 }

@@ -9,6 +9,7 @@ use yii\web\IdentityInterface;
 use backend\models\Perfil;
 use backend\models\TipoUsuario;
 use common\models\User;
+use backend\models\Alumno;
 use yii\helpers\ArrayHelper;
 /**
  * User model
@@ -62,24 +63,24 @@ class User extends ActiveRecord implements IdentityInterface
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este nombre de Usuario ya existe.'],
             ['username', 'string', 'min' => 6], 
             ['username', 'match', 'pattern' => '/^[0-9a-z]+$/i', 'message' => 'Sólo se aceptan letras y numeros'],    
-
+            ['role', 'string', 'max' => 64],
             ['email', 'filter', 'filter' => 'trim'],           
             ['email', 'email'],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este Email ya existe.'],
 
-            [['username','email','password','tipo_usuario_id'], 'required', 'on'=>'create'],
+            [['username','email','password','role'], 'required', 'on'=>'create'],
             [['email'], 'required', 'on'=>'update'],
-            ['password', 'match', 'pattern' => "/^.{8,16}$/", 'message' => 'Mínimo 6 y máximo 16 caracteres'], 
+            ['password', 'match', 'pattern' => "/^.{8,16}$/", 'message' => 'Mínimo 8 y máximo 16 caracteres'], 
             //[['tipo_usuario_id'], 'required'],
-            [['tipo_usuario_id'], 'integer'],
-            [['tipo_usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => TipoUsuario::className(), 'targetAttribute' => ['tipo_usuario_id' => 'id']],
+            //[['tipo_usuario_id'], 'integer'],
+            //[['tipo_usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => TipoUsuario::className(), 'targetAttribute' => ['tipo_usuario_id' => 'id']],
         ];
     }
 
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios['create'] = ['username','email','password','tipo_usuario_id']; 
+        $scenarios['create'] = ['username','email','password','role']; 
         $scenarios['update'] = ['email'];       
         return $scenarios;
     }
@@ -90,7 +91,7 @@ class User extends ActiveRecord implements IdentityInterface
             'username'=>"Username",
             'password'=>"Password",
             'email'=> "Email",
-            'tipo_usuario_id' => 'Tipo Usuario',
+            'role' => 'Tipo Usuario',
         ];
     }
 
@@ -136,6 +137,18 @@ class User extends ActiveRecord implements IdentityInterface
         return static::findOne([
             'password_reset_token' => $token,
             'status' => self::STATUS_ACTIVE,
+        ]);
+    }
+
+    public static function findByToken($token)
+    {
+        if (!static::isPasswordResetTokenValid($token)) {
+            return null;
+        }
+
+        return static::findOne([
+            'password_reset_token' => $token,
+            'status' => self::STATUS_INACTIVE,
         ]);
     }
 
@@ -230,10 +243,15 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasOne(Perfil::className(), ['user_id' => 'id']);
     }
 
-    public function getTipoUsuario() 
+    public function getAlumno()
+    {
+        return $this->hasOne(Alumno::className(), ['user_id' => 'id']);
+    }
+
+    /*public function getTipoUsuario() 
     { 
         return $this->hasOne(TipoUsuario::className(), ['id' => 'tipo_usuario_id']);
-    } 
+    } */
 
     public static function getListaTipo()
     {        
@@ -248,6 +266,41 @@ class User extends ActiveRecord implements IdentityInterface
     public function getPerfilNombre()
     {
         return $this->perfil ? $this->perfil->nombre : 'ninguno';
+    }
+
+    public function getIdAlumno()
+    {
+        return $this->alumno ? $this->alumno->id : 'ninguno';
+    }
+
+    public function getNombreAlumno()
+    {
+        return $this->alumno ? $this->alumno->nombreCompleto : 'ninguno';
+    }
+
+    public function getNombreRole()
+    {
+        return $this->role ;
+    }
+
+    public function getListaRoles()
+    {
+        $query= $posts = Yii::$app->db->createCommand('SELECT * FROM auth_item WHERE type=1')->queryAll();
+        
+
+        return ArrayHelper::map($query, 'name','name');
+    }
+
+    /**
+     * Informa si el usuario tiene rol de PRECEPTOR
+     */
+    public function getIsPreceptor()
+    {
+        if($this->role == 'PRECEPTOR')
+        {
+            return true;
+        }
+        return false;
     }
 
 }

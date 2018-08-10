@@ -1,3 +1,4 @@
+
 <?php
 $params = array_merge(
     require(__DIR__ . '/../../common/config/params.php'),
@@ -13,14 +14,34 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'assetManager' => [
+            'bundles' => [
+                
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'js'=>[]
+                ],
+                'yii\bootstrap\BootstrapAsset' => [
+                    'css' => []
+                ]
+            ]
+        ],
+        'authManager' => [
+        'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
+        ],    
+        'user' => [        
+        'identityClass' => 'common\models\User',
+        'loginUrl' => ['site/login'],
+        'enableAutoLogin' => true,
+        'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+        ], 
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],
-        'user' => [
+        /*'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
-        ],
+        ],*/
         'session' => [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-frontend',
@@ -45,6 +66,25 @@ return [
             ],
         ],
         */
+    ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+             //Permisos permitidos solo de manera temporal por que no existen usuarios     
+            'gii/*',//Permitir solo en desarrollo.                 
+            'site/logout',
+            'site/change-password',
+            'site/request-password-reset',
+            'site/reset-password',  
+            'site/activar-cuenta',
+            'site/signup', 
+            'site/validation',
+            'site/preinscripcion', 
+            'admin/user/request-password-reset',            
+            'admin/user/reset-password',                   
+
+
+        ]
     ],
     'params' => $params,
 ];

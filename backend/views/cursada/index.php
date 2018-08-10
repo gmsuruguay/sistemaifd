@@ -17,70 +17,27 @@ $this->params['breadcrumbs'][] = $this->title;
     <?=$this->render('_search', ['model' => $searchModel])?>
     <div class="box">
         <div class="box-header with-border">            
-            <h3 class="box-title">Listado de actas</h3>  
-            <div class="pull-right">
-            <?= Html::a('<i class="fa  fa-plus"></i> Nuevo', ['create'], ['class' => 'btn btn-success']) ?>
-            </div>           
+            <h3 class="box-title">Listado de Inscripciones</h3>  
+                      
         </div>
         <div class="box-body">
             <?= GridView::widget([
-                'dataProvider' => $dataProvider,               
+                'dataProvider' => $dataProvider,   
+                'showOnEmpty'=>false,            
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],                    
-                    [
-                    'attribute'=>'fecha_inscripcion',
-                    'label'=>'Fecha Inscripción',
-                    'format'=>'text',//raw, html
-                    'content'=>function ($data){
-                        return FechaHelper::fechaDMY($data->fecha_inscripcion);
-                    }
-                    ],                 
-                    [
-                    'attribute'=>'alumno',
-                    'label'=>'Alumno',
-                    'format'=>'text',//raw, html
-                    'content'=>function ($data){      
-                        $url = Url::to(['alumno/view', 'id'=>$data->alumnoId]);
-                        $opciones = [];
-                        return Html::a($data->datoCompletoAlumno, $url, $opciones);             
-                        
-                    }
-                    ], 
-                    [
-                    'attribute'=>'materia_id',
-                    'label'=>'Materia',
-                    'format'=>'text',//raw, html
-                    'content'=>function ($data){
-                        return $data->descripcionMateria;
-                    }
-                    ], 
-                    [
-                    'attribute'=>'condicion_id',
-                    'label'=>'Condición',
-                    'format'=>'text',//raw, html
-                    'content'=>function ($data){
-                        return $data->descripcionCondicion;
-                    }
-                    ], 
-                    [
-                    'attribute'=>'fecha',
-                    'label'=>'Fecha',
-                    'format'=>'text',//raw, html
-                    'content'=>function ($data){
-                        return FechaHelper::fechaDMY($data->fecha);
-                    }
-                    ], 
-                    'nota',                   
-                    [
-                    'attribute'=>'fecha_vencimiento',
-                    'label'=>'Fecha Vencimiento',
-                    'format'=>'text',//raw, html
-                    'content'=>function ($data){
-                        return FechaHelper::fechaDMY($data->fecha_vencimiento);
-                    }
-                    ], 
+                    ['class' => 'yii\grid\SerialColumn'],                                  
+                   
+                    'materia', 
+                    'cant',
 
-                    ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{update} {delete}')],
+                    ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{detalle}'),
+                    'buttons' => [
+                        
+                        'detalle' => function ($url,$model,$key) {
+                                return Html::a('<span class="glyphicon glyphicon-print" aria-hidden="true"></span>', ['imprimir-inscripcion-cursada','id'=>$model['id'],'anio'=>$model['anio'] ], ['target'=>'_blank']);
+                        },
+                    ],
+                    ],
                 ],
             ]); ?>
         </div>

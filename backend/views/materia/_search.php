@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use backend\models\Carrera;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model backend\models\search\MateriaSearch */
 /* @var $form yii\widgets\ActiveForm */
@@ -10,26 +11,46 @@ use yii\widgets\ActiveForm;
 
 <div class="materia-search">
 
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
+    <div class="box">
+            <div class="box-header with-border">                         
+                <h3 class="box-title"><i class="fa fa-filter"></i> Criterios de búsqueda</h3>
+            </div>
+            <div class="box-body">
+                <?php $form = ActiveForm::begin([
+                    'action' => ['index'],
+                    'method' => 'get',
+                ]); ?>    
+                
+                <div class="row">
+                    <div class="col-md-4">
+                    <?= $form->field($model, 'descripcion')->textInput(['placeholder'=>'Nombre de la materia']) ?>
+                    </div>
+                    <div class="col-md-4">
+                      <?= $form->field($model, 'carrera_id')->widget(Select2::classname(), [
+                
+                                                'data' => Carrera::getListaCarreras(),
+                                                'language' => 'es',
+                                                'options' => ['placeholder' => 'Mostrar todos'],
+                                                'pluginOptions' => [
+                                                    'allowClear' => true
+                                                ],
+                                                ])
 
-    <?= $form->field($model, 'id') ?>
+                            ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'estado')->dropDownList(['0'=>'DISPONIBLE','1'=>'ASIGNADA'],['prompt'=>'Mostrar todos']); ?>
+                    </div>                    
+                    
+                </div>  
+                
+                <div class="form-group">
+                    <?= Html::submitButton('<i class="fa fa-search"></i> Buscar', ['class' => 'btn btn-primary']) ?>
+                  
+                </div>
 
-    <?= $form->field($model, 'descripcion') ?>
-
-    <?= $form->field($model, 'carrera_id') ?>
-
-    <?= $form->field($model, 'anio') ?>
-
-    <?= $form->field($model, 'estado')->checkbox() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+                <?php ActiveForm::end(); ?>
+            </div>
     </div>
-
-    <?php ActiveForm::end(); ?>
 
 </div>

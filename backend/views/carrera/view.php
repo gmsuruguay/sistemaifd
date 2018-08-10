@@ -11,7 +11,7 @@ use backend\models\search\CorrelatividadSearch;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Carrera */
 
-$this->title = $model->id;
+$this->title = 'Plan de Estudio';
 $this->params['breadcrumbs'][] = ['label' => 'Carreras', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -33,14 +33,30 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <div class="box-body">  
-            <?= DetailView::widget([
-            'model' => $model,
-            'attributes' => [               
-               
-                'duracion',
-                'cohorte',
-            ],
-            ]) ?>     
+            <table class="table" style="width:100%">
+                <tr>
+                    <th>Duración en años</th>
+                    <td><?=$model->duracion ?></td>
+                    <th>Cohorte</th>
+                    <td><?=$model->cohorte ?></td>
+                    <th>Validez Nacional</th>
+                    <td><?=$model->validez_nacional ?></td>
+                </tr>
+                <tr>
+                    <th>Cantidad Materias</th>
+                    <td><?=$model->cantidad_materias ?></td>
+                    <th>Cantidad Horas</th>
+                    <td><?=$model->cantidad_horas ?></td>
+                    <th>Nro. Resolución</th>
+                    <td><?=$model->nro_resolucion ?></td>
+                </tr>
+                <tr>
+                    <th>Sede</th>
+                    <td colspan="5"><?=$model->descripcionSede ?></td>
+                </tr>            
+            </table>
+
+            
         </div>
     </div> 
 
@@ -52,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-header with-border">           
             
             <div class="pull-right">
-            <?= Html::a('<i class="fa  fa-plus"></i> Agregar materia', ['materia/create','id' => $model->id],['class' => 'btn btn-success modalButton']) ?>
+            <?= Html::a('<i class="fa  fa-plus"></i> Agregar materia', ['materia/nuevo','id' => $model->id],['class' => 'btn btn-success']) ?>
             </div>            
         </div>
         <div class="box-body">
@@ -98,6 +114,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     ],
                     'periodo',
+                    [
+                    'attribute'=>'condicion_id',
+                    'label'=>'Condicion',
+                    'value'=>function($data){
+                        return $data->descripcionCondicion;
+                    },
+                    ],
+                    [
+                    'attribute'=>'condicion_examen_libre',
+                    'label'=>'Condicion Examen Libre',
+                    'value'=>function($data){
+                        return $data->condicionExamen;
+                    },
+                    ],                    
 
                     ['class' => 'yii\grid\ActionColumn', 'template' => Helper::filterActionColumn('{update} {delete}'), 
                     'buttons' => [

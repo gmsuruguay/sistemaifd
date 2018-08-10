@@ -1,0 +1,12 @@
+#Timezone por defecto
+SetEnv TZ America/Argentina/Jujuy
+Options -Indexes
+
+# Deny accessing below extensions
+<Files ~ "(.json|.lock|.git)">
+Order allow,deny
+Deny from all
+</Files>
+
+# Deny accessing dot files
+RewriteRule (^\.|/\.) - [F]

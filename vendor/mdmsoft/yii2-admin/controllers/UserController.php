@@ -3,6 +3,7 @@
 namespace mdm\admin\controllers;
 
 use Yii;
+use  yii\web\Session;
 use mdm\admin\models\form\Login;
 use mdm\admin\models\form\PasswordResetRequest;
 use mdm\admin\models\form\ResetPassword;
@@ -19,6 +20,8 @@ use yii\web\NotFoundHttpException;
 use yii\base\UserException;
 use yii\mail\BaseMailer;
 use backend\models\Perfil;
+use yii\web\HttpException;
+use backend\models\UsuarioSede;
 /**
  * User controller
  */
@@ -125,38 +128,115 @@ class UserController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionRestringirAcceso()
+    {
+        $this->layout='error';
+        return $this->render('error403');
+    }
+
     /**
      * Login
      * @return string
      */
+    /*
+    
     public function actionLogin()
-    {
-        //$this->layout='view_clean';
+    {       
 
         if (!Yii::$app->getUser()->isGuest) {
             return $this->goHome();
         }
 
         $model = new Login();
-        if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
+
+        if ($model->load(Yii::$app->getRequest()->post()) ) {
+        
+            $user= User::findByUsername($model->username);      
+            
+            if($user==null){
+                throw new NotFoundHttpException('Este usuario no existe');
+            }
+            
+                        
+            if($user->role != 'ALUMNO'){
+                if($model->login()){
+                    return $this->goBack();
+                }else{
+                    return $this->render('login', [
+                        'model' => $model,
+                    ]);
+                }
+                
+            }else {                
+                return $this->redirect(['restringir-acceso']);
+            }               
+                                
+            
+        } else{
             return $this->render('login', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
-    }
+        
+        
+    } */
 
-    /**
-     * Logout
-     * @return string
-     */
-    public function actionLogout()
-    {
-        Yii::$app->getUser()->logout();
+    public function actionLogin()
+    {       
 
-        return $this->goHome();
+        if (!Yii::$app->getUser()->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new Login();
+
+        if ($model->load(Yii::$app->getRequest()->post()) ) {
+        
+            $user= User::findByUsername($model->username);      
+            
+            if($user==null){
+                throw new NotFoundHttpException('Este usuario no existe');
+            }
+            
+                        
+            if($user->role != 'ALUMNO'){
+                if($model->login()){
+                    //Para los Usuarios con Role preceptor se debe crear una variable de sesión.
+                    if(Yii::$app->user->identity->role=='PRECEPTOR'){
+                        $session = Yii::$app->session;
+                        $m= $this->findSede(Yii::$app->user->identity->id);
+                        $session->set('sede',$m->sede_id);
+                    }
+                    return $this->goBack();
+                }else{
+                    return $this->render('login', [
+                        'model' => $model,
+                    ]);
+                }
+                
+            }else {                
+                return $this->redirect(['restringir-acceso']);
+            }               
+                                
+            
+        } else{
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
+        
+        
     }
+/**
+ * Logout
+ * @return string
+ */
+public function actionLogout()
+{
+    Yii::$app->getUser()->logout();
+
+    return $this->goHome();
+}
 
     /**
      * Signup new user
@@ -298,6 +378,15 @@ class UserController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findSede($id)
+    {
+        if (($model = UsuarioSede::find()->where(['user_id' => $id])->one() ) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('Este usuario no tiene una sede asignada');
         }
     }
 }

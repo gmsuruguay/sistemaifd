@@ -1,0 +1,29 @@
+.app-icono {
+    font-size: 15px;
+}
+
+.test+.tooltip>.tooltip-inner {
+    padding: 10px;
+    font-size: 15px;
+}
+
+.label {
+    font-size: 100%;
+}
+
+.preload {
+    display: none;
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+}
+.app-info {
+    padding: 5px 5px 5px 15px;
+    line-height: 1;   
+    left: 55px;
+    color:white;
+}

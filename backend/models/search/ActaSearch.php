@@ -6,20 +6,21 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Acta;
-
+use common\models\HelperSede;
 /**
  * ActaSearch represents the model behind the search form about `backend\models\Acta`.
  */
 class ActaSearch extends Acta
 {
     public $alumno;
+    public $sede;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'libro', 'folio', 'condicion_id', 'alumno_id', 'materia_id', 'nro_permiso'], 'integer'],
+            [['id', 'libro', 'folio', 'condicion_id', 'alumno_id', 'materia_id', 'nro_permiso','sede'], 'integer'],
             [['nota'], 'number'],
             [['asistencia'], 'boolean'],
             [['fecha_examen', 'resolucion','alumno'], 'safe'],
@@ -47,7 +48,8 @@ class ActaSearch extends Acta
         $query = Acta::find();
 
         // add conditions that should always apply here
-        $query->joinWith(['alumno']);
+        $query->joinWith(['alumno','materia.carrera']);
+        //$query->joinWith(['carrera']);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -81,9 +83,15 @@ class ActaSearch extends Acta
             'nro_permiso' => $this->nro_permiso,
         ]);
 
-        $query->andFilterWhere(['like', 'resolucion', $this->resolucion])
-              ->orFilterWhere(['like', 'alumno.numero', $this->alumno])
+        $query->orFilterWhere(['like', 'alumno.numero', $this->alumno])
               ->orFilterWhere(['like', "concat_ws(' ',alumno.apellido,alumno.nombre)", $this->alumno]);
+        
+        if(Yii::$app->user->identity->role=='PRECEPTOR'){
+            
+            
+            $query->andFilterWhere(['=', 'carrera.sede_id', HelperSede::obtenerSede()]);
+        
+        }
 
         return $dataProvider;
     }

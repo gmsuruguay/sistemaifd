@@ -5,8 +5,8 @@ namespace backend\models;
 use Yii;
 
 use common\models\FechaHelper;
-
-
+use backend\models\Condicion;
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "acta".
  *
@@ -38,7 +38,8 @@ class Acta extends \yii\db\ActiveRecord
     {
         return [
             [['libro', 'folio', 'condicion_id', 'alumno_id', 'materia_id'], 'integer'],
-            [['nota'], 'number'],
+            [['libro', 'folio', 'condicion_id', 'alumno_id', 'materia_id','fecha_examen'], 'required'],
+            [['nota'], 'number','min'=>0, 'max'=>10],
             [['asistencia'], 'boolean'],
             [['condicion_id', 'alumno_id', 'materia_id','nota'], 'required'],
             [['fecha_examen'], 'safe'],
@@ -129,6 +130,17 @@ class Acta extends \yii\db\ActiveRecord
     public function getAlumnoId()
     {
         return $this->alumno ? $this->alumno->id : '-Ninguno-';
+    }
+
+    public function getDescripcionCondicion()
+    {
+        return $this->condicion ? $this->condicion->descripcion : 'Ninguno';
+    }
+
+    public function getListaCondicion()
+    {        
+        $sql = Condicion::find()->where(['id'=>[1,2,3]])->orderBy('descripcion')->all();
+        return ArrayHelper::map($sql, 'id', 'descripcion');
     }
 
 }

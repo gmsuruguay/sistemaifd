@@ -6,20 +6,21 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Inscripcion;
-
+use common\models\HelperSede;
 /**
  * InscripcionSearch represents the model behind the search form about `backend\models\Inscripcion`.
  */
 class InscripcionSearch extends Inscripcion
 {
     public $alumno;
+    public $sede;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'alumno_id', 'carrera_id', 'nro_libreta'], 'integer'],
+            [['id', 'alumno_id', 'carrera_id', 'nro_libreta','sede','estado'], 'integer'],
             [['fecha', 'observacion','alumno','nro_legajo'], 'safe'],
         ];
     }
@@ -45,7 +46,8 @@ class InscripcionSearch extends Inscripcion
         $query = Inscripcion::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
-        $query->joinWith(['alumno']);
+        $query->joinWith(['alumno','carrera']);
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -73,10 +75,18 @@ class InscripcionSearch extends Inscripcion
             'carrera_id' => $this->carrera_id,
             'nro_libreta' => $this->nro_libreta,
             'fecha' => $this->fecha,
+            'estado'=> $this->estado,
+            //'carrera.sede_id' => 1,
         ]);
 
         $query->orFilterWhere(['like', 'alumno.numero', $this->alumno])
               ->orFilterWhere(['like', "concat_ws(' ',alumno.apellido,alumno.nombre)", $this->alumno]);
+
+        if(Yii::$app->user->identity->role=='PRECEPTOR'){            
+       
+        $query->andFilterWhere(['=', 'carrera.sede_id', HelperSede::obtenerSede()]);
+        
+        }              
 
         return $dataProvider;
     }

@@ -4,6 +4,7 @@ use common\models\ValorHelper;
 use backend\models\Alumno;
 use backend\models\Docente;
 use backend\models\Carrera;
+use backend\models\Materia;
 use yii\helpers\Html;
 /* @var $this yii\web\View */
 
@@ -59,13 +60,13 @@ $this->title = 'Inicio - Sistema';
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3><i class="fa fa-pencil"></i></h3>
-              <p>Usuarios</p>
+              <h3><?= Materia::cantidadDisponible() ?></h3>
+              <p>Materias Disponibles</p>
             </div>
             <div class="icon">
-            <i class="fa fa-users"></i>
+            <i class="fa fa-leanpub"></i>
             </div>
-            <a href="<?= Url::toRoute('user/') ?>" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?= Url::toRoute('materia/') ?>" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -110,6 +111,20 @@ $this->title = 'Inicio - Sistema';
                <i class="fa fa-rocket"></i>
               </div>
               <a href="<?= Url::toRoute('cursada/') ?>" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+              <div class="inner">
+                <h3><i class="fa fa-file"></i></h3>
+                <p>Solicitudes Certificados</p>
+              </div>
+              <div class="icon">
+               <i class="fa fa-print"></i>
+              </div>
+              <a href="<?= Url::toRoute('pedido/') ?>" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->

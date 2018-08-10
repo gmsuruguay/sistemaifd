@@ -24,17 +24,7 @@ use backend\models\Alumno;
                                         'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-calendar"></i>']]
                                     ])->widget( MaskedInput::className(), [    
                                                     'clientOptions' => ['alias' =>  'date']
-                        ]) ?>
-        
-
-            <?= $form->field($model, 'alumno_id')->widget(Select2::classname(), [                                            
-                                                            'data' => Alumno::getListaAlumnos(),
-                                                            'language' => 'es',
-                                                            'options' => ['placeholder' => 'Buscar alumno por DNI o Apellido'],
-                                                            'pluginOptions' => [
-                                                                'allowClear' => true
-                                                            ],
-                                                            ]) ?>
+                        ]) ?>         
 
             <?= $form->field($model, 'materia_id')->widget(Select2::classname(), [
                         
@@ -45,31 +35,6 @@ use backend\models\Alumno;
                                                             'allowClear' => true
                                                         ],
                                                         ]) ?>
-
-            <?= $form->field($model, 'fecha',[
-                                            'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-calendar"></i>']]
-                                        ])->widget( MaskedInput::className(), [    
-                                                        'clientOptions' => ['alias' =>  'date']
-                            ]) ?>
-
-            <?= $form->field($model, 'nota')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'condicion_id')->widget(Select2::classname(), [
-                                        
-                                                                        'data' => $model->getListaCondicion(),
-                                                                        'language' => 'es',
-                                                                        'options' => ['placeholder' => 'Buscar'],
-                                                                        'pluginOptions' => [
-                                                                            'allowClear' => true
-                                                                        ],
-                                                                        ]) ?>
-            
-
-            <?= $form->field($model, 'fecha_vencimiento',[
-                                        'addon' => ['prepend' => ['content'=>'<i class="glyphicon glyphicon-calendar"></i>']]
-                                    ])->widget( MaskedInput::className(), [    
-                                                    'clientOptions' => ['alias' =>  'date']
-                        ]) ?>
         
         </div>  
         <div class="box-footer">

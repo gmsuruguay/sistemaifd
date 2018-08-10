@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Acta */
 
-$this->title = 'Create Acta';
+$this->title = 'Registrar Actas Historicas';
 $this->params['breadcrumbs'][] = ['label' => 'Actas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

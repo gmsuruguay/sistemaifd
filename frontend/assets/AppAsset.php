@@ -12,12 +12,18 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
+        'css/materialize.min.css',
+        'css/style.css',
+        'css/reporte.css'
     ];
     public $js = [
+        'js/materialize.js',
+        'js/init.js',
+        'js/alert.js',
+        'js/yii_overrides.js',   
     ];
-    public $depends = [
+    public $depends = [       
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        'backend\assets\SweetAlertAsset', 
     ];
 }

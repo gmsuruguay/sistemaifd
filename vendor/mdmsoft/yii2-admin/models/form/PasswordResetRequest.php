@@ -24,7 +24,7 @@ class PasswordResetRequest extends Model
             ['email', 'exist',
                 'targetClass' => 'mdm\admin\models\User',
                 'filter' => ['status' => User::STATUS_ACTIVE],
-                'message' => 'There is no user with such email.'
+                'message' => 'No existe un usuario registrado con este e-mail.'
             ],
         ];
     }

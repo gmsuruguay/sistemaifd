@@ -40,6 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 
                 <div class="form-group">
                     <?= Html::submitButton(Yii::t('rbac-admin', 'Ingresar'), ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+                    <div style="color:#999;margin:1em 0">
+                    Si olvidaste tu contraseña recupérala haciendo click <?= Html::a('aqui', ['user/request-password-reset']) ?>.
+                    </div>
                 </div>
                 <?php ActiveForm::end(); ?>             
 

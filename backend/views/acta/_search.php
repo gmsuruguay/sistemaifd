@@ -24,22 +24,15 @@ use kartik\widgets\DatePicker;
                 ]); ?>    
                 
                 <div class="row">
+                    
                     <div class="col-md-4">
-                    <?= $form->field($model, 'alumno')->textInput(['placeholder'=>'Buscar por DNI o Apellido y Nombre']) ?>
+                    <?= $form->field($model, 'libro') ?>   
                     </div>
-                    <div class="col-md-4">
-                      <?= $form->field($model, 'materia_id')->widget(Select2::classname(), [
-                
-                                                'data' => Materia::getListaMaterias(),
-                                                'language' => 'es',
-                                                'options' => ['placeholder' => 'Mostrar todos'],
-                                                'pluginOptions' => [
-                                                    'allowClear' => true
-                                                ],
-                                                ])
 
-                            ?>
+                    <div class="col-md-4">
+                    <?= $form->field($model, 'folio') ?>
                     </div>
+
                     <div class="col-md-4">
                      <?= $form->field($model, 'fecha_examen')->widget(DatePicker::classname(), [
                             'options' => ['placeholder' => '',                            
@@ -51,11 +44,14 @@ use kartik\widgets\DatePicker;
                                 'todayHighlight' => true
                             ]
                             ]); ?>
-                    </div>                    
+                    </div> 
+                   
+                    
+                                       
                     
                 </div>  
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                     <?= $form->field($model, 'condicion_id')->widget(Select2::classname(), [
                                 
                                                                 'data' => Condicion::getlistaCondicion(),
@@ -68,11 +64,19 @@ use kartik\widgets\DatePicker;
 
                                             ?>
                     </div>
-                    <div class="col-md-4">
-                     <?= $form->field($model, 'libro') ?>   
-                    </div>
-                    <div class="col-md-4">
-                     <?= $form->field($model, 'folio') ?>
+                   
+                    <div class="col-md-6">
+                      <?= $form->field($model, 'materia_id')->widget(Select2::classname(), [
+                
+                                                'data' => Materia::getListaMaterias(),
+                                                'language' => 'es',
+                                                'options' => ['placeholder' => 'Mostrar todos'],
+                                                'pluginOptions' => [
+                                                    'allowClear' => true
+                                                ],
+                                                ])
+
+                            ?>
                     </div>
                     
                 </div>               

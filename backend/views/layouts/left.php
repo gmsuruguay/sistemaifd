@@ -68,7 +68,7 @@ use backend\models\Sede;
                         'icon' => 'fa fa-book',
                         'url' => '#',
                         'items' => [                            
-                            ['label' => 'Listar Folios', 'icon' => 'fa fa-list', 'url' => ['/acta'],],
+                            ['label' => 'Buscar Actas', 'icon' => 'fa fa-list', 'url' => ['/acta'],],
                             ['label' => 'Registrar Actas Historicas', 'icon' => 'fa fa-plus', 'url' => ['/acta/create'],],    
                             ['label' => 'Registrar Actas con Inscripción', 'icon' => 'fa fa-plus', 'url' => ['/acta/load-from-inscripto']],                          
                         ],

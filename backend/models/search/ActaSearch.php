@@ -45,21 +45,22 @@ class ActaSearch extends Acta
      */
     public function search($params)
     {
-        $query = Acta::find();
+        $query = Acta::find()->select(['libro','folio','fecha_examen','condicion_id','materia_id'])->distinct();
 
         // add conditions that should always apply here
-        $query->joinWith(['alumno','materia.carrera']);
+        //$query->joinWith(['alumno','materia.carrera']);
         //$query->joinWith(['carrera']);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['libro' => SORT_ASC,'folio' => SORT_ASC]],
         ]);
 
-        $dataProvider->sort->attributes['alumno'] = [
+        /*$dataProvider->sort->attributes['alumno'] = [
             // The tables are the ones our relation are configured to
             // in my case they are prefixed with "tbl_"
             'asc' => ['alumno.apellido' => SORT_ASC],
             'desc'=> ['alumno.apellido' => SORT_DESC],
-        ];
+        ];*/
 
         $this->load($params);
 
@@ -74,17 +75,17 @@ class ActaSearch extends Acta
             'id' => $this->id,
             'libro' => $this->libro,
             'folio' => $this->folio,
-            'nota' => $this->nota,
-            'asistencia' => $this->asistencia,
+            //'nota' => $this->nota,
+            //'asistencia' => $this->asistencia,
             'condicion_id' => $this->condicion_id,
-            'alumno_id' => $this->alumno_id,
+            //'alumno_id' => $this->alumno_id,
             'materia_id' => $this->materia_id,
             'fecha_examen' => $this->fecha_examen,
-            'nro_permiso' => $this->nro_permiso,
+            //'nro_permiso' => $this->nro_permiso,
         ]);
 
-        $query->orFilterWhere(['like', 'alumno.numero', $this->alumno])
-              ->orFilterWhere(['like', "concat_ws(' ',alumno.apellido,alumno.nombre)", $this->alumno]);
+        /*$query->orFilterWhere(['like', 'alumno.numero', $this->alumno])
+              ->orFilterWhere(['like', "concat_ws(' ',alumno.apellido,alumno.nombre)", $this->alumno]);*/
         
         /*if(Yii::$app->user->identity->role=='PRECEPTOR'){
             

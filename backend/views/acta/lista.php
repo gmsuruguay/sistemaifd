@@ -27,7 +27,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'libro',
-                    'folio', 
+                    'folio',
+                    'nro_permiso',                   
+                    'nota',
+                    'asistencia:boolean',
+                   
+                    [
+                    'attribute'=>'materia_id',
+                    'label'=>'Materia',
+                    'format'=>'text',//raw, html
+                    'content'=>function ($data){
+                        return $data->descripcionMateria;
+                    }
+                    ], 
                     
                     [
                     'attribute'=>'fecha_examen',
@@ -37,32 +49,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         return FechaHelper::fechaDMY($data->fecha_examen);
                     }
                     ],  
-                                      
-                   
-                    [
-                    'attribute'=>'condicion_id',                    
-                    'format'=>'text',//raw, html
-                    'content'=>function ($data){
-                        return $data->DescripcionCondicion;
-                    }
-                    ], 
-                    [
-                    'attribute'=>'materia_id',
-                    'label'=>'Materia',
-                    'format'=>'text',//raw, html
-                    'content'=>function ($data){
-                        return $data->descripcionMateria;
-                    }
-                    ], 
 
                     ['class' => 'yii\grid\ActionColumn',
-                    'template' => Helper::filterActionColumn('{detalle}'),
+                    'template' => Helper::filterActionColumn('{delete}'),
                     'buttons' => [
-                        'detalle' => function ($url,$model,$key) {
-                            return Html::a('<span class="glyphicon glyphicon-search" aria-hidden="true"></span>', ['load','libro'=>$model->libro,'folio'=>$model->folio, 'fecha_examen'=>$model->fecha_examen, 'condicion_id'=>$model->condicion_id,'materia_id'=>$model->materia_id ], ['target'=>'_blank']);
+                        'delete'=>function ($url, $model, $key) {
+                                            
+                            return Html::a('', ['/acta/delete-from-index', 'id'=>$model->id], ['class' => 'fa fa-trash', 'title'=>'Eliminar registro']);
+                            
                         },
                     ]
-                    ],
+                ],
             ]]); ?>
            
         </div>

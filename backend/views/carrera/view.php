@@ -11,7 +11,7 @@ use backend\models\search\CorrelatividadSearch;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Carrera */
 
-$this->title = 'Plan de Estudio';
+$this->title = 'Espacio Curricular';
 $this->params['breadcrumbs'][] = ['label' => 'Carreras', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

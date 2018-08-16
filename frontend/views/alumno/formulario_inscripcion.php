@@ -20,7 +20,7 @@ $this->title = 'Formulario de Inscripción';
 </table>
 <br>
 <div  style="text-align:center;">
-    <h2>Formulario de Inscripción</h2>    
+    <h4>Formulario de Inscripción</h4>    
 </div>
 
 <table width="70%">

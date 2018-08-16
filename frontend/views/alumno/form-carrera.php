@@ -11,7 +11,7 @@ use backend\models\Carrera;
 $this->title = 'Selecciona Carrera';
 ?>
 <div class="carrera-view">   
-        <h3><?=$this->title?></h3> 
+    <h4><?= Html::encode($this->title) ?></h4>
             
              <?php $form = ActiveForm::begin([
                 'method' => 'post',

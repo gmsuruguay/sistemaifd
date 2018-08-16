@@ -14,7 +14,7 @@ $this->title = 'Mi Historia Academica';
 
 <div class="historia-academica-view">
 
-    <h3><?= Html::encode($this->title) ?></h3>   
+    <h4><?= Html::encode($this->title) ?></h4>  
         <div class="card-panel">
             <?= DetailView::widget([
                 'model' => $model,
@@ -32,31 +32,33 @@ $this->title = 'Mi Historia Academica';
         </div>
 
     <div class="card">
-    <table  width="100%">
-        <thead>     
-          <tr>  
-            <th>Espacio Curricular</th>           
-            <th>Año</th>
-            <th>Calificación</th>               
-            <th>Fecha</th>                
-            <th>Condición</th>   
-            <th>Tipo</th>     
-          </tr>
-        </thead> 
-        <tbody>
-            <?php foreach ($materias as $dato): ?>
-            <tr>
-                <td><?=$dato['descripcion'] ?></td>  
-                <td><?=$dato['anio'] ?></td>  
-                <td><?=$dato['nota'] ?></td>  
-                <td><?=FechaHelper::fechaDMY($dato['fecha']) ?></td>    
-                <td><?=$dato['condicion'] ?></td>                
-                <td><?=$dato['tipo'] ?></td>  
-                       
-            </tr>
-            <?php endforeach; ?>
-        </tbody>                
-    </table>
+        
+            <table class="responsive-table" width="100%">
+                <thead>     
+                  <tr>  
+                    <th>Espacio Curricular</th>           
+                    <th>Año</th>
+                    <th>Calificación</th>               
+                    <th>Fecha</th>                
+                    <th>Condición</th>   
+                    <th>Tipo</th>     
+                  </tr>
+                </thead> 
+                <tbody>
+                    <?php foreach ($materias as $dato): ?>
+                    <tr>
+                        <td><?=$dato['descripcion'] ?></td>  
+                        <td><?=$dato['anio'] ?></td>  
+                        <td><?=$dato['nota'] ?></td>  
+                        <td><?=FechaHelper::fechaDMY($dato['fecha']) ?></td>    
+                        <td><?=$dato['condicion'] ?></td>                
+                        <td><?=$dato['tipo'] ?></td>  
+                            
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>                
+            </table>
+        
     </div>
     
 

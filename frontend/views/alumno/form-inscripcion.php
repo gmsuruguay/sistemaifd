@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 $this->title="Inscripción a examen";
 ?>
 <div class="alumno-form-inscripcion">
-    <h3><?=$this->title?></h3>
+<h4><?= Html::encode($this->title) ?></h4>
     <?php $form = ActiveForm::begin(['class'=>'col s12 m12']); ?>
 
         <div class="row">

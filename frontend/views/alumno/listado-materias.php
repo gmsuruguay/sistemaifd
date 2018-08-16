@@ -12,7 +12,7 @@ $this->title = 'Inscripción Materias';
 ?>
 <div class="carrera-view">  
 
-    <h3><?= Html::encode($this->title) ?></h3>
+    <h4><?= Html::encode($this->title) ?></h4>
     <!--
     Lista de materias para la carrera en cuestion
     !-->     

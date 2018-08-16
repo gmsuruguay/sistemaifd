@@ -87,4 +87,21 @@ h4 {
 }
 
 
+
 /*Fin estilos Boton Alert*/
+
+/*Estilo btn*/
+.margen-btn{
+    padding-bottom: 25px;
+}
+h4{
+   text-align: center; 
+}
+
+/*Estilos responsive*/
+
+@media only screen and (max-width: 600px) {
+    .btn {
+        width: 100%;
+    }
+}

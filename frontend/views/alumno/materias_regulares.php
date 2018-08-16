@@ -14,7 +14,7 @@ use common\models\FechaHelper;
 $this->title = 'Regularidades';
 ?>
 <div class="materias-regulares-view">
-    <h3><?= Html::encode($this->title) ?></h3>
+<h4><?= Html::encode($this->title) ?></h4>
     <div class="card-panel">
     <?= DetailView::widget([
         'model' => $model,
@@ -38,7 +38,9 @@ $this->title = 'Regularidades';
         <div class="card-action">
 
         <?= GridView::widget([
-                'dataProvider' => $dataProvider,              
+                'dataProvider' => $dataProvider, 
+                'tableOptions' => ['class' => 'responsive-table','width'=>'100%'],
+             
                 'columns' => [
                     ['class' => 'kartik\grid\SerialColumn'],                  
                     [

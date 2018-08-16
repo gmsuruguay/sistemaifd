@@ -15,7 +15,7 @@ $this->title = 'SURI - PREINSCRIPCION';
 ?>
 <div class="inscripcion-index">    
     
-    <h3><?= Html::encode($this->title) ?></h3>
+<h4><?= Html::encode($this->title) ?></h4>
 
     
     

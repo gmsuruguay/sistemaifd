@@ -13,7 +13,7 @@ $this->title = 'Mis Inscripciones';
 ?>
 <div class="inscripcion-view">
 
-    <h3><?= Html::encode($this->title) ?></h3>   
+    <h4><?= Html::encode($this->title) ?></h4>  
         <div class="card-panel">
         <?= DetailView::widget([
             'model' => $model,

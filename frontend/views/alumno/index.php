@@ -14,7 +14,7 @@ $this->title = 'Carreras Inscriptas';
 ?>
 <div class="inscripcion-index">    
     
-    <h3><?= Html::encode($this->title) ?></h3>
+    <h4><?= Html::encode($this->title) ?></h4>
     <?php foreach ($model as $m): ?>
         <div class="row">
             <div class="col s12 m12">
@@ -24,38 +24,47 @@ $this->title = 'Carreras Inscriptas';
                     <p></p>
                 </div>
                 <div class="card-action">
-                    <?php 
-                    if (Helper::checkRoute('listar-materia') && CalendarioAcademico::estaHabilitado('CURSADA') ) {
-                        echo Html::a(Yii::t('app', '<i class="material-icons left">create</i> Inscribir materia'), ['listar-materia', 'id' => $m->carrera_id], [
-                            'class' => 'btn waves-effect waves-light'                            
-                        ]);
-                    }  
-                    
-                    if (Helper::checkRoute('form-inscripcion') && CalendarioAcademico::estaHabilitado('EXAMEN') ) {
-                        echo Html::a(Yii::t('app', '<i class="material-icons left">create</i> Inscribir examen'), ['form-inscripcion', 'id' => $m->carrera_id], [
-                            'class' => 'btn waves-effect waves-light'                            
-                        ]);
-                    }  
-                    if(Helper::checkRoute('ver-inscripciones')){
-                        echo Html::a('<i class="material-icons left">format_list_bulleted</i> Mis inscripciones', ['ver-inscripciones', 'id' => $m->id], [
-                            'class' => 'btn waves-effect waves-light',                  
-                            
-                        ]);
-                    }
-                    if(Helper::checkRoute('historial-academico')){
-                        echo Html::a('<i class="material-icons left">school</i> Mi historia academica', ['historial-academico', 'id' => $m->id], [
-                            'class' => 'btn waves-effect waves-light',                  
-                            
-                        ]);
-                    }
 
-                    if(Helper::checkRoute('listar-regularidades')){
-                        echo Html::a('<i class="material-icons left">format_list_bulleted</i> Regularidades', ['listar-regularidades', 'id' => $m->id], [
-                            'class' => 'btn waves-effect waves-light',                  
+                    
+                    
+                        <?php 
+                        if (Helper::checkRoute('listar-materia') && CalendarioAcademico::estaHabilitado('CURSADA') ) {
+                            echo Html::a(Yii::t('app', '<i class="material-icons left">create</i> Inscribir materia'), ['listar-materia', 'id' => $m->carrera_id], [
+                                'class' => 'btn waves-effect waves-light'                            
+                            ]);
+                        }  
+                        
+                        if (Helper::checkRoute('form-inscripcion') && CalendarioAcademico::estaHabilitado('EXAMEN') ) {
+                            echo Html::a(Yii::t('app', '<i class="material-icons left">create</i> Inscribir examen'), ['form-inscripcion', 'id' => $m->carrera_id], [
+                                'class' => 'btn waves-effect waves-light'                            
+                            ]);
+                        }  
+                        
+                        if(Helper::checkRoute('ver-inscripciones')){
+
                             
-                        ]);
-                    }
-                    ?>
+                            echo Html::a('<i class="material-icons left">format_list_bulleted</i> Mis inscripciones', ['ver-inscripciones', 'id' => $m->id], [
+                                'class' => 'btn waves-effect waves-light',                  
+                                
+                            ]);
+
+
+                        }
+                        if(Helper::checkRoute('historial-academico')){
+                            echo Html::a('<i class="material-icons left">school</i> Mi historia academica', ['historial-academico', 'id' => $m->id], [
+                                'class' => 'btn waves-effect waves-light',                  
+                                
+                            ]);
+                        }
+
+                        if(Helper::checkRoute('listar-regularidades')){
+                            echo Html::a('<i class="material-icons left">format_list_bulleted</i> Regularidades', ['listar-regularidades', 'id' => $m->id], [
+                                'class' => 'btn waves-effect waves-light',                  
+                                
+                            ]);
+                        }
+                        ?>
+                    
                 </div>
                 </div>
             </div>

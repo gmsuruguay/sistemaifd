@@ -25,7 +25,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>  
 
   <nav class="teal lighten-1" role="navigation">
-    <div class="nav-wrapper "><a id="logo-container" href="#" class="brand-logo"><?= Html::img('@web/img/logo_ifd_header.png', ['width'=>'80%','alt'=>Yii::$app->name,'class'=>'pull-left'])?></a>
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo"><?= Html::img('@web/img/logo_ifd_header.png', ['width'=>'80%','alt'=>Yii::$app->name,'class'=>'pull-left'])?></a>
       <ul class="right hide-on-med-and-down">      
        <?php if (Yii::$app->user->isGuest): ?>
         <li><a href="<?= Url::toRoute('/site/login')?>"><i class="material-icons left">account_circle</i>Iniciar Sesión</a></li>

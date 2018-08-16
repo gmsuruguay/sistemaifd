@@ -90,7 +90,8 @@ class UserController extends Controller
         if ($user->status == User::STATUS_INACTIVE) {
             $user->status = User::STATUS_ACTIVE;
             if ($user->save()) {
-                 return $this->redirect(['index']);
+                Yii::$app->getSession()->setFlash('success', 'Activación realizada correctamente.');
+                return $this->redirect(['index']);
             } else {
                 $errors = $user->firstErrors;
                 throw new UserException(reset($errors));
@@ -106,7 +107,8 @@ class UserController extends Controller
         if ($user->status == User::STATUS_ACTIVE) {
             $user->status = User::STATUS_INACTIVE;
             if ($user->save()) {
-                 return $this->redirect(['index']);
+                Yii::$app->getSession()->setFlash('danger', 'La cuenta del usuario se ha desactivado correctamente.');
+                return $this->redirect(['index']);
             } else {
                 $errors = $user->firstErrors;
                 throw new UserException(reset($errors));
@@ -271,6 +273,29 @@ class UserController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    //Blanqueo de clave
+
+    public function actionBlanquear($id)
+    {
+        $user = $this->findModel($id);
+        if ($user->status == User::STATUS_ACTIVE) {
+
+            $user->setPassword('12345678');
+            $user->generateAuthKey();
+
+            if ($user->save()) {
+                Yii::$app->getSession()->setFlash('success', 'Blanqueo de contraseña realizada correctamente.');
+                return $this->redirect(['index']);
+            } else {
+                $errors = $user->firstErrors;
+                throw new UserException(reset($errors));
+            }
+        }
+        Yii::$app->getSession()->setFlash('danger', 'No se pudo blanquear la contraseña de este usuario.');
+        return $this->redirect(['index']);    
+        
     }
 
 }

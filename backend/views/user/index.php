@@ -63,11 +63,31 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     
 
-                    ['class' => 'yii\grid\ActionColumn','template' => '{view} {permisos}', 
+                    ['class' => 'yii\grid\ActionColumn','template' => '{view} {permisos} {reset}', 
                      'buttons' => [
+
+
+
                         'permisos'=>function ($url, $model, $key) {
+                	        return $model->status==10 ?        		
+                            Html::a('', ['/admin/assignment/view', 'id'=>$model->id], ['class' => 'glyphicon glyphicon-lock', 'title'=>'Permisos'])
+                            :'';
+                        },
+
+                        'reset'=>function ($url, $model, $key) {
                 	                		
-                            return Html::a('', ['/admin/assignment/view', 'id'=>$model->id], ['class' => 'glyphicon glyphicon-lock', 'title'=>'Permisos']);
+                            return $model->status==10 ?
+                            Html::a('', ['blanquear', 'id'=>$model->id], 
+                            [
+                                'class' => 'glyphicon glyphicon-repeat', 
+                                'data' => [
+                                    'confirm' => 'Esta seguro de blanquear la contraseña ?',
+                                    'method' => 'post',
+                                ],
+                                'title'=>'Blanquear clave'
+                            ])
+
+                            :'';
                             
                         },
 

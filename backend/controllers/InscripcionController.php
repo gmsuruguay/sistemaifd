@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\FechaHelper;
+use backend\models\SolicitarDniForm;
 
 /**
  * InscripcionController implements the CRUD actions for Inscripcion model.
@@ -62,6 +63,33 @@ class InscripcionController extends Controller
         ]);
     }
 
+    public function actionBuscarAlumno()
+    {
+        $model = new SolicitarDniForm();
+        
+        if ($model->load(Yii::$app->request->post())) {
+            $alumno = Alumno::find()->where(['numero' => $model->dni])->one();
+            if($alumno){
+                // Alumno encontrado
+                return $this->render('solicitarDni',[
+                    'model' => $model,
+                    'encontrado' => 1,
+                    'alumno' => $alumno,
+                ]);
+            }else{
+                // Alumno no encontrado: registrar
+                return $this->render('solicitarDni',[
+                    'model' => $model,
+                    'encontrado' => 0,
+                ]);
+            }
+        } else {
+            return $this->render('solicitarDni',[
+                'model' => $model,
+            ]);
+        }
+    }
+
      /**
      * Registra una nueva inscripcion a una carrera desde la vista alumno/_academico.     
      * @return mixed
@@ -78,7 +106,7 @@ class InscripcionController extends Controller
              }
             
          } else {
-             return $this->render('formulario', [
+                return $this->render('formulario', [
                  'model' => $model,
                  'alumno' => $alumno,
              ]);

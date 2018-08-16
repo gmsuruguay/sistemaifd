@@ -208,9 +208,10 @@ class AlumnoController extends Controller
         }
     }*/
 
-    public function actionCreate()
+    public function actionCreate($dni)
     {
         $model = new Alumno();
+        $model->numero=$dni;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('info', "Por favor complete el formulario con los datos académicos");

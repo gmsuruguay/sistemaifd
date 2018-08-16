@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-login ">    
 
     <div class="row">
-        <div class="col m6 offset-m3">
+        <div class="col m6 s12 offset-m3">
           <div class="box-login">           
 
             <div class="row">
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="center-align">
                     <?= Html::submitButton('INICIAR SESIÓN <i class="material-icons right">send</i>', ['class' => 'btn waves-effect waves-light', 'name' => 'login-button']) ?>
                     <div style="color:#999;margin:1em 0">
-                    Si olvidaste tu contraseña recupérala haciendo click <?= Html::a('aqui', ['site/request-password-reset']) ?>.
+                    <!--Si olvidaste tu contraseña recupérala haciendo click --><?//Html::a('aqui', ['site/request-password-reset']) ?>
                     </div>
                 </div>
                 <?php ActiveForm::end(); ?>

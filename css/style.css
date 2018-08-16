@@ -36,12 +36,9 @@ main {
     background-color: #464646;
 }
 
-.site-login {
-    padding: 50px 15px 20px;
-}
-
 .logo-inicio {
     margin-top: 40px;
+    margin-bottom: 25px;
 }
 
 .box-login {

@@ -117,7 +117,7 @@ class Carrera extends \yii\db\ActiveRecord
     public static function cantidad(){   
         
 
-        $cantidad = self::find()->where(['sede_id'=>HelperSede::obtenerSede()])->count();
+        $cantidad = self::find()->count();
         return $cantidad;        
 
     }

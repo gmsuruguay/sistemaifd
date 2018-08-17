@@ -32,7 +32,8 @@ class AlumnoController extends Controller
         $model= Inscripcion::find()->where(['alumno_id'=>$id_alumno])->all();
 
         $preinscripcion=Inscripcion::existePreinscripcion($id_alumno);
-        if($preinscripcion){
+        if(!$preinscripcion){
+            
             $this->layout='main2';
             return $this->render('index-preinscripcion', [                     
                 'model' => $model,           
@@ -51,10 +52,14 @@ class AlumnoController extends Controller
         $model = new Inscripcion();   
         $alumno= $this->findModel(Yii::$app->user->identity->idAlumno);              
         if ($model->load(Yii::$app->request->post()) ) {
+            
             $model->alumno_id= Yii::$app->user->identity->idAlumno; 
+            $model->carrera_id= $model->carrera_id;
             $model->estado=0; // Estado Pre-inscripto
-            $model->fecha=date('Y-m-d');
+            $model->fecha=date('d-m-Y');
+            
             if($model->save()){
+               
                 $session = Yii::$app->session;                
                 $session->set('id_carrera', $model->carrera_id);
                 Yii::$app->session->setFlash('success', "Por favor complete el formulario con sus datos personales");

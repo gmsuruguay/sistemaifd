@@ -37,7 +37,7 @@ $this->title = 'SURI - PREINSCRIPCION';
             </div>
         </div>        
 
-        <?= Html::a('<i class="material-icons left">school</i> ELEGIR CARRERA', ['registrar-carrera'], ['class' => 'btn waves-effect waves-light']); ?>
+        <?= Html::a('<i class="material-icons left">school</i> ELEGIR CARRERA', ['registrar-carrera'], ['class' => 'btn cyan waves-effect waves-light']); ?>
     
     
                    

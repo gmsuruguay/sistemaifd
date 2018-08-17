@@ -34,10 +34,10 @@ class Inscripcion extends \yii\db\ActiveRecord
     {
         return [
             [['alumno_id', 'carrera_id', 'fecha'], 'required'],
-            [['alumno_id', 'carrera_id', 'nro_libreta'], 'integer'],
+            [['alumno_id', 'carrera_id', 'nro_libreta','estado'], 'integer'],
             [['fotocopia_dni', 'certificado_nacimiento', 'titulo_secundario', 'certificado_visual', 'certificado_auditivo', 'certificado_foniatrico', 'foto', 'constancia_cuil', 'planilla_prontuarial'], 'boolean'],
             [['fecha'], 'safe'],
-            [['nro_legajo','estado'], 'string','max'=>45],
+            [['nro_legajo'], 'string','max'=>45],
             [['observacion'], 'string'],
             [['alumno_id'], 'exist', 'skipOnError' => true, 'targetClass' => Alumno::className(), 'targetAttribute' => ['alumno_id' => 'id']],
             [['carrera_id'], 'exist', 'skipOnError' => true, 'targetClass' => Carrera::className(), 'targetAttribute' => ['carrera_id' => 'id']],

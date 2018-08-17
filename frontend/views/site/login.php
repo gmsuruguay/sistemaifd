@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>               
 
                 <div class="center-align">
-                    <?= Html::submitButton('INICIAR SESIÓN <i class="material-icons right">send</i>', ['class' => 'btn waves-effect waves-light', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('INICIAR SESIÓN <i class="material-icons right">send</i>', ['class' => 'btn cyan waves-effect waves-light', 'name' => 'login-button']) ?>
                     <div style="color:#999;margin:1em 0">
                     <!--Si olvidaste tu contraseña recupérala haciendo click --><?//Html::a('aqui', ['site/request-password-reset']) ?>
                     </div>

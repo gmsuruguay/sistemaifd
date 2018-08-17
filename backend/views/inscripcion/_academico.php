@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use mdm\admin\components\Helper;
+use common\models\FechaHelper;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Inscripcion */
 
@@ -17,7 +18,10 @@ use mdm\admin\components\Helper;
                 'value'=>$model->descripcionCarrera,
                 ],
                 'nro_libreta',
-                'fecha',
+                [
+                'label'=>'fecha',
+                'value'=>FechaHelper::fechaDMY($model->fecha)
+                ],
                 'observacion:ntext',                
                 [
                 'label'=>'Fotocopia DNI',

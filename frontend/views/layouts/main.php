@@ -24,7 +24,7 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>  
 
-  <nav class="teal lighten-1" role="navigation">
+  <nav class="cyan" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo"><?= Html::img('@web/img/logo_ifd_header.png', ['width'=>'80%','alt'=>Yii::$app->name,'class'=>'pull-left'])?></a>
       <ul class="right hide-on-med-and-down">      
        <?php if (Yii::$app->user->isGuest): ?>
@@ -97,7 +97,7 @@ AppAsset::register($this);
     </main>
 
 
-    <footer class="page-footer teal lighten-1">    
+    <footer class="page-footer cyan">    
         <div class="footer-copyright">
         <div class="container">
             © 2017 SURI      

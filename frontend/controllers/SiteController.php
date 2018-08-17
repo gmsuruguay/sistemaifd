@@ -21,6 +21,7 @@ use backend\models\Alumno;
 use common\models\AuthAssignment;
 use yii\widgets\ActiveForm;
 use backend\models\CalendarioAcademico;
+use backend\models\Perfil;
 /**
  * Site controller
  */
@@ -220,7 +221,8 @@ class SiteController extends Controller
             $model = new SignupForm();
             $alumno = new Alumno();
             $user = new User();
-            $role= new AuthAssignment();       
+            $role= new AuthAssignment();    
+            $perfil=  new Perfil(); 
 
             if ($model->load(Yii::$app->getRequest()->post())  ) {
                 
@@ -248,6 +250,12 @@ class SiteController extends Controller
                     $role->user_id = $user->id;
                     $role->created_at= time();
                     $role->save();
+
+                    $perfil->nombre= $alumno->nombre;
+                    $perfil->apellido= $alumno->apellido;
+                    $perfil->user_id=$user->id;
+                    $perfil->estado=0;
+                    $perfil->save();
 
                     if ($model->sendEmail()) {
                         Yii::$app->session->setFlash('success', 'Revise su correo electrónico para obtener más instrucciones.');

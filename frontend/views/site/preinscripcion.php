@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php 
      if ( CalendarioAcademico::estaHabilitado('PREINSCRIPCION') ) {
         echo Html::a(Yii::t('app', '<i class="material-icons left">create</i> Iniciar Preinscripcion'), ['signup'], [
-            'class' => 'btn waves-effect waves-light'                            
+            'class' => 'btn cyan waves-effect waves-light'                            
         ]);
         }
     ?>

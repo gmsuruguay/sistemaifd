@@ -277,8 +277,7 @@ class Materia extends \yii\db\ActiveRecord
     public static function cantidadDisponible(){  
        
         $cantidad = self::find()->joinWith(['carrera'])
-                    ->where(['materia.estado' => 0])
-                    ->andWhere(['sede_id'=> HelperSede::obtenerSede()])
+                    ->where(['materia.estado' => 0])                
                     ->count();
         return $cantidad;        
 

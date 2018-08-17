@@ -13,10 +13,10 @@ $carrera= Carrera::modelCarrera($carrera_id);
 ?>
 
 <div class="row">
-        <div class="col s12 m12">
+        <div class="col m8 s12 offset-m2">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title"><h4><i class="material-icons medium left">description</i>  <?= Html::encode($this->title) ?></h4></span>
+                    <span class="card-title"><h5 class="center-align"><?= Html::encode($this->title) ?></h5></span>
    
 
                 </div>
@@ -39,18 +39,18 @@ $carrera= Carrera::modelCarrera($carrera_id);
                         </p>
                 </div> 
                 <div class="card-action">
-                <div class="row">
-                    <div class="col m12">
+                <div class="form-group">
+                   
                         <?php                     
 
                         if(Helper::checkRoute('imprimir-formulario')){
                             echo Html::a('<i class="material-icons left">local_printshop</i> Imprimir', ['imprimir-formulario', 'id' => $model->id], [
-                                'class' => 'btn waves-effect waves-light btn-large right',                  
+                                'class' => 'btn cyan waves-effect waves-light',                  
                                 
                             ]);
                         }
                         ?>
-                    </div>
+                   
                  </div>
                 </div>
                 

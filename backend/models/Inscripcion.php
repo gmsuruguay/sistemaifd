@@ -136,6 +136,15 @@ class Inscripcion extends \yii\db\ActiveRecord
         return $existe;
     }
 
+    public static function  modelInscripcion($id)
+    {        
+        $model = self::find()->where(['id'=>$id])->one();
+        if($model){
+           return  $model;
+        }
+    }
+
+
 
 
 }

@@ -60,8 +60,12 @@ class AlumnoController extends Controller
             
             if($model->save()){
                
-                $session = Yii::$app->session;                
-                $session->set('id_carrera', $model->carrera_id);
+                $session = Yii::$app->session; 
+                                   
+                $session->set('nro_inscripcion', $model->id);
+                
+
+               
                 Yii::$app->session->setFlash('success', "Por favor complete el formulario con sus datos personales");
                 return $this->redirect(['actualizar-legajo', 'id' => $alumno->id]);               
                
@@ -99,7 +103,7 @@ class AlumnoController extends Controller
     }
 
     
-    public function actionImprimirFormulario($id){
+    public function actionImprimir($id){
         
         $mes=FechaHelper::obtenerMes(date('Y-m-d'));
         $pdf = Yii::$app->pdf;

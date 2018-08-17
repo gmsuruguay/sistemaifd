@@ -4,12 +4,14 @@ use common\models\FechaHelper;
 use mdm\admin\components\Helper;
 use  yii\web\Session;
 use backend\models\Carrera;
+use backend\models\Inscripcion;
 
 $this->title = 'Resumen Formulario de Preinscripción';
 
 $session = Yii::$app->session;
-$carrera_id = $session->get('id_carrera');
-$carrera= Carrera::modelCarrera($carrera_id);
+$id= $session->get('nro_inscripcion');
+$inscripcion=Inscripcion::modelInscripcion($id);
+$carrera= Carrera::modelCarrera($inscripcion->carrera_id);
 ?>
 
 <div class="row">
@@ -43,8 +45,8 @@ $carrera= Carrera::modelCarrera($carrera_id);
                    
                         <?php                     
 
-                        if(Helper::checkRoute('imprimir-formulario')){
-                            echo Html::a('<i class="material-icons left">local_printshop</i> Imprimir', ['imprimir-formulario', 'id' => $model->id], [
+                        if(Helper::checkRoute('imprimir')){
+                            echo Html::a('<i class="material-icons left">local_printshop</i> Imprimir', ['imprimir', 'id' => $id], [
                                 'class' => 'btn cyan waves-effect waves-light',                  
                                 
                             ]);

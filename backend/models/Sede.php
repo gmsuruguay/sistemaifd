@@ -91,6 +91,12 @@ class Sede extends \yii\db\ActiveRecord
     {        
         $model = self::findOne(1);
         return 'SEDE '.$model->localidad;
+
+    }
+    public static function getRegistro()
+    {
+        $model = self::find()->one();
+        return $model;
     }
     
 }

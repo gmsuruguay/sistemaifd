@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use mdm\admin\components\Helper;
+use backend\models\Sede;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\SedeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -17,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-header with-border">            
             <h3 class="box-title">Lista de Sedes</h3>
             <div class="pull-right">
-            <?= Html::a('<i class="fa  fa-plus"></i> Nuevo', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= !is_null(Sede::getRegistro()) ? '': Html::a('<i class="fa  fa-plus"></i> Nuevo', ['create'], ['class' => 'btn btn-success']) ?>
             </div>            
         </div>
         <div class="box-body">

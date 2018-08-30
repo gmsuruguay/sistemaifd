@@ -43,7 +43,7 @@ $this->title = 'Datos Personales';
                         
                         if (Helper::checkRoute('actualizar')) {
                             echo Html::a(Yii::t('app', '<i class="material-icons left">edit</i> Actualizar'), ['actualizar', 'id' => $model->id], [
-                                'class' => 'btn-floating btn-large waves-effect waves-light'                            
+                                'class' => 'btn-floating cyan btn-large waves-effect waves-light'                            
                             ]);
                         }  
                     

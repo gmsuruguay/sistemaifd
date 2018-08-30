@@ -30,13 +30,13 @@ $this->title = 'Carreras Inscriptas';
                         <?php 
                         if (Helper::checkRoute('listar-materia') && CalendarioAcademico::estaHabilitado('CURSADA') ) {
                             echo Html::a(Yii::t('app', '<i class="material-icons left">create</i> Inscribir materia'), ['listar-materia', 'id' => $m->carrera_id], [
-                                'class' => 'btn waves-effect waves-light'                            
+                                'class' => 'btn cyan waves-effect waves-light'                            
                             ]);
                         }  
                         
                         if (Helper::checkRoute('form-inscripcion') && CalendarioAcademico::estaHabilitado('EXAMEN') ) {
                             echo Html::a(Yii::t('app', '<i class="material-icons left">create</i> Inscribir examen'), ['form-inscripcion', 'id' => $m->carrera_id], [
-                                'class' => 'btn waves-effect waves-light'                            
+                                'class' => 'btn cyan waves-effect waves-light'                            
                             ]);
                         }  
                         
@@ -44,7 +44,7 @@ $this->title = 'Carreras Inscriptas';
 
                             
                             echo Html::a('<i class="material-icons left">format_list_bulleted</i> Mis inscripciones', ['ver-inscripciones', 'id' => $m->id], [
-                                'class' => 'btn waves-effect waves-light',                  
+                                'class' => 'btn cyan waves-effect waves-light',                  
                                 
                             ]);
 
@@ -52,14 +52,14 @@ $this->title = 'Carreras Inscriptas';
                         }
                         if(Helper::checkRoute('historial-academico')){
                             echo Html::a('<i class="material-icons left">school</i> Mi historia academica', ['historial-academico', 'id' => $m->id], [
-                                'class' => 'btn waves-effect waves-light',                  
+                                'class' => 'btn cyan waves-effect waves-light',                  
                                 
                             ]);
                         }
 
                         if(Helper::checkRoute('listar-regularidades')){
                             echo Html::a('<i class="material-icons left">format_list_bulleted</i> Regularidades', ['listar-regularidades', 'id' => $m->id], [
-                                'class' => 'btn waves-effect waves-light',                  
+                                'class' => 'btn cyan waves-effect waves-light',                  
                                 
                             ]);
                         }

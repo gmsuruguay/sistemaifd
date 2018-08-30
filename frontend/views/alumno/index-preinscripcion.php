@@ -11,7 +11,7 @@ use backend\models\Inscripcion;
 /* @var $searchModel backend\models\search\InscripcionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'SURI - PREINSCRIPCION';
+$this->title = 'Carreras Inscriptas';
 ?>
 <div class="inscripcion-index">    
     
@@ -20,6 +20,7 @@ $this->title = 'SURI - PREINSCRIPCION';
     
     
     <?php if( !Inscripcion::existePreinscripcion(Yii::$app->user->identity->idAlumno) ): ?>
+    
         <div class="row" id="alert_box">
             <div class="col s12 m12">
                 <div class="card cyan lighten-3">
@@ -56,8 +57,8 @@ $this->title = 'SURI - PREINSCRIPCION';
                         <div class="col m12">
                             <?php                     
 
-                            if(Helper::checkRoute('imprimir-formulario')){
-                                echo Html::a('<i class="material-icons left">local_printshop</i> Imprimir', ['imprimir-formulario', 'id' => $m->id], [
+                            if(Helper::checkRoute('imprimir')){
+                                echo Html::a('<i class="material-icons left">local_printshop</i> Imprimir', ['imprimir', 'id' => $m->id], [
                                     'class' => 'btn waves-effect waves-light btn-large right',                  
                                     'target'=>'_blank',
                                 ]);

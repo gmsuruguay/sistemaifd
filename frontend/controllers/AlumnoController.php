@@ -32,7 +32,7 @@ class AlumnoController extends Controller
         $model= Inscripcion::find()->where(['alumno_id'=>$id_alumno])->all();
 
         $preinscripcion=Inscripcion::existePreinscripcion($id_alumno);
-        if(!$preinscripcion){
+        if($preinscripcion){
             
             $this->layout='main2';
             return $this->render('index-preinscripcion', [                     

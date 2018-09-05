@@ -7,7 +7,7 @@ use common\models\FechaHelper;
 /* @var $model app\models\ActaExamen */
 
 $this->title = 'Carga de calificaciones';
-$this->params['breadcrumbs'][] = ['label' => 'Acta de Examen', 'url' => ['create']];
+$this->params['breadcrumbs'][] = ['label' => 'Acta de Examen', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="acta-examen-view">

@@ -305,6 +305,7 @@ class AlumnoController extends Controller
                 $mes=FechaHelper::obtenerMes(date('Y-m-d'));
                 $pdf = Yii::$app->pdf;        
                 $pdf->cssFile = 'css/reporte.css';
+                $pdf->format = 'legal';
                 $pdf->options = ['title' => 'Constancia Analitica'];
                 $pdf->content = $this->renderPartial('reporte_constancia_analitica', [
                     'model' => $model,

@@ -3,7 +3,7 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=ifd_db',
+            'dsn' => 'mysql:host=localhost;dbname=ifd_produccion',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',

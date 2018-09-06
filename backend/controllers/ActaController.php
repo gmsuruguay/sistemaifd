@@ -516,26 +516,46 @@ class ActaController extends Controller
         }
     }
 
+    protected function findMateriasConEquivalencia($alumno,$carrera)
+    {
+        //$model = $this->findModelInscripcion($id);
+        //$alumno = $model->alumno_id;
+        //$carrera = $model->carrera_id;        
+        $query = Acta::find()
+                    ->joinWith(['materia'])
+                    ->where(['alumno_id' => $alumno])                
+                    ->andWhere(['=','acta.condicion_id',4])                            
+                    ->andWhere(['materia.carrera_id' => $carrera]);
+                    //->orderBy('materia.anio')
+                    
+        return $query;
+    }
+
     public function actionRegistrarEquivalencia($id)
     {
-        $inscripcion = $this->findModelInscripcion($id);
+        $inscripcion = $this->findModelInscripcion($id);            
+        $materias = new ActiveDataProvider([
+            'query' => $this->findMateriasConEquivalencia($inscripcion->alumno_id, $inscripcion->carrera_id),
+            ]);
+        
         $model = new Acta();
+
 
         if ($model->load(Yii::$app->request->post())) {
             $model->condicion_id=4;
             $model->alumno_id= $inscripcion->alumno_id;
             if($model->save()){
                 Yii::$app->session->setFlash('success', "Registración de equivalencia realizada correctamente");
-                return $this->render('_form_equivalencia', [
-                    'model' => $model,
-                    'inscripcion'=>$inscripcion
+                return $this->redirect(['registrar-equivalencia', 
+                    'id' => $inscripcion->id,                    
                 ]);
             }
             
         } 
         return $this->render('_form_equivalencia', [
             'model' => $model,
-            'inscripcion'=>$inscripcion
+            'inscripcion'=>$inscripcion,
+            'materias' => $materias,
         ]);
         
     }

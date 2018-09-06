@@ -132,18 +132,18 @@ class AlumnoController extends Controller
         $sql= 'SELECT m.descripcion, m.anio, nota, fecha_examen as fecha, c.descripcion as condicion, :examen as tipo  FROM acta
         JOIN materia as m on m.id = acta.materia_id
         JOIN condicion as c on c.id = acta.condicion_id
-        WHERE m.carrera_id=:carrera AND alumno_id=:alumno AND asistencia = 1 AND acta.condicion_id <> 2
+        WHERE m.carrera_id=:carrera AND alumno_id=:alumno
         UNION ALL
         SELECT m.descripcion, m.anio, nota, fecha_cierre as fecha, c.descripcion as condicion, :cursada as tipo FROM cursada
         JOIN materia as m on m.id = cursada.materia_id
         JOIN condicion as c on c.id = cursada.condicion_id
-        WHERE m.carrera_id =:carrera AND alumno_id =:alumno
+        WHERE m.carrera_id =:carrera AND alumno_id =:alumno AND cursada.condicion_id <> 2
         ORDER BY fecha DESC';
 
         $query = $connection->createCommand($sql);
         $query->bindValue(":carrera", $carrera);
         $query->bindValue(":alumno", $alumno);
-        $query->bindValue(":examen", 'EXAMEN');
+        $query->bindValue(":examen", '');
         $query->bindValue(":cursada", 'CURSADA');
 
         $materias= $query->queryAll();

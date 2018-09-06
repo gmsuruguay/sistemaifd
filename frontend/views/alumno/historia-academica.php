@@ -41,7 +41,7 @@ $this->title = 'Mi Historia Academica';
                     <th>Calificación</th>               
                     <th>Fecha</th>                
                     <th>Condición</th>   
-                    <th>Tipo</th>     
+                    <th>Detalle</th>     
                   </tr>
                 </thead> 
                 <tbody>

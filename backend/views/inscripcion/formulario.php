@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'observacion')->textarea(['rows' => 6]) ?>
             
-            <?= $form->field($model, 'estado')->radioList(array('p'=>'PREINSCRIPTO','i'=>'INSCRIPTO')); ?>
+            <?= $form->field($model, 'estado')->radioList(array('0'=>'PREINSCRIPTO','1'=>'INSCRIPTO')); ?>
 
         </div>                              
         <div class="box-footer">

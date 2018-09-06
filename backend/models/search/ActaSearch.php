@@ -45,7 +45,7 @@ class ActaSearch extends Acta
      */
     public function search($params)
     {
-        $query = Acta::find()->select(['libro','folio','fecha_examen','condicion_id','materia_id'])->distinct();
+        $query = Acta::find()->select(['libro','folio','fecha_examen','condicion_id','materia_id'])->where('condicion_id <>4')->distinct();
 
         // add conditions that should always apply here
         //$query->joinWith(['alumno','materia.carrera']);

@@ -112,6 +112,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         //'linkOptions' => ['target'=>'_blank'],
                                                         'visible' => true,  // if you want to hide an item based on a condition, use this
                                                     ],
+                                                    [
+                                                        'label' => 'Registrar Equivalencias',
+                                                        'url' => ['/acta/registrar-equivalencia', 'id' => $key],
+                                                        'linkOptions' => ['target'=>'_blank'],
+                                                        'visible' => true,  // if you want to hide an item based on a condition, use this
+                                                    ],
                                                     
                                                 ],
                                                 'options' => [

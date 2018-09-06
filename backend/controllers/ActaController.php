@@ -21,7 +21,7 @@ use common\models\FechaHelper;
 use backend\models\CalendarioExamen;
 use yii\db\Query;
 use yii\helpers\Html;
-
+use backend\models\Inscripcion;
 
 /**
  * ActaController implements the CRUD actions for Acta model.
@@ -132,6 +132,7 @@ class ActaController extends Controller
     public function actionCreate()
     {
         $model = new Acta();
+        $model->scenario='load';
 
         if ($model->load(Yii::$app->request->post())) {
             return $this->redirect(['load', 
@@ -505,5 +506,39 @@ class ActaController extends Controller
             return;
         }
     }
+
+    protected function findModelInscripcion($id)
+    {
+        if (($model = Inscripcion::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionRegistrarEquivalencia($id)
+    {
+        $inscripcion = $this->findModelInscripcion($id);
+        $model = new Acta();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->condicion_id=4;
+            $model->alumno_id= $inscripcion->alumno_id;
+            if($model->save()){
+                Yii::$app->session->setFlash('success', "Registración de equivalencia realizada correctamente");
+                return $this->render('_form_equivalencia', [
+                    'model' => $model,
+                    'inscripcion'=>$inscripcion
+                ]);
+            }
+            
+        } 
+        return $this->render('_form_equivalencia', [
+            'model' => $model,
+            'inscripcion'=>$inscripcion
+        ]);
+        
+    }
+
 
 }

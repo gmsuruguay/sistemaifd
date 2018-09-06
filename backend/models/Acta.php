@@ -38,18 +38,28 @@ class Acta extends \yii\db\ActiveRecord
     {
         return [
             [['libro', 'folio', 'condicion_id', 'alumno_id', 'materia_id'], 'integer'],
-            [['libro', 'folio', 'condicion_id', 'alumno_id', 'materia_id','fecha_examen'], 'required'],
+            [['condicion_id', 'alumno_id', 'materia_id','fecha_examen'], 'required'],
             [['nota'], 'number','min'=>0, 'max'=>10],
             [['asistencia'], 'boolean'],
             [['condicion_id', 'alumno_id', 'materia_id','nota'], 'required'],
             [['fecha_examen'], 'safe'],
             [['resolucion'], 'string', 'max' => 45],
+            [['tipo_equivalencia'], 'string', 'max' => 20],
+            [['descripcion'], 'string'],
+            [['libro', 'folio'], 'required', 'on'=>'load'],
             [['nro_permiso'], 'string', 'max' => 11],
             [['alumno_id'], 'exist', 'skipOnError' => true, 'targetClass' => Alumno::className(), 'targetAttribute' => ['alumno_id' => 'id']],
             [['condicion_id'], 'exist', 'skipOnError' => true, 'targetClass' => Condicion::className(), 'targetAttribute' => ['condicion_id' => 'id']],
             [['materia_id'], 'exist', 'skipOnError' => true, 'targetClass' => Materia::className(), 'targetAttribute' => ['materia_id' => 'id']],
 
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['load'] = ['libro', 'folio','condicion_id', 'alumno_id', 'materia_id','fecha_examen'];              
+        return $scenarios;
     }
 
     /**
@@ -68,7 +78,9 @@ class Acta extends \yii\db\ActiveRecord
             'alumno_id' => 'Alumno',
             'materia_id' => 'Materia',
             'fecha_examen' => 'Fecha Examen',
-            'resolucion' => 'Resolucion',
+            'resolucion' => 'Resolución',
+            'tipo_equivalencia'=>'Equivalencia',
+            'descripcion'=>'Descripción'
         ];
     }
 

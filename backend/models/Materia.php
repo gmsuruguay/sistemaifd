@@ -282,5 +282,12 @@ class Materia extends \yii\db\ActiveRecord
         return $cantidad;        
 
     }
+
+    public static function getListaMateriasPorCarrera($id)
+    {                    
+                 
+        $sql = self::find()->where(['carrera_id'=>$id])->orderBy('descripcion')->all();
+        return ArrayHelper::map($sql, 'id', 'descripcion');
+    }
     
 }

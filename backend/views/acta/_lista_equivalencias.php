@@ -32,7 +32,18 @@ use yii\helpers\Html;
                     <td><?=$dato->descripcion ?></td>  
                     <td><?=$dato->tipo_equivalencia ?></td>  
                     <td><?=$dato->nota ?></td>  
-                    <td><?= Html::a('', ['actualizar-equivalencia', 'id'=>$dato->id,'inscripcion_id'=>$inscripcion->id], ['class' => 'glyphicon glyphicon-pencil', 'title'=>'Actualizar equivalencia'])?></td>         
+                    <td>
+                        <?= Html::a('', ['actualizar-equivalencia', 'id'=>$dato->id,'inscripcion_id'=>$inscripcion->id], ['class' => 'glyphicon glyphicon-pencil', 'title'=>'Actualizar equivalencia'])?>
+                        <?= Html::a('', ['eliminar-equivalencia', 'id'=>$dato->id,'inscripcion_id'=>$inscripcion->id], 
+                        [
+                            'class' => 'glyphicon glyphicon-trash', 'title'=>'Eliminar equivalencia',
+                            'data' => [
+                                'confirm' => 'Esta seguro de eliminar este registro?',
+                                'method' => 'post',
+                            ],
+                        ])?>
+
+                    </td>         
                 </tr>
                 <?php endforeach; ?>
             </tbody>                

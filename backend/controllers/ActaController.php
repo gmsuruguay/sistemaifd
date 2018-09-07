@@ -579,6 +579,17 @@ class ActaController extends Controller
         }
     }
 
+    public function actionEliminarEquivalencia($id,$inscripcion_id)
+    {
+        $inscripcion = $this->findModelInscripcion($inscripcion_id);
+        $model = $this->findModel($id);
+        $this->findModel($id)->delete();
+        return $this->redirect(['registrar-equivalencia', 
+        'id' => $inscripcion->id,                    
+        ]);
+        
+    }
+
 
 
 }

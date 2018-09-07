@@ -191,7 +191,7 @@ class PedidoController extends Controller
                 $query = Acta::find()
                          ->joinWith(['materia'])
                          ->where(['alumno_id' => $a->alumno_id])                
-                         ->andWhere(['asistencia'=>1])                            
+                         ->andWhere(['>=','nota',4])                              
                          ->andWhere(['materia.carrera_id' => $a->carrera_id])
                          ->orderBy('materia.anio')
                          ->all();

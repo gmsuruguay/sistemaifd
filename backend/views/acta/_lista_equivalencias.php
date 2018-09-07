@@ -9,7 +9,7 @@ use yii\helpers\Html;
             
     </div>
     <div class="box-body">
-        <table  width="100%">
+        <table class="table" width="100%">
             <thead>     
               <tr> 
                 <th>#</th> 

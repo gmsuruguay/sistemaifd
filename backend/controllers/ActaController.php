@@ -525,22 +525,19 @@ class ActaController extends Controller
                     ->joinWith(['materia'])
                     ->where(['alumno_id' => $alumno])                
                     ->andWhere(['=','acta.condicion_id',4])                            
-                    ->andWhere(['materia.carrera_id' => $carrera]);
-                    //->orderBy('materia.anio')
+                    ->andWhere(['materia.carrera_id' => $carrera])
+                    ->all();
                     
         return $query;
     }
 
     public function actionRegistrarEquivalencia($id)
     {
-        $inscripcion = $this->findModelInscripcion($id);            
-        $materias = new ActiveDataProvider([
-            'query' => $this->findMateriasConEquivalencia($inscripcion->alumno_id, $inscripcion->carrera_id),
-            ]);
+        $inscripcion = $this->findModelInscripcion($id);           
         
+        $materias=$this->findMateriasConEquivalencia($inscripcion->alumno_id, $inscripcion->carrera_id);
         $model = new Acta();
-
-
+        
         if ($model->load(Yii::$app->request->post())) {
             $model->condicion_id=4;
             $model->alumno_id= $inscripcion->alumno_id;
@@ -552,13 +549,36 @@ class ActaController extends Controller
             }
             
         } 
-        return $this->render('_form_equivalencia', [
+        //echo $model->inscripcion_id;die;
+        return $this->render('equivalencia', [
             'model' => $model,
             'inscripcion'=>$inscripcion,
             'materias' => $materias,
         ]);
         
     }
+
+    //Actualizar equivalencia
+
+    public function actionActualizarEquivalencia($id,$inscripcion_id)
+    {
+        $model = $this->findModel($id);
+        $inscripcion = $this->findModelInscripcion($inscripcion_id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->update()) {
+            Yii::$app->session->setFlash('success', "Actualización realizada correctamente");
+                return $this->redirect(['registrar-equivalencia', 
+                    'id' => $inscripcion->id,                    
+                ]);
+        } else {
+            $model->fecha_examen=FechaHelper::fechaDMY($model->fecha_examen);
+            return $this->render('actualizar_equivalencia', [
+                'model' => $model,
+                'inscripcion'=>$inscripcion,
+            ]);
+        }
+    }
+
 
 
 }

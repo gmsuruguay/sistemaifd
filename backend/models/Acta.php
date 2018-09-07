@@ -23,6 +23,7 @@ use yii\helpers\ArrayHelper;
  */
 class Acta extends \yii\db\ActiveRecord
 {
+    
     /**
      * @inheritdoc
      */

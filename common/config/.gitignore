@@ -1,7 +1,3 @@
-<<<<<<< HEAD
 main-local.php
-#params-local.php
-#test-local.php
-=======
-main-local.php
->>>>>>> desarrollo
+params-local.php
+test-local.php

@@ -18,10 +18,7 @@ nbproject
 Thumbs.db
 
 # composer vendor dir
-#/vendor
-
-# ingnore db rentas
-#/db 
+/vendor
 
 # composer itself is not needed
 composer.phar

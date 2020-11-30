@@ -22,7 +22,7 @@ return [
 
 
         'pdf' => [
-            'class' => Pdf::classname(),
+            'class' => Pdf::class,
             // set to use core fonts only
             'mode' => Pdf::MODE_BLANK, 
             // A4 paper format

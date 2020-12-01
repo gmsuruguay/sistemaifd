@@ -302,5 +302,17 @@ class User extends ActiveRecord implements IdentityInterface
         }
         return false;
     }
+   
+
+    public function getTipoUsuario()
+    {
+    return $this->hasOne(TipoUsuario::className(), ['id' => 'tipo_usuario_id']);
+    }
+   
+
+    public function getEstado()
+    {
+        return ($this->status == 10) ? 'Activo': 'Inactivo';
+    }
 
 }

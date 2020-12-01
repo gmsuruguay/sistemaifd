@@ -53,8 +53,8 @@ return [
     
             'user' => [
             
-            'identityClass' => 'mdm\admin\models\User',
-            'loginUrl' => ['admin/user/login'],
+            'identityClass' => 'common\models\User',
+            'loginUrl' => ['site/login'],
         ], 
         'view' => [
          'theme' => [

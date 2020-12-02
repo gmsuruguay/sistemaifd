@@ -26,9 +26,8 @@ use dmstr\widgets\Alert;
     </section>
 </div>
 
-<footer class="main-footer" style="text-align:center;">
-  <img src="img/escudo_municipio.png" style="width: 4%;">
-  <strong>2020 | Municipio de Perico <small style="font-size: 0.7em;"> - <i class="fa fa-trademark" style="color: red;" ></i><b> Cómputos</b> 2020</small></strong>
+<footer class="main-footer" style="text-align:center;"> 
+  <strong>2020 | SURI <small style="font-size: 0.7em;"> - <b> iDev Software</b> 2020</small></strong>
 </footer>
 
 <!-- Control Sidebar -->

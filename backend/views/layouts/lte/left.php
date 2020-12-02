@@ -26,50 +26,82 @@ $identity = Yii::$app->user->identity;
     </div>
 
     
-    <?php
-    $menuItems= [
-      ['label' => 'Menu Yii2', 'visible' => false, 'options' => ['class' => 'header']],     
-       
+    <?php   
+
+    $menuItems = [
+      ['label' => 'Menu', 'options' => ['class' => 'header']],     
+      ['label' => 'Inicio', 'icon' => 'home', 'url' => ['/site']],  
+      ['label' => 'Carreras', 'icon' => 'certificate', 'url' => ['/carrera']],   
+      ['label' => 'Materias', 'icon' => 'leanpub', 'url' => ['/materia']],    
+     
       [
-        'label' => 'Tramites',
-        'icon' => 'book',
-        'url' => '#',
-        'items' => [
-            ['label' => 'Mis Trámites', 'icon' => 'file', 'url' => ['/tramite/index']],  
-            ['label' => 'En Tránsito', 'icon' => 'file-text', 'url' => ['/tramite/transito'],           
-            ],
-            /*['label' => 'Procesados', 'icon' => 'file-text', 'url' => ['/tramite/mis-tramites'],           
-            ],*/
-            ['label' => 'Otros Trámites', 'icon' => 'file-text', 'url' => ['/tramite/otros-tramites'],                      
-            ]                        
+          'label' => 'Alumnos',
+          'icon' => 'graduation-cap',
+          'url' => '#',
+          'items' => [         
+              ['label' => 'Listar Alumnos Inscriptos', 'icon' => 'user', 'url' => ['/inscripcion'],],                   
+              ['label' => 'Administrar Alumnos', 'icon' => 'users', 'url' => ['/alumno'],],                             
+              ['label' => 'Listar Titulos', 'icon' => 'vcard-o', 'url' => ['/titulo-secundario'],],    
+              ['label' => 'Listar Colegios Secundarios', 'icon' => 'university', 'url' => ['/colegio-secundario'],],                             
           ],
       ], 
-      ['label' => 'Personas', 'icon' => 'user', 'url' => ['/iniciador/index']],
-      ['label' => 'Asuntos', 'icon' => 'list', 'url' =>  ['/asunto/index'],
-      
-      ], 
       [
-        'label' => 'Configuración',
-        'icon' => 'cog',
-        'url' => '#',
-        
-        'items' => [
-            [
-              'label' => 'Seguridad',
-              'icon' => 'lock',
-              'url' => '#',
-              'items' => [
-                ['label' => 'Usuarios', 'icon' => 'users', 'url' =>  ['/usuario/index'],],  
-                ['label' => 'Roles', 'icon' => 'list', 'url' =>  ['/admin/role'],],  
-                ['label' => 'Rutas', 'icon' => 'link', 'url' =>  ['/admin/route'],],                
-                ]                     
-              
-            ],             
-            ['label' => 'Estados', 'icon' => 'list', 'url' =>  ['/estado/index'],],             
-            ['label' => 'Reparticiones / Dpto.', 'icon' => 'building-o', 'url' =>  ['/reparticion/index'],],   
-            ['label' => 'Numeración de Tramites', 'icon' => 'edit', 'url' =>  ['/numeracion-tramite/index'],],               
-        ],
-      ],        
+          'label' => 'Cursadas',
+          'icon' => 'rocket',
+          'url' => '#',
+          'items' => [                            
+              ['label' => 'Listar Inscripciones', 'icon' => 'list', 'url' => ['/cursada'],],
+              ['label' => 'Registrar Cierre Cursada', 'icon' => 'edit', 'url' => ['/cursada/cerrar-cursada'],],                            
+          ],
+      ],
+      [
+          'label' => 'Examen',
+          'icon' => 'newspaper-o',
+          'url' => '#',
+          'items' => [                            
+              ['label' => 'Listar Permisos solicitados', 'icon' => 'list', 'url' => ['/inscripcion-examen'],],
+              ['label' => 'Imprimir Listado', 'icon' => 'print', 'url' => ['/inscripcion-examen/listar-inscripciones'],],
+              ['label' => 'Calendario Examen', 'icon' => 'calendar', 'url' => ['/calendario-examen'],],                                
+              ['label' => 'Turno Examen', 'icon' => 'list', 'url' => ['/turno-examen'],],                         ],
+      ],
+      
+      [
+          'label' => 'Actas',
+          'icon' => 'book',
+          'url' => '#',
+          'items' => [                            
+              ['label' => 'Listar Folios', 'icon' => 'list', 'url' => ['/acta'],],
+              ['label' => 'Registrar Actas Historicas', 'icon' => 'plus', 'url' => ['/acta/create'],],    
+              ['label' => 'Registrar Actas con Inscripción', 'icon' => 'plus', 'url' => ['/acta/load-from-inscripto']],                          
+          ],
+      ],  
+      [
+          'label' => 'Docentes',
+          'icon' => 'user',
+          'url' => '#',
+          'items' => [                            
+              ['label' => 'Listar Docentes', 'icon' => 'list', 'url' => ['/docente'],],
+              ['label' => 'Agregar Docente', 'icon' => 'plus', 'url' => ['/docente/create'],],    
+              ['label' => 'Listar Titulos Docentes', 'icon' => 'vcard-o', 'url' => ['/titulo']],                          
+          ],
+      ],  
+      ['label' => 'Solicitudes Certificados', 'icon' => 'file', 'url' => ['/pedido']], 
+      ['label' => 'Localidades', 'icon' => 'map-marker', 'url' => ['/localidad']], 
+      ['label' => 'Condición Cursada', 'icon' => 'question-circle', 'url' => ['/condicion']], 
+      ['label' => 'Calendario Académico', 'icon' => 'calendar', 'url' => ['/calendario-academico'],],  
+                                     
+    
+      [
+          'label' => 'Configuración',
+          'icon' => 'cog',
+          'url' => '#',
+          'items' => [
+              ['label' => 'Sedes', 'icon' => 'university', 'url' => ['/sede'],],
+              ['label' => 'Usuarios', 'icon' => 'users', 'url' => ['/user'],],
+              ['label' => 'Controladores', 'icon' => 'code', 'url' => ['/admin/route'],],
+              ['label' => 'Roles', 'icon' => 'lock', 'url' => ['/admin/role'],],
+          ],
+      ],
     ];
    
     ?>

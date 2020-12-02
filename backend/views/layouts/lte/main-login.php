@@ -1,12 +1,12 @@
 <?php
-use frontend\assets\AppAsset;
+
 use yii\helpers\Html;
 use dmstr\widgets\Alert;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-//dmstr\web\AdminLteAsset::register($this);
-AppAsset::register($this);
+dmstr\web\AdminLteAsset::register($this);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="content-page">
+<body class="content-page hold-transition login-page">
 
 <?php $this->beginBody() ?>
 <div class="container">

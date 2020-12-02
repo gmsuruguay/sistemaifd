@@ -1,9 +1,17 @@
-$(document).on('ready pjax:success', function() {
+/* $(document).on('ready pjax:success', function() {
     $('.modalButton').click(function(e) {
+        console.log("ingreso");
         e.preventDefault(); //for prevent default behavior of <a> tag.
         var tagname = $(this)[0].tagName;
         $('#ModalId').modal('show').find('.modalContent').load($(this).attr('href'));
     });
+}); */
+
+$('.modalButton').click(function(e) {
+    console.log("ingreso");
+    e.preventDefault(); //for prevent default behavior of <a> tag.
+    var tagname = $(this)[0].tagName;
+    $('#ModalId').modal('show').find('.modalContent').load($(this).attr('href'));
 });
 
 

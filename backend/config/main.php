@@ -12,6 +12,7 @@ return [
     'name'=>'SURI - SISTEMA UNICO DE REGISTRO INTITUCIONAL',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
+    'layout' => 'lte/main',
     'bootstrap' => ['log'],
     'modules' => [
         'admin' => [
@@ -51,25 +52,25 @@ return [
             'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
             ],
     
-            'user' => [
+        'user' => [
             
             'identityClass' => 'common\models\User',
             'loginUrl' => ['site/login'],
         ], 
-        'view' => [
+        /* 'view' => [
          'theme' => [
              'pathMap' => [
                     '@app/views' => '@backend/views'
                 ],
             ],
-        ],
+        ], 
         'assetManager' => [
             'bundles' => [
                 'dmstr\web\AdminLteAsset' => [
                     'skin' => 'skin-blue',
                 ],
             ],
-        ],
+        ], */
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
